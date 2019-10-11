@@ -229,7 +229,5 @@ namespace Harry.LabTools.LabWinAPI
 
 		#endregion
 		
-		
-
 	}
 }

@@ -15,7 +15,7 @@ namespace Harry.LabTools.LabHex
 		private SizeF FontSize()
 		{
 			Graphics g = this.CreateGraphics();
-			SizeF sizeF = g.MeasureString("00", this.m_Font);
+			SizeF sizeF = g.MeasureString("00", this.defaultFont);
 			g.Dispose();
 			return sizeF;
 		}
@@ -23,12 +23,12 @@ namespace Harry.LabTools.LabHex
 		/// <summary>
 		/// 计算字体的大小
 		/// </summary>
-		/// <param name="strText"></param>
+		/// <param name="str"></param>
 		/// <returns></returns>
-		private SizeF FontSize(string strText)
+		private SizeF FontSize(string str)
 		{
 			Graphics g = this.CreateGraphics();
-			SizeF sizeF = g.MeasureString(strText, this.m_Font);
+			SizeF sizeF = g.MeasureString(str, this.defaultFont);
 			g.Dispose();
 			return sizeF;
 		}
@@ -36,13 +36,13 @@ namespace Harry.LabTools.LabHex
 		/// <summary>
 		/// 计算字体的大小
 		/// </summary>
-		/// <param name="strText"></param>
-		/// <param name="font"></param>
+		/// <param name="str"></param>
+		/// <param name="ft"></param>
 		/// <returns></returns>
-		private SizeF FontSize(string strText, Font font)
+		private SizeF FontSize(string str, Font ft)
 		{
 			Graphics g = this.CreateGraphics();
-			SizeF sizeF = g.MeasureString(strText, font);
+			SizeF sizeF = g.MeasureString(str, ft);
 			g.Dispose();
 			return sizeF;
 		}
@@ -53,30 +53,30 @@ namespace Harry.LabTools.LabHex
 		/// <returns></returns>
 		private int FontWidth()
 		{
-			SizeF size = FontSize("00", this.m_Font);
+			SizeF size = FontSize("00", this.defaultFont);
 			return (int)(size.Width-1.5);
 		}
 
 		/// <summary>
 		/// 计算字体的宽度
 		/// </summary>
-		/// <param name="strText"></param>
+		/// <param name="str"></param>
 		/// <returns></returns>
-		private int FontWidth(string strText)
+		private int FontWidth(string str)
 		{
-			SizeF size = FontSize(strText, this.m_Font);
+			SizeF size = FontSize(str, this.defaultFont);
 			return (int)(size.Width-1.5);
 		}
 
 		/// <summary>
 		/// 计算字体的宽度
 		/// </summary>
-		/// <param name="strText"></param>
-		/// <param name="font"></param>
+		/// <param name="str"></param>
+		/// <param name="ft"></param>
 		/// <returns></returns>
-		private int FontWidth(string strText, Font font)
+		private int FontWidth(string str, Font ft)
 		{
-			SizeF size = FontSize(strText, font);
+			SizeF size = FontSize(str, ft);
 			return (int)(size.Width);
 		}
 
@@ -86,7 +86,7 @@ namespace Harry.LabTools.LabHex
 		/// <returns></returns>
 		private int FontHeigth()
 		{
-			SizeF size = FontSize("00", this.m_Font);
+			SizeF size = FontSize("00", this.defaultFont);
 
 			return (int)(size.Height);
 		}
@@ -94,11 +94,11 @@ namespace Harry.LabTools.LabHex
 		/// <summary>
 		/// 计算字体的高度
 		/// </summary>
-		/// <param name="strText"></param>
+		/// <param name="str"></param>
 		/// <returns></returns>
-		private int FontHeigth(string strText)
+		private int FontHeigth(string str)
 		{
-			SizeF size = FontSize(strText, this.m_Font);
+			SizeF size = FontSize(str, this.defaultFont);
 
 			return (int)(size.Height);
 		}
@@ -106,12 +106,12 @@ namespace Harry.LabTools.LabHex
 		/// <summary>
 		/// 计算字体的高度
 		/// </summary>
-		/// <param name="strText"></param>
-		/// <param name="font"></param>
-		/// <returns></returns>
-		private int FontHeigth(string strText, Font font)
+		/// <param name="str"></param>
+		/// <param name="ft"></param>
+		/// <returns></returns>defaultXScaleShow
+		private int FontHeigth(string str, Font ft)
 		{
-			SizeF size = FontSize(strText, font);
+			SizeF size = FontSize(str, ft);
 			return (int)(size.Height);
 		}
 
