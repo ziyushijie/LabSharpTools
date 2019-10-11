@@ -28,15 +28,15 @@ namespace Harry.LabTools.LabHex
 			else
 			{
 				//---获取起始地址点
-				Point nowPointA = this.CalcDataAddrBeginPosition();
+				Point nowPointA = this.CalcDataScalePoint();
 				//---计算字体的宽度
 				int fontWidth = this.FontWidth();
 				//---计算字体的高度
 				int fontHeight = this.FontHeigth();
 				//---计算当前控件能够显示的最大行数
-				int iMaxRowCount = this.CalcShowMaxRowNum();
+				int iMaxRowCount = this.defaultMaxRow;//this.CalcYScaleMaxRow();
 				//---计算数据需要显示的行数
-				int iTotalRowCount = this.CalcMaxRowNum();
+				int iTotalRowCount = this.defaultTotalRow;// this.CalcYScaleTotalRow();
 				//---数据栏的背景色
 				Brush backGroundBrush = new SolidBrush(this.defaultFontBackGroundColor);
 				//---设置数据栏字体颜色
@@ -174,6 +174,8 @@ namespace Harry.LabTools.LabHex
 				this.defaultYScaleShowBit4 = YScaleShowBit4.BIT4X8;
 			}
 
+			//---数据显示的最大行数
+			this.defaultTotalRow = this.CalcYScaleTotalRow();
 			//---创建并显示光标
 			this.OnFindCaret();
 			//---滑块指向开始
@@ -204,6 +206,8 @@ namespace Harry.LabTools.LabHex
 				//---数组拷贝
 				Array.Copy(dat, this.defaultNowData, dat.Length);
 				Array.Copy(dat, this.defaultLastData, dat.Length);
+				//---数据显示的最大行数
+				this.defaultTotalRow = this.CalcYScaleTotalRow();
 				//---创建并显示光标
 				this.OnFindCaret();
 				//---滑块指向开始
@@ -246,19 +250,16 @@ namespace Harry.LabTools.LabHex
 					Array.Copy(dat, this.defaultLastData, dat.Length);
 					this.defaultShowChangeFlag = true;
 				}
-
+				//---数据显示的最大行数
+				this.defaultTotalRow = this.CalcYScaleTotalRow();
 				//---创建并显示光标
 				this.OnFindCaret();
-
 				//---滑块指向开始
 				this.defaultVScrollBar.Value = 0;
-
 				//---置位当前显示的行号位0
 				this.defaultRowNowNum = 0;
-
 				//---显示垂直滚动条
 				this.VScrollBarShow();
-
 				//---重新绘制窗体
 				this.Invalidate();
 			}
@@ -277,17 +278,16 @@ namespace Harry.LabTools.LabHex
 			{
 				return;
 			}
-
 			//---数据长度的合法性
 			if ((index + length) > this.defaultNowData.Length)
 			{
 				return;
 			}
-
 			//---数据拷贝
 			Array.Copy(dat, 0, this.defaultNowData, index, length);
 			Array.Copy(this.defaultNowData, this.defaultLastData, this.defaultNowData.Length);
-
+			//---数据显示的最大行数
+			this.defaultTotalRow = this.CalcYScaleTotalRow();
 			//---查找光标
 			this.OnFindCaret();
 			//---滑块指向开始
@@ -299,7 +299,43 @@ namespace Harry.LabTools.LabHex
 			//重新绘制窗体
 			this.Invalidate();
 		}
-		
+
+		#endregion
+
+		#region 数据刻度
+
+
+		/// <summary>
+		/// 数据栏的起始位置
+		/// </summary>
+		/// <returns></returns>
+		private Point CalcDataScalePoint()
+		{
+			int iWidth = 0;
+			int iHeight = 0;
+
+			//---判定是否显示X轴刻度
+			if (this.defaultXScaleShow)
+			{
+				iHeight = this.defaultXScaleHeight+this.defaultXScaleHeightOffset - this.defaultExternalLineWidth / 2;
+			}
+			else
+			{
+				iHeight = this.defaultExternalLineWidth / 2;
+			}
+			//---判定是否显示Y轴刻度
+			if (this.defaultYScaleShow)
+			{
+				iWidth = this.defaultYScaleWidth + this.defaultExternalLineWidth / 2;
+			}
+			else
+			{
+				iWidth = this.defaultExternalLineWidth / 2;
+			}
+			//---返回结果
+			return new Point(iWidth, iHeight);
+		}
+
 		#endregion
 
 	}

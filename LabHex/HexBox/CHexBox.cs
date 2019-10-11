@@ -84,7 +84,6 @@ namespace Harry.LabTools.LabHex
 
 			//强制设置输入法为英文输入模式
 			this.ImeMode=ImeMode.Disable;
-
 			this.AddData(512);
 		}
 
@@ -119,8 +118,8 @@ namespace Harry.LabTools.LabHex
 			this.BackColor=this.defaultFontBackGroundColor;
 			//设置输入焦点
 			this.Focus();
-			//---绘制船体外部线条
-			this.OnPaintExternalRectangle(e);
+			//---计算控件现实的行数
+			this.defaultMaxRow = this.CalcYScaleMaxRow();
 			//---显示垂直滚动条
 			if ((this.defaultNowData!=null)&&(this.defaultNowData.Length!=0))
 			{
@@ -129,7 +128,14 @@ namespace Harry.LabTools.LabHex
 			//---绘制X轴刻度
 			if (this.defaultXScaleShow)
 			{
-				this.OnPaintXScale(e);
+				if (this.defaultXScaleStringShow==true)
+				{
+					this.OnPaintXScaleAll(e);
+				}
+				else
+				{
+					this.OnPaintXScale(e);
+				}				
 			}
 			//---绘制Y轴刻度
 			if (this.defaultYScaleShow)
@@ -139,9 +145,17 @@ namespace Harry.LabTools.LabHex
 			//---绘制数据刻度
 			this.OnPaintDataScale(e);
 			//---绘制Y轴刻度选择背景
-			this.OnDrawYScaleBackGroundRectangle(e);
+			if (this.defaultXScaleBackGroundRectangleShow)
+			{
+				this.OnDrawYScaleBackGroundRectangle(e);
+			}
 			//---绘制X轴刻度选择背景
-			this.OnDrawXScaleBackGroundRectangle(e);
+			if (this.defaultXScaleBackGroundRectangleShow)
+			{
+				this.OnDrawXScaleBackGroundRectangle(e);
+			}
+			//---绘制船体外部线条,最后绘制，避免因为控制尺寸绘制最后一组数据的时候覆盖
+			this.OnPaintExternalRectangle(e);
 		}
 		
 		#endregion
@@ -165,176 +179,6 @@ namespace Harry.LabTools.LabHex
 			//---绘制线条
 			e.Graphics.DrawLines(nowPen, nowPoint);
 		}
-		#endregion
-
-		#region 地址栏的函数
-
-		/// <summary>
-		/// 计算地址栏的起始位置
-		/// </summary>
-		/// <returns></returns>
-		private Point CalcYAddrBeginPosition()
-		{
-			Point _return;
-
-			if (this.defaultXScaleShow)
-			{
-				_return=new Point(this.defaultExternalLineWidth / 2, this.defaultXScaleHeight - this.defaultExternalLineWidth / 2);
-			}
-			else
-			{
-				_return=new Point(this.defaultExternalLineWidth / 2, this.defaultExternalLineWidth / 2);
-			}
-
-			return _return;
-		}
-
-		#endregion
-
-		#region 数据栏
-
-		/// <summary>
-		/// 计算当前控件能够显示的最大行数
-		/// </summary>
-		/// <returns></returns>
-		private int CalcShowMaxRowNum()
-		{
-			//---获取字体的宽度及长度
-			SizeF sizef = this.FontSize();
-
-			//---字体的宽度和长度转换成整型
-			int fontWidth = (int)(sizef.Width);
-			int fontHeight = (int)(sizef.Height);
-
-			//---计算控件最大可显示的行数
-			int iHeight = 0;
-
-			//---是否显示标题栏
-			if (this.defaultXScaleShow)
-			{
-				iHeight=this.Height-this.defaultExternalLineWidth * 2-this.defaultXScaleHeight;
-			}
-			else
-			{
-				iHeight=this.Height-this.defaultExternalLineWidth * 2;
-			}
-			return (int)(iHeight/(fontHeight+this.defaultColStaffWidth));
-		}
-
-		/// <summary>
-		/// 数据地址栏显示的总行数
-		/// </summary>
-		/// <returns></returns>
-		private int CalcMaxRowNum()
-		{
-			if ((this.defaultNowData==null)||(this.defaultNowData.Length==0))
-			{
-				return -1;
-			}
-
-			//---计算实际的行数
-			int dataRow = 0;
-			dataRow=this.defaultNowData.Length/this.defaultRowShowNum;
-
-			//---不能整除则加一
-			if ((this.defaultNowData.Length%this.defaultRowShowNum)!=0)
-			{
-				dataRow+=1;
-			}
-			return dataRow;
-		}
-
-		/// <summary>
-		/// 数据栏的起始位置
-		/// </summary>
-		/// <returns></returns>
-		private Point CalcDataAddrBeginPosition()
-		{
-			Point pointA;
-			int iWidth = 0;
-			int iHeight = 0;
-
-			//---判定是否显示标题栏
-			if (this.defaultXScaleShow)
-			{
-				iHeight=this.defaultXScaleHeight - this.defaultExternalLineWidth / 2;
-			}
-			else
-			{
-				iHeight=this.defaultExternalLineWidth / 2;
-			}
-
-			//---判定是否显示地址栏
-			if (this.mYScaleShow)
-			{
-				iWidth=this.defaultYScaleWidth + this.defaultExternalLineWidth / 2;
-			}
-			else
-			{
-				iWidth=this.defaultExternalLineWidth / 2;
-			}
-
-			pointA=new Point(iWidth, iHeight);
-
-			return pointA;
-		}
-
-		/// <summary>
-		/// 计算当前显示的列的列号
-		/// </summary>
-		/// <returns></returns>
-		private int CalcCurrentColumnIndex()
-		{
-			int _return = 0;
-			if (this.defaultMousePos.iPos>=0)
-			{
-				_return=this.defaultMousePos.iPos%this.defaultRowShowNum;
-			}
-			else
-			{
-				//_return = -1;
-				_return=0;
-			}
-
-			return _return;
-		}
-
-		/// <summary>
-		/// 获取数据所在行的起始信息
-		/// </summary>
-		/// <returns></returns>
-		private Point CalcRowBeginPosition()
-		{
-			Point pointA;
-			int iOffset = 0;
-
-			//---计算字体的高度
-			int fontHeight = this.FontHeigth();
-
-			if (this.mYScaleShow)
-			{
-				iOffset=this.defaultExternalLineWidth / 2+this.defaultYScaleWidth;
-			}
-			else
-			{
-				iOffset=this.defaultExternalLineWidth / 2;
-			}
-
-			int height = 0;
-			if (this.defaultXScaleShow)
-			{
-				height=this.defaultExternalLineWidth / 2+this.defaultXScaleHeight + this.defaultRowSelectedNum*(fontHeight+this.defaultColStaffWidth);
-			}
-			else
-			{
-				height=this.defaultExternalLineWidth / 2+this.defaultRowSelectedNum*(fontHeight+this.defaultColStaffWidth);
-			}
-
-			pointA=new Point(iOffset, height);
-
-			return pointA;
-		}
-
 		#endregion
 
 		#region 滚动滑块的处理
@@ -377,9 +221,10 @@ namespace Harry.LabTools.LabHex
 			int fontWidth = (int)fontSizef.Width;
 			int fontHeight = (int)fontSizef.Height;
 			//---计算当前控件能够显示的最大行数
-			int iMaxRowCount = this.CalcShowMaxRowNum();
+			int iMaxRowCount = this.defaultMaxRow;//this.CalcYScaleMaxRow();
 			//---计算数据需要显示的行数
-			int iTotalRowCount = this.CalcMaxRowNum();
+			int iTotalRowCount = this.CalcYScaleTotalRow();
+			//---当前位置
 			if (iTotalRowCount>iMaxRowCount)
 			{
 				this.defaultVScrollBar.Visible=true;
@@ -417,7 +262,7 @@ namespace Harry.LabTools.LabHex
 				return;
 			}
 			//---数据选择的列号
-			int currentColumn = this.CalcCurrentColumnIndex();
+			int currentColumn = this.CalcXScaleColIndex();
 			//---判断当前列号是否合法
 			if (currentColumn==-1)
 			{
@@ -428,7 +273,7 @@ namespace Harry.LabTools.LabHex
 			//---计算字体的高度
 			int fontHeight = this.FontHeigth();
 			//---当前起始位置
-			Point pointA = this.CalcDataAddrBeginPosition();
+			Point pointA = this.CalcDataScalePoint();
 			if (this.defaultMousePos.bLeftPos)
 			{
 				pointA.X = pointA.X + currentColumn * (fontWidth + this.defaultRowStaffWidth) + (fontWidth) / 2;
@@ -618,22 +463,16 @@ namespace Harry.LabTools.LabHex
 
 					//---记录鼠标的坐标
 					Point mousePoint = new Point(e.X, e.Y);
-
 					//---获取地址栏的起始位置
-					Point pointA = this.CalcYAddrBeginPosition();
-
+					Point pointA = this.CalcYScalePoint();
 					//---计算字体的宽度
 					int fontWidth = this.FontWidth();
-
 					//---计算字体的高度
 					int fontHeight = this.FontHeigth();
-
 					//---计算当前控件能够显示的最大行数
-					int iMaxRowCount = this.CalcShowMaxRowNum();
-
+					int iMaxRowCount = this.defaultMaxRow;//this.CalcYScaleMaxRow();
 					//---计算数据需要显示的行数
-					int iTotalRowCount = this.CalcMaxRowNum();
-
+					int iTotalRowCount = this.defaultTotalRow;// this.CalcYScaleTotalRow();
 					//---判断鼠标左键是否是右侧的空白位置
 					if ((mousePoint.X<this.defaultDataStartHeight)||(mousePoint.X>(this.defaultDataStartWidth-10)))
 					{
@@ -886,10 +725,10 @@ namespace Harry.LabTools.LabHex
 					int fontHeight = this.FontHeigth();
 
 					//---获取当前的列信息
-					int colPosition = this.CalcCurrentColumnIndex();
+					int colPosition = this.CalcXScaleColIndex();
 
 					//---获取数据所在行的起始信息---仅仅是起始信息
-					Point pointA = this.CalcRowBeginPosition();
+					Point pointA = this.CalcYScaleRowPoint();
 
 					//---用于计算光标的二维坐标
 					Point pointB = new Point();
@@ -901,16 +740,13 @@ namespace Harry.LabTools.LabHex
 						if (this.defaultMousePos.bRightPos)
 						{
 							//---计算控件最大可显示的行数
-							int iMaxDataRow = this.CalcShowMaxRowNum();
-
+							int iMaxDataRow = this.defaultMaxRow;//this.CalcYScaleMaxRow();
 							//---计算实际的行数
-							int iDataRow = this.CalcMaxRowNum();
-
+							int iDataRow = this.defaultTotalRow;// this.CalcYScaleTotalRow();
 							//---判断选择数据所在的行号-----从1开始
 							if (this.defaultRowSelectedNum<(iMaxDataRow-1))
 							{
 								this.defaultRowSelectedNum++;
-
 								//---为了避免光标在最后一个位置,依然能够移动位置
 								if (this.defaultRowSelectedNum!=iDataRow)
 								{
@@ -1028,10 +864,10 @@ namespace Harry.LabTools.LabHex
 					int fontHeight = this.FontHeigth();
 
 					//---查找在第几列
-					int colPosition = this.CalcCurrentColumnIndex();
+					int colPosition = this.CalcXScaleColIndex();
 
 					//---获取所在行的启动信息
-					Point pointA = this.CalcRowBeginPosition();
+					Point pointA = this.CalcYScaleRowPoint();
 
 					//---表示在每行的起始位置
 					Point pointB = new Point();
@@ -1128,19 +964,14 @@ namespace Harry.LabTools.LabHex
 					//---获取字体的宽度及长度
 					int i_font_width = this.FontWidth();
 					int i_font_height = this.FontHeigth();
-
 					//---查找在第几列
-					int iColumn = this.CalcCurrentColumnIndex();
-
+					int iColumn = this.CalcXScaleColIndex();
 					//---获取所在行的启动信息
-					Point pointA = this.CalcRowBeginPosition();
-
+					Point pointA = this.CalcYScaleRowPoint();
 					//---计算最大显示行数
-					int iMaxDataRow = this.CalcShowMaxRowNum();
-
+					int iMaxDataRow = this.defaultMaxRow;//this.CalcYScaleMaxRow();
 					//---计算实际数据可显示的行数
-					int i_data_row = this.CalcMaxRowNum();
-
+					int i_data_row = this.defaultTotalRow;// this.CalcYScaleTotalRow();
 					//---进行判定
 					Point pointB = new Point();
 					if ((defaultMousePos.iPos-defaultRowShowNum)>=0)
@@ -1235,17 +1066,13 @@ namespace Harry.LabTools.LabHex
 					int i_font_height = FontHeigth();
 
 					//---查找在第几列
-					int iColumn = this.CalcCurrentColumnIndex();
-
+					int iColumn = this.CalcXScaleColIndex();
 					//---获取所在行的启动信息
-					Point pointA = this.CalcRowBeginPosition();
-
+					Point pointA = this.CalcYScaleRowPoint();
 					//---计算最大显示行数
-					int iMaxDataRow = this.CalcShowMaxRowNum();
-
+					int iMaxDataRow = this.defaultMaxRow;//this.CalcYScaleMaxRow();
 					//---计算实际数据可显示的行数
-					int i_data_row = this.CalcMaxRowNum();
-
+					int i_data_row = this.defaultTotalRow;// this.CalcYScaleTotalRow();
 					//---进行判定
 					Point pointB = new Point();
 					if ((this.defaultMousePos.iPos+defaultRowShowNum)<(this.mNowData.Length))
@@ -1319,6 +1146,39 @@ namespace Harry.LabTools.LabHex
 					}
 				}
 			}
+		}
+
+		#endregion
+
+		#region 私有函数
+
+		/// <summary>
+		/// 获取窗体可操作区域位置
+		/// </summary>
+		/// <returns></returns>
+		private Rectangle CalcHexBoxRectangle()
+		{
+			Rectangle rt = new Rectangle();
+			rt.X = this.defaultExternalLineWidth / 2;
+			rt.Y = this.defaultExternalLineWidth / 2;
+			//---判断垂直滚动条是否可见
+			if (this.defaultVScrollBar.Visible)
+			{
+				rt.Width = this.Width - this.defaultExternalLineWidth - this.defaultScrollBarWidth;
+			}
+			else
+			{
+				rt.Width = this.Width - this.defaultExternalLineWidth;
+			}
+			if (this.defaultXScaleShow)
+			{
+				rt.Height = this.Height - this.defaultExternalLineWidth - this.defaultXScaleHeight - this.defaultXScaleHeightOffset+1;
+			}
+			else
+			{
+				rt.Height = this.Height - this.defaultExternalLineWidth;
+			}
+			return rt;
 		}
 
 		#endregion

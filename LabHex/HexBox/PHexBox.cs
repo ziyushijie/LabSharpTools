@@ -60,7 +60,7 @@ namespace Harry.LabTools.LabHex
 
 		#endregion
 
-		#region X方向
+		#region X轴
 
 		/// <summary>
 		/// X方向刻度
@@ -70,7 +70,7 @@ namespace Harry.LabTools.LabHex
 		/// <summary>
 		/// 属性读写
 		/// </summary>
-		public bool mXShowScale
+		public bool mXScaleShow
 		{
 			get
 			{
@@ -80,6 +80,29 @@ namespace Harry.LabTools.LabHex
 			set
 			{
 				this.defaultXScaleShow = value;
+				//---重新绘制窗体
+				this.Invalidate();
+			}
+		}
+
+		/// <summary>
+		/// X方向刻度,显示地址位置和ASCII码信息
+		/// </summary>
+		private bool defaultXScaleStringShow = false;
+
+		/// <summary>
+		/// 属性读写
+		/// </summary>
+		public bool mXScaleStringShow
+		{
+			get
+			{
+				return this.defaultXScaleStringShow;
+			}
+
+			set
+			{
+				this.defaultXScaleStringShow = value;
 				//---重新绘制窗体
 				this.Invalidate();
 			}
@@ -187,23 +210,46 @@ namespace Harry.LabTools.LabHex
 		}
 
 		/// <summary>
-		/// X方向刻度位置偏移
+		/// X方向刻度高度的偏移
 		/// </summary>
-		private int defaultXScalePosOffset = 2;
+		private int defaultXScaleHeightOffset = 2;
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public int mXScalePosOffset
+		public int mXScaleHeightOffset
 		{
 			get
 			{
-				return this.defaultXScalePosOffset;
+				return this.defaultXScaleHeightOffset;
 			}
 
 			set
 			{
-				this.defaultXScalePosOffset = value;
+				this.defaultXScaleHeightOffset = value;
+				//---重新绘制窗体
+				this.Invalidate();
+			}
+		}
+
+		/// <summary>
+		/// X方向刻度
+		/// </summary>
+		private bool defaultXScaleBackGroundRectangleShow = true;
+
+		/// <summary>
+		/// 属性读写
+		/// </summary>
+		public bool mXScaleBackGroundRectangleShow
+		{
+			get
+			{
+				return this.defaultXScaleBackGroundRectangleShow;
+			}
+
+			set
+			{
+				this.defaultXScaleBackGroundRectangleShow = value;
 				//---重新绘制窗体
 				this.Invalidate();
 			}
@@ -364,6 +410,29 @@ namespace Harry.LabTools.LabHex
 			}
 		}
 
+		/// <summary>
+		/// X方向刻度
+		/// </summary>
+		private bool defaultYScaleBackGroundRectangleShow = true;
+
+		/// <summary>
+		/// 属性读写
+		/// </summary>
+		public bool mYScaleBackGroundRectangleShow
+		{
+			get
+			{
+				return this.defaultYScaleBackGroundRectangleShow;
+			}
+
+			set
+			{
+				this.defaultYScaleBackGroundRectangleShow = value;
+				//---重新绘制窗体
+				this.Invalidate();
+			}
+		}
+
 		#endregion Y轴地址
 
 		#region 数据地址
@@ -386,6 +455,11 @@ namespace Harry.LabTools.LabHex
 		/// 数据的字体的颜色
 		/// </summary>
 		private Color defaultDataFontColor = Color.Black;
+
+		/// <summary>
+		/// 数据地址偏移
+		/// </summary>
+		private int defaultDataScaleOffset = 1;
 
 		#endregion 数据地址
 
@@ -573,6 +647,11 @@ namespace Harry.LabTools.LabHex
 		/// </summary>
 		private int defaultScrollBarWidth = 16;
 
+		/// <summary>
+		/// 下拉控件的位置
+		/// </summary>
+		private int defaultScrollBarPos = 0;
+
 		#endregion 垂直滚动条
 
 		#region 字符
@@ -692,7 +771,7 @@ namespace Harry.LabTools.LabHex
 
 		/// 光标的Y方向偏移
 		/// </summary>
-		private int defaultCaretYOffset = 2;
+		private int defaultCaretYOffset = 0;//2;
 
 		#endregion 光标信息
 
@@ -712,6 +791,16 @@ namespace Harry.LabTools.LabHex
 		/// 记录数据区域每行的高度
 		/// </summary>
 		private int defaultDataStartHeight = 0;
+
+		/// <summary>
+		/// 数据区域显示的最大行数
+		/// </summary>
+		private int defaultMaxRow = 0;
+
+		/// <summary>
+		/// 数据显示的最大行数
+		/// </summary>
+		private int defaultTotalRow = 0;
 
 		#endregion 变量定义
 

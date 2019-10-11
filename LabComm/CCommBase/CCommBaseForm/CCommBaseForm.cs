@@ -12,12 +12,18 @@ namespace Harry.LabTools.LabComm
 {
     public partial class CCommBaseForm : FloatPopupBaseForm
     {
-        #region 变量定义
+		#region 变量函数
 
-        #endregion
-
-        #region 属性定义
 		/// <summary>
+		/// 是否使能最小尺寸限制
+		/// </summary>
+		private bool defaultLimitedSizeEnable = false;
+
+		#endregion
+
+		#region 属性函数
+
+        	/// <summary>
 		/// 
 		/// </summary>
 		public virtual CCommSerialParam mCCommSrialParam
@@ -50,6 +56,22 @@ namespace Harry.LabTools.LabComm
 			}
 		}
 
+		/// <summary>
+		/// 属性读写
+		/// </summary>
+		public virtual bool mLimitedSizeEnable
+		{
+			get
+			{
+				return this.defaultLimitedSizeEnable;
+			}
+			set
+			{
+				this.defaultLimitedSizeEnable = value;
+				//---重新绘制窗体
+				//this.Invalidate();
+			}
+		}
 
 		#endregion
 
