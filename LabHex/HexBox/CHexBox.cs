@@ -441,7 +441,8 @@ namespace Harry.LabTools.LabHex
 			//---显示输入符
 			this.OnCreateCaret();
 			//---设置输入符的位置
-			CWinAPICaret.SetCaretPos(pointA.X, pointA.Y);
+			//CWinAPICaret.SetCaretPos(pointA.X, pointA.Y+1);
+			CWinAPICaret.SetCaretPos((pointA.X - this.defaultCaretXOffset), (pointA.Y + this.defaultCaretYOffset));
 			//---显示输入符
 			CWinAPICaret.ShowCaret(this.Handle);
 		}
@@ -472,7 +473,7 @@ namespace Harry.LabTools.LabHex
 			if (!this.defaultIsCreateCaret)
 			{
 				this.defaultIsCreateCaret=true;
-				CWinAPICaret.CreateCaret(this.Handle, IntPtr.Zero, (int)(this.defaultFont.Size), defaultFont.Height + this.defaultColStaffWidth);
+				CWinAPICaret.CreateCaret(this.Handle, IntPtr.Zero, (int)(this.defaultFont.Size), this.defaultFont.Height + this.defaultColStaffWidth);
 			}
 		}
 
@@ -719,7 +720,7 @@ namespace Harry.LabTools.LabHex
 						//---创建光标
 						this.OnCreateCaret();
 						//---设置光标
-						CWinAPICaret.SetCaretPos(this.defaultDataEndWidth+8, nowRectangle.Y);
+						CWinAPICaret.SetCaretPos((this.defaultDataEndWidth+8), (nowRectangle.Y+this.defaultCaretYOffset));
 						//---显示光标
 						CWinAPICaret.ShowCaret(this.Handle);
 						this.defaultIsHideCaret=false;
@@ -753,7 +754,7 @@ namespace Harry.LabTools.LabHex
 							if (nowRegion.IsVisible(mousePoint))
 							{
 								//---设置光标
-								CWinAPICaret.SetCaretPos((nowRectangle.X-this.defaultCaretOffset), nowRectangle.Y);
+								CWinAPICaret.SetCaretPos((nowRectangle.X - this.defaultCaretXOffset), (nowRectangle.Y + this.defaultCaretYOffset));
 								//---显示光标
 								CWinAPICaret.ShowCaret(this.Handle);
 								this.defaultIsHideCaret=false;
@@ -771,7 +772,7 @@ namespace Harry.LabTools.LabHex
 							if (nowRegion.IsVisible(mousePoint))
 							{
 								//---设置光标
-								CWinAPICaret.SetCaretPos(nowRectangle.X-this.defaultCaretOffset, nowRectangle.Y);
+								CWinAPICaret.SetCaretPos((nowRectangle.X-this.defaultCaretXOffset), (nowRectangle.Y+this.defaultCaretYOffset));
 
 								//---显示光标
 								CWinAPICaret.ShowCaret(this.Handle);
@@ -920,7 +921,7 @@ namespace Harry.LabTools.LabHex
 									//---设置光标的位置;同时置位光标的位置标志
 									this.defaultMousePos.bRightPos=false;
 									this.defaultMousePos.bLeftPos=true;
-									CWinAPICaret.SetCaretPos(pointB.X-this.defaultCaretOffset, pointB.Y);
+									CWinAPICaret.SetCaretPos((pointB.X-this.defaultCaretXOffset), (pointB.Y+this.defaultCaretYOffset));
 								}
 								else
 								{
@@ -947,7 +948,7 @@ namespace Harry.LabTools.LabHex
 								this.defaultMousePos.iPos+=1;
 								this.defaultMousePos.bRightPos=false;
 								this.defaultMousePos.bLeftPos=true;
-								CWinAPICaret.SetCaretPos(pointB.X-this.defaultCaretOffset, pointB.Y);
+								CWinAPICaret.SetCaretPos((pointB.X - this.defaultCaretXOffset), (pointB.Y + this.defaultCaretYOffset));
 								return;
 							}
 
@@ -968,7 +969,7 @@ namespace Harry.LabTools.LabHex
 							pointB.Y=pointA.Y-2;
 							this.defaultMousePos.bRightPos=true;
 							this.defaultMousePos.bLeftPos=false;
-							CWinAPICaret.SetCaretPos(pointB.X-this.defaultCaretOffset, pointB.Y);
+							CWinAPICaret.SetCaretPos((pointB.X - this.defaultCaretXOffset), (pointB.Y + this.defaultCaretYOffset));
 							this.Invalidate();
 							return;
 						}
@@ -989,7 +990,7 @@ namespace Harry.LabTools.LabHex
 							this.defaultMousePos.iPos+=1;
 							this.defaultMousePos.bRightPos=false;
 							this.defaultMousePos.bLeftPos=true;
-							CWinAPICaret.SetCaretPos(pointB.X-this.defaultCaretOffset, pointB.Y);
+							CWinAPICaret.SetCaretPos((pointB.X - this.defaultCaretXOffset), (pointB.Y + this.defaultCaretYOffset));
 							this.Invalidate();
 							return;
 						}
@@ -1001,7 +1002,7 @@ namespace Harry.LabTools.LabHex
 							pointB.Y=pointA.Y-2;
 							this.defaultMousePos.bRightPos=true;
 							this.defaultMousePos.bLeftPos=false;
-							CWinAPICaret.SetCaretPos(pointB.X-this.defaultCaretOffset, pointB.Y);
+							CWinAPICaret.SetCaretPos((pointB.X - this.defaultCaretXOffset), (pointB.Y + this.defaultCaretYOffset));
 							this.Invalidate();
 							return;
 						}
@@ -1043,7 +1044,7 @@ namespace Harry.LabTools.LabHex
 							pointB.Y=pointA.Y-2;
 							this.defaultMousePos.bRightPos=false;
 							this.defaultMousePos.bLeftPos=true;
-							CWinAPICaret.SetCaretPos(pointB.X - this.defaultCaretOffset, pointB.Y);
+							CWinAPICaret.SetCaretPos((pointB.X - this.defaultCaretXOffset), (pointB.Y + this.defaultCaretYOffset));
 							this.Invalidate();
 							return;
 						}
@@ -1059,7 +1060,7 @@ namespace Harry.LabTools.LabHex
 								this.defaultMousePos.iPos-=1;
 								this.defaultMousePos.bRightPos=true;
 								this.defaultMousePos.bLeftPos=false;
-								CWinAPICaret.SetCaretPos(pointB.X - this.defaultCaretOffset, pointB.Y);
+								CWinAPICaret.SetCaretPos((pointB.X - this.defaultCaretXOffset), (pointB.Y + this.defaultCaretYOffset));
 								this.Invalidate();
 								return;
 							}
@@ -1075,7 +1076,7 @@ namespace Harry.LabTools.LabHex
 								defaultMousePos.iPos-=1;
 								this.defaultMousePos.bRightPos=true;
 								this.defaultMousePos.bLeftPos=false;
-								CWinAPICaret.SetCaretPos(pointB.X - this.defaultCaretOffset, pointB.Y);
+								CWinAPICaret.SetCaretPos((pointB.X - this.defaultCaretXOffset), (pointB.Y + this.defaultCaretYOffset));
 								this.Invalidate();
 								return;
 							}
@@ -1092,7 +1093,7 @@ namespace Harry.LabTools.LabHex
 							pointB.Y=pointA.Y-2;
 							this.defaultMousePos.bRightPos=false;
 							this.defaultMousePos.bLeftPos=true;
-							CWinAPICaret.SetCaretPos(pointB.X - this.defaultCaretOffset, pointB.Y);
+							CWinAPICaret.SetCaretPos((pointB.X - this.defaultCaretXOffset), (pointB.Y + this.defaultCaretYOffset));
 							this.Invalidate();
 							return;
 						}
@@ -1105,7 +1106,7 @@ namespace Harry.LabTools.LabHex
 							this.defaultMousePos.iPos-=1;
 							this.defaultMousePos.bRightPos=true;
 							this.defaultMousePos.bLeftPos=false;
-							CWinAPICaret.SetCaretPos(pointB.X - this.defaultCaretOffset, pointB.Y);
+							CWinAPICaret.SetCaretPos((pointB.X - this.defaultCaretXOffset), (pointB.Y + this.defaultCaretYOffset));
 							this.Invalidate();
 							return;
 						}
@@ -1157,7 +1158,7 @@ namespace Harry.LabTools.LabHex
 								defaultMousePos.iPos-=defaultRowShowNum;
 								defaultMousePos.bRightPos=true;
 								defaultMousePos.bLeftPos=false;
-								CWinAPICaret.SetCaretPos(pointB.X - this.defaultCaretOffset, pointB.Y);
+								CWinAPICaret.SetCaretPos((pointB.X - this.defaultCaretXOffset), (pointB.Y + this.defaultCaretYOffset));
 								this.Invalidate();
 								return;
 							}
@@ -1171,7 +1172,7 @@ namespace Harry.LabTools.LabHex
 								defaultMousePos.iPos-=defaultRowShowNum;
 								defaultMousePos.bRightPos=false;
 								defaultMousePos.bLeftPos=true;
-								CWinAPICaret.SetCaretPos(pointB.X - this.defaultCaretOffset, pointB.Y);
+								CWinAPICaret.SetCaretPos((pointB.X - this.defaultCaretXOffset), (pointB.Y + this.defaultCaretYOffset));
 								this.Invalidate();
 								return;
 							}
@@ -1190,7 +1191,7 @@ namespace Harry.LabTools.LabHex
 								defaultMousePos.iPos-=defaultRowShowNum;
 								defaultMousePos.bRightPos=true;
 								defaultMousePos.bLeftPos=false;
-								CWinAPICaret.SetCaretPos(pointB.X - this.defaultCaretOffset, pointB.Y);
+								CWinAPICaret.SetCaretPos((pointB.X - this.defaultCaretXOffset), (pointB.Y + this.defaultCaretYOffset));
 								this.defaultVScrollBar.Value=defaultRowNowNum;
 								this.Invalidate();
 								return;
@@ -1205,7 +1206,7 @@ namespace Harry.LabTools.LabHex
 								defaultMousePos.iPos-=defaultRowShowNum;
 								defaultMousePos.bRightPos=false;
 								defaultMousePos.bLeftPos=true;
-								CWinAPICaret.SetCaretPos(pointB.X - this.defaultCaretOffset, pointB.Y);
+								CWinAPICaret.SetCaretPos((pointB.X - this.defaultCaretXOffset), (pointB.Y + this.defaultCaretYOffset));
 								this.defaultVScrollBar.Value=defaultRowNowNum;
 								this.Invalidate();
 								return;
@@ -1262,7 +1263,7 @@ namespace Harry.LabTools.LabHex
 								defaultMousePos.iPos+=defaultRowShowNum;
 								defaultMousePos.bRightPos=true;
 								defaultMousePos.bLeftPos=false;
-								CWinAPICaret.SetCaretPos(pointB.X - this.defaultCaretOffset, pointB.Y);
+								CWinAPICaret.SetCaretPos((pointB.X - this.defaultCaretXOffset), (pointB.Y + this.defaultCaretYOffset));
 								this.Invalidate();
 								return;
 							}
@@ -1276,7 +1277,7 @@ namespace Harry.LabTools.LabHex
 								defaultMousePos.iPos+=defaultRowShowNum;
 								defaultMousePos.bRightPos=false;
 								defaultMousePos.bLeftPos=true;
-								CWinAPICaret.SetCaretPos(pointB.X - this.defaultCaretOffset, pointB.Y);
+								CWinAPICaret.SetCaretPos((pointB.X - this.defaultCaretXOffset), (pointB.Y + this.defaultCaretYOffset));
 								this.Invalidate();
 								return;
 							}
@@ -1294,7 +1295,7 @@ namespace Harry.LabTools.LabHex
 								defaultMousePos.iPos+=defaultRowShowNum;
 								defaultMousePos.bRightPos=true;
 								defaultMousePos.bLeftPos=false;
-								CWinAPICaret.SetCaretPos(pointB.X - this.defaultCaretOffset, pointB.Y);
+								CWinAPICaret.SetCaretPos((pointB.X - this.defaultCaretXOffset), (pointB.Y + this.defaultCaretYOffset));
 								this.defaultVScrollBar.Value=defaultRowNowNum;
 								this.Invalidate();
 								return;
@@ -1309,7 +1310,7 @@ namespace Harry.LabTools.LabHex
 								defaultMousePos.iPos+=defaultRowShowNum;
 								defaultMousePos.bRightPos=false;
 								defaultMousePos.bLeftPos=true;
-								CWinAPICaret.SetCaretPos(pointB.X - this.defaultCaretOffset, pointB.Y);
+								CWinAPICaret.SetCaretPos((pointB.X - this.defaultCaretXOffset), (pointB.Y + this.defaultCaretYOffset));
 								this.defaultVScrollBar.Value=defaultRowNowNum;
 								this.Invalidate();
 								return;

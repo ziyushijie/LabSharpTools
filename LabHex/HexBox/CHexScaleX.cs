@@ -145,7 +145,6 @@ namespace Harry.LabTools.LabHex
 			{
 				//---数据选择的列号
 				int currentColumn = this.CalcCurrentColumnIndex();
-
 				//---判断列号是否合法
 				if (currentColumn == -1)
 				{
@@ -163,34 +162,31 @@ namespace Harry.LabTools.LabHex
 					{
 						pointA = new Point(this.defaultExternalLineWidth / 2, this.defaultExternalLineWidth / 2);
 					}
-
 					//---计算宽度
 					int fontWidth = this.FontWidth();
-
 					//---计算字体的高度
 					int fontHeight = this.FontHeigth();
-
 					Rectangle nowRectangle = new Rectangle();
-
+					//---初值计算
+					nowRectangle.X = pointA.X;
+					//---计算起点X的位置
 					if (this.defaultMousePos.bLeftPos)
 					{
-						nowRectangle.X = pointA.X + currentColumn * (fontWidth + this.defaultRowStaffWidth) + (fontWidth) / 2 - 3;
+						nowRectangle.X = pointA.X + currentColumn * (fontWidth + this.defaultRowStaffWidth) + (fontWidth) / 2 - 4;
 					}
 					if (this.defaultMousePos.bRightPos)
 					{
 						nowRectangle.X = pointA.X + currentColumn * (fontWidth + this.defaultRowStaffWidth) + fontWidth - 4;
 					}
-
-					nowRectangle.Y = pointA.Y;
-
+					//---计算起点Y的位置
+					nowRectangle.Y = pointA.Y- (this.defaultExternalLineWidth/2);
+					//---计算宽度
 					nowRectangle.Width = (fontWidth + 1) / 2;
-
-					nowRectangle.Height = this.defaultXScaleHeight - this.defaultExternalLineWidth;
-
+					//---计算高度
+					nowRectangle.Height = this.defaultXScaleHeight;// - this.defaultExternalLineWidth;
 					//---区域矩形背景填充
 					Brush backGroundBrush = new SolidBrush(Color.FromArgb(60, Color.Black));
 					e.Graphics.FillRectangle(backGroundBrush, nowRectangle);
-
 					//---外边框线条
 					e.Graphics.DrawRectangle(new Pen(Color.DarkGray, 1), nowRectangle);
 				}

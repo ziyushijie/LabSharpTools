@@ -686,9 +686,13 @@ namespace Harry.LabTools.LabHex
 		private bool defaultIsHideCaret = false;
 
 		/// <summary>
-		/// 光标的偏移
+		/// 光标的X方向偏移
 		/// </summary>
-		private int defaultCaretOffset = 1;
+		private int defaultCaretXOffset = 1;
+
+		/// 光标的Y方向偏移
+		/// </summary>
+		private int defaultCaretYOffset = 2;
 
 		#endregion 光标信息
 

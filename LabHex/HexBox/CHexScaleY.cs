@@ -156,26 +156,22 @@ namespace Harry.LabTools.LabHex
 			{
 				//---判定起始点
 				Point nowPointA = this.CalcYAddrBeginPosition();
-
 				//---计算宽度
 				int fontWidth = this.FontWidth();
-
 				//计算字体的高度
 				int fontHeight = this.FontHeigth();
-
 				//---矩形区域
 				Rectangle nowRectangle = new Rectangle();
+				//---起点(X,Y)坐标
 				nowRectangle.X = nowPointA.X;
-				nowRectangle.Y = nowPointA.Y + this.defaultRowSelectedNum * (fontHeight + this.defaultColStaffWidth);
-
-				nowRectangle.Width = this.defaultYScaleWidth + (this.defaultExternalLineWidth);
-
+				nowRectangle.Y = nowPointA.Y + this.defaultRowSelectedNum * (fontHeight + this.defaultColStaffWidth)+(this.defaultExternalLineWidth);
+				//---计算宽度
+				nowRectangle.Width = this.defaultYScaleWidth ;//+ (this.defaultExternalLineWidth);
+				//---计算高度
 				nowRectangle.Height = fontHeight + this.defaultColStaffWidth;
-
 				//---区域矩形背景填充
 				Brush backGroundBrush = new SolidBrush(Color.FromArgb(60, Color.Black));
 				e.Graphics.FillRectangle(backGroundBrush, nowRectangle);
-
 				//---外边框线条
 				e.Graphics.DrawRectangle(new Pen(Color.DarkGray, 1), nowRectangle);
 			}
