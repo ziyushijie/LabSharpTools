@@ -48,6 +48,18 @@ namespace Harry.LabTools.LabComm
 			return -1;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="usbParam"></param>
+		/// <param name="rxCRC"></param>
+		/// <param name="tcCRC"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public override int Init(CCommUSBParam usbParam, COMM_CRC rxCRC, COMM_CRC txCRC, RichTextBox msg = null)
+		{
+			return -1;
+		}
 		#endregion
 
 		#region 私有函数

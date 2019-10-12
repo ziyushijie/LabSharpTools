@@ -134,16 +134,16 @@ namespace Harry.LabTools.LabComm
 			}
 		}
 
-        /// <summary>
-        /// 设备连接状态
-        /// </summary>
-        public virtual bool IsConnected
-        {
-            get
-            {
-                return false;
-            }
-        }
+		/// <summary>
+		/// 设备连接状态
+		/// </summary>
+		public virtual bool IsConnected
+		{
+			get
+			{
+				return false;
+			}
+		}
 
 		/// <summary>
 		/// 设备是否发生变化,TRUE---发生变化，FALSE---未变化
@@ -159,14 +159,14 @@ namespace Harry.LabTools.LabComm
 
 			}
 		}
-        #endregion
+		#endregion
 
-        #region 串口属性
+		#region 串口属性
 
-        /// <summary>
-        /// 串行参数
-        /// </summary>
-        public virtual CCommSerialParam mSerialParam
+		/// <summary>
+		/// 串行参数
+		/// </summary>
+		public virtual CCommSerialParam mSerialParam
 		{
 			get
 			{
@@ -212,6 +212,17 @@ namespace Harry.LabTools.LabComm
 		}
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="serialParam"></param>
+		/// <param name="rxCRC"></param>
+		/// <param name="tcCRC"></param>
+		/// <param name="msg"></param>
+		public virtual int Init(CCommSerialParam serialParam, COMM_CRC rxCRC, COMM_CRC txCRC, RichTextBox msg = null)
+		{
+			return -1;
+		}
+		/// <summary>
 		/// 初始化USB参数
 		/// </summary>
 		/// <param name="uSBParam"></param>
@@ -222,13 +233,25 @@ namespace Harry.LabTools.LabComm
 			return -1;
 		}
 
-
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <param name="usbParam"></param>
+		/// <param name="rxCRC"></param>
+		/// <param name="tcCRC"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int Init(CCommUSBParam usbParam, COMM_CRC rxCRC, COMM_CRC txCRC, RichTextBox msg = null)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 分析参数
+		/// </summary>
 		/// <param name="serialParam"></param>
 		/// <param name="uSBParam"></param>
-		public virtual void  AnalyseParam( CCommSerialParam serialParam,CCommUSBParam usbParam)
+		public virtual void  AnalyseParam( CCommSerialParam serialParam,CCommUSBParam usbParam,bool isUpAddrID=false)
 		{
 			if ((serialParam!=null)&&(this.mSerialParam!=null))
 			{
@@ -237,13 +260,52 @@ namespace Harry.LabTools.LabComm
 				this.mSerialParam.mStopBits	=serialParam.mStopBits	;
 				this.mSerialParam.mDataBits	=serialParam.mDataBits	;
 				this.mSerialParam.mParity	=serialParam.mParity	;
-                this.Name = this.mSerialParam.mName;
+				//---是否需要更新ID
+				if (isUpAddrID)
+				{
+					this.mSerialParam.mAddrID = serialParam.mAddrID;
+				}
+
+				this.Name = this.mSerialParam.mName;
             }
 			if ((usbParam!=null)&&(this.mUSBParam!=null))
 			{
 				this.mUSBParam.mVID=mUSBParam.mVID;
 				this.mUSBParam.mPID=mUSBParam.mPID;
 			}
+		}
+
+		/// <summary>
+		/// 分析参数
+		/// </summary>
+		/// <param name="serialParam"></param>
+		/// <param name="uSBParam"></param>
+		public virtual void AnalyseParam(CCommSerialParam serialParam, CCommUSBParam usbParam,COMM_CRC rxCRC, COMM_CRC txCRC, bool isUpAddrID = false)
+		{
+			if ((serialParam != null) && (this.mSerialParam != null))
+			{
+				this.mSerialParam.mName		= serialParam.mName		;
+				this.mSerialParam.mBaudRate = serialParam.mBaudRate	;
+				this.mSerialParam.mStopBits = serialParam.mStopBits	;
+				this.mSerialParam.mDataBits = serialParam.mDataBits	;
+				this.mSerialParam.mParity	= serialParam.mParity	;
+				//---是否需要更新ID
+				if (isUpAddrID)
+				{
+					this.mSerialParam.mAddrID = serialParam.mAddrID;
+				}
+				this.Name = this.mSerialParam.mName;
+				
+			}
+			if ((usbParam != null) && (this.mUSBParam != null))
+			{
+				this.mUSBParam.mVID = mUSBParam.mVID;
+				this.mUSBParam.mPID = mUSBParam.mPID;
+			}
+			//---发送数据校验方式
+			this.SendData.mCRCMode = txCRC;
+			//---接收数据校验方式
+			this.ReceData.mCRCMode = rxCRC;
 		}
 
 		#endregion

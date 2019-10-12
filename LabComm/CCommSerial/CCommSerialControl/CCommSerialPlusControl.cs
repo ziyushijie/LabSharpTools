@@ -137,7 +137,7 @@ namespace Harry.LabTools.LabComm
 				return this.comboBox_Parity.Text;
 			}
 		}
-
+		
 		#endregion
 
 		#region 构造函数
@@ -149,9 +149,9 @@ namespace Harry.LabTools.LabComm
         {
             InitializeComponent();
 
-            //---限制窗体的大小
-            this.MinimumSize = this.Size;
-            this.MaximumSize = this.Size;
+			//---限制窗体的大小
+			//this.MinimumSize = this.Size;
+			//this.MaximumSize = this.Size;
 
 			this.StartupInit();
 

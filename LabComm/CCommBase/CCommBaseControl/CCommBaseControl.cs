@@ -24,6 +24,8 @@ namespace Harry.LabTools.LabComm
 		/// 是否显示端口配置参数
 		/// </summary>
 		private bool defaultIsShowCommParam=false;
+
+
 		
         #endregion
 
@@ -128,7 +130,7 @@ namespace Harry.LabTools.LabComm
 				}
 			}
 		}
-
+		
         #endregion
 
         #region 构造函数

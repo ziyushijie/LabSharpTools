@@ -478,8 +478,39 @@ namespace Harry.LabTools.LabComm
 
 		#endregion
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="serialParam"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
 		int Init(CCommSerialParam serialParam, RichTextBox msg = null);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="serialParam"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		int Init(CCommSerialParam serialParam, COMM_CRC rxCRC, COMM_CRC txCRC, RichTextBox msg = null);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="usbParam"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
 		int Init(CCommUSBParam usbParam, RichTextBox msg = null);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="usbParam"></param>
+		/// <param name="rxCRC"></param>
+		/// <param name="tcCRC"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		int Init(CCommUSBParam usbParam, COMM_CRC rxCRC, COMM_CRC txCRC, RichTextBox msg = null);
 
 	}
 }

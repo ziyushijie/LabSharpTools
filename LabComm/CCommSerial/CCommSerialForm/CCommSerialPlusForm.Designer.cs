@@ -38,8 +38,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.cCommSerial.Location = new System.Drawing.Point(4, 4);
 			this.cCommSerial.Margin = new System.Windows.Forms.Padding(0);
-			this.cCommSerial.MaximumSize = new System.Drawing.Size(151, 189);
 			this.cCommSerial.mCCOMM = null;
+			this.cCommSerial.mCCommRichTextBox = null;
 			this.cCommSerial.MinimumSize = new System.Drawing.Size(151, 189);
 			this.cCommSerial.mIsShowCommParam = true;
 			this.cCommSerial.Name = "cCommSerial";

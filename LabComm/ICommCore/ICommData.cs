@@ -206,7 +206,5 @@ namespace Harry.LabTools.LabComm
 
 		#endregion
 
-
-
 	}
 }

@@ -363,6 +363,18 @@ namespace Harry.LabTools.LabComm
 			return -1;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="serialParam"></param>
+		/// <param name="rxCRC"></param>
+		/// <param name="tcCRC"></param>
+		/// <param name="msg"></param>
+		public override int Init(CCommSerialParam serialParam, COMM_CRC rxCRC, COMM_CRC txCRC, RichTextBox msg = null)
+		{
+			return -1;
+		}
+
 		#endregion
 
 		#region 私有函数

@@ -16,22 +16,7 @@ namespace Harry.LabTools.LabComm
 		#endregion
 
 		#region 属性函数
-
-		/// <summary>
-		/// 属性读写
-		/// </summary>
-		public override bool mLimitedSizeEnable
-		{
-			get
-			{
-				return base.mLimitedSizeEnable;
-			}
-			set
-			{
-				base.mLimitedSizeEnable = value;
-			}
-		}
-
+		
 		#endregion
 
 		#region 构造函数

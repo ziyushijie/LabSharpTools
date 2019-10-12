@@ -11,16 +11,17 @@ namespace Harry.LabTools.LabComm
 {
     public partial class CCommSerialControl : CCommBaseControl
     {
-        #region 变量定义
+		#region 变量定义
 
-        #endregion
 
-        #region 属性定义
+		#endregion
 
-        /// <summary>
-        /// 端口属性
-        /// </summary>
-        public override CCommBase mCCOMM
+		#region 属性定义
+
+		/// <summary>
+		/// 端口属性
+		/// </summary>
+		public override CCommBase mCCOMM
         {
             get
             {
@@ -77,6 +78,8 @@ namespace Harry.LabTools.LabComm
 			}
 		}
 
+		
+
 		#endregion
 
 		#region 构造函数
@@ -87,11 +90,10 @@ namespace Harry.LabTools.LabComm
 		public CCommSerialControl()
         {
             InitializeComponent();
-
-            //---限制窗体的大小
-            this.MinimumSize = this.Size;
-            this.MaximumSize = this.Size;
-        }
+			//---限制窗体的大小
+			this.MinimumSize = this.Size;
+			this.MaximumSize = this.Size;
+		}
 
         #endregion
 

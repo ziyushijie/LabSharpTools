@@ -61,10 +61,10 @@ namespace Harry.LabTools.LabComm
             //---判断是否限定最小尺寸
             if (isLimitedSize)
             {
-                //---限制窗体的大小
-                this.MinimumSize = this.Size;
-                this.MaximumSize = this.Size;
-            }          
+				//---限制窗体的大小
+				this.MinimumSize = this.Size;
+				this.MaximumSize = this.Size;
+			}          
         }
 
 		/// <summary>

@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DocumentFormat.OpenXml, Version=2.10.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
-      <HintPath>..\packages\DocumentFormat.OpenXml.2.10.0-beta0002\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -108,6 +105,12 @@
     <Compile Include="CCommSerial\CCommSerialControl\CCommSerialControl.Designer.cs">
       <DependentUpon>CCommSerialControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="CCommSerial\CCommSerialControl\CCommSerialFullControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CCommSerial\CCommSerialControl\CCommSerialFullControl.Designer.cs">
+      <DependentUpon>CCommSerialFullControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="CCommSerial\CCommSerialControl\CCommSerialPlusControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -119,6 +122,12 @@
     </Compile>
     <Compile Include="CCommSerial\CCommSerialForm\CCommSerialForm.Designer.cs">
       <DependentUpon>CCommSerialForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CCommSerial\CCommSerialForm\CCommSerialFullForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CCommSerial\CCommSerialForm\CCommSerialFullForm.Designer.cs">
+      <DependentUpon>CCommSerialFullForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CCommSerial\CCommSerialForm\CCommSerialPlusForm.cs">
       <SubType>Form</SubType>
@@ -199,8 +208,14 @@
     <EmbeddedResource Include="CCommSerial\CCommSerialControl\CCommSerialControl.resx">
       <DependentUpon>CCommSerialControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CCommSerial\CCommSerialControl\CCommSerialFullControl.resx">
+      <DependentUpon>CCommSerialFullControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CCommSerial\CCommSerialControl\CCommSerialPlusControl.resx">
       <DependentUpon>CCommSerialPlusControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CCommSerial\CCommSerialForm\CCommSerialFullForm.resx">
+      <DependentUpon>CCommSerialFullForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CCommSerial\CCommSerialForm\CCommSerialPlusForm.resx">
       <DependentUpon>CCommSerialPlusForm.cs</DependentUpon>
