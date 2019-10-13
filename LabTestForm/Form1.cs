@@ -17,7 +17,7 @@ namespace LabTestForm
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			this.usedComm = new CCommSerial();
-            //this.cCommBaseControl1.Init(this.usedComm,this.cRichTextBoxEx1);
+            this.cCommBaseControl1.Init(this.usedComm);
 		}
 	}
 }

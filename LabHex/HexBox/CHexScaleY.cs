@@ -152,7 +152,7 @@ namespace Harry.LabTools.LabHex
 		/// <param name="e"></param>
 		private void OnDrawYScaleBackGroundRectangle(PaintEventArgs e)
 		{
-			if (this.mYScaleShow && (this.defaultRowSelectedNum != -1) && (this.defaultMousePos.iArea == 1))
+			if (this.defaultYScaleShow && (this.defaultRowSelectedNum != -1) && (this.defaultMousePos.iArea == 1))
 			{
 				//---判定起始点
 				Point nowPointA = this.CalcYScalePoint();

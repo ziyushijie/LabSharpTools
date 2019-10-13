@@ -199,7 +199,7 @@ namespace Harry.LabTools.LabHex
 			{
 				this.defaultLength = byte.Parse(str.Substring(1, 2), System.Globalization.NumberStyles.AllowHexSpecifier);
 			}
-			catch (Exception e)
+			catch
 			{
 				this.defaultLogMessage = "Hex数据长度解析错误!";
 				return false;

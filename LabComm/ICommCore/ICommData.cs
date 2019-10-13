@@ -11,7 +11,7 @@ namespace Harry.LabTools.LabComm
 	public enum COMM_CRC : byte
 	{
 		CRC_NONE = 0,           //---无校验方式
-		CRC_CHECKSUM = 1,           //---检验和
+		CRC_CHECKSUM = 1,       //---检验和
 		CRC_CRC8 = 2,           //---CRC8校验
 		CRC_CRC16 = 3,          //---CRC16校验
 		CRC_CRC32 = 4,          //---CRC32校验

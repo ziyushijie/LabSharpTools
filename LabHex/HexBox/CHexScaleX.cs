@@ -108,6 +108,8 @@ namespace Harry.LabTools.LabHex
 					fontOffset += fontWidth + this.defaultRowStaffWidth;
 				}
 
+				this.defaultXScaleStringStartWidth = fontOffset + this.FontWidth("0000");
+
 				//---标题栏下划线的颜色
 				Pen nowPen = new Pen(this.defaultExternalLineColor);
 
@@ -125,8 +127,8 @@ namespace Harry.LabTools.LabHex
 					nowPointB.X = this.Width - this.defaultExternalLineWidth / 2;
 				}
 				nowPointB.Y = nowPointA.Y;
+				//---数据地址的偏移
 				this.defaultDataStartHeight = nowPointB.Y;
-
 				//---绘制标题栏的下划线
 				e.Graphics.DrawLine(nowPen, nowPointA, nowPointB);
 			}
@@ -145,7 +147,7 @@ namespace Harry.LabTools.LabHex
 			else
 			{
 				//---获取标题栏的起始点
-				Point nowPoint = new Point(200, 200);//new Point(this.defaultExternalLineWidth / 2, this.defaultExternalLineWidth / 2);
+				Point nowPoint = new Point(this.defaultXScaleStringStartWidth, this.defaultExternalLineWidth / 2);
 
 				//---计算标题栏的宽度
 				int nowWidth = 0;
@@ -164,22 +166,10 @@ namespace Harry.LabTools.LabHex
 				int nowHeight = (this.defaultXScaleHeight + this.defaultXScaleHeightOffset);
 
 				//---获得字体的宽度
-				int fontWidth = this.FontWidth();
+				int fontWidth = this.FontWidth("0");
 
 				//---设置字体的起始位置
-				int fontOffset = this.defaultExternalLineWidth / 2 + this.defaultRowStaffWidth;
-
-				//---判断是否显示地址栏
-				if (this.defaultYScaleShow)
-				{
-					//---计算字体的大小
-					SizeF sizefAdd=new SizeF();
-					sizefAdd.Width = this.defaultDataStartHeight+500;
-					//---标题栏第一个字符的起始地址
-					fontOffset += (int)sizefAdd.Width + this.defaultYScaleOffsetWidth;
-					//---数据地址栏的宽度
-					this.defaultYScaleWidth = (int)sizefAdd.Width + this.defaultYScaleOffsetWidth;
-				}
+				int fontOffset = this.defaultXScaleStringStartWidth;
 
 				//---获取坐标
 				Point nowPointA = new Point();
@@ -210,9 +200,9 @@ namespace Harry.LabTools.LabHex
 					e.Graphics.DrawString(msg, this.defaultFont, nowBrush, nowPointA);
 
 					//---计算下一个数据的地址
-					fontOffset += fontWidth + this.defaultRowStaffWidth;
+					fontOffset += fontWidth;
 				}
-
+				
 				//---标题栏下划线的颜色
 				Pen nowPen = new Pen(this.defaultExternalLineColor);
 
@@ -230,7 +220,7 @@ namespace Harry.LabTools.LabHex
 					nowPointB.X = this.Width - this.defaultExternalLineWidth / 2;
 				}
 				nowPointB.Y = nowPointA.Y;
-				this.defaultDataStartHeight = nowPointB.Y;
+				//this.defaultDataStartHeight = nowPointB.Y;
 
 				//---绘制标题栏的下划线
 				e.Graphics.DrawLine(nowPen, nowPointA, nowPointB);
@@ -281,7 +271,9 @@ namespace Harry.LabTools.LabHex
 						pointA = new Point(this.defaultExternalLineWidth / 2, this.defaultExternalLineWidth / 2);
 					}
 					//---计算宽度
-					int fontWidth = this.FontWidth();
+					int fontWidthA = this.FontWidth();
+					int fontWidthB = this.FontWidth("0");
+					//---
 					//---计算字体的高度
 					int fontHeight = this.FontHeigth();
 					Rectangle nowRectangle = new Rectangle();
@@ -290,16 +282,16 @@ namespace Harry.LabTools.LabHex
 					//---计算起点X的位置
 					if (this.defaultMousePos.bLeftPos)
 					{
-						nowRectangle.X = pointA.X + currentColumn * (fontWidth + this.defaultRowStaffWidth) + (fontWidth) / 2 - 3;
+						nowRectangle.X = pointA.X + currentColumn * (fontWidthA + this.defaultRowStaffWidth) + (fontWidthA) / 2 - 3;
 					}
 					if (this.defaultMousePos.bRightPos)
 					{
-						nowRectangle.X = pointA.X + currentColumn * (fontWidth + this.defaultRowStaffWidth) + fontWidth - 4;
+						nowRectangle.X = pointA.X + currentColumn * (fontWidthA + this.defaultRowStaffWidth) + fontWidthA - 4;
 					}
 					//---计算起点Y的位置
 					nowRectangle.Y = pointA.Y- (this.defaultExternalLineWidth/2);
 					//---计算宽度
-					nowRectangle.Width = (fontWidth + 1) / 2;
+					nowRectangle.Width = (fontWidthA + 1) / 2;
 					//---计算高度
 					nowRectangle.Height = this.defaultXScaleHeight;// - this.defaultExternalLineWidth;
 					//---区域矩形背景填充
@@ -307,6 +299,20 @@ namespace Harry.LabTools.LabHex
 					e.Graphics.FillRectangle(backGroundBrush, nowRectangle);
 					//---外边框线条
 					e.Graphics.DrawRectangle(new Pen(Color.DarkGray, 1), nowRectangle);
+
+					//---绘制当前在字符串区域选择的数据信息
+					if (this.defaultXScaleStringShow)
+					{
+						Point nowPointB = this.CalcYScalePoint();
+						//---起点(X,Y)坐标
+						nowRectangle.X = this.mXScaleStringStartWidth + currentColumn * fontWidthB + 2;
+						nowRectangle.Y = nowPointB.Y + this.defaultRowSelectedNum * (fontHeight + this.defaultColStaffWidth) + (this.defaultExternalLineWidth);
+						//---计算高度
+						nowRectangle.Height = fontHeight + this.defaultColStaffWidth;
+						//e.Graphics.FillRectangle(backGroundBrush, nowRectangle);
+						//---外边框线条
+						e.Graphics.DrawRectangle(new Pen(Color.DarkGray, 1), nowRectangle);
+					}
 				}
 			}
 			else

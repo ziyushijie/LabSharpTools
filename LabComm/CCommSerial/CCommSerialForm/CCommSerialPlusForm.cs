@@ -115,6 +115,14 @@ namespace Harry.LabTools.LabComm
 			this.Init(cbb, cComm);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="cbb"></param>
+		/// <param name="cComm"></param>
+		/// <param name="msg"></param>
+		/// <param name="text"></param>
+		/// <param name="isLimitedSize"></param>
 		public CCommSerialPlusForm(ComboBox cbb, CCommBase cComm,RichTextBox msg=null, string text = null, bool isLimitedSize = false)
 		{
 			InitializeComponent();

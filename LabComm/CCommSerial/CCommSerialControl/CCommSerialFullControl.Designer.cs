@@ -89,11 +89,11 @@
 			this.comboBox_RxCRC.FormattingEnabled = true;
 			this.comboBox_RxCRC.IntegralHeight = false;
 			this.comboBox_RxCRC.Items.AddRange(new object[] {
-            "9",
-            "8",
-            "7",
-            "6",
-            "5"});
+            "CRC_NONE",
+            "CRC_SUM",
+            "CRC_CRC8",
+            "CRC_CRC16",
+            "CRC_CRC32"});
 			this.comboBox_RxCRC.Location = new System.Drawing.Point(197, 53);
 			this.comboBox_RxCRC.Margin = new System.Windows.Forms.Padding(1, 3, 3, 3);
 			this.comboBox_RxCRC.Name = "comboBox_RxCRC";
@@ -118,11 +118,11 @@
 			this.comboBox_TxCRC.FormattingEnabled = true;
 			this.comboBox_TxCRC.IntegralHeight = false;
 			this.comboBox_TxCRC.Items.AddRange(new object[] {
-            "9",
-            "8",
-            "7",
-            "6",
-            "5"});
+            "CRC_NONE",
+            "CRC_SUM",
+            "CRC_CRC8",
+            "CRC_CRC16",
+            "CRC_CRC32"});
 			this.comboBox_TxCRC.Location = new System.Drawing.Point(197, 79);
 			this.comboBox_TxCRC.Margin = new System.Windows.Forms.Padding(1, 3, 3, 3);
 			this.comboBox_TxCRC.Name = "comboBox_TxCRC";

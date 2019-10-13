@@ -184,8 +184,9 @@ namespace Harry.LabTools.LabComm
         {
             if (this.defaultCCOMM != null)
             {
-                this.defaultCCOMM.Dispose();
-            }
+				// this.defaultCCOMM.Dispose();
+				GC.SuppressFinalize(this.defaultCCOMM);
+			}
             GC.SuppressFinalize(this);
         }
 
@@ -388,10 +389,18 @@ namespace Harry.LabTools.LabComm
 				//---检查对象类型
 				if (this.defaultCCOMM.GetType()==typeof(CCommSerial))
 				{
-					//---串行通讯对象的参数
-					p=new CCommSerialPlusForm(this.comboBox_COMM,this.defaultCCOMM, this.defaultCCOMM.mCCommRichTextBox, "配置设备" ,true );
+					if (this.defaultCCOMM.IsFullParam)
+					{
+						//---串行通讯对象的参数
+						p = new CCommSerialFullForm(this.comboBox_COMM, this.defaultCCOMM, this.defaultCCOMM.mCCommRichTextBox, "配置设备", true);
+					}
+					else
+					{
+						//---串行通讯对象的参数
+						p=new CCommSerialPlusForm(this.comboBox_COMM,this.defaultCCOMM, this.defaultCCOMM.mCCommRichTextBox, "配置设备" ,true );
+					}
 				}
-				else if(this.defaultCCOMM.GetType()==typeof(CCommSerial))
+				else if(this.defaultCCOMM.GetType()==typeof(CCommUSB))
 				{
 					//---USB通讯对象的参数
 					p=new CCommUSBPlusForm(); 
@@ -402,7 +411,14 @@ namespace Harry.LabTools.LabComm
 					if (p.ShowDialog(this.comboBox_COMM, 0, this.comboBox_COMM.Height+4) == System.Windows.Forms.DialogResult.OK)
 					{
 						//---解析参数
-						this.defaultCCOMM.AnalyseParam(p.mCCommSrialParam, p.mCCommUSBParam);   
+						if (this.defaultCCOMM.IsFullParam)
+						{
+							this.defaultCCOMM.AnalyseParam(p.mCCommSrialParam, p.mCCommUSBParam,p.mRxCRC,p.mTxCRC,true);
+						}
+						else
+						{
+							this.defaultCCOMM.AnalyseParam(p.mCCommSrialParam, p.mCCommUSBParam);
+						}
 						//---检查端口是否发生变化
 						if (p.mCCommChanged == true)
 						{
@@ -426,6 +442,7 @@ namespace Harry.LabTools.LabComm
 					}
 					//---释放资源
 					p.FreeResource();
+					GC.SuppressFinalize(p);
 				}
 
 			}

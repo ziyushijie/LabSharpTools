@@ -18,8 +18,8 @@ namespace Harry.LabTools.LabComm
 
 		#region 属性函数
 
-        	/// <summary>
-		/// 
+        /// <summary>
+		/// 串口参数
 		/// </summary>
 		public virtual CCommSerialParam mCCommSrialParam
 		{
@@ -30,7 +30,7 @@ namespace Harry.LabTools.LabComm
 		}
 
 		/// <summary>
-		/// 
+		/// USB参数
 		/// </summary>
 		public virtual CCommUSBParam mCCommUSBParam
 		{
@@ -41,7 +41,7 @@ namespace Harry.LabTools.LabComm
 		}
 
 		/// <summary>
-		/// 
+		/// 端口变化
 		/// </summary>
 		public virtual bool mCCommChanged
 		{
@@ -51,7 +51,28 @@ namespace Harry.LabTools.LabComm
 			}
 		}
 
-		
+		/// <summary>
+		/// 接收数据校验方式
+		/// </summary>
+		public virtual COMM_CRC mRxCRC
+		{
+			get
+			{
+				return COMM_CRC.CRC_NONE;
+			}
+		}
+
+		/// <summary>
+		/// 发送数据校验方式
+		/// </summary>
+		public virtual COMM_CRC mTxCRC
+		{
+			get
+			{
+				return COMM_CRC.CRC_NONE;
+			}
+		}
+
 
 		#endregion
 

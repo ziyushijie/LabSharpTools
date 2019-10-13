@@ -54,10 +54,10 @@
     <Compile Include="HexBox\CHexScaleY.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="HexBox\PHexBox.cs">
+    <Compile Include="HexBox\CHexParam.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="HexBox\CFont.cs">
+    <Compile Include="HexBox\CHexFont.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="HexFile\CHexFile.cs" />

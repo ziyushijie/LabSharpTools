@@ -88,7 +88,7 @@ namespace Harry.LabTools.LabHex
 		/// <summary>
 		/// X方向刻度,显示地址位置和ASCII码信息
 		/// </summary>
-		private bool defaultXScaleStringShow = false;
+		private bool defaultXScaleStringShow = true;
 
 		/// <summary>
 		/// 属性读写
@@ -103,6 +103,29 @@ namespace Harry.LabTools.LabHex
 			set
 			{
 				this.defaultXScaleStringShow = value;
+				//---重新绘制窗体
+				this.Invalidate();
+			}
+		}
+
+		/// <summary>
+		/// 显示字符串的位置
+		/// </summary>
+		private int defaultXScaleStringStartWidth = 0;
+
+		/// <summary>
+		/// 属性读写
+		/// </summary>
+		public int mXScaleStringStartWidth
+		{
+			get
+			{
+				return this.defaultXScaleStringStartWidth;
+			}
+
+			set
+			{
+				this.defaultXScaleStringStartWidth = value;
 				//---重新绘制窗体
 				this.Invalidate();
 			}
@@ -444,7 +467,7 @@ namespace Harry.LabTools.LabHex
 		{
 			ANSI = 1,
 			Unicond = 2,
-		}
+		} 
 
 		/// <summary>
 		/// 数据的格式
@@ -771,7 +794,7 @@ namespace Harry.LabTools.LabHex
 
 		/// 光标的Y方向偏移
 		/// </summary>
-		private int defaultCaretYOffset = 0;//2;
+		private int defaultCaretYOffset = 4;//2;
 
 		#endregion 光标信息
 

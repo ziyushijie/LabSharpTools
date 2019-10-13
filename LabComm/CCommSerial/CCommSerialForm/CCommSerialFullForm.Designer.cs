@@ -28,26 +28,26 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.cCommSerialFullControl1 = new Harry.LabTools.LabComm.CCommSerialFullControl();
+			this.cCommSerial = new Harry.LabTools.LabComm.CCommSerialFullControl();
 			this.SuspendLayout();
 			// 
-			// cCommSerialFullControl1
+			// cCommSerial
 			// 
-			this.cCommSerialFullControl1.Location = new System.Drawing.Point(85, 48);
-			this.cCommSerialFullControl1.mCCOMM = null;
-			this.cCommSerialFullControl1.mCCommRichTextBox = null;
-			this.cCommSerialFullControl1.mIsShowCommParam = true;
-			this.cCommSerialFullControl1.Name = "cCommSerialFullControl1";
-			this.cCommSerialFullControl1.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-			this.cCommSerialFullControl1.Size = new System.Drawing.Size(291, 160);
-			this.cCommSerialFullControl1.TabIndex = 0;
+			this.cCommSerial.Location = new System.Drawing.Point(2, 3);
+			this.cCommSerial.mCCOMM = null;
+			this.cCommSerial.mCCommRichTextBox = null;
+			this.cCommSerial.mIsShowCommParam = true;
+			this.cCommSerial.Name = "cCommSerial";
+			this.cCommSerial.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+			this.cCommSerial.Size = new System.Drawing.Size(291, 160);
+			this.cCommSerial.TabIndex = 0;
 			// 
 			// CCommSerialFullForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(800, 450);
-			this.Controls.Add(this.cCommSerialFullControl1);
+			this.ClientSize = new System.Drawing.Size(296, 166);
+			this.Controls.Add(this.cCommSerial);
 			this.Name = "CCommSerialFullForm";
 			this.Text = "CCommSerialFullForm";
 			this.ResumeLayout(false);
@@ -56,6 +56,6 @@
 
 		#endregion
 
-		private CCommSerialFullControl cCommSerialFullControl1;
+		private CCommSerialFullControl cCommSerial;
 	}
 }

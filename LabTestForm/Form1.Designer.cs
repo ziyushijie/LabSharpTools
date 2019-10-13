@@ -50,7 +50,7 @@ namespace LabTestForm
 			// 
 			this.cHexBox1.BackColor = System.Drawing.Color.White;
 			this.cHexBox1.ImeMode = System.Windows.Forms.ImeMode.Disable;
-			this.cHexBox1.Location = new System.Drawing.Point(13, 87);
+			this.cHexBox1.Location = new System.Drawing.Point(58, 206);
 			this.cHexBox1.mExternalLineColor = System.Drawing.Color.DarkGray;
 			this.cHexBox1.mExternalLineWidth = 2;
 			this.cHexBox1.mFirstRowOffset = 4;
@@ -581,7 +581,8 @@ namespace LabTestForm
 			this.cHexBox1.mXScaleHeightOffset = 2;
 			this.cHexBox1.mXScaleShow = true;
 			this.cHexBox1.mXScaleShowBit8 = Harry.LabTools.LabHex.CHexBox.XScaleShowBit8.BIT8X16;
-			this.cHexBox1.mXScaleStringShow = false;
+			this.cHexBox1.mXScaleStringShow = true;
+			this.cHexBox1.mXScaleStringStartWidth = 629;
 			this.cHexBox1.mYScaleBackGroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
 			this.cHexBox1.mYScaleBackGroundRectangleShow = true;
 			this.cHexBox1.mYScaleFontColor = System.Drawing.Color.Black;
@@ -590,7 +591,7 @@ namespace LabTestForm
 			this.cHexBox1.mYScaleShowBit4 = Harry.LabTools.LabHex.CHexBox.YScaleShowBit4.BIT4X4;
 			this.cHexBox1.mYScaleWidth = 86;
 			this.cHexBox1.Name = "cHexBox1";
-			this.cHexBox1.Size = new System.Drawing.Size(852, 450);
+			this.cHexBox1.Size = new System.Drawing.Size(899, 457);
 			this.cHexBox1.TabIndex = 3;
 			this.cHexBox1.Text = "cHexBox1";
 			// 
@@ -598,7 +599,7 @@ namespace LabTestForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1038, 696);
+			this.ClientSize = new System.Drawing.Size(1432, 720);
 			this.Controls.Add(this.cHexBox1);
 			this.Controls.Add(this.cCommBaseControl1);
 			this.Name = "Form1";

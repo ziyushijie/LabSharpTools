@@ -154,6 +154,7 @@ namespace Harry.LabTools.LabHex
 			{
 				this.OnDrawXScaleBackGroundRectangle(e);
 			}
+			
 			//---绘制船体外部线条,最后绘制，避免因为控制尺寸绘制最后一组数据的时候覆盖
 			this.OnPaintExternalRectangle(e);
 		}
@@ -313,7 +314,7 @@ namespace Harry.LabTools.LabHex
 		/// </summary>
 		private void OnCreateCaret()
 		{
-			float size = 0.0f;
+			//float size = 0.0f;
 			//如果没有创建Caret，则创建
 			if (!this.defaultIsCreateCaret)
 			{
@@ -536,7 +537,7 @@ namespace Harry.LabTools.LabHex
 
 					int dataOffset = 0;
 
-					if (this.mYScaleShow)
+					if (this.defaultYScaleShow)
 					{
 						dataOffset=this.defaultExternalLineWidth / 2+this.defaultYScaleWidth;
 					}
@@ -559,7 +560,7 @@ namespace Harry.LabTools.LabHex
 						//---创建光标
 						this.OnCreateCaret();
 						//---设置光标
-						CWinAPICaret.SetCaretPos((this.defaultDataEndWidth+8), (nowRectangle.Y+this.defaultCaretYOffset));
+						CWinAPICaret.SetCaretPos((this.defaultDataEndWidth+8), (nowRectangle.Y+this.defaultCaretYOffset/2));
 						//---显示光标
 						CWinAPICaret.ShowCaret(this.Handle);
 						this.defaultIsHideCaret=false;
@@ -593,7 +594,7 @@ namespace Harry.LabTools.LabHex
 							if (nowRegion.IsVisible(mousePoint))
 							{
 								//---设置光标
-								CWinAPICaret.SetCaretPos((nowRectangle.X - this.defaultCaretXOffset), (nowRectangle.Y + this.defaultCaretYOffset));
+								CWinAPICaret.SetCaretPos((nowRectangle.X - this.defaultCaretXOffset), (nowRectangle.Y + this.defaultCaretYOffset/2));
 								//---显示光标
 								CWinAPICaret.ShowCaret(this.Handle);
 								this.defaultIsHideCaret=false;
@@ -611,7 +612,7 @@ namespace Harry.LabTools.LabHex
 							if (nowRegion.IsVisible(mousePoint))
 							{
 								//---设置光标
-								CWinAPICaret.SetCaretPos((nowRectangle.X-this.defaultCaretXOffset), (nowRectangle.Y+this.defaultCaretYOffset));
+								CWinAPICaret.SetCaretPos((nowRectangle.X-this.defaultCaretXOffset), (nowRectangle.Y+this.defaultCaretYOffset/2));
 
 								//---显示光标
 								CWinAPICaret.ShowCaret(this.Handle);
@@ -1056,14 +1057,14 @@ namespace Harry.LabTools.LabHex
 			if (defaultMousePos.iPos!=-1&&defaultMousePos.iArea!=-1)
 			{
 				//---获取焦点
-				this.Focus();
+				//this.Focus();
 
 				//----表明在Data区
 				if (defaultMousePos.iArea==1)
 				{
 					//---获取字体的宽度及长度
-					int i_font_width = FontWidth();
-					int i_font_height = FontHeigth();
+					int iFontWidth =  this.FontWidth();
+					int iFontHeight = this.FontHeigth();
 
 					//---查找在第几列
 					int iColumn = this.CalcXScaleColIndex();
@@ -1072,7 +1073,7 @@ namespace Harry.LabTools.LabHex
 					//---计算最大显示行数
 					int iMaxDataRow = this.defaultMaxRow;//this.CalcYScaleMaxRow();
 					//---计算实际数据可显示的行数
-					int i_data_row = this.defaultTotalRow;// this.CalcYScaleTotalRow();
+					int iTotalDataRow = this.defaultTotalRow;// this.CalcYScaleTotalRow();
 					//---进行判定
 					Point pointB = new Point();
 					if ((this.defaultMousePos.iPos+defaultRowShowNum)<(this.mNowData.Length))
@@ -1084,8 +1085,8 @@ namespace Harry.LabTools.LabHex
 							//---表明在第一个字节的右部
 							if (defaultMousePos.bRightPos)
 							{
-								pointB.X=pointA.X+iColumn*(i_font_width+defaultRowStaffWidth)+defaultRowStaffWidth+(i_font_width)/2;
-								pointB.Y=pointA.Y+i_font_height+defaultColStaffWidth-2;
+								pointB.X=pointA.X+iColumn*(iFontWidth+defaultRowStaffWidth)+defaultRowStaffWidth+(iFontWidth)/2;
+								pointB.Y=pointA.Y+iFontHeight+defaultColStaffWidth-2;
 
 								defaultMousePos.iPos+=defaultRowShowNum;
 								defaultMousePos.bRightPos=true;
@@ -1098,8 +1099,8 @@ namespace Harry.LabTools.LabHex
 							//---表明在第一个字节的左部
 							if (defaultMousePos.bLeftPos)
 							{
-								pointB.X=pointA.X+iColumn*(i_font_width+defaultRowStaffWidth)+defaultRowStaffWidth;
-								pointB.Y=pointA.Y+i_font_height+defaultColStaffWidth-2;
+								pointB.X=pointA.X+iColumn*(iFontWidth+defaultRowStaffWidth)+defaultRowStaffWidth;
+								pointB.Y=pointA.Y+iFontHeight+defaultColStaffWidth-2;
 
 								defaultMousePos.iPos+=defaultRowShowNum;
 								defaultMousePos.bRightPos=false;
@@ -1116,7 +1117,7 @@ namespace Harry.LabTools.LabHex
 							//---表明在第一个字节的右部
 							if (defaultMousePos.bRightPos)
 							{
-								pointB.X=pointA.X+iColumn*(i_font_width+defaultRowStaffWidth)+defaultRowStaffWidth+(i_font_width)/2;
+								pointB.X=pointA.X+iColumn*(iFontWidth+defaultRowStaffWidth)+defaultRowStaffWidth+(iFontWidth)/2;
 								pointB.Y=pointA.Y;
 
 								defaultMousePos.iPos+=defaultRowShowNum;
@@ -1131,7 +1132,7 @@ namespace Harry.LabTools.LabHex
 							//---表明在第一个字节的左部
 							if (defaultMousePos.bLeftPos)
 							{
-								pointB.X=pointA.X+iColumn*(i_font_width+defaultRowStaffWidth)+defaultRowStaffWidth;
+								pointB.X=pointA.X+iColumn*(iFontWidth+defaultRowStaffWidth)+defaultRowStaffWidth;
 								pointB.Y=pointA.Y;
 
 								defaultMousePos.iPos+=defaultRowShowNum;

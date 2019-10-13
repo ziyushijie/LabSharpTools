@@ -63,15 +63,19 @@ namespace Harry.LabTools.LabComm
 		/// </summary>
 		private bool defaultChanged = false;
 
-        
-        #endregion
+		/// <summary>
+		/// 是否显示全部参数
+		/// </summary>
+		private bool defaultFullParam = true;
 
-        #region 公共属性
+		#endregion
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public override string Name
+		#region 公共属性
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override string Name
 		{
 			get
 			{
@@ -260,7 +264,20 @@ namespace Harry.LabTools.LabComm
 			}
 		}
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		public override bool IsFullParam
+		{
+			get
+			{
+				return this.defaultFullParam;
+			}
+			set
+			{
+				this.defaultFullParam = value;
+			}
+		}
 
 		#endregion
 

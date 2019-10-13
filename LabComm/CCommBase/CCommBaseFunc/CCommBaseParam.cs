@@ -159,6 +159,21 @@ namespace Harry.LabTools.LabComm
 
 			}
 		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public virtual bool IsFullParam
+		{
+			get
+			{
+				return false;
+			}
+			set
+			{
+			}
+		}
+
 		#endregion
 
 		#region 串口属性

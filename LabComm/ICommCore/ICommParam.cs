@@ -169,13 +169,14 @@ namespace Harry.LabTools.LabComm
 		/// <param name="stopBits"></param>
 		/// <param name="dataBits"></param>
 		/// <param name="parity"></param>
-		public CCommSerialParam(string name,string baudRate,string stopBits,string dataBits,string parity)
+		public CCommSerialParam(string name,string baudRate,string stopBits,string dataBits,string parity,int addrID=-1)
 		{
 			this.defaultName=name;
 			this.defaultBaudRate=baudRate;
 			this.defaultStopBits=stopBits;
 			this.defaultDataBits=dataBits;
 			this.defaultParity=parity;
+			this.defaultAddrID = addrID;
 		}
 
 		#endregion
@@ -451,6 +452,15 @@ namespace Harry.LabTools.LabComm
 		/// 设备是否发生变化
 		/// </summary>
 		bool IsChanged
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// 是否显示全部全部配置参数
+		/// </summary>
+		bool IsFullParam
 		{
 			get;
 			set;

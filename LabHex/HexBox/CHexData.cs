@@ -30,7 +30,8 @@ namespace Harry.LabTools.LabHex
 				//---获取起始地址点
 				Point nowPointA = this.CalcDataScalePoint();
 				//---计算字体的宽度
-				int fontWidth = this.FontWidth();
+				int fontWidthA = this.FontWidth();
+				int fontWidthB = this.FontWidth("0");
 				//---计算字体的高度
 				int fontHeight = this.FontHeigth();
 				//---计算当前控件能够显示的最大行数
@@ -38,18 +39,21 @@ namespace Harry.LabTools.LabHex
 				//---计算数据需要显示的行数
 				int iTotalRowCount = this.defaultTotalRow;// this.CalcYScaleTotalRow();
 				//---数据栏的背景色
-				Brush backGroundBrush = new SolidBrush(this.defaultFontBackGroundColor);
+				Brush backGroundBrushA = new SolidBrush(this.defaultFontBackGroundColor);
+				Brush backGroundBrushB = new SolidBrush(this.defaultFontBackGroundColor);
 				//---设置数据栏字体颜色
 				Brush fontBrush = new SolidBrush(this.defaultDataFontColor);
 				//---设置绘制数据区域的矩形图形
-				Rectangle nowRectangle = new Rectangle();
+				Rectangle nowRectangleA = new Rectangle();
+				Rectangle nowRectangleB = new Rectangle();
 				//---设置绘制区域
 				Point nowPointB = new Point();
+				Point nowPointC = new Point();
 				string strMsg = null;
 				//---计算数据的偏移
 				int dataOffset = this.defaultRowNowNum * this.defaultRowShowNum;
 				//---计算数据的高度
-				int iHeight = nowPointA.Y + (fontHeight + this.defaultColStaffWidth) / (this.defaultFirstRowOffset);
+				int iHeight = nowPointA.Y+ (fontHeight + this.defaultColStaffWidth)/(this.defaultFirstRowOffset);
 				//---界面显示多少列
 				for (int ix = this.defaultRowNowNum; ix < this.defaultRowNowNum + iMaxRowCount; ix++)
 				{
@@ -60,8 +64,11 @@ namespace Harry.LabTools.LabHex
 					}
 					else
 					{
-						nowPointB.X = nowPointA.X + this.defaultRowStaffWidth;
+						nowPointB.X = nowPointA.X+ this.defaultRowStaffWidth;
 						nowPointB.Y = iHeight;
+						//---显示字符串
+						nowPointC.X = this.defaultXScaleStringStartWidth;
+						nowPointC.Y = iHeight;
 						//---每行显示多少数据
 						for (int iy = dataOffset; iy < dataOffset + this.defaultRowShowNum; iy++)
 						{
@@ -70,27 +77,51 @@ namespace Harry.LabTools.LabHex
 								break;
 							}
 							//---刷新背景色
-							nowRectangle.X = nowPointB.X;
-							nowRectangle.Y = nowPointB.Y = iHeight;
-							nowRectangle.Width = fontWidth;
-							nowRectangle.Height = fontHeight;
+							nowRectangleA.X = nowPointB.X;
+							nowRectangleA.Y = nowPointB.Y - this.defaultColStaffWidth;
+							nowRectangleA.Width = fontWidthA;
+							nowRectangleA.Height = fontHeight+this.defaultColStaffWidth;
 							//---判断是否通过背景色的进行数据不同的标注
 							if ((this.defaultNowData[iy] != this.defaultLastData[iy]) || (this.defaultShowChangeFlag == true))
 							{
-								backGroundBrush = new SolidBrush(Color.Yellow);
-								e.Graphics.FillRectangle(backGroundBrush, nowRectangle);
-								backGroundBrush = new SolidBrush(Color.White);
+								backGroundBrushA = new SolidBrush(Color.Yellow);
+								e.Graphics.FillRectangle(backGroundBrushA, nowRectangleA);
+								backGroundBrushA = new SolidBrush(Color.White);
 								this.defaultNewDataChange = true;
 							}
 							else
 							{
-								e.Graphics.FillRectangle(backGroundBrush, nowRectangle);
+								e.Graphics.FillRectangle(backGroundBrushA, nowRectangleA);
 							}
 
-							//---显示字符串信息
+							//---显示数据字符串信息
 							strMsg = this.defaultNowData[iy].ToString("X2");
 							e.Graphics.DrawString(strMsg, this.defaultFont, fontBrush, nowPointB);
-							nowPointB.X += fontWidth + this.defaultRowStaffWidth;
+							nowPointB.X += fontWidthA + this.defaultRowStaffWidth;
+							
+							//---绘制字符串信息
+							if (this.defaultXScaleStringShow)
+							{
+
+								nowRectangleB.X = nowPointC.X;
+								nowRectangleB.Y = nowPointC.Y - this.defaultColStaffWidth;
+								nowRectangleB.Width = fontWidthB;
+								nowRectangleB.Height = fontHeight+ this.defaultColStaffWidth;
+								if (this.defaultNowData[iy] == 0xFF)
+								{
+									strMsg = "Y";
+									e.Graphics.FillRectangle(backGroundBrushB, nowRectangleB);
+								}
+								else
+								{
+									strMsg= ".";
+									backGroundBrushB = new SolidBrush(Color.Yellow);
+									e.Graphics.FillRectangle(backGroundBrushB, nowRectangleB);
+									backGroundBrushB = new SolidBrush(Color.White);
+								}
+								e.Graphics.DrawString(strMsg, this.defaultFont, fontBrush, nowPointC);
+								nowPointC.X += fontWidthB;
+							}
 						}
 						//---数据开始的位置
 						this.defaultDataStartWidth = (int)nowPointB.X;
