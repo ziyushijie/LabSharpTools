@@ -22,12 +22,12 @@ namespace Harry.LabTools.LabControlPlus
 		/// <summary>
 		/// 
 		/// </summary>
-		private readonly ManualResetEvent _eventDone = new ManualResetEvent(false);
+		private readonly ManualResetEvent EventDone = new ManualResetEvent(false);
 
 		/// <summary>
 		/// 
 		/// </summary>
-		private Process defaulProcess = null;
+		private Process defaultProcess = null;
 
 		/// <summary>
 		/// 
@@ -48,31 +48,31 @@ namespace Harry.LabTools.LabControlPlus
 		#region 重载函数
 
 		/// <summary>
-		/// 
+		/// 句柄销毁
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnHandleDestroyed(EventArgs e)
 		{
-			this.Stop();
+			this.KillProcess();
 			base.OnHandleDestroyed(e);
 		}
 
 		/// <summary>
-		/// 
+		/// 大小重置
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
 		{
-			if (defaulProcess != null)
+			if (defaultProcess != null)
 			{
-				CWinAPIWindows.MoveWindow(this.defaulProcess.MainWindowHandle, 0, 0, this.Width, this.Height, true);
+				CWinAPIWindows.MoveWindow(this.defaultProcess.MainWindowHandle, 0, 0, this.Width, this.Height, true);
 			}
 
 			base.OnResize(e);
 		}
 
 		/// <summary>
-		/// 
+		/// 尺寸发生改变
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnSizeChanged(EventArgs e)
@@ -90,7 +90,7 @@ namespace Harry.LabTools.LabControlPlus
 		/// </summary>
 		/// <param name="appPath"></param>
 		/// <returns></returns>
-		private Process Start(string appPath)
+		private Process StartProcess(string appPath)
 		{
 			if (!File.Exists(appPath))
 			{
@@ -123,7 +123,7 @@ namespace Harry.LabTools.LabControlPlus
 		/// 关闭外进程
 		/// </summary>
 		/// <param name="process"></param>
-		private void Kill(Process process)
+		private void KillProcess(Process process)
 		{
 			if ((process != null) && (!process.HasExited))
 			{
@@ -157,15 +157,15 @@ namespace Harry.LabTools.LabControlPlus
 					setTime++;
 				}
 				//---设置初始尺寸和位置
-				CWinAPIWindows.MoveWindow(this.defaulProcess.MainWindowHandle, 0, 0, this.Width, this.Height, true);
+				CWinAPIWindows.MoveWindow(this.defaultProcess.MainWindowHandle, 0, 0, this.Width, this.Height, true);
 				// Remove border and whatnot               
 				//---移除边框和右上角的最大，最小和关闭功能
-				CWinAPIWindows.SetWindowLong(new HandleRef(this, this.defaulProcess.MainWindowHandle), CWinAPIWindows.GWL_STYLE, CWinAPIWindows.WS_VISIBLE);
+				CWinAPIWindows.SetWindowLong(new HandleRef(this, this.defaultProcess.MainWindowHandle), CWinAPIWindows.GWL_STYLE, CWinAPIWindows.WS_VISIBLE);
 			}
 
 			if (isEmbedSuccess)
 			{
-				this.defaultEmbededWindowHandle = this.defaulProcess.MainWindowHandle;
+				this.defaultEmbededWindowHandle = this.defaultProcess.MainWindowHandle;
 			}
 
 			return isEmbedSuccess;
@@ -179,34 +179,34 @@ namespace Harry.LabTools.LabControlPlus
 		#region 公有函数定义
 
 		/// <summary>
-		/// 
+		/// 嵌入进程
 		/// </summary>
 		/// <param name="processPath"></param>
 		/// <returns></returns>
 		public bool EmbeddedProcess(string processPath)
 		{
 			bool isStartAndEmbedSuccess = false;
-			this._eventDone.Reset();
+			this.EventDone.Reset();
 
 			//---启动进程
-			this.defaulProcess = this.Start(processPath);
+			this.defaultProcess = this.StartProcess(processPath);
 			
-			if (this.defaulProcess == null)
+			if (this.defaultProcess == null)
 			{
 				return false;
 			}
 
 			//---等待新进程完成它的初始化并等待用户输入
-			this.defaulProcess.WaitForInputIdle();
+			this.defaultProcess.WaitForInputIdle();
 
 			//---确保可获取到句柄
 			Thread thread = new Thread(new ThreadStart(() =>
 			{
 				while (true)
 				{
-					if (this.defaulProcess.MainWindowHandle != (IntPtr)0)
+					if (this.defaultProcess.MainWindowHandle != (IntPtr)0)
 					{
-						this._eventDone.Set();
+						this.EventDone.Set();
 						break;
 					}
 					//---
@@ -217,12 +217,12 @@ namespace Harry.LabTools.LabControlPlus
 			thread.Start();
 
 			//---嵌入进程
-			if (this._eventDone.WaitOne(10000))
+			if (this.EventDone.WaitOne(10000))
 			{
-				isStartAndEmbedSuccess = this.EmbeddedProcess(defaulProcess);
+				isStartAndEmbedSuccess = this.EmbeddedProcess(defaultProcess);
 				if (!isStartAndEmbedSuccess)
 				{
-					this.Kill(this.defaulProcess);
+					this.KillProcess(this.defaultProcess);
 				}
 			}
 			return isStartAndEmbedSuccess;
@@ -232,9 +232,9 @@ namespace Harry.LabTools.LabControlPlus
 		/// <summary>
 		/// 关闭进程
 		/// </summary>
-		public void Stop()
+		public void KillProcess()
 		{
-			this.Kill(this.defaulProcess);
+			this.KillProcess(this.defaultProcess);
 		}
 
 
@@ -245,34 +245,38 @@ namespace Harry.LabTools.LabControlPlus
 		/// <returns></returns>
 		public bool EmbeddedExistedProcess(Process process)
 		{
-			this.defaulProcess = process;
+			this.defaultProcess = process;
 
 			return this.EmbeddedProcess(process);
 		}
 
 
 		/// <summary>
-		/// 
+		/// 关闭指定名称的进程
 		/// </summary>
 		/// <param name="strProcessesByName"></param>
-		public  void Kill(string strProcessesByName)//关闭线程
+		public  void KillProcess(string strProcessesByName)
 		{
 			foreach (Process p in Process.GetProcesses())
 			{
-				if (p.ProcessName.ToUpper().Contains(strProcessesByName))
+				if (p.ProcessName.ToUpper().Contains(strProcessesByName.ToUpper()))
 				{
 					try
 					{
+						//---杀死指定的线程
 						p.Kill();
+						//---等待退出
 						p.WaitForExit(); // possibly with a timeout
 					}
 					catch (Win32Exception e)
 					{
-						MessageBox.Show(e.Message.ToString());   // process was terminating or can't be terminated - deal with it
+						// process was terminating or can't be terminated - deal with it
+						MessageBox.Show(e.Message.ToString());   
 					}
 					catch (InvalidOperationException e)
 					{
-						MessageBox.Show(e.Message.ToString()); // process has already exited - might be able to let this one go
+						// process has already exited - might be able to let this one go
+						MessageBox.Show(e.Message.ToString()); 
 					}
 				}
 			}

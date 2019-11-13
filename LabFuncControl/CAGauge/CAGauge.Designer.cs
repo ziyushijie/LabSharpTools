@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Harry.LabTools.LabControlPlus
+﻿namespace Harry.LabTools.LabFuncControl
 {
-	partial class CPanelEx
+	partial class CAGauge
 	{
 		/// <summary> 
 		/// 必需的设计器变量。
@@ -19,9 +17,6 @@ namespace Harry.LabTools.LabControlPlus
 			{
 				components.Dispose();
 			}
-			//---垃圾回收
-			GC.SuppressFinalize(this.EventDone);
-			GC.SuppressFinalize(defaultProcess);
 			base.Dispose(disposing);
 		}
 
@@ -33,7 +28,7 @@ namespace Harry.LabTools.LabControlPlus
 		/// </summary>
 		private void InitializeComponent()
 		{
-			components = new System.ComponentModel.Container();
+			components = new System.ComponentModel.Container();	
 		}
 
 		#endregion

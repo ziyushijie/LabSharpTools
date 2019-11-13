@@ -204,7 +204,6 @@ namespace Harry.LabTools.LabHex
 			{
 				this.defaultYScaleShowBit4 = YScaleShowBit4.BIT4X8;
 			}
-
 			//---数据显示的最大行数
 			this.defaultTotalRow = this.CalcYScaleTotalRow();
 			//---创建并显示光标
@@ -271,16 +270,16 @@ namespace Harry.LabTools.LabHex
 					Array.Resize<byte>(ref this.defaultNowData, dat.Length);
 					Array.Resize<byte>(ref this.defaultLastData, dat.Length);
 				}
-
+				//---填充默认数据是0xFF
+				CGenFuncMem.GenFuncMemset(ref this.defaultNowData, 0xFF);
 				//---数组拷贝
 				Array.Copy(dat, this.defaultNowData, dat.Length);
-
 				//---判断是否显示不同
 				if (isShowDifference != true)
 				{
 					Array.Copy(dat, this.defaultLastData, dat.Length);
-					this.defaultShowChangeFlag = true;
 				}
+				this.defaultShowChangeFlag = isShowDifference;
 				//---数据显示的最大行数
 				this.defaultTotalRow = this.CalcYScaleTotalRow();
 				//---创建并显示光标

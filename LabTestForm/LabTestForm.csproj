@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>LabTestForm</RootNamespace>
     <AssemblyName>LabTestForm</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -139,6 +139,10 @@
     <ProjectReference Include="..\LabControlPlus\LabControlPlus.csproj">
       <Project>{E54A51A6-A054-4F21-AC22-A827B5EF4D36}</Project>
       <Name>LabControlPlus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LabFuncControl\LabFuncControl.csproj">
+      <Project>{2BDCF93A-3A16-4AC3-A3F6-6E45601F13E5}</Project>
+      <Name>LabFuncControl</Name>
     </ProjectReference>
     <ProjectReference Include="..\LabHex\LabHex.csproj">
       <Project>{72D5A1AE-5BD4-4DC1-AF94-D760DB573C10}</Project>

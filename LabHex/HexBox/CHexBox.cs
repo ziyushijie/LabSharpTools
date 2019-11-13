@@ -154,7 +154,6 @@ namespace Harry.LabTools.LabHex
 			{
 				this.OnDrawXScaleBackGroundRectangle(e);
 			}
-			
 			//---绘制船体外部线条,最后绘制，避免因为控制尺寸绘制最后一组数据的时候覆盖
 			this.OnPaintExternalRectangle(e);
 		}
