@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2BDCF93A-3A16-4AC3-A3F6-6E45601F13E5}</ProjectGuid>
+    <ProjectGuid>{72D5A1AE-5BD4-4DC1-AF94-D760DB573C10}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Harry.LabTools.LabFuncControl</RootNamespace>
-    <AssemblyName>Harry.LabTools.LabFuncControl</AssemblyName>
+    <RootNamespace>Harry.LabTools.LabHexEdit</RootNamespace>
+    <AssemblyName>Harry.LabTools.LabHexEdit</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -43,13 +43,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CAGauge\CAGauge.cs">
+    <Compile Include="HexBoxControl\CHexData.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CAGauge\CAGauge.Designer.cs">
-      <DependentUpon>CAGauge.cs</DependentUpon>
+    <Compile Include="HexBoxControl\CHexBox.cs">
+      <SubType>Component</SubType>
     </Compile>
+    <Compile Include="HexBoxControl\CHexScaleX.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="HexBoxControl\CHexScaleY.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="HexBoxControl\CHexParam.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="HexBoxControl\CHexFont.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="HexFileFunc\CHexFile.cs" />
+    <Compile Include="HexFileFunc\CHexLine.cs" />
+    <Compile Include="HexFileFunc\IHexLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\LabGenFunc\LabGenFunc.csproj">
+      <Project>{C64AEEA0-7A08-4786-9F1E-BD66608E190E}</Project>
+      <Name>LabGenFunc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LabWinAPI\LabWinAPI.csproj">
+      <Project>{B928595D-A068-47D0-9D31-89D592258D32}</Project>
+      <Name>LabWinAPI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -32,7 +32,7 @@ namespace LabTestForm
 		private void InitializeComponent()
 		{
 			this.cCommBaseControl1 = new Harry.LabTools.LabComm.CCommBaseControl();
-			this.cHexBox1 = new Harry.LabTools.LabHex.CHexBox();
+			this.cHexBox1 = new Harry.LabTools.LabHexEdit.CHexBox();
 			this.caGauge1 = new Harry.LabTools.LabFuncControl.CAGauge();
 			this.cCheckedListBoxEx1 = new Harry.LabTools.LabControlPlus.CCheckedListBoxEx();
 			this.cNumericUpDownEx1 = new Harry.LabTools.LabControlPlus.CNumericUpDownEx();
@@ -586,7 +586,7 @@ namespace LabTestForm
 			this.cHexBox1.mXScaleHeight = 24;
 			this.cHexBox1.mXScaleHeightOffset = 2;
 			this.cHexBox1.mXScaleShow = true;
-			this.cHexBox1.mXScaleShowBit8 = Harry.LabTools.LabHex.CHexBox.XScaleShowBit8.BIT8X16;
+			this.cHexBox1.mXScaleShowBit8 = Harry.LabTools.LabHexEdit.CHexBox.XScaleShowBit8.BIT8X16;
 			this.cHexBox1.mXScaleStringShow = true;
 			this.cHexBox1.mXScaleStringStartWidth = 579;
 			this.cHexBox1.mYScaleBackGroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
@@ -594,7 +594,7 @@ namespace LabTestForm
 			this.cHexBox1.mYScaleFontColor = System.Drawing.Color.Black;
 			this.cHexBox1.mYScaleOffsetWidth = 32;
 			this.cHexBox1.mYScaleShow = true;
-			this.cHexBox1.mYScaleShowBit4 = Harry.LabTools.LabHex.CHexBox.YScaleShowBit4.BIT4X4;
+			this.cHexBox1.mYScaleShowBit4 = Harry.LabTools.LabHexEdit.CHexBox.YScaleShowBit4.BIT4X4;
 			this.cHexBox1.mYScaleWidth = 86;
 			this.cHexBox1.Name = "cHexBox1";
 			this.cHexBox1.Size = new System.Drawing.Size(902, 634);
@@ -760,7 +760,7 @@ namespace LabTestForm
 
 		#endregion
         private Harry.LabTools.LabComm.CCommBaseControl cCommBaseControl1;
-		private Harry.LabTools.LabHex.CHexBox cHexBox1;
+		private Harry.LabTools.LabHexEdit.CHexBox cHexBox1;
 		private Harry.LabTools.LabFuncControl.CAGauge caGauge1;
 		private Harry.LabTools.LabControlPlus.CCheckedListBoxEx cCheckedListBoxEx1;
 		private Harry.LabTools.LabControlPlus.CNumericUpDownEx cNumericUpDownEx1;
