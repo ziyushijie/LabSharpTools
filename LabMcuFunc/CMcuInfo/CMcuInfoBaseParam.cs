@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Harry.LabTools.LabMcuFunc
 {
-	public partial class CMcuHVSP 
+	public  class CBaseMcuInfoBaseParam
 	{
 		#region 变量定义
 
@@ -16,6 +16,14 @@ namespace Harry.LabTools.LabMcuFunc
 		#endregion
 
 		#region 构造函数
+		
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		public CBaseMcuInfoBaseParam()
+		{
+			
+		}
 
 		#endregion
 

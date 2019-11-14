@@ -7,8 +7,8 @@
     <ProjectGuid>{22AE2121-9EBB-4772-9C2B-10BB545B4D2F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Harry.LabTools.LabMcu</RootNamespace>
-    <AssemblyName>Harry.LabTools.LabMcu</AssemblyName>
+    <RootNamespace>Harry.LabTools.LabMcuFunc</RootNamespace>
+    <AssemblyName>Harry.LabTools.LabMcuFunc</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -53,6 +53,8 @@
     <Compile Include="CMcuHVSP\CMcuHVSPData.cs" />
     <Compile Include="CMcuHVSP\CMcuHVSPFunc.cs" />
     <Compile Include="CMcuHVSP\CMcuHVSPParam.cs" />
+    <Compile Include="CMcuInfo\CMcuInfoAVR8BitsParam.cs" />
+    <Compile Include="CMcuInfo\CMcuInfoBaseParam.cs" />
     <Compile Include="CMcuISP\CMcuISPFunc.cs" />
     <Compile Include="CMcuISP\CMcuISP.cs" />
     <Compile Include="CMcuISP\CMcuISPData.cs" />
@@ -64,9 +66,14 @@
     <Compile Include="IMcuInfo\IMcuInfoData.cs" />
     <Compile Include="IMcuInfo\IMcuInfoEvent.cs" />
     <Compile Include="IMcuInfo\IMcuInfoFunc.cs" />
-    <Compile Include="IMcuInfo\IMcuInfoParam.cs" />
+    <Compile Include="IMcuInfo\IAVR8BitsMcuInfoParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\LabComm\LabComm.csproj">
+      <Project>{3FBD5434-D5CB-4E6F-95D3-3905E5DE178A}</Project>
+      <Name>LabComm</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

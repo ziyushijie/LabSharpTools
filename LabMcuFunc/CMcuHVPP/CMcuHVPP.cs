@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Harry.LabTools.LabMcu
+namespace Harry.LabTools.LabMcuFunc
 {
 	public partial class CMcuHVPP : CMcuBase
 	{
