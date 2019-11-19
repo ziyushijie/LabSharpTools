@@ -28,16 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // CCommBaseForm
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(360, 205);
-            this.Name = "CCommBaseForm";
-            this.Text = "CCommBaseForm";
-            this.ResumeLayout(false);
+			this.SuspendLayout();
+			// 
+			// CCommBaseForm
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.ClientSize = new System.Drawing.Size(360, 205);
+			this.Name = "CCommBaseForm";
+			this.Text = "CCommBaseForm";
+			this.ResumeLayout(false);
 
         }
 

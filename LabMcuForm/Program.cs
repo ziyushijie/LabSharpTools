@@ -16,7 +16,9 @@ namespace LabMcuForm
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new Form1());
+			//Application.Run(new CMcuFormBase());
+			Application.Run(new CMcuFormAVR8BitsFuseAndLock());
+			
 		}
 	}
 }

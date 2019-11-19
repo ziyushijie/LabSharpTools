@@ -9,13 +9,22 @@ namespace Harry.LabTools.LabComm
 	/// <summary>
 	/// 通信状态
 	/// </summary>
-	public enum COMM_STATE : byte
+	public enum CCOMM_STATE : byte
 	{
 		STATE_IDLE				= 0,			//---空闲状态
 		STATE_POLLREAD			= 1,			//---轮训读取状态
 		STATE_WRITE				= 2,			//---写入状态
 		STATE_EVENTREAD			= 3,			//---事件读取状态
 		STATE_ERROR				= 4,			//---错误状态
+	};
+
+	/// <summary>
+	/// 通讯端口的类型
+	/// </summary>
+	public enum CCOMM_TYPE : byte
+	{
+		COMM_SERIAL				=0,				//---串口通讯
+		COMM_USB				=1,				//---USB通讯
 	};
 
 	/// <summary>
@@ -353,6 +362,15 @@ namespace Harry.LabTools.LabComm
 	interface ICommParam
 	{
 		#region 公有参数
+		
+		/// <summary>
+		/// 使用的通讯方式
+		/// </summary>
+		CCOMM_TYPE Type
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// 通断端口名称
@@ -426,7 +444,7 @@ namespace Harry.LabTools.LabComm
 		/// <summary>
 		/// 通讯状态
 		/// </summary>
-		COMM_STATE COMMSTATE
+		CCOMM_STATE COMMSTATE
 		{
 			get;
 		}
@@ -502,7 +520,7 @@ namespace Harry.LabTools.LabComm
 		/// <param name="serialParam"></param>
 		/// <param name="msg"></param>
 		/// <returns></returns>
-		int Init(CCommSerialParam serialParam, COMM_CRC rxCRC, COMM_CRC txCRC, RichTextBox msg = null);
+		int Init(CCommSerialParam serialParam, CCOMM_CRC rxCRC, CCOMM_CRC txCRC, RichTextBox msg = null);
 
 		/// <summary>
 		/// 
@@ -520,7 +538,7 @@ namespace Harry.LabTools.LabComm
 		/// <param name="tcCRC"></param>
 		/// <param name="msg"></param>
 		/// <returns></returns>
-		int Init(CCommUSBParam usbParam, COMM_CRC rxCRC, COMM_CRC txCRC, RichTextBox msg = null);
+		int Init(CCommUSBParam usbParam, CCOMM_CRC rxCRC, CCOMM_CRC txCRC, RichTextBox msg = null);
 
 	}
 }

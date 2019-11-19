@@ -358,8 +358,11 @@ namespace Harry.LabTools.LabComm
         {
             //---button 点击事件
             this.button_COMM.Click += new System.EventHandler(this.Button_Click);
-            //---端口状态刷新事件
-            this.pictureBox_COMM.Click += new EventHandler(this.PictureBox_Click);
+			//---button 右击事件
+			this.button_COMM.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ButtonMouseDown_Click);
+
+			//---端口状态刷新事件
+			this.pictureBox_COMM.Click += new EventHandler(this.PictureBox_Click);
 
 			//---增加鼠标移动事件
 			this.comboBox_COMM.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ComboBoxMouseDown_Click);
@@ -385,7 +388,7 @@ namespace Harry.LabTools.LabComm
 			{
 				CCommBaseForm p=null;
 				//---检查对象类型
-				if (this.defaultCCOMM.GetType()==typeof(CCommSerial))
+				if ((this.defaultCCOMM.GetType() == typeof(CCommSerial)) && (this.defaultCCOMM.Type == CCOMM_TYPE.COMM_SERIAL))
 				{
 					if (this.defaultCCOMM.IsFullParam)
 					{
@@ -395,13 +398,17 @@ namespace Harry.LabTools.LabComm
 					else
 					{
 						//---串行通讯对象的参数
-						p=new CCommSerialPlusForm(this.comboBox_COMM,this.defaultCCOMM, this.defaultCCOMM.mCCommRichTextBox, "配置设备" ,true );
+						p = new CCommSerialPlusForm(this.comboBox_COMM, this.defaultCCOMM, this.defaultCCOMM.mCCommRichTextBox, "配置设备", true);
 					}
 				}
-				else if(this.defaultCCOMM.GetType()==typeof(CCommUSB))
+				else if ((this.defaultCCOMM.GetType() == typeof(CCommUSB)) && (this.defaultCCOMM.Type == CCOMM_TYPE.COMM_USB))
 				{
 					//---USB通讯对象的参数
-					p=new CCommUSBPlusForm(); 
+					p = new CCommUSBPlusForm();
+				}
+				else
+				{
+					MessageBox.Show("不支持的端口的参数配置!");
 				}
 				//---判断对象是否可用
 				if (p!=null)
@@ -446,6 +453,45 @@ namespace Harry.LabTools.LabComm
 			}
 		}
 
+		/// <summary>
+		/// 配置通讯方式
+		/// </summary>
+		private void ConfigCCOMMType()
+		{
+			if (this.defaultCCOMM!=null)
+			{
+				CCommBasePlusForm p = new CCommBasePlusForm(this.defaultCCOMM.Type);
+				if (p != null)
+				{
+					if (p.ShowDialog(this.button_COMM, 0, this.button_COMM.Height + 4) == System.Windows.Forms.DialogResult.OK)
+					{
+						if (this.defaultCCOMM.Type != p.mCCommType)
+						{
+							//if (p.mCCommType == CCOMM_TYPE.COMM_SERIAL)
+							if ((p.mCCommType == CCOMM_TYPE.COMM_SERIAL)&&(this.defaultCCOMM.GetType() == typeof(CCommUSB)))
+							{
+								this.defaultCCOMM = new CCommSerial(this.comboBox_COMM);
+							}
+							//else if (p.mCCommType == CCOMM_TYPE.COMM_USB)
+							else if ((p.mCCommType == CCOMM_TYPE.COMM_USB) &&(this.defaultCCOMM.GetType() == typeof(CCommSerial)))
+							{
+								this.defaultCCOMM = new CCommUSB(this.comboBox_COMM);
+							}
+							else 
+							{
+								MessageBox.Show("不支持的通讯端口,端口类型未发生更改!");
+								//this.defaultCCOMM = null;
+							}
+						}
+					}
+					//---释放资源
+					p.FreeResource();
+					GC.SuppressFinalize(p);
+				}
+			}
+			
+		}
+
 		#endregion
 
 		#region 事件函数
@@ -486,7 +532,29 @@ namespace Harry.LabTools.LabComm
             btn.Enabled = true;
         }
 
-        /// <summary>
+		/// <summary>
+		/// 按钮的右键按下
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		public virtual void ButtonMouseDown_Click(object sender, MouseEventArgs e)
+		{
+			Button btn = (Button)sender;
+			switch (btn.Name)
+			{
+				case "button_COMM":
+					//---判断鼠标按下的按键
+					if (e.Button == MouseButtons.Right)
+					{
+						this.ConfigCCOMMType();
+					}
+					break;
+				default:
+					break;
+			}
+		}	
+
+		/// <summary>
 		/// 图片点击事件
 		/// </summary>
 		/// <param name="sender"></param>
@@ -526,6 +594,7 @@ namespace Harry.LabTools.LabComm
 			{
 				case "comboBox_COMM":
 					//---判断鼠标按下的按键
+					//if (e.Button == MouseButtons.Right)
 					if ((e.Button == MouseButtons.Right) && (this.defaultIsShowCommParam == true))
 					{
 						//---通过图片校验端口的状态

@@ -12,8 +12,27 @@ namespace Harry.LabTools.LabComm
 
 		#endregion
 
-		#region 属性定义
+		#region 公共属性
 
+		/// <summary>
+		/// 使用的通讯端口
+		/// </summary>
+		public override CCOMM_TYPE Type
+		{
+			get
+			{
+				return CCOMM_TYPE.COMM_USB;
+			}
+			set
+			{
+				base.Type = value;
+			}
+		}
+
+
+		#endregion
+
+		#region 属性定义
 		/// <summary>
 		/// 
 		/// </summary>
@@ -56,7 +75,7 @@ namespace Harry.LabTools.LabComm
 		/// <param name="tcCRC"></param>
 		/// <param name="msg"></param>
 		/// <returns></returns>
-		public override int Init(CCommUSBParam usbParam, COMM_CRC rxCRC, COMM_CRC txCRC, RichTextBox msg = null)
+		public override int Init(CCommUSBParam usbParam, CCOMM_CRC rxCRC, CCOMM_CRC txCRC, RichTextBox msg = null)
 		{
 			return -1;
 		}

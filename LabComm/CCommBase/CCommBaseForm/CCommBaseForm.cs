@@ -54,22 +54,22 @@ namespace Harry.LabTools.LabComm
 		/// <summary>
 		/// 接收数据校验方式
 		/// </summary>
-		public virtual COMM_CRC mRxCRC
+		public virtual CCOMM_CRC mRxCRC
 		{
 			get
 			{
-				return COMM_CRC.CRC_NONE;
+				return CCOMM_CRC.CRC_NONE;
 			}
 		}
 
 		/// <summary>
 		/// 发送数据校验方式
 		/// </summary>
-		public virtual COMM_CRC mTxCRC
+		public virtual CCOMM_CRC mTxCRC
 		{
 			get
 			{
-				return COMM_CRC.CRC_NONE;
+				return CCOMM_CRC.CRC_NONE;
 			}
 		}
 
@@ -109,7 +109,6 @@ namespace Harry.LabTools.LabComm
         #endregion
 
         #region 公有函数
-
 		
         #endregion
 

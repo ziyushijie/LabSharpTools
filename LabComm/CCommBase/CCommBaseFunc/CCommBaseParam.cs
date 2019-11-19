@@ -8,8 +8,31 @@ namespace Harry.LabTools.LabComm
 {
 	public partial class CCommBase : ICommParam
 	{
+		#region 变量定义
+
+		/// <summary>
+		/// 通讯方式的类型
+		/// </summary>
+		private CCOMM_TYPE defaultCCommType = CCOMM_TYPE.COMM_SERIAL;
+
+		#endregion
 
 		#region 公共属性
+
+		/// <summary>
+		/// 通讯端口的类型
+		/// </summary>
+		public virtual CCOMM_TYPE Type
+		{
+			get
+			{
+				return this.defaultCCommType;
+			}
+			set
+			{
+				this.defaultCCommType = value;
+			}
+		}
 
 		/// <summary>
 		/// 
@@ -115,11 +138,11 @@ namespace Harry.LabTools.LabComm
 		/// <summary>
 		/// 通讯状态
 		/// </summary>
-		public virtual COMM_STATE COMMSTATE
+		public virtual CCOMM_STATE COMMSTATE
 		{
 			get
 			{
-				return COMM_STATE.STATE_IDLE;
+				return CCOMM_STATE.STATE_IDLE;
 			}
 		}
 
@@ -233,7 +256,7 @@ namespace Harry.LabTools.LabComm
 		/// <param name="rxCRC"></param>
 		/// <param name="tcCRC"></param>
 		/// <param name="msg"></param>
-		public virtual int Init(CCommSerialParam serialParam, COMM_CRC rxCRC, COMM_CRC txCRC, RichTextBox msg = null)
+		public virtual int Init(CCommSerialParam serialParam, CCOMM_CRC rxCRC, CCOMM_CRC txCRC, RichTextBox msg = null)
 		{
 			return -1;
 		}
@@ -256,7 +279,7 @@ namespace Harry.LabTools.LabComm
 		/// <param name="tcCRC"></param>
 		/// <param name="msg"></param>
 		/// <returns></returns>
-		public virtual int Init(CCommUSBParam usbParam, COMM_CRC rxCRC, COMM_CRC txCRC, RichTextBox msg = null)
+		public virtual int Init(CCommUSBParam usbParam, CCOMM_CRC rxCRC, CCOMM_CRC txCRC, RichTextBox msg = null)
 		{
 			return -1;
 		}
@@ -295,7 +318,7 @@ namespace Harry.LabTools.LabComm
 		/// </summary>
 		/// <param name="serialParam"></param>
 		/// <param name="uSBParam"></param>
-		public virtual void AnalyseParam(CCommSerialParam serialParam, CCommUSBParam usbParam,COMM_CRC rxCRC, COMM_CRC txCRC, bool isUpAddrID = false)
+		public virtual void AnalyseParam(CCommSerialParam serialParam, CCommUSBParam usbParam,CCOMM_CRC rxCRC, CCOMM_CRC txCRC, bool isUpAddrID = false)
 		{
 			if ((serialParam != null) && (this.mSerialParam != null))
 			{

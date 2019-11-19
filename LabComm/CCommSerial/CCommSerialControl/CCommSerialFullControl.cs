@@ -32,31 +32,31 @@ namespace Harry.LabTools.LabComm
 		/// <summary>
 		/// 获取接收CRC的校验方式
 		/// </summary>
-		public virtual COMM_CRC mRxCRC
+		public virtual CCOMM_CRC mRxCRC
 		{
 			get
 			{
-				COMM_CRC _return = COMM_CRC.CRC_NONE;
+				CCOMM_CRC _return = CCOMM_CRC.CRC_NONE;
 				switch (this.comboBox_RxCRC.Text)
 				{
 
 					case "CRC_NONE":
-						_return = COMM_CRC.CRC_NONE;
+						_return = CCOMM_CRC.CRC_NONE;
 						break;
 					case "CRC_SUM":
-						_return = COMM_CRC.CRC_CHECKSUM;
+						_return = CCOMM_CRC.CRC_CHECKSUM;
 						break;
 					case "CRC_CRC8":
-						_return = COMM_CRC.CRC_CRC8;
+						_return = CCOMM_CRC.CRC_CRC8;
 						break;
 					case "CRC_CRC16":
-						_return = COMM_CRC.CRC_CRC16;
+						_return = CCOMM_CRC.CRC_CRC16;
 						break;
 					case "CRC_CRC32":
-						_return = COMM_CRC.CRC_CRC32;
+						_return = CCOMM_CRC.CRC_CRC32;
 						break;
 					default:
-						_return = COMM_CRC.CRC_NONE;
+						_return = CCOMM_CRC.CRC_NONE;
 						break;
 				}
 				return _return;
@@ -66,31 +66,31 @@ namespace Harry.LabTools.LabComm
 		/// <summary>
 		/// 获取发送CRC的校验方式
 		/// </summary>
-		public virtual COMM_CRC mTxCRC
+		public virtual CCOMM_CRC mTxCRC
 		{
 			get
 			{
-				COMM_CRC _return = COMM_CRC.CRC_NONE;
+				CCOMM_CRC _return = CCOMM_CRC.CRC_NONE;
 				switch (this.comboBox_RxCRC.Text)
 				{
 
 					case "CRC_NONE":
-						_return = COMM_CRC.CRC_NONE;
+						_return = CCOMM_CRC.CRC_NONE;
 						break;
 					case "CRC_SUM":
-						_return = COMM_CRC.CRC_CHECKSUM;
+						_return = CCOMM_CRC.CRC_CHECKSUM;
 						break;
 					case "CRC_CRC8":
-						_return = COMM_CRC.CRC_CRC8;
+						_return = CCOMM_CRC.CRC_CRC8;
 						break;
 					case "CRC_CRC16":
-						_return = COMM_CRC.CRC_CRC16;
+						_return = CCOMM_CRC.CRC_CRC16;
 						break;
 					case "CRC_CRC32":
-						_return = COMM_CRC.CRC_CRC32;
+						_return = CCOMM_CRC.CRC_CRC32;
 						break;
 					default:
-						_return = COMM_CRC.CRC_NONE;
+						_return = CCOMM_CRC.CRC_NONE;
 						break;
 				}
 				return _return;

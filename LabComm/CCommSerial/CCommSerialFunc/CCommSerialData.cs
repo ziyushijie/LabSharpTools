@@ -10,12 +10,12 @@ namespace Harry.LabTools.LabComm
 		/// <summary>
 		/// 接收数据
 		/// </summary>
-		private CCommData defaultSerialReceData = new CCommData(0x5A, 64, COMM_CRC.CRC_NONE);
+		private CCommData defaultSerialReceData = new CCommData(0x5A, 64, CCOMM_CRC.CRC_NONE);
 
 		/// <summary>
 		/// 发送数据
 		/// </summary>
-		private CCommData defaultSerialSendData = new CCommData(0x55, 64, COMM_CRC.CRC_NONE);
+		private CCommData defaultSerialSendData = new CCommData(0x55, 64, CCOMM_CRC.CRC_NONE);
 
 		#endregion
 
@@ -182,25 +182,25 @@ namespace Harry.LabTools.LabComm
 					{
 						this.defaultSerialReceData.mLength = cmd.Length;
 						//---计算CRC的位置
-						if (this.defaultSerialReceData.mCRCMode == COMM_CRC.CRC_CHECKSUM)
+						if (this.defaultSerialReceData.mCRCMode == CCOMM_CRC.CRC_CHECKSUM)
 						{
 							this.defaultSerialReceData.mLength -= 1;
 							//---计算校验和
 							this.defaultSerialReceData.mCRCResult = CGenFuncCRC.GenFuncCheckSum(cmd, this.defaultSerialReceData.mLength);
 						}
-						else if (this.defaultSerialReceData.mCRCMode == COMM_CRC.CRC_CRC8)
+						else if (this.defaultSerialReceData.mCRCMode == CCOMM_CRC.CRC_CRC8)
 						{
 							this.defaultSerialReceData.mLength -= 1;
 							//---计算CRC8
 							this.defaultSerialReceData.mCRCResult = CGenFuncCRC.GenFuncCheckSum(cmd, this.defaultSerialReceData.mLength);
 						}
-						else if (this.defaultSerialReceData.mCRCMode == COMM_CRC.CRC_CRC16)
+						else if (this.defaultSerialReceData.mCRCMode == CCOMM_CRC.CRC_CRC16)
 						{
 							this.defaultSerialReceData.mLength -= 2;
 							//---计算CRC16
 							this.defaultSerialReceData.mCRCResult = CGenFuncCRC.GenFuncCRC16Table(cmd, this.defaultSerialReceData.mLength);
 						}
-						else if (this.defaultSerialReceData.mCRCMode == COMM_CRC.CRC_CRC32)
+						else if (this.defaultSerialReceData.mCRCMode == CCOMM_CRC.CRC_CRC32)
 						{
 							this.defaultSerialReceData.mLength -= 4;
 							//---计算CRC32
@@ -243,7 +243,7 @@ namespace Harry.LabTools.LabComm
 			{
 				if (this.defaultSerialSendData==null)
 				{
-					this.defaultSerialSendData = new CCommData(0x55, 64, COMM_CRC.CRC_NONE);
+					this.defaultSerialSendData = new CCommData(0x55, 64, CCOMM_CRC.CRC_NONE);
 				}
 				this.defaultSerialSendData.mLength = 0;
 				if (this.defaultSerialSendData.mByte == null)
@@ -328,26 +328,26 @@ namespace Harry.LabTools.LabComm
 				}
 
 				//---计算CRC数据
-				if (this.defaultSerialSendData.mCRCMode == COMM_CRC.CRC_CHECKSUM)
+				if (this.defaultSerialSendData.mCRCMode == CCOMM_CRC.CRC_CHECKSUM)
 				{
 					//---计算校验和
 					this.defaultSerialSendData.mCRCResult = CGenFuncCRC.GenFuncCheckSum(this.defaultSerialSendData.mByte.ToArray(), this.defaultSerialSendData.mByte.Count);
 					this.defaultSerialSendData.mByte.Add((byte)this.defaultSerialSendData.mCRCResult);
 				}
-				else if (this.defaultSerialSendData.mCRCMode == COMM_CRC.CRC_CRC8)
+				else if (this.defaultSerialSendData.mCRCMode == CCOMM_CRC.CRC_CRC8)
 				{
 					//---计算CRC8
 					this.defaultSerialSendData.mCRCResult = CGenFuncCRC.GenFuncCRC8Table(CGenFuncCRC.USE_CRC8_Type.USE_CRC8_07H,this.defaultSerialSendData.mByte.ToArray(), this.defaultSerialSendData.mByte.Count);
 					this.defaultSerialSendData.mByte.Add((byte)this.defaultSerialSendData.mCRCResult);
 				}
-				else if (this.defaultSerialSendData.mCRCMode == COMM_CRC.CRC_CRC16)
+				else if (this.defaultSerialSendData.mCRCMode == CCOMM_CRC.CRC_CRC16)
 				{
 					//---计算CRC16
 					this.defaultSerialSendData.mCRCResult = CGenFuncCRC.GenFuncCRC16Table(this.defaultSerialSendData.mByte.ToArray(), this.defaultSerialSendData.mByte.Count);
 					this.defaultSerialSendData.mByte.Add((byte)(this.defaultSerialSendData.mCRCResult>>8));
 					this.defaultSerialSendData.mByte.Add((byte)this.defaultSerialSendData.mCRCResult);
 				}
-				else if (this.defaultSerialSendData.mCRCMode == COMM_CRC.CRC_CRC32)
+				else if (this.defaultSerialSendData.mCRCMode == CCOMM_CRC.CRC_CRC32)
 				{
 					//---计算CRC32
 					this.defaultSerialSendData.mCRCResult = CGenFuncCRC.GenFuncCRC16Table(this.defaultSerialSendData.mByte.ToArray(), this.defaultSerialSendData.mByte.Count);
@@ -357,7 +357,7 @@ namespace Harry.LabTools.LabComm
 					this.defaultSerialSendData.mByte.Add((byte)this.defaultSerialSendData.mCRCResult);
 				}
 				//---计算CRC之后，重新整理数据长度
-				if (this.defaultSerialSendData.mCRCMode != COMM_CRC.CRC_NONE)
+				if (this.defaultSerialSendData.mCRCMode != CCOMM_CRC.CRC_NONE)
 				{
 					//---计算传输数据的长度
 					this.defaultSerialSendData.mLength = this.defaultSerialSendData.mByte.Count;

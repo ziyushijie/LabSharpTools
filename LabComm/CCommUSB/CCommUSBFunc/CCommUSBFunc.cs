@@ -29,6 +29,26 @@ namespace Harry.LabTools.LabComm
 		/// <returns></returns>
 		public override int Init(ComboBox cbb, RichTextBox msg = null)
 		{
+			if (cbb != null)
+			{
+				//---异步调用
+				if (cbb.InvokeRequired)
+				{
+					cbb.BeginInvoke((EventHandler)
+							 //cbb.Invoke((EventHandler)
+							 (delegate
+							 {
+								 cbb.Items.Clear();
+								 cbb.SelectedIndex = -1;
+
+							 }));
+				}
+				else
+				{
+					cbb.Items.Clear();
+					cbb.SelectedIndex = -1;
+				}
+			}
 			return -1;
 		}
 

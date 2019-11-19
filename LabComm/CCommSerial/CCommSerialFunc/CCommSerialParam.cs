@@ -40,7 +40,7 @@ namespace Harry.LabTools.LabComm
 		/// <summary>
 		/// 工作状态
 		/// </summary>
-		private COMM_STATE defaultSerialSTATE = COMM_STATE.STATE_IDLE;
+		private CCOMM_STATE defaultSerialSTATE = CCOMM_STATE.STATE_IDLE;
 
 		/// <summary>
 		/// 串口参数
@@ -71,6 +71,21 @@ namespace Harry.LabTools.LabComm
 		#endregion
 
 		#region 公共属性
+
+		/// <summary>
+		/// 使用的通讯端口
+		/// </summary>
+		public override CCOMM_TYPE Type
+		{
+			get
+			{
+				return CCOMM_TYPE.COMM_SERIAL;
+			}
+			set
+			{
+				base.Type = value;
+			}
+		}
 
 		/// <summary>
 		/// 
@@ -218,7 +233,7 @@ namespace Harry.LabTools.LabComm
 		/// <summary>
 		/// 通讯状态
 		/// </summary>
-		public override COMM_STATE COMMSTATE
+		public override CCOMM_STATE COMMSTATE
 		{
 			get
 			{
@@ -387,7 +402,7 @@ namespace Harry.LabTools.LabComm
 		/// <param name="rxCRC"></param>
 		/// <param name="tcCRC"></param>
 		/// <param name="msg"></param>
-		public override int Init(CCommSerialParam serialParam, COMM_CRC rxCRC, COMM_CRC txCRC, RichTextBox msg = null)
+		public override int Init(CCommSerialParam serialParam, CCOMM_CRC rxCRC, CCOMM_CRC txCRC, RichTextBox msg = null)
 		{
 			return -1;
 		}

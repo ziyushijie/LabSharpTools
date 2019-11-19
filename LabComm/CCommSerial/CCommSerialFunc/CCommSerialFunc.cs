@@ -44,12 +44,12 @@ namespace Harry.LabTools.LabComm
 								 (delegate
 								 {
 									 cbb.Items.Clear();
-									 for (int i = 0; i < this.defaSerialIndexMemu.Count; i++)
+									 for (int i = 0; i < this.defaultSerialIndexMemu.Count; i++)
 									 {
-										 cbb.Items.Add("COM" + this.defaSerialIndexMemu[i].ToString());
+										 cbb.Items.Add("COM" + this.defaultSerialIndexMemu[i].ToString());
 									 }
                                      //---当前端口在设备中索引
-                                     _return = this.defaSerialIndexMemu.IndexOf((byte)this.Index);
+                                     _return = this.defaultSerialIndexMemu.IndexOf((byte)this.Index);
                                      if (_return < 0)
                                      {
                                          cbb.SelectedIndex = 0;
@@ -64,12 +64,12 @@ namespace Harry.LabTools.LabComm
 					else
 					{
 						cbb.Items.Clear();
-						for (int i = 0; i < this.defaSerialIndexMemu.Count; i++)
+						for (int i = 0; i < this.defaultSerialIndexMemu.Count; i++)
 						{
-							cbb.Items.Add("COM" + this.defaSerialIndexMemu[i].ToString());
+							cbb.Items.Add("COM" + this.defaultSerialIndexMemu[i].ToString());
 						}
                         //---当前端口在设备中索引
-                        _return = this.defaSerialIndexMemu.IndexOf((byte)this.Index);
+                        _return = this.defaultSerialIndexMemu.IndexOf((byte)this.Index);
                         if (_return<0)
                         {
                             cbb.SelectedIndex = 0;
@@ -83,7 +83,7 @@ namespace Harry.LabTools.LabComm
 					//---获取设备的驱动信息
 					this.defaultSerialInfo = this.defaultSerialInfoMemu[_return];
 					//---获取设备的名称信息
-					this.Name = "COM" + this.defaSerialIndexMemu[_return].ToString();
+					this.Name = "COM" + this.defaultSerialIndexMemu[_return].ToString();
 				}
 				this.defaultSerialMsg = "端口刷新成功！\r\n";
 				_return = 0;
@@ -151,9 +151,9 @@ namespace Harry.LabTools.LabComm
 			//---检查设备端口
 			if ((addNames == null) || (addNames.Count == 0))
 			{
-				if (this.defaSerialIndexMemu!=null)
+				if (this.defaultSerialIndexMemu!=null)
 				{
-					this.defaSerialIndexMemu.Clear();
+					this.defaultSerialIndexMemu.Clear();
 				}
 				if (this.defaultSerialInfoMemu!=null)
 				{
@@ -189,10 +189,10 @@ namespace Harry.LabTools.LabComm
                 //---遍历是哪个设备插入
                 for (i = 0; i < addNames.Count; i++)
 				{
-					if ((this.defaSerialIndexMemu != null) && (this.defaSerialIndexMemu.Count > 0))
+					if ((this.defaultSerialIndexMemu != null) && (this.defaultSerialIndexMemu.Count > 0))
 					{
 						//---查询是哪个设备插入
-						portIndex = this.defaSerialIndexMemu.IndexOf(addNames[i]);
+						portIndex = this.defaultSerialIndexMemu.IndexOf(addNames[i]);
 					}
 					//---UI显示插入的设备
 					if (portIndex < 0)
@@ -223,15 +223,15 @@ namespace Harry.LabTools.LabComm
 					}
 				}
 
-				if ((this.defaSerialIndexMemu.Count != 0) && (portIndex >= 0))
+				if ((this.defaultSerialIndexMemu.Count != 0) && (portIndex >= 0))
 				{
-					portIndex = this.defaSerialIndexMemu[portIndex];
+					portIndex = this.defaultSerialIndexMemu[portIndex];
 				}
 
-  				this.defaSerialIndexMemu = new List<byte>();
-				this.defaSerialIndexMemu.AddRange(addNames.ToArray());
+  				this.defaultSerialIndexMemu = new List<byte>();
+				this.defaultSerialIndexMemu.AddRange(addNames.ToArray());
 
-				if (this.defaSerialIndexMemu.Count != 0)
+				if (this.defaultSerialIndexMemu.Count != 0)
 				{
 					if (portIndex < 0)
 					{
@@ -239,7 +239,7 @@ namespace Harry.LabTools.LabComm
 					}
 					else
 					{
-						portIndex = this.defaSerialIndexMemu.IndexOf((byte)portIndex);
+						portIndex = this.defaultSerialIndexMemu.IndexOf((byte)portIndex);
 					}
 
 				}
@@ -254,9 +254,9 @@ namespace Harry.LabTools.LabComm
 								 (delegate
 								 {
 									 this.mCCommComBox.Items.Clear();
-									 for (i = 0; i < this.defaSerialIndexMemu.Count; i++)
+									 for (i = 0; i < this.defaultSerialIndexMemu.Count; i++)
 									 {
-										 this.mCCommComBox.Items.Add("COM" + this.defaSerialIndexMemu[i].ToString());
+										 this.mCCommComBox.Items.Add("COM" + this.defaultSerialIndexMemu[i].ToString());
 									 }
 									 this.mCCommComBox.SelectedIndex = portIndex;
 								 }));
@@ -264,9 +264,9 @@ namespace Harry.LabTools.LabComm
 					else
 					{
 						this.mCCommComBox.Items.Clear();
-						for (i = 0; i < this.defaSerialIndexMemu.Count; i++)
+						for (i = 0; i < this.defaultSerialIndexMemu.Count; i++)
 						{
-							this.mCCommComBox.Items.Add("COM" + this.defaSerialIndexMemu[i].ToString());
+							this.mCCommComBox.Items.Add("COM" + this.defaultSerialIndexMemu[i].ToString());
 						}
 						this.mCCommComBox.SelectedIndex = portIndex;
 					}
@@ -299,7 +299,7 @@ namespace Harry.LabTools.LabComm
 			List<byte> addNames = this.GetSerialPortIndex(SerialPort.GetPortNames());
 			if ((addNames == null) || (addNames.Count == 0))
 			{
-				this.defaSerialIndexMemu = new List<byte>();
+				this.defaultSerialIndexMemu = new List<byte>();
 				if (this.mCCommComBox != null)
 				{
 					//---异步调用
@@ -330,15 +330,15 @@ namespace Harry.LabTools.LabComm
 				int i = 0;
                 this.defaultSerialMsg = "";
                 //---遍历是哪个设备移除
-                for (i = 0; i < this.defaSerialIndexMemu.Count; i++)
+                for (i = 0; i < this.defaultSerialIndexMemu.Count; i++)
 				{
 					//---查询是哪个设备移除
-					portIndex = addNames.IndexOf(this.defaSerialIndexMemu[i]);
+					portIndex = addNames.IndexOf(this.defaultSerialIndexMemu[i]);
 					//---UI显示插入的设备
 					if (portIndex < 0)
 					{
                         //---判断是不是当前设备
-						if (this.defaSerialIndexMemu[i] == this.Index)
+						if (this.defaultSerialIndexMemu[i] == this.Index)
 						{
 							this.Name = "";
                             if (this.defaultConnected ==true)
@@ -353,7 +353,7 @@ namespace Harry.LabTools.LabComm
                             }
 						}
                         _return = 2;
-                        this.defaultSerialMsg += "COM" + this.defaSerialIndexMemu[i].ToString() + "设备移除！\r\n";
+                        this.defaultSerialMsg += "COM" + this.defaultSerialIndexMemu[i].ToString() + "设备移除！\r\n";
 					}
 				}
 
@@ -379,22 +379,22 @@ namespace Harry.LabTools.LabComm
 					}
 				}
 
-				if ((this.defaSerialIndexMemu.Count != 0) && (portIndex >= 0))
+				if ((this.defaultSerialIndexMemu.Count != 0) && (portIndex >= 0))
 				{
-					portIndex = this.defaSerialIndexMemu[portIndex];
+					portIndex = this.defaultSerialIndexMemu[portIndex];
 				}
 
-				if (this.defaSerialIndexMemu==null)
+				if (this.defaultSerialIndexMemu==null)
 				{
-					this.defaSerialIndexMemu = new List<byte>();
+					this.defaultSerialIndexMemu = new List<byte>();
 				}
 				else
 				{
-					this.defaSerialIndexMemu.Clear();
+					this.defaultSerialIndexMemu.Clear();
 				}
-				this.defaSerialIndexMemu.AddRange(addNames.ToArray());
+				this.defaultSerialIndexMemu.AddRange(addNames.ToArray());
 
-				if (this.defaSerialIndexMemu.Count != 0)
+				if (this.defaultSerialIndexMemu.Count != 0)
 				{
 					if (portIndex < 0)
 					{
@@ -403,7 +403,7 @@ namespace Harry.LabTools.LabComm
 					}
 					else
 					{
-						portIndex = this.defaSerialIndexMemu.IndexOf((byte)portIndex);
+						portIndex = this.defaultSerialIndexMemu.IndexOf((byte)portIndex);
 						if (portIndex < 0)
 						{
                             //---默认选择第一个设备
@@ -422,9 +422,9 @@ namespace Harry.LabTools.LabComm
 								 (delegate
 								 {
 									 this.mCCommComBox.Items.Clear();
-									 for (i = 0; i < this.defaSerialIndexMemu.Count; i++)
+									 for (i = 0; i < this.defaultSerialIndexMemu.Count; i++)
 									 {
-										 this.mCCommComBox.Items.Add("COM" + this.defaSerialIndexMemu[i].ToString());
+										 this.mCCommComBox.Items.Add("COM" + this.defaultSerialIndexMemu[i].ToString());
 									 }
 									 this.mCCommComBox.SelectedIndex = portIndex;
 								 }));
@@ -432,22 +432,22 @@ namespace Harry.LabTools.LabComm
 					else
 					{
 						this.mCCommComBox.Items.Clear();
-						for (i = 0; i < this.defaSerialIndexMemu.Count; i++)
+						for (i = 0; i < this.defaultSerialIndexMemu.Count; i++)
 						{
-							this.mCCommComBox.Items.Add("COM" + this.defaSerialIndexMemu[i].ToString());
+							this.mCCommComBox.Items.Add("COM" + this.defaultSerialIndexMemu[i].ToString());
 						}
 						this.mCCommComBox.SelectedIndex = portIndex;
 					}
 				}
 			}
 			//---判断设备是否为空
-			if (this.defaSerialIndexMemu.Count == 0)
+			if (this.defaultSerialIndexMemu.Count == 0)
 			{
 				//---释放端口
 				if ((this.defaultSerialPort != null) && (this.Index != 0))
 				{
 					//---端口状态，空闲
-					this.defaultSerialSTATE = COMM_STATE.STATE_IDLE;
+					this.defaultSerialSTATE = CCOMM_STATE.STATE_IDLE;
 					//---关闭端口
 					this.defaultSerialPort.Close();
                     //---释放串口资源
@@ -676,12 +676,12 @@ namespace Harry.LabTools.LabComm
 				if (this.defaultSerialPort.IsOpen)
 				{
 					//---等待端口事件处理完成
-					while (!((this.defaultSerialSTATE == COMM_STATE.STATE_IDLE) || (this.defaultSerialSTATE == COMM_STATE.STATE_ERROR)))
+					while (!((this.defaultSerialSTATE == CCOMM_STATE.STATE_IDLE) || (this.defaultSerialSTATE == CCOMM_STATE.STATE_ERROR)))
 					{
 						Application.DoEvents();
 					}
 					//---端口状态，空闲
-					this.defaultSerialSTATE = COMM_STATE.STATE_IDLE;
+					this.defaultSerialSTATE = CCOMM_STATE.STATE_IDLE;
 					//---关闭端口
 					this.defaultSerialPort.Close();
 				}
@@ -734,7 +734,7 @@ namespace Harry.LabTools.LabComm
 						if (this.defaultSerialPort.IsOpen == false)
 						{
 							//---端口状态，错误
-							this.defaultSerialSTATE = COMM_STATE.STATE_ERROR;
+							this.defaultSerialSTATE = CCOMM_STATE.STATE_ERROR;
 							this.defaultSerialMsg = "端口：" + this.Name + "打开失败!\r\n";
 							_return = 2;
 						}
@@ -757,7 +757,7 @@ namespace Harry.LabTools.LabComm
 				else
 				{
 					//---端口状态，错误
-					this.defaultSerialSTATE = COMM_STATE.STATE_ERROR;
+					this.defaultSerialSTATE = CCOMM_STATE.STATE_ERROR;
 					this.defaultSerialMsg = "端口：" + argName + "初始化失败!\r\n";
 					_return = 4;
 				}

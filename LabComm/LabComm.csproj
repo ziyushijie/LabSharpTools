@@ -49,6 +49,8 @@
     <Reference Include="Microsoft.VisualStudio.TextManager.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <HintPath>..\packages\Microsoft.VisualStudio.TextManager.Interop.7.10.6071\lib\net11\Microsoft.VisualStudio.TextManager.Interop.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -74,6 +76,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -93,6 +96,12 @@
     </Compile>
     <Compile Include="CCommBase\CCommBaseForm\CCommBaseForm.Designer.cs">
       <DependentUpon>CCommBaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CCommBase\CCommBaseForm\CCommBasePlusForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CCommBase\CCommBaseForm\CCommBasePlusForm.Designer.cs">
+      <DependentUpon>CCommBasePlusForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CCommBase\CCommBaseFunc\CCommBase.cs" />
     <Compile Include="CCommBase\CCommBaseFunc\CCommBaseControl.cs" />
@@ -198,13 +207,15 @@
       <Name>LabGenFunc</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="CCommBase\CCommBaseControl\CCommBaseControl.resx">
       <DependentUpon>CCommBaseControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CCommBase\CCommBaseForm\CCommBaseForm.resx">
       <DependentUpon>CCommBaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CCommBase\CCommBaseForm\CCommBasePlusForm.resx">
+      <DependentUpon>CCommBasePlusForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CCommSerial\CCommSerialControl\CCommSerialControl.resx">
       <DependentUpon>CCommSerialControl.cs</DependentUpon>

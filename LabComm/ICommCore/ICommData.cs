@@ -8,13 +8,13 @@ namespace Harry.LabTools.LabComm
 	/// <summary>
 	/// CRC校验方式
 	/// </summary>
-	public enum COMM_CRC : byte
+	public enum CCOMM_CRC : byte
 	{
-		CRC_NONE = 0,           //---无校验方式
-		CRC_CHECKSUM = 1,       //---检验和
-		CRC_CRC8 = 2,           //---CRC8校验
-		CRC_CRC16 = 3,          //---CRC16校验
-		CRC_CRC32 = 4,          //---CRC32校验
+		CRC_NONE			= 0,			//---无校验方式
+		CRC_CHECKSUM		= 1,			//---检验和
+		CRC_CRC8			= 2,			//---CRC8校验
+		CRC_CRC16			= 3,			//---CRC16校验
+		CRC_CRC32			= 4,			//---CRC32校验
 	};
 
 	/// <summary>
@@ -42,7 +42,7 @@ namespace Harry.LabTools.LabComm
 		/// <summary>
 		/// CRC的方式
 		/// </summary>
-		public COMM_CRC mCRCMode = COMM_CRC.CRC_NONE;
+		public CCOMM_CRC mCRCMode = CCOMM_CRC.CRC_NONE;
 
 		/// <summary>
 		/// 父命令
@@ -117,7 +117,7 @@ namespace Harry.LabTools.LabComm
 		/// <param name="id"></param>
 		/// <param name="size"></param>
 		/// <param name="crcMode"></param>
-		public CCommData(int id, int size,COMM_CRC crcMode)
+		public CCommData(int id, int size,CCOMM_CRC crcMode)
 		{
 			this.mID = id;
 			this.mSize = size;

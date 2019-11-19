@@ -15,7 +15,7 @@ namespace Harry.LabTools.LabComm
 		/// <summary>
 		/// 设备索引列表，用于监控设备的拔插
 		/// </summary>
-		private List<byte> defaSerialIndexMemu = new List<byte>();
+		private List<byte> defaultSerialIndexMemu = new List<byte>();
 
 		/// <summary>
 		/// 设备驱动表
@@ -102,7 +102,7 @@ namespace Harry.LabTools.LabComm
 			//---清空错误消息
 			this.defaultSerialMsg = string.Empty;
 			//---工作状态是忙碌
-			this.defaultSerialSTATE = COMM_STATE.STATE_POLLREAD;
+			this.defaultSerialSTATE = CCOMM_STATE.STATE_POLLREAD;
 			// CRC的计算结果
 			UInt32 crcVal = 0;
 			//---数据的读取---阻塞读取
@@ -199,23 +199,23 @@ namespace Harry.LabTools.LabComm
 				if (this.AnalyseReceData(cmd.ToArray()) == true)
 				{
 					//---校验CRC
-					if ((this.defaultSerialReceData.mCRCMode == COMM_CRC.CRC_CHECKSUM) || (this.defaultSerialReceData.mCRCMode == COMM_CRC.CRC_CRC8))
+					if ((this.defaultSerialReceData.mCRCMode == CCOMM_CRC.CRC_CHECKSUM) || (this.defaultSerialReceData.mCRCMode == CCOMM_CRC.CRC_CRC8))
 					{
 						crcVal = cmd[this.defaultSerialReceData.mLength];
 					}
-					else if (this.defaultSerialReceData.mCRCMode == COMM_CRC.CRC_CRC16)
+					else if (this.defaultSerialReceData.mCRCMode == CCOMM_CRC.CRC_CRC16)
 					{
 						crcVal = cmd[this.defaultSerialReceData.mLength];
 						crcVal = (crcVal >> 8) + cmd[this.defaultSerialReceData.mLength + 1];
 					}
-					else if (this.defaultSerialReceData.mCRCMode == COMM_CRC.CRC_CRC32)
+					else if (this.defaultSerialReceData.mCRCMode == CCOMM_CRC.CRC_CRC32)
 					{
 						crcVal = cmd[this.defaultSerialReceData.mLength];
 						crcVal = (crcVal >> 8) + cmd[this.defaultSerialReceData.mLength + 1];
 						crcVal = (crcVal >> 8) + cmd[this.defaultSerialReceData.mLength + 2];
 						crcVal = (crcVal >> 8) + cmd[this.defaultSerialReceData.mLength + 3];
 					}
-					if (this.defaultSerialReceData.mCRCMode != COMM_CRC.CRC_NONE)
+					if (this.defaultSerialReceData.mCRCMode != CCOMM_CRC.CRC_NONE)
 					{
 						if (this.defaultSerialReceData.mCRCResult != crcVal)
 						{
@@ -227,7 +227,7 @@ namespace Harry.LabTools.LabComm
 			}
 
 			//---工作状态是忙碌
-			this.defaultSerialSTATE = COMM_STATE.STATE_IDLE;
+			this.defaultSerialSTATE = CCOMM_STATE.STATE_IDLE;
 			//---清空接收缓存区
 			this.defaultSerialPort.DiscardInBuffer();
 			//---清空发送缓存区
@@ -257,7 +257,7 @@ namespace Harry.LabTools.LabComm
 			//---清空错误消息
 			this.defaultSerialMsg = string.Empty;
 			//---工作状态是忙碌
-			this.defaultSerialSTATE = COMM_STATE.STATE_POLLREAD;
+			this.defaultSerialSTATE = CCOMM_STATE.STATE_POLLREAD;
 			// CRC的计算结果
 			UInt32 crcVal = 0;
 			//---数据的读取---阻塞读取
@@ -371,23 +371,23 @@ namespace Harry.LabTools.LabComm
 				if (this.AnalyseReceData(cmd.ToArray()) == true)
 				{
 					//---校验CRC
-					if ((this.defaultSerialReceData.mCRCMode == COMM_CRC.CRC_CHECKSUM) || (this.defaultSerialReceData.mCRCMode == COMM_CRC.CRC_CRC8))
+					if ((this.defaultSerialReceData.mCRCMode == CCOMM_CRC.CRC_CHECKSUM) || (this.defaultSerialReceData.mCRCMode == CCOMM_CRC.CRC_CRC8))
 					{
 						crcVal = cmd[this.defaultSerialReceData.mLength];
 					}
-					else if (this.defaultSerialReceData.mCRCMode == COMM_CRC.CRC_CRC16)
+					else if (this.defaultSerialReceData.mCRCMode == CCOMM_CRC.CRC_CRC16)
 					{
 						crcVal = cmd[this.defaultSerialReceData.mLength];
 						crcVal = (crcVal >> 8) + cmd[this.defaultSerialReceData.mLength + 1];
 					}
-					else if (this.defaultSerialReceData.mCRCMode == COMM_CRC.CRC_CRC32)
+					else if (this.defaultSerialReceData.mCRCMode == CCOMM_CRC.CRC_CRC32)
 					{
 						crcVal = cmd[this.defaultSerialReceData.mLength];
 						crcVal = (crcVal >> 8) + cmd[this.defaultSerialReceData.mLength + 1];
 						crcVal = (crcVal >> 8) + cmd[this.defaultSerialReceData.mLength + 2];
 						crcVal = (crcVal >> 8) + cmd[this.defaultSerialReceData.mLength + 3];
 					}
-					if (this.defaultSerialReceData.mCRCMode != COMM_CRC.CRC_NONE)
+					if (this.defaultSerialReceData.mCRCMode != CCOMM_CRC.CRC_NONE)
 					{
 						if (this.defaultSerialReceData.mCRCResult != crcVal)
 						{
@@ -398,7 +398,7 @@ namespace Harry.LabTools.LabComm
 				}
 			}
 			//---工作状态是忙碌
-			this.defaultSerialSTATE = COMM_STATE.STATE_IDLE;
+			this.defaultSerialSTATE = CCOMM_STATE.STATE_IDLE;
 			//---清空接收缓存区
 			this.defaultSerialPort.DiscardInBuffer();
 			//---清空发送缓存区
@@ -441,14 +441,14 @@ namespace Harry.LabTools.LabComm
 			//---设置设备没有发生变化
 			this.defaultChanged = false;
 			//---检查是否发生设备变化
-			if (this.defaSerialIndexMemu.Count == 0)
+			if (this.defaultSerialIndexMemu.Count == 0)
 			{
 				this.defaultChanged = true;
 			}
-			else if (this.defaSerialIndexMemu.Count > 0)
+			else if (this.defaultSerialIndexMemu.Count > 0)
 			{
 				//---判断连个数组是否相等
-				if (Enumerable.SequenceEqual(_return.ToArray(), this.defaSerialIndexMemu.ToArray())!=true)
+				if (Enumerable.SequenceEqual(_return.ToArray(), this.defaultSerialIndexMemu.ToArray())!=true)
 				{
 					this.defaultChanged = true;
 				}
@@ -471,11 +471,11 @@ namespace Harry.LabTools.LabComm
 			List<string> _return = new List<string>();
 			int i ,j ;
 			//---遍历端口信息
-			for (i = 0; i < this.defaSerialIndexMemu.Count; i++)
+			for (i = 0; i < this.defaultSerialIndexMemu.Count; i++)
 			{
 				for (j = 0; j < argNames.Length; j++)
 				{
-					if (argNames[j].Contains("COM"+this.defaSerialIndexMemu[i].ToString()))
+					if (argNames[j].Contains("COM"+this.defaultSerialIndexMemu[i].ToString()))
 					{
 						_return.Add(argNames[j]);
 						//---结束本次循环
@@ -498,9 +498,9 @@ namespace Harry.LabTools.LabComm
 			string[] argInfo = SystemHardware.GetSerialPort();
 			if ((argNames==null)||(argNames.Length==0))
 			{
-				if (this.defaSerialIndexMemu!=null)
+				if (this.defaultSerialIndexMemu!=null)
 				{
-					this.defaSerialIndexMemu.Clear();
+					this.defaultSerialIndexMemu.Clear();
 				}
 				if (this.defaultSerialInfoMemu != null)
 				{
@@ -509,8 +509,8 @@ namespace Harry.LabTools.LabComm
 			}
 			else
 			{
-				this.defaSerialIndexMemu = this.GetSerialPortIndex(argNames);
-				if ((this.defaSerialIndexMemu != null)&&(this.defaSerialIndexMemu.Count>0))
+				this.defaultSerialIndexMemu = this.GetSerialPortIndex(argNames);
+				if ((this.defaultSerialIndexMemu != null)&&(this.defaultSerialIndexMemu.Count>0))
 				{
 					this.defaultSerialInfoMemu = this.GetSerialPortInfo(argInfo);
 				}

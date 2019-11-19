@@ -27,19 +27,25 @@ namespace Harry.LabTools.LabGenForm
         //由于多次ShowDialog会使OnLoad/OnShown重入，故需设置此标记以供重入时判断
         private bool defaultIsShowDialogAgain=false;
 
-        //边框相关字段
+        //===边框相关字段
         private BorderStyle defaultBorderType = BorderStyle.Fixed3D;
         private Border3DStyle defaultBorder3DStyle=System.Windows.Forms.Border3DStyle.RaisedInner;
         private ButtonBorderStyle defaultBorderSingleStyle = ButtonBorderStyle.Solid;
         private Color defaultBorderColor = Color.DarkGray;
 
-        #endregion
+		/// <summary>
+		/// 是否显示右上角的最大最小和关闭功能
+		/// </summary>
+		private bool defaultControlBox = false;
 
-        #region 属性定义
-        /// <summary>
-        /// 获取或设置边框类型
-        /// </summary>
-        [Description("获取或设置边框类型。")]
+		#endregion
+
+		#region 属性定义
+
+		/// <summary>
+		/// 获取或设置边框类型
+		/// </summary>
+		[Description("获取或设置边框类型。")]
         [DefaultValue(BorderStyle.Fixed3D)]
         public BorderStyle BorderType
         {
@@ -136,30 +142,84 @@ namespace Harry.LabTools.LabGenForm
             }
         }
 
-        #endregion
+		/// <summary>
+		/// 
+		/// </summary>
+		public virtual bool mControlBox
+		{
+			get
+			{
+				return this.defaultControlBox;
+			}
+			set
+			{
+				this.defaultControlBox = value;
+				//---判断是否显示
+				if (this.defaultControlBox == false)
+				{
+					this.CreateParams.Style &= ~0x800000;     //WS_BORDER        去除
+					this.CreateParams.Style &= ~0x400000;     //WS_DLGFRAME      去除
+					base.ControlBox = false;
+				}
+				else
+				{
+					this.CreateParams.Style |= 0x800000;      //WS_BORDER        去除
+					this.CreateParams.Style |= 0x400000;       //WS_DLGFRAME      去除
+					base.ControlBox = true;
+				}
+				//---刷新窗体
+				this.Invalidate();
+			}
+		}
 
-        #region 构造函数
+		#endregion
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public FloatPopupBaseForm()
+		#region 构造函数
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public FloatPopupBaseForm()
         {
             InitializeComponent();
             
             //初始化基类属性
             this.InitBaseProperties();
 
-            //初始化边框相关
-            this.defaultBorderType = BorderStyle.Fixed3D;
-            this.defaultBorder3DStyle = System.Windows.Forms.Border3DStyle.RaisedInner;
-            this.defaultBorderSingleStyle= ButtonBorderStyle.Solid;
-            this.defaultBorderColor= Color.DarkGray;
+			//初始化边框相关
+			this.defaultBorderType = BorderStyle.Fixed3D;
+			this.defaultBorder3DStyle = System.Windows.Forms.Border3DStyle.RaisedInner;
+			this.defaultBorderSingleStyle = ButtonBorderStyle.Solid;
+			this.defaultBorderColor = Color.DarkGray;
 
 			//初始化消息筛选器。添加和移除在显示/隐藏时负责
 			this.defaultMousMessageFilter = new MouseMessageFilter(this);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public FloatPopupBaseForm(bool isControlBox)
+		{
+			InitializeComponent();
+
+			this.defaultControlBox = isControlBox;
+
+			//初始化基类属性
+			this.InitBaseProperties();
+
+			//初始化边框相关
+			this.defaultBorderType = BorderStyle.Fixed3D;
+			this.defaultBorder3DStyle = System.Windows.Forms.Border3DStyle.RaisedInner;
+			this.defaultBorderSingleStyle = ButtonBorderStyle.Solid;
+			this.defaultBorderColor = Color.DarkGray;
+
+			//初始化消息筛选器。添加和移除在显示/隐藏时负责
+			this.defaultMousMessageFilter = new MouseMessageFilter(this);
+
 			
 		}
+
 		#endregion
 
 		#region 析构函数
@@ -323,10 +383,20 @@ namespace Harry.LabTools.LabGenForm
                 prms.Style |= 0x4000000;       //WS_CLIPSIBLINGS
                 prms.Style |= 0x10000;         //WS_TABSTOP
                 prms.Style &= ~0x40000;        //WS_SIZEBOX       去除
-                prms.Style &= ~0x800000;       //WS_BORDER        去除
-                prms.Style &= ~0x400000;       //WS_DLGFRAME      去除
-                //prms.Style &= ~0x20000;      //WS_MINIMIZEBOX   去除
-                //prms.Style &= ~0x10000;      //WS_MAXIMIZEBOX   去除
+				//---判断是否显示
+				if (this.defaultControlBox==false)
+				{
+					prms.Style &= ~0x800000;     //WS_BORDER        去除
+					prms.Style &= ~0x400000;     //WS_DLGFRAME      去除
+				}
+				else
+				{
+					prms.Style |=0x800000;		 //WS_BORDER        去除
+					prms.Style |=0x400000;       //WS_DLGFRAME      去除
+				}
+
+				//prms.Style &= ~0x20000;			//WS_MINIMIZEBOX   去除
+                //prms.Style &= ~0x10000;			//WS_MAXIMIZEBOX   去除
 
                 prms.ExStyle = 0;
                 //prms.ExStyle |= 0x1;         //WS_EX_DLGMODALFRAME 立体边框
@@ -432,17 +502,17 @@ namespace Harry.LabTools.LabGenForm
             //---绘制3D边框
             if (this.defaultBorderType == BorderStyle.Fixed3D)
             {
-                ControlPaint.DrawBorder3D(e.Graphics, ClientRectangle, Border3DStyle);
+                ControlPaint.DrawBorder3D(e.Graphics, ClientRectangle, this.defaultBorder3DStyle);
             }
             //---绘制线型边框
             else if (this.defaultBorderType == BorderStyle.FixedSingle)
             {
-                ControlPaint.DrawBorder(e.Graphics, ClientRectangle, BorderColor, BorderSingleStyle);
+                ControlPaint.DrawBorder(e.Graphics, ClientRectangle, this.defaultBorderColor, this.defaultBorderSingleStyle);
             }
             else
             {
 
-                ControlPaint.DrawBorder(e.Graphics, ClientRectangle, BorderColor, ButtonBorderStyle.Solid);
+                ControlPaint.DrawBorder(e.Graphics, ClientRectangle, this.defaultBorderColor, ButtonBorderStyle.Solid);
             }
         }
 
@@ -506,7 +576,7 @@ namespace Harry.LabTools.LabGenForm
             this.SetLocationAndOwner(controlOrItem, offset);
 			//---延时等待句柄的获取，暂时不知道怎么优化，频繁的操作控件，这里会发生崩溃
 			//---调试发现，如果再这里等待，发生崩溃的现象减少
-			LabGenFunc.CGenFuncDelay.GenFuncDelayms(100);
+			LabGenFunc.CGenFuncDelay.GenFuncDelayms(150);
 			//---返回结果
 			DialogResult _return = DialogResult.None;
 			try
@@ -624,166 +694,177 @@ namespace Harry.LabTools.LabGenForm
         /// </summary>
         private void InitBaseProperties()
         {
-            base.ControlBox = false;                           //重要
+           // base.ControlBox = false;                           //重要
             //必须得是SizableToolWindow才能支持调整大小的同时，不受SystemInformation.MinWindowTrackSize的限制
             base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             base.Text = string.Empty;                          //重要
-            base.HelpButton = false;
-            base.Icon = null;
-            base.IsMdiContainer = false;
-            base.MaximizeBox = false;
-            base.MinimizeBox = false;
-            base.ShowIcon = false;
-            base.ShowInTaskbar = false;
-            base.StartPosition = FormStartPosition.Manual;     //重要
-            base.TopMost = false;
-            base.WindowState = FormWindowState.Normal;
+			base.HelpButton = false;
+			base.IsMdiContainer = false;
+			base.MaximizeBox = false;
+			base.MinimizeBox = false;
+			if (this.defaultControlBox==false)
+			{
+				base.Icon = null;
+				base.ShowIcon = false;
+			}
 
-            this.Leave += new EventHandler(this.CheckToHide);
+			base.ShowInTaskbar = false;
+			base.StartPosition = FormStartPosition.Manual;     //重要
+			base.TopMost = false;
+			base.WindowState = FormWindowState.Normal;
+
+			this.Leave += new EventHandler(this.CheckToHide);
             this.Deactivate += new System.EventHandler(this.CheckToHide);
 
         }
+		
+		/// <summary>
+		/// 屏蔽原方法
+		/// </summary>
+		/// <returns></returns>
+		[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+		[Obsolete("请使用别的重载！", true)]
+		public new DialogResult ShowDialog()
+		{
+			throw new NotImplementedException();
+		}
 
-        /// <summary>
-        /// 屏蔽原方法
-        /// </summary>
-        /// <returns></returns>
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("请使用别的重载！", true)]
-        public new DialogResult ShowDialog()
-        {
-            throw new NotImplementedException();
-        }
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="owner"></param>
+		/// <returns></returns>
+		[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+		[Obsolete("请使用别的重载！", true)]
+		public new DialogResult ShowDialog(IWin32Window owner)
+		{
+			throw new NotImplementedException();
+		}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="owner"></param>
-        /// <returns></returns>
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("请使用别的重载！", true)]
-        public new DialogResult ShowDialog(IWin32Window owner)
-        {
-            throw new NotImplementedException();
-        }
+		/// <summary>
+		/// 
+		/// </summary>
+		[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+		[Obsolete("请使用别的重载！", true)]
+		public new void Show()
+		{
+			throw new NotImplementedException();
+		}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("请使用别的重载！", true)]
-        public new void Show()
-        {
-            throw new NotImplementedException();
-        }
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="owner"></param>
+		[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+		[Obsolete("请使用别的重载！", true)]
+		public new void Show(IWin32Window owner)
+		{
+			throw new NotImplementedException();
+		}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="owner"></param>
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("请使用别的重载！", true)]
-        public new void Show(IWin32Window owner)
-        {
-            throw new NotImplementedException();
-        }
+		///// <summary>
+		///// 屏蔽原属性
+		///// </summary>
+		//[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+		//[Obsolete("禁用该属性！", true)]
+		//public new bool ControlBox
+		//{
+		//    get
+		//    {
+		//        return false;
+		//    }
+		//    set
+		//    {
+		//    }
+		//}
 
-        /// <summary>
-        /// 屏蔽原属性
-        /// </summary>
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("禁用该属性！", true)]
-        public new bool ControlBox
-        {
-            get
-            {
-                return false;
-            }
-            set
-            {
-            }
-        }
+		/// <summary>
+		/// 
+		/// </summary>
+		[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+		[Obsolete("设置边框请使用Border相关属性！", true)]
+		public new FormBorderStyle FormBorderStyle
+		{
+			get
+			{
+				return System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+			}
+			set
+			{
+			}
+		}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("设置边框请使用Border相关属性！", true)]
-        public new FormBorderStyle FormBorderStyle
-        {
-            get
-            {
-                return System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            }
-            set
-            {
-            }
-        }
+		///// <summary>
+		///// 
+		///// </summary>
+		//[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+		//[Obsolete("禁用该属性！", true)]
+		//public override sealed string Text
+		//{
+		//    get
+		//    {
+		//        return string.Empty;
+		//    }
+		//    set
+		//    {
+		//    }
+		//}
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        //[Obsolete("禁用该属性！", true)]
-        //public override sealed string Text
-        //{
-        //    get
-        //    {
-        //        return string.Empty;
-        //    }
-        //    set
-        //    {
-        //    }
-        //}
+		/// <summary>
+		/// 
+		/// </summary>
+		[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+		[Obsolete("禁用该属性！", true)]
+		public new bool HelpButton
+		{
+			get
+			{
+				return false;
+			}
+			set
+			{
+			}
+		}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("禁用该属性！", true)]
-        public new bool HelpButton
-        {
-            get
-            {
-                return false;
-            }
-            set
-            {
-            }
-        }
+		/// <summary>
+		/// 
+		/// </summary>
+		[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+		[Obsolete("禁用该属性！", true)]
+		public new Image Icon
+		{
+			get
+			{
+				if (this.defaultControlBox == false)
+				{
+					return null;
+				}
+				else
+				{
+					return (Image)base.Icon.ToBitmap();
+				}
+			}
+			set
+			{
+			}
+		}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("禁用该属性！", true)]
-        public new Image Icon
-        {
-            get
-            {
-                return null;
-            }
-            set
-            {
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("禁用该属性！", true)]
-        public new bool IsMdiContainer
-        {
-            get
-            {
-                return false;
-            }
-            set
-            {
-            }
-        }
-
+		/// <summary>
+		/// 
+		/// </summary>
+		[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+		[Obsolete("禁用该属性！", true)]
+		public new bool IsMdiContainer
+		{
+			get
+			{
+				return false;
+			}
+			set
+			{
+			}
+		}
+		
         /// <summary>
         /// 
         /// </summary>
@@ -816,92 +897,92 @@ namespace Harry.LabTools.LabGenForm
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("禁用该属性！", true)]
-        public new bool ShowIcon
-        {
-            get
-            {
-                return false;
-            }
-            set
-            {
-            }
-        }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("禁用该属性！", true)]
-        public new bool ShowInTaskbar
-        {
-            get
-            {
-                return false;
-            }
-            set
-            {
-            }
-        }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("禁用该属性！", true)]
-        public new FormStartPosition StartPosition
-        {
-            get
-            {
-                return FormStartPosition.Manual;
-            }
-            set
-            {
-            }
-        }
+		/// <summary>
+		/// 
+		/// </summary>
+		[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+		[Obsolete("禁用该属性！", true)]
+		public new bool ShowIcon
+		{
+			get
+			{
+				return this.defaultControlBox;
+			}
+			set
+			{
+			}
+		}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("禁用该属性！", true)]
-        public new bool TopMost
-        {
-            get
-            {
-                return false;
-            }
-            set
-            {
-            }
-        }
+		/// <summary>
+		/// 
+		/// </summary>
+		[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+		[Obsolete("禁用该属性！", true)]
+		public new bool ShowInTaskbar
+		{
+			get
+			{
+				return false;
+			}
+			set
+			{
+			}
+		}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("禁用该属性！", true)]
-        public new FormWindowState WindowState
-        {
-            get
-            {
-                return FormWindowState.Normal;
-            }
-            set
-            {
-            }
-        }
+		/// <summary>
+		/// 
+		/// </summary>
+		[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+		[Obsolete("禁用该属性！", true)]
+		public new FormStartPosition StartPosition
+		{
+			get
+			{
+				return FormStartPosition.Manual;
+			}
+			set
+			{
+			}
+		}
 
-        #endregion
+		/// <summary>
+		/// 
+		/// </summary>
+		[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+		[Obsolete("禁用该属性！", true)]
+		public new bool TopMost
+		{
+			get
+			{
+				return false;
+			}
+			set
+			{
+			}
+		}
 
-        /// <summary>
-        /// 程序鼠标消息筛选器
-        /// </summary>
-        private class MouseMessageFilter : IMessageFilter
+		/// <summary>
+		/// 
+		/// </summary>
+		[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+		[Obsolete("禁用该属性！", true)]
+		public new FormWindowState WindowState
+		{
+			get
+			{
+				return FormWindowState.Normal;
+			}
+			set
+			{
+			}
+		}
+		
+		#endregion
+
+		/// <summary>
+		/// 程序鼠标消息筛选器
+		/// </summary>
+		private class MouseMessageFilter : IMessageFilter
         {
             #region 变量定义
             /// <summary>

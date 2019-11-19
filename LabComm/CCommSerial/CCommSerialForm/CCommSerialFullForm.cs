@@ -32,7 +32,7 @@ namespace Harry.LabTools.LabComm
 		/// <summary>
 		/// 接收数据校验方式
 		/// </summary>
-		public override COMM_CRC mRxCRC
+		public override CCOMM_CRC mRxCRC
 		{
 			get
 			{
@@ -43,7 +43,7 @@ namespace Harry.LabTools.LabComm
 		/// <summary>
 		/// 发送数据校验方式
 		/// </summary>
-		public override COMM_CRC mTxCRC
+		public override CCOMM_CRC mTxCRC
 		{
 			get
 			{

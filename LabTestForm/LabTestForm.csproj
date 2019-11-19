@@ -139,6 +139,10 @@
       <Project>{72D5A1AE-5BD4-4DC1-AF94-D760DB573C10}</Project>
       <Name>LabHexEdit</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LabMcuFunc\LabMcuFunc.csproj">
+      <Project>{22AE2121-9EBB-4772-9C2B-10BB545B4D2F}</Project>
+      <Name>LabMcuFunc</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

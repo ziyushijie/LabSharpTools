@@ -34,6 +34,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,32 +43,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CMcuBase\CMcuBase.cs" />
-    <Compile Include="CMcuBase\CMcuBaseData.cs" />
-    <Compile Include="CMcuBase\CMcuBaseFunc.cs" />
-    <Compile Include="CMcuBase\CMcuBaseParam.cs" />
-    <Compile Include="CMcuHVPP\CMcuHVPP.cs" />
-    <Compile Include="CMcuHVPP\CMcuHVPPData.cs" />
-    <Compile Include="CMcuHVPP\CMcuHVPPFunc.cs" />
-    <Compile Include="CMcuHVPP\CMcuHVPPParam.cs" />
-    <Compile Include="CMcuHVSP\CMcuHVSP.cs" />
-    <Compile Include="CMcuHVSP\CMcuHVSPData.cs" />
-    <Compile Include="CMcuHVSP\CMcuHVSPFunc.cs" />
-    <Compile Include="CMcuHVSP\CMcuHVSPParam.cs" />
-    <Compile Include="CMcuInfo\CMcuInfoAVR8BitsParam.cs" />
-    <Compile Include="CMcuInfo\CMcuInfoBaseParam.cs" />
-    <Compile Include="CMcuISP\CMcuISPFunc.cs" />
-    <Compile Include="CMcuISP\CMcuISP.cs" />
-    <Compile Include="CMcuISP\CMcuISPData.cs" />
-    <Compile Include="CMcuISP\CMcuISPParam.cs" />
-    <Compile Include="CMcuJTAG\CMcuJTAG.cs" />
-    <Compile Include="CMcuJTAG\CMcuJTAGData.cs" />
-    <Compile Include="CMcuJTAG\CMcuJTAGFunc.cs" />
-    <Compile Include="CMcuJTAG\CMcuJTAGParam.cs" />
-    <Compile Include="IMcuInfo\IMcuInfoData.cs" />
-    <Compile Include="IMcuInfo\IMcuInfoEvent.cs" />
-    <Compile Include="IMcuInfo\IMcuInfoFunc.cs" />
-    <Compile Include="IMcuInfo\IAVR8BitsMcuInfoParam.cs" />
+    <Compile Include="CMcuFuncBase\CMcuFuncBase.cs" />
+    <Compile Include="CMcuFuncBase\CMcuFuncBaseData.cs" />
+    <Compile Include="CMcuFuncBase\CMcuFuncBaseFunc.cs" />
+    <Compile Include="CMcuFuncBase\CMcuFuncBaseParam.cs" />
+    <Compile Include="CMcuFuncAVR8BitsHVPP\CMcuFuncAVR8BitsHVPP.cs" />
+    <Compile Include="CMcuFuncAVR8BitsHVPP\CMcuFuncAVR8BitsHVPPData.cs" />
+    <Compile Include="CMcuFuncAVR8BitsHVPP\CMcuFuncAVR8BitsHVPPFunc.cs" />
+    <Compile Include="CMcuFuncAVR8BitsHVPP\CMcuFuncAVR8BitsHVPPParam.cs" />
+    <Compile Include="CMcuFuncAVR8BitsHVSP\CMcuFuncAVR8BitsHVSP.cs" />
+    <Compile Include="CMcuFuncAVR8BitsHVSP\CMcuFuncAVR8BitsHVSPData.cs" />
+    <Compile Include="CMcuFuncAVR8BitsHVSP\CMcuFuncAVR8BitsHVSPFunc.cs" />
+    <Compile Include="CMcuFuncAVR8BitsHVSP\CMcuFuncAVR8BitsHVSPParam.cs" />
+    <Compile Include="CMcuFuncInfo\CMcuFuncInfoAVR8BitsParam.cs" />
+    <Compile Include="CMcuFuncInfo\CMcuFuncInfoBaseParam.cs" />
+    <Compile Include="CMcuFuncAVR8BitsISP\CMcuFuncAVR8BitsISPFunc.cs" />
+    <Compile Include="CMcuFuncAVR8BitsISP\CMcuFuncAVR8BitsISP.cs" />
+    <Compile Include="CMcuFuncAVR8BitsISP\CMcuFuncAVR8BitsISPData.cs" />
+    <Compile Include="CMcuFuncAVR8BitsISP\CMcuFuncAVR8BitsISPParam.cs" />
+    <Compile Include="CMcuFuncAVR8BitsJTAG\CMcuFuncAVR8BitsJTAG.cs" />
+    <Compile Include="CMcuFuncAVR8BitsJTAG\CMcuFuncAVR8BitsJTAGData.cs" />
+    <Compile Include="CMcuFuncAVR8BitsJTAG\CMcuFuncAVR8BitsJTAGFunc.cs" />
+    <Compile Include="CMcuFuncAVR8BitsJTAG\CMcuFuncAVR8BitsJTAGParam.cs" />
+    <Compile Include="IMcuFuncInfo\IMcuFuncInfoData.cs" />
+    <Compile Include="IMcuFuncInfo\IMcuFuncInfoEvent.cs" />
+    <Compile Include="IMcuFuncInfo\IMcuFuncInfoFunc.cs" />
+    <Compile Include="IMcuFuncInfo\IMcuFuncInfoAVR8BitsParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

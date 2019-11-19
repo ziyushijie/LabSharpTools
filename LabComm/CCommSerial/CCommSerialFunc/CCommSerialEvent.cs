@@ -94,17 +94,17 @@ namespace Harry.LabTools.LabComm
 			if ((str == "SerialDataReceivedEventArgs") || (str == "System.IO.Ports.SerialDataReceivedEventArgs"))
 			{
 				if ((this.defaultSerialPort != null) && (this.defaultSerialPort.IsOpen == true) &&
-					(this.defaultSerialSTATE == COMM_STATE.STATE_IDLE))
+					(this.defaultSerialSTATE == CCOMM_STATE.STATE_IDLE))
 				{
 					//---设置状态为事件读取
-					this.defaultSerialSTATE = COMM_STATE.STATE_EVENTREAD;
+					this.defaultSerialSTATE = CCOMM_STATE.STATE_EVENTREAD;
 					//---执行委托函数,数据接收函数
 					if (this.EventCCommReceData!=null)
 					{
 						this.EventCCommReceData?.Invoke(sender, e);
 					}					
 					//---设置状态为空闲模式
-					this.defaultSerialSTATE = COMM_STATE.STATE_IDLE;
+					this.defaultSerialSTATE = CCOMM_STATE.STATE_IDLE;
 				}
 			}
 		}
