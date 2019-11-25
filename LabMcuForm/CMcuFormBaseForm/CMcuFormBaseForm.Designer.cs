@@ -1,6 +1,6 @@
 ﻿namespace LabMcuForm
 {
-	partial class CMcuFormBase
+	partial class CMcuFormBaseForm
 	{
 		/// <summary>
 		/// Required designer variable.

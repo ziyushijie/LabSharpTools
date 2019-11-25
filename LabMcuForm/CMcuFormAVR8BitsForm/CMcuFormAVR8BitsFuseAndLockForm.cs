@@ -1,0 +1,183 @@
+﻿using Harry.LabTools.LabGenForm;
+using Harry.LabTools.LabMcuFunc;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace LabMcuForm
+{
+	public partial class CMcuFormAVR8BitsFuseAndLockForm :CMcuFormBaseForm
+	{
+
+		#region 变量定义
+
+		/// <summary>
+		/// MCU功能的基类
+		/// </summary>
+		private CMcuFuncBase defaultCMcuFunc = new CMcuFuncBase();
+
+		#endregion
+
+		#region 属性定义
+
+		/// <summary>
+		/// MCU功能的基类
+		/// </summary>
+		public virtual CMcuFuncBase mCMcuFunc
+		{
+			get
+			{
+				return this.defaultCMcuFunc;
+			}
+		}
+
+		#endregion
+
+		#region 构造函数
+
+		/// <summary>
+		/// 无参构造函数
+		/// </summary>
+		public CMcuFormAVR8BitsFuseAndLockForm ()
+		{
+			InitializeComponent();
+			//---注册事件函数
+			this.RegistrationEventHandler();
+		}
+
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		/// <param name="chipName"></param>
+		public CMcuFormAVR8BitsFuseAndLockForm(string chipName)
+		{
+			InitializeComponent();
+			if (this.defaultCMcuFunc==null)
+			{
+				this.defaultCMcuFunc = new CMcuFuncBase();
+			}
+			//---初始化芯片信息
+			this.defaultCMcuFunc.mMcuInfoParam.McuTypeInfo(chipName);
+			//---初始化控件信息
+			this.cMcuControlAVR8BitsFuseAndLock1.Init(this.defaultCMcuFunc);
+			//---注册事件函数
+			this.RegistrationEventHandler();
+		}
+
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		/// <param name="chipCMcue"></param>
+		public CMcuFormAVR8BitsFuseAndLockForm(CMcuFuncBase chipCMcue)
+		{
+			InitializeComponent();
+			//---检查自身类是否为空
+			if (this.defaultCMcuFunc == null)
+			{
+				this.defaultCMcuFunc = new CMcuFuncBase();
+			}
+			//---检查传递类是否为空
+			if (chipCMcue!=null)
+			{
+				this.defaultCMcuFunc = chipCMcue;
+				//---初始化控件信息
+				this.cMcuControlAVR8BitsFuseAndLock1.Init(this.defaultCMcuFunc);
+			}
+			//---注册事件函数
+			this.RegistrationEventHandler();
+		}
+
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		/// <param name="chipName"></param>
+		/// <param name="chipCMcue"></param>
+		public CMcuFormAVR8BitsFuseAndLockForm(string chipName,CMcuFuncBase chipCMcue)
+		{
+			InitializeComponent();
+			//---检验对象是否存在
+			if (this.defaultCMcuFunc == null)
+			{
+				this.defaultCMcuFunc = new CMcuFuncBase();
+			}
+			this.defaultCMcuFunc = chipCMcue;
+			//---初始化芯片信息
+			this.defaultCMcuFunc.mMcuInfoParam.McuTypeInfo(chipName);
+			//---初始化控件信息
+			this.cMcuControlAVR8BitsFuseAndLock1.Init(this.defaultCMcuFunc);
+			//---注册事件函数
+			this.RegistrationEventHandler();
+		}
+		#endregion
+
+		#region 公共函数
+
+		#endregion
+
+		#region 保护函数
+
+		#endregion
+
+		#region 私有函数
+
+		/// <summary>
+		/// 注册事件函数
+		/// </summary>
+		private void RegistrationEventHandler()
+		{
+			this.FormClosing += new FormClosingEventHandler(this.Form_FormClosing);
+		}
+
+		#endregion
+
+		#region 事件函数
+
+		/// <summary>
+		/// 窗体关闭事件
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Form_FormClosing(object sender, EventArgs e)
+		{
+			//---返回操作完成状态
+			this.DialogResult = System.Windows.Forms.DialogResult.OK;
+		}
+
+		#endregion
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			this.defaultCMcuFunc.mMcuInfoParam.McuTypeInfo("atmega8");
+			this.cMcuControlAVR8BitsFuseAndLock1.Init(this.defaultCMcuFunc);
+		}
+
+		private void button2_Click(object sender, EventArgs e)
+		{
+			//---创建窗体
+			CMcuFormAVR8BitsFuseAndLockForm cMcuForm = new CMcuFormAVR8BitsFuseAndLockForm();
+			//---C# 等待另外一个窗体关闭，再进行主线程的代码
+			if (cMcuForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+			{
+				this.defaultCMcuFunc = cMcuForm.mCMcuFunc;
+				this.cMcuControlAVR8BitsFuseAndLock1.Init(this.defaultCMcuFunc);
+			}
+			//---资源释放
+			cMcuForm.Dispose();
+			
+			//if (cMcuForm.ShowDialog(this.button2,-cMcuForm.Width/2, -cMcuForm.Height) == )
+			//{
+
+			//}
+			//if (cMcuForm.ShowDialog()== System.Windows.Forms.DialogResult.OK)
+			//{
+
+			//}
+		}
+	}
+}

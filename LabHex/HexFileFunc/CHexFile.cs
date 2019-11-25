@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Harry.LabTools.LabHexEdit
 {
-	public partial  class CHexFile
+	public partial class CHexFile
 	{
 		#region 变量定义
 
@@ -25,6 +25,21 @@ namespace Harry.LabTools.LabHexEdit
 		/// 数据是否有效
 		/// </summary>
 		private bool defaultIsOK = false;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private ushort defaultCS = 0;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private ushort defaultIP = 0;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private uint defaultEIP = 0;
 
 		#endregion
 
@@ -49,6 +64,40 @@ namespace Harry.LabTools.LabHexEdit
 			get
 			{
 				return this.defaultLogMessage;
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public virtual ushort mCS
+		{
+			get
+			{
+				return this.defaultCS;
+			}
+		}
+		
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public virtual ushort mIP
+		{
+			get
+			{
+				return this.defaultIP;
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public virtual uint mEIP
+		{
+			get
+			{
+				return this.defaultEIP;
 			}
 		}
 
@@ -118,7 +167,7 @@ namespace Harry.LabTools.LabHexEdit
 			{
 				long _return = 0;
 				HexType lastHexType = HexType.DATA_RECORD;
-				long addrTemp=0;
+				long tempAddr=0;
 				byte[] buffer = null;
 				if ((this.defaultCHexLine == null) || (this.defaultCHexLine.Count == 0))
 				{
@@ -133,15 +182,15 @@ namespace Harry.LabTools.LabHexEdit
 						{
 							case HexType.DATA_RECORD:                           //0
 								//---当前数据的地址，不包含扩展线性地址
-								addrTemp = (long)(this.defaultCHexLine[i].Addr + this.defaultCHexLine[i].Length);
-								//---数据记录文件
+								tempAddr = (long)(this.defaultCHexLine[i].Addr + this.defaultCHexLine[i].Length);
+								//---用来标识数据记录文件,并校验数据地址是否超出64K
 								if ((lastHexType == HexType.DATA_RECORD)||((_return&0xFFFF0000)==0))
 								{
 									//---保留数据地址为最后最大的数据地址，避免某些编译器编译后的固件，数据信息的地址不是递增的
 									//---理论上Hex文件的数据地址是递增模式的，但是某些编译器会存在乱序模式
-									if (addrTemp > _return)
+									if (tempAddr > _return)
 									{
-										_return = addrTemp;
+										_return = tempAddr;
 									}
 								}
 								//---用来标识扩展线性地址的记录
@@ -149,14 +198,15 @@ namespace Harry.LabTools.LabHexEdit
 								{
 									//---保留数据地址为最后最大的数据地址，避免某些编译器编译后的固件，数据信息的地址不是递增的
 									//---理论上Hex文件的数据地址是递增模式的，但是某些编译器会存在乱序模式
-									if (addrTemp > (_return & 0xFFFF))
+									if (tempAddr > (_return & 0xFFFF))
 									{
-										_return = (_return & 0xFFFF0000) + addrTemp;
+										_return = (_return & 0xFFFF0000) + tempAddr;
 									}
 								}
+								//---是其他格式的数据信息
 								else
 								{
-									_return = (_return & 0xFFFF0000) + addrTemp;//(long)(this.defaultCHexLine[i].Addr + this.defaultCHexLine[i].Length);
+									_return = (_return & 0xFFFF0000) + tempAddr;//(long)(this.defaultCHexLine[i].Addr + this.defaultCHexLine[i].Length);
 								}
 								//---将数据地址修改为实际对应的地址
 								(this.defaultCHexLine[i].Addr) += (_return & 0xFFFF0000);
@@ -177,7 +227,8 @@ namespace Harry.LabTools.LabHexEdit
 									this.defaultCHexLine[i].InfoData[0]
 								};
 								_return = BitConverter.ToUInt32(buffer, 0);
-								_return <<= 4;
+								this.defaultCS = (ushort)_return;
+								this.defaultIP = (ushort)(_return >> 16);
 								lastHexType = HexType.START_SEGMENT_ADDRESS_RECORD;
 								break;
 							case HexType.EXTEND_LINEAR_ADDRESS_RECORD:			//4
@@ -191,10 +242,14 @@ namespace Harry.LabTools.LabHexEdit
 							case HexType.START_LINEAR_ADDRESS_RECORD:			//5
 								buffer = new byte[4]
 								{
-									this.defaultCHexLine[i].InfoData[3], this.defaultCHexLine[i].InfoData[2], this.defaultCHexLine[i].InfoData[1],
-									this.defaultCHexLine[i].InfoData[0]
+									//this.defaultCHexLine[i].InfoData[3], this.defaultCHexLine[i].InfoData[2], this.defaultCHexLine[i].InfoData[1],
+									//this.defaultCHexLine[i].InfoData[0]
+									this.defaultCHexLine[i].InfoData[0], this.defaultCHexLine[i].InfoData[1],
+									this.defaultCHexLine[i].InfoData[2], this.defaultCHexLine[i].InfoData[3]
 								};
-								//_return = BitConverter.ToUInt32(buffer, 0);
+								_return = BitConverter.ToUInt32(buffer, 0);
+								this.defaultEIP =(uint) _return;
+								lastHexType = HexType.START_LINEAR_ADDRESS_RECORD;
 								break;
 							default:
 								break;
@@ -353,34 +408,17 @@ namespace Harry.LabTools.LabHexEdit
 				{
 					case HexType.DATA_RECORD:
 						//---拷贝数据
-						//Array.Copy(this.defaultCHexLine[i].InfoData, 0, _return, (baseAddr+ this.defaultCHexLine[i].Addr), this.defaultCHexLine[i].Length);
 						Array.Copy(this.defaultCHexLine[i].InfoData, 0, _return, (this.defaultCHexLine[i].Addr), this.defaultCHexLine[i].Length);
 						break;
-
 					case HexType.END_OF_FILE_RECORD:
 						break;
 					case HexType.EXTEND_SEGMENT_ADDRESS_RECORD:
-						////---获取数据的地址
-						//buffer = new byte[2] { this.defaultCHexLine[i].InfoData[1], this.defaultCHexLine[i].InfoData[0] };
-						//baseAddr = BitConverter.ToUInt16(buffer, 0);
-						//baseAddr <<= 4;
 						break;
 					case HexType.START_SEGMENT_ADDRESS_RECORD:
-						////---获取数据的地址
-						//buffer = new byte[4] { this.defaultCHexLine[i].InfoData[3], this.defaultCHexLine[i].InfoData[2], this.defaultCHexLine[i].InfoData[1], this.defaultCHexLine[i].InfoData[0] };
-						//baseAddr = BitConverter.ToUInt32(buffer, 0);
-						//baseAddr <<= 4;
 						break;
 					case HexType.EXTEND_LINEAR_ADDRESS_RECORD:
-						//---获取数据的地址
-						//buffer = new byte[2] { this.defaultCHexLine[i].InfoData[1], this.defaultCHexLine[i].InfoData[0] };
-						//baseAddr = BitConverter.ToUInt16(buffer, 0);
-						//baseAddr <<= 16;
 						break;
 					case HexType.START_LINEAR_ADDRESS_RECORD:
-						////---获取数据的地址
-						//buffer = new byte[4] { this.defaultCHexLine[i].InfoData[3], this.defaultCHexLine[i].InfoData[2], this.defaultCHexLine[i].InfoData[1], this.defaultCHexLine[i].InfoData[0] };
-						//baseAddr = BitConverter.ToUInt32(buffer, 0);
 						break;
 					default:
 						return null;

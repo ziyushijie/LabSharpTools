@@ -1,4 +1,4 @@
-﻿namespace Harry.LabTools.LabGenForm
+﻿namespace Harry.LabTools
 {
     partial class FloatPopupBaseForm
     {

@@ -598,9 +598,9 @@ namespace LabTestForm
 			// cCommBaseControl1
 			// 
 			this.cCommBaseControl1.Location = new System.Drawing.Point(12, 12);
-			this.cCommBaseControl1.mCCOMM = null;
-			this.cCommBaseControl1.mCCommRichTextBox = null;
-			this.cCommBaseControl1.mIsShowCommParam = true;
+			//this.cCommBaseControl1.mCCOMM = null;
+			//this.cCommBaseControl1.mCCommRichTextBox = null;
+			//this.cCommBaseControl1.mIsShowCommParam = true;
 			this.cCommBaseControl1.Name = "cCommBaseControl1";
 			this.cCommBaseControl1.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
 			this.cCommBaseControl1.Size = new System.Drawing.Size(262, 56);

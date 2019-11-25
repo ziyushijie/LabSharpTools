@@ -37,8 +37,8 @@ namespace LabTestForm
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			this.usedComm = new CCommSerial();
-			this.cCommBaseControl1.Init(this.usedComm);
+			//this.usedComm = new CCommBase();//new CCommSerial();
+			//this.cCommBaseControl1.Init(this.usedComm);
 		}
 
 		private void button1_Click(object sender, EventArgs e)

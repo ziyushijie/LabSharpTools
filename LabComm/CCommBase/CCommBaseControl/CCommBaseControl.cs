@@ -13,12 +13,12 @@ namespace Harry.LabTools.LabComm
 {
     public partial class CCommBaseControl : UserControl
     {
-        #region 变量定义
+		#region 变量定义
 
 		/// <summary>
 		/// 使用的端口
 		/// </summary>
-        private CCommBase defaultCCOMM = null;
+		private CCommBase defaultCCOMM = new CCommBase();//null;
 
 		/// <summary>
 		/// 是否显示端口配置参数
@@ -374,7 +374,6 @@ namespace Harry.LabTools.LabComm
                     this.defaultCCOMM = new CCommBase();
                 }
                 this.defaultCCOMM = ccomm;
-
                 this.defaultCCOMM.Init(this.comboBox_COMM, msg);
             }
         }

@@ -10,24 +10,28 @@ using System.Windows.Forms;
 
 namespace LabMcuForm
 {
-	public partial class CMcuFormBase : Form
+	public partial class CMcuFormAVR8BitsForm : Form
 	{
+
 		#region 变量定义
 
 		#endregion
+
 		#region 属性定义
 
 		#endregion
 
 		#region 构造函数
-		
+
 		/// <summary>
 		/// 
 		/// </summary>
-		public CMcuFormBase()
+		public CMcuFormAVR8BitsForm()
 		{
 			InitializeComponent();
 		}
+
+
 
 		#endregion
 

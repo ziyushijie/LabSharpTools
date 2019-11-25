@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Harry.LabTools.LabGenForm
+namespace Harry.LabTools
 {
     public partial class FloatPopupBaseForm : Form
     {

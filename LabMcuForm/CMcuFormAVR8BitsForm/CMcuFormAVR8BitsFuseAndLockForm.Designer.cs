@@ -1,6 +1,6 @@
 ﻿namespace LabMcuForm
 {
-	partial class CMcuFormAVR8BitsFuseAndLock
+	partial class CMcuFormAVR8BitsFuseAndLockForm
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -29,7 +29,8 @@
 		private void InitializeComponent()
 		{
 			this.button1 = new System.Windows.Forms.Button();
-			this.cMcuControlAVR8BitsFuseAndLock1 = new LabMcuForm.CMcuFormAVR8Bits.CMcuControlAVR8BitsFuseAndLock();
+			this.cMcuControlAVR8BitsFuseAndLock1 = new LabMcuForm.CMcuFormAVR8Bits.CMcuFormAVR8BitsFuseAndLockControl();
+			this.button2 = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// button1
@@ -53,16 +54,22 @@
 			this.cMcuControlAVR8BitsFuseAndLock1.Size = new System.Drawing.Size(655, 305);
 			this.cMcuControlAVR8BitsFuseAndLock1.TabIndex = 2;
 			// 
-			// CMcuFormAVR8BitsFuseAndLock
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(401, 368);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(75, 23);
+			this.button2.TabIndex = 3;
+			this.button2.Text = "button2";
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.button2_Click);
+			// 
+			// CMcuFormAVR8BitsFuseAndLockForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(656, 496);
-			this.Controls.Add(this.cMcuControlAVR8BitsFuseAndLock1);
-			this.Controls.Add(this.button1);
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
-			this.Name = "CMcuFormAVR8BitsFuseAndLock";
+			this.Name = "CMcuFormAVR8BitsFuseAndLockForm";
 			this.Text = "Fuse&Lock";
 			this.ResumeLayout(false);
 
@@ -70,6 +77,7 @@
 
 		#endregion
 		private System.Windows.Forms.Button button1;
-		private CMcuFormAVR8Bits.CMcuControlAVR8BitsFuseAndLock cMcuControlAVR8BitsFuseAndLock1;
+		private CMcuFormAVR8Bits.CMcuFormAVR8BitsFuseAndLockControl cMcuControlAVR8BitsFuseAndLock1;
+		private System.Windows.Forms.Button button2;
 	}
 }

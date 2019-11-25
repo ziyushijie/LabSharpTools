@@ -675,6 +675,583 @@ namespace Harry.LabTools.LabMcuFunc
 								oscValue1, oscValue2, oscValue3, oscValue4);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="clb"></param>
+		/// <param name="fuseBits"></param>
+		public void FuseCheckedListBoxBitsRefresh(CheckedListBox clb, TextBox tb, int index)
+		{
+			int temp = 0;
+			for (int i = 0; i < 8; i++)
+			{
+				if (clb.InvokeRequired)
+				{
+					clb.BeginInvoke((EventHandler)
+							 //cbb.Invoke((EventHandler)
+							 (delegate
+							 {
+								 if (clb.Items[i].ToString() == "NC")
+								 {
+									 temp |= (1 << (7 - i));
+								 }
+								 else
+								 {
+									 string str = clb.Items[i].ToString();
+									 if (clb.GetItemCheckState(i) == CheckState.Checked)
+									 {
+										 temp |= (1 << (7 - i));
+									 }
+									 else
+									 {
+										 temp &= ~(1 << (7 - i));
+									 }
+								 }
+							 }));
+				}
+				else
+				{
+					if (clb.Items[i].ToString() == "NC")
+					{
+						temp |= (1 << (7 - i));
+					}
+					else
+					{
+						string str = clb.Items[i].ToString();
+						if (clb.GetItemCheckState(i) == CheckState.Checked)
+						{
+							temp |= (1 << (7 - i));
+						}
+						else
+						{
+							temp &= ~(1 << (7 - i));
+						}
+					}
+				}
+				
+			}
+			if (index < 3)
+			{
+				this.defaultChipFuse[index] = (byte)temp;
+			}
+			else
+			{
+				this.defaultChipLock = (byte)temp;
+			}
+			if (tb.InvokeRequired)
+			{
+				tb.BeginInvoke((EventHandler)
+								 //cbb.Invoke((EventHandler)
+								 (delegate
+								 {
+									 tb.Text = temp.ToString("X2");
+								 }));
+			}
+			else
+			{
+				tb.Text = temp.ToString("X2");
+			}
+			
+			
+		}
+
+		/// <summary>
+		/// 属性改变值
+		/// </summary>
+		/// <param name="clb"></param>
+		/// <param name="index"></param>
+		public void FuseCheckedListBoxBitsRefresh(CheckedListBox clb,int fuseVal, int index)
+		{
+			int val = 0;
+			if (index < 3)
+			{
+				if (fuseVal!=this.defaultChipFuse[index])
+				{
+					this.defaultChipFuse[index] = (byte)fuseVal;
+				}
+				val = this.defaultChipFuse[index];
+			}
+			else
+			{
+				if (fuseVal != this.defaultChipLock)
+				{
+					defaultChipLock = (byte)fuseVal;
+				}
+				val = this.defaultChipLock;
+			}
+			for (int i = 0; i < 8; i++)
+			{
+				if (clb.InvokeRequired)
+				{
+					clb.BeginInvoke((EventHandler)
+									 //cbb.Invoke((EventHandler)
+									 (delegate
+									 {
+										 if (clb.Items[i].ToString() == "NC")
+										 {
+											 clb.SetItemCheckState(i, CheckState.Indeterminate);  //是控件处于不可选定状态
+										 }
+										 else
+										 {
+											 if ((val & 0x80) == 0)
+											 {
+												 clb.SetItemCheckState(i, CheckState.Unchecked);
+											 }
+											 else
+											 {
+												 clb.SetItemCheckState(i, CheckState.Checked);
+											 }
+										 }
+									 }));
+				}
+				else
+				{
+					if (clb.Items[i].ToString() == "NC")
+					{
+						clb.SetItemCheckState(i, CheckState.Indeterminate);  //是控件处于不可选定状态
+					}
+					else
+					{
+						if ((val & 0x80) == 0)
+						{
+							clb.SetItemCheckState(i, CheckState.Unchecked);
+						}
+						else
+						{
+							clb.SetItemCheckState(i, CheckState.Checked);
+						}
+					}
+				}
+				
+				val <<= 1;
+			}
+		}
+		/// <summary>
+		/// 刷新Text信息
+		/// </summary>
+		/// <param name="clb"></param>
+		/// <param name="highFuse"></param>
+		public bool FuseCheckedListBoxTextRefresh(CheckedListBox clb, int index)
+		{
+			int offset = 0;
+			int fuseVal = 0;
+			CMcuFuncAVR8BitsParam tempCMcuFuncInfo = null;
+			if (clb == null)
+			{
+				return false;
+			}
+			else
+			{
+
+				//---校验低位熔丝位
+				if (index == 0)
+				{
+					if (this.defaultChipExternFuseText != null)
+					{
+						offset += this.defaultChipExternFuseText.mLength;
+					}
+					if (this.defaultChipHighFuseText != null)
+					{
+						offset += this.defaultChipHighFuseText.mLength;
+					}
+					tempCMcuFuncInfo = this.defaultChipLowFuseText;
+					//---低位熔丝位
+					fuseVal = this.defaultChipFuse[0];
+				}
+				//---校验高位熔丝位
+				else if (index == 1)
+				{
+					if (this.defaultChipExternFuseText != null)
+					{
+						offset += this.defaultChipExternFuseText.mLength;
+					}
+					tempCMcuFuncInfo = this.defaultChipHighFuseText;
+					//---高位熔丝位
+					fuseVal = this.defaultChipFuse[1];
+				}
+				//---校验拓展熔丝位
+				else if (index == 2)
+				{
+					if (this.defaultChipExternFuseText != null)
+					{
+						return false;
+					}
+					else
+					{
+						tempCMcuFuncInfo = this.defaultChipExternFuseText;
+						//---拓展位熔丝位
+						fuseVal = this.defaultChipFuse[2];
+					}
+				}
+				//---校验加密熔丝位
+				else if (index == 3)
+				{
+					if (this.defaultChipExternFuseText != null)
+					{
+						offset += this.defaultChipExternFuseText.mLength;
+					}
+					if (this.defaultChipHighFuseText != null)
+					{
+						offset += this.defaultChipHighFuseText.mLength;
+					}
+					if (this.defaultChipLowFuseText != null)
+					{
+						offset += this.defaultChipLowFuseText.mLength;
+					}
+					tempCMcuFuncInfo = this.defaultChipLockFuseText;
+					//---加密位熔丝位
+					fuseVal = this.defaultChipLock;
+				}
+				else
+				{
+					return false;
+				}
+				//刷新text的状态
+				for (int i = 0; i < tempCMcuFuncInfo.mLength; i++)
+				{
+					if (clb.InvokeRequired)
+					{
+						clb.BeginInvoke((EventHandler)
+										 //cbb.Invoke((EventHandler)
+										 (delegate
+										 {
+											 if ((fuseVal & tempCMcuFuncInfo.mMask[i]) == tempCMcuFuncInfo.mValue[i])
+											 {
+												 clb.SetItemCheckState(i + offset, CheckState.Checked);
+											 }
+											 else
+											 {
+												 clb.SetItemCheckState(i + offset, CheckState.Unchecked);
+											 }
+										 }));
+					}
+					else
+					{
+						if ((fuseVal & tempCMcuFuncInfo.mMask[i]) == tempCMcuFuncInfo.mValue[i])
+						{
+							clb.SetItemCheckState(i + offset, CheckState.Checked);
+						}
+						else
+						{
+							clb.SetItemCheckState(i + offset, CheckState.Unchecked);
+						}
+					}
+
+				}
+				return true;
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="clbBits"></param>
+		/// <param name="clbText"></param>
+		/// <param name="tb"></param>
+		/// <param name="index"></param>
+		/// <returns></returns>
+		public bool FuseCheckedListBoxRefresh(CheckedListBox clbBits, CheckedListBox clbText, TextBox tb, int index)
+		{
+			this.FuseCheckedListBoxBitsRefresh(clbBits,tb, index);
+			return this.FuseCheckedListBoxTextRefresh(clbText, index);
+		}
+
+		/// <summary>
+		/// 获取改变的值
+		/// </summary>
+		/// <param name="clb"></param>
+		/// <param name="val"></param>
+		public void FuseCheckedListBoxRefresh(CheckedListBox clb, TextBox lowFuse, TextBox highFuse, TextBox externFuse, TextBox lockFuse )
+		{
+			int[] val = new int[] { Convert.ToByte(externFuse.Text, 16), Convert.ToByte(highFuse.Text, 16), Convert.ToByte(lowFuse.Text, 16), Convert.ToByte(lockFuse.Text, 16) };
+			//---当前选择值
+			int selectIndex = clb.SelectedIndex;
+			int offset = 0;
+			int temp = 0;
+			CheckState cb = CheckState.Unchecked;
+			if (clb.InvokeRequired)
+			{
+				clb.BeginInvoke((EventHandler)
+										 //cbb.Invoke((EventHandler)
+										 (delegate
+										 {
+											 cb =clb.GetItemCheckState(selectIndex);
+										 }));
+			}
+			else
+			{
+				cb = clb.GetItemCheckState(selectIndex);
+			}
+			
+			//---拓展熔丝位
+			if (this.defaultChipExternFuseText != null)
+			{
+				if ((selectIndex < (this.defaultChipExternFuseText.mLength + offset)) && (selectIndex >= offset))
+				{
+					temp = this.defaultChipFuse[2];
+					if (clb.InvokeRequired)
+					{
+						clb.BeginInvoke((EventHandler)
+												 //cbb.Invoke((EventHandler)
+												 (delegate
+												 {
+													 if (clb.GetItemCheckState(selectIndex) == CheckState.Unchecked)
+													 {
+														 if (!((this.defaultChipExternFuseText.mMask[selectIndex - offset] == 0x80) || (this.defaultChipExternFuseText.mMask[selectIndex - offset] == 0x40) || (this.defaultChipExternFuseText.mMask[selectIndex - offset] == 0x20) || (this.defaultChipExternFuseText.mMask[selectIndex - offset] == 0x10) ||
+															   (this.defaultChipExternFuseText.mMask[selectIndex - offset] == 0x08) || (this.defaultChipExternFuseText.mMask[selectIndex - offset] == 0x04) || (this.defaultChipExternFuseText.mMask[selectIndex - offset] == 0x02) || (this.defaultChipExternFuseText.mMask[selectIndex - offset] == 0x01)))
+														 {
+															 clb.SetItemCheckState(selectIndex, CheckState.Checked);
+															 return;
+														 }
+
+														 temp |= this.defaultChipExternFuseText.mMask[selectIndex - offset] | (this.defaultChipExternFuseText.mValue[selectIndex - offset]);
+													 }
+													 else
+													 {
+														 temp = temp & (~this.defaultChipExternFuseText.mMask[selectIndex - offset]) | (this.defaultChipExternFuseText.mValue[selectIndex - offset]);
+													 }
+												 }));
+					}
+					else
+					{
+						if (clb.GetItemCheckState(selectIndex) == CheckState.Unchecked)
+						{
+							if (!((this.defaultChipExternFuseText.mMask[selectIndex - offset] == 0x80) || (this.defaultChipExternFuseText.mMask[selectIndex - offset] == 0x40) || (this.defaultChipExternFuseText.mMask[selectIndex - offset] == 0x20) || (this.defaultChipExternFuseText.mMask[selectIndex - offset] == 0x10) ||
+								  (this.defaultChipExternFuseText.mMask[selectIndex - offset] == 0x08) || (this.defaultChipExternFuseText.mMask[selectIndex - offset] == 0x04) || (this.defaultChipExternFuseText.mMask[selectIndex - offset] == 0x02) || (this.defaultChipExternFuseText.mMask[selectIndex - offset] == 0x01)))
+							{
+								clb.SetItemCheckState(selectIndex, CheckState.Checked);
+								return;
+							}
+
+							temp |= this.defaultChipExternFuseText.mMask[selectIndex - offset] | (this.defaultChipExternFuseText.mValue[selectIndex - offset]);
+						}
+						else
+						{
+							temp = temp & (~this.defaultChipExternFuseText.mMask[selectIndex - offset]) | (this.defaultChipExternFuseText.mValue[selectIndex - offset]);
+						}
+					}
+					
+					this.defaultChipFuse[2] = (byte)temp;
+					if (externFuse.InvokeRequired)
+					{
+						externFuse.BeginInvoke((EventHandler)
+								 //cbb.Invoke((EventHandler)
+								 (delegate
+								 {
+									 externFuse.Text = temp.ToString("X2");
+								 }));
+					}
+					else
+					{
+						externFuse.Text = temp.ToString("X2");
+					}					
+					return;
+				}
+				offset += this.defaultChipExternFuseText.mLength;
+			}
+			//---高位熔丝位
+			if (this.defaultChipHighFuseText != null)
+			{
+				if ((selectIndex < (this.defaultChipHighFuseText.mLength + offset)) && (selectIndex >= offset))
+				{
+					temp = this.defaultChipFuse[1];
+					if (clb.InvokeRequired)
+					{
+						clb.BeginInvoke((EventHandler)
+												 //cbb.Invoke((EventHandler)
+												 (delegate
+												 {
+													 if (clb.GetItemCheckState(selectIndex) == CheckState.Unchecked)
+													 {
+														 if (!((this.defaultChipHighFuseText.mMask[selectIndex - offset] == 0x80) || (this.defaultChipHighFuseText.mMask[selectIndex - offset] == 0x40) || (this.defaultChipHighFuseText.mMask[selectIndex - offset] == 0x20) || (this.defaultChipHighFuseText.mMask[selectIndex - offset] == 0x10) ||
+															   (this.defaultChipHighFuseText.mMask[selectIndex - offset] == 0x08) || (this.defaultChipHighFuseText.mMask[selectIndex - offset] == 0x04) || (this.defaultChipHighFuseText.mMask[selectIndex - offset] == 0x02) || (this.defaultChipHighFuseText.mMask[selectIndex - offset] == 0x01)))
+														 {
+															 clb.SetItemCheckState(selectIndex, CheckState.Checked);
+															 return;
+														 }
+														 temp |= this.defaultChipHighFuseText.mMask[selectIndex - offset] | (this.defaultChipHighFuseText.mValue[selectIndex - offset]);
+													 }
+													 else
+													 {
+														 temp = temp & (~this.defaultChipHighFuseText.mMask[selectIndex - offset]) | (this.defaultChipHighFuseText.mValue[selectIndex - offset]);
+													 }
+												 }));
+					}
+					else
+					{
+						if (clb.GetItemCheckState(selectIndex) == CheckState.Unchecked)
+						{
+							if (!((this.defaultChipHighFuseText.mMask[selectIndex - offset] == 0x80) || (this.defaultChipHighFuseText.mMask[selectIndex - offset] == 0x40) || (this.defaultChipHighFuseText.mMask[selectIndex - offset] == 0x20) || (this.defaultChipHighFuseText.mMask[selectIndex - offset] == 0x10) ||
+								  (this.defaultChipHighFuseText.mMask[selectIndex - offset] == 0x08) || (this.defaultChipHighFuseText.mMask[selectIndex - offset] == 0x04) || (this.defaultChipHighFuseText.mMask[selectIndex - offset] == 0x02) || (this.defaultChipHighFuseText.mMask[selectIndex - offset] == 0x01)))
+							{
+								clb.SetItemCheckState(selectIndex, CheckState.Checked);
+								return;
+							}
+							temp |= this.defaultChipHighFuseText.mMask[selectIndex - offset] | (this.defaultChipHighFuseText.mValue[selectIndex - offset]);
+						}
+						else
+						{
+							temp = temp & (~this.defaultChipHighFuseText.mMask[selectIndex - offset]) | (this.defaultChipHighFuseText.mValue[selectIndex - offset]);
+						}
+					}
+					this.defaultChipFuse[1] = (byte)temp;
+					if (highFuse.InvokeRequired)
+					{
+						highFuse.BeginInvoke((EventHandler)
+								 //cbb.Invoke((EventHandler)
+								 (delegate
+								 {
+									 highFuse.Text = temp.ToString("X2");
+								 }));
+					}
+					else
+					{
+						highFuse.Text = temp.ToString("X2");
+					}
+					return;
+				}
+				offset += this.defaultChipHighFuseText.mLength;
+			}
+			if (this.defaultChipLowFuseText!= null)
+			{
+				if ((selectIndex < (this.defaultChipLowFuseText.mLength + offset)) && (selectIndex >= offset))
+				{
+					temp = this.defaultChipFuse[0];
+					if (clb.InvokeRequired)
+					{
+						clb.BeginInvoke((EventHandler)
+												 //cbb.Invoke((EventHandler)
+												 (delegate
+												 {
+													 if (clb.GetItemCheckState(selectIndex) == CheckState.Unchecked)
+													 {
+														 if (!((this.defaultChipLowFuseText.mMask[selectIndex - offset] == 0x80) || (this.defaultChipLowFuseText.mMask[selectIndex - offset] == 0x40) || (this.defaultChipLowFuseText.mMask[selectIndex - offset] == 0x20) || (this.defaultChipLowFuseText.mMask[selectIndex - offset] == 0x10) ||
+															   (this.defaultChipLowFuseText.mMask[selectIndex - offset] == 0x08) || (this.defaultChipLowFuseText.mMask[selectIndex - offset] == 0x04) || (this.defaultChipLowFuseText.mMask[selectIndex - offset] == 0x02) || (this.defaultChipLowFuseText.mMask[selectIndex - offset] == 0x01)))
+														 {
+															 clb.SetItemCheckState(selectIndex, CheckState.Checked);
+															 return;
+														 }
+														 temp |= this.defaultChipLowFuseText.mMask[selectIndex - offset] | (this.defaultChipLowFuseText.mValue[selectIndex - offset]);
+													 }
+													 else
+													 {
+														 temp = temp & (~this.defaultChipLowFuseText.mMask[selectIndex - offset]) | (this.defaultChipLowFuseText.mValue[selectIndex - offset]);
+													 }
+												 }));
+					}
+					else
+					{
+						if (clb.GetItemCheckState(selectIndex) == CheckState.Unchecked)
+						{
+							if (!((this.defaultChipLowFuseText.mMask[selectIndex - offset] == 0x80) || (this.defaultChipLowFuseText.mMask[selectIndex - offset] == 0x40) || (this.defaultChipLowFuseText.mMask[selectIndex - offset] == 0x20) || (this.defaultChipLowFuseText.mMask[selectIndex - offset] == 0x10) ||
+								  (this.defaultChipLowFuseText.mMask[selectIndex - offset] == 0x08) || (this.defaultChipLowFuseText.mMask[selectIndex - offset] == 0x04) || (this.defaultChipLowFuseText.mMask[selectIndex - offset] == 0x02) || (this.defaultChipLowFuseText.mMask[selectIndex - offset] == 0x01)))
+							{
+								clb.SetItemCheckState(selectIndex, CheckState.Checked);
+								return;
+							}
+							temp |= this.defaultChipLowFuseText.mMask[selectIndex - offset] | (this.defaultChipLowFuseText.mValue[selectIndex - offset]);
+						}
+						else
+						{
+							temp = temp & (~this.defaultChipLowFuseText.mMask[selectIndex - offset]) | (this.defaultChipLowFuseText.mValue[selectIndex - offset]);
+						}
+					}
+					this.defaultChipFuse[0] = (byte)temp;					
+					if (lowFuse.InvokeRequired)
+					{
+						lowFuse.BeginInvoke((EventHandler)
+								 //cbb.Invoke((EventHandler)
+								 (delegate
+								 {
+									 lowFuse.Text = temp.ToString("X2");
+								 }));
+					}
+					else
+					{
+						lowFuse.Text = temp.ToString("X2");
+					}
+					return;
+				}
+				offset += this.defaultChipLowFuseText.mLength;
+			}
+			if (this.defaultChipLockFuseText != null)
+			{
+				if ((selectIndex < (this.defaultChipLockFuseText.mLength + offset)) && (selectIndex >= offset))
+				{
+					temp = this.defaultChipLock;
+					if (clb.InvokeRequired)
+					{
+						clb.BeginInvoke((EventHandler)
+												 //cbb.Invoke((EventHandler)
+												 (delegate
+												 {
+													 if (clb.GetItemCheckState(selectIndex) == CheckState.Unchecked)
+													 {
+														 if (!((this.defaultChipLockFuseText.mMask[selectIndex - offset] == 0x80) || (this.defaultChipLockFuseText.mMask[selectIndex - offset] == 0x40) || (this.defaultChipLockFuseText.mMask[selectIndex - offset] == 0x20) || (this.defaultChipLockFuseText.mMask[selectIndex - offset] == 0x10) ||
+															   (this.defaultChipLockFuseText.mMask[selectIndex - offset] == 0x08) || (this.defaultChipLockFuseText.mMask[selectIndex - offset] == 0x04) || (this.defaultChipLockFuseText.mMask[selectIndex - offset] == 0x02) || (this.defaultChipLockFuseText.mMask[selectIndex - offset] == 0x01)))
+														 {
+															 clb.SetItemCheckState(selectIndex, CheckState.Checked);
+															 return;
+														 }
+														 temp |= this.defaultChipLockFuseText.mMask[selectIndex - offset] | (this.defaultChipLockFuseText.mValue[selectIndex - offset]);
+													 }
+													 else
+													 {
+														 temp = temp & (~this.defaultChipLockFuseText.mMask[selectIndex - offset]) | (this.defaultChipLockFuseText.mValue[selectIndex - offset]);
+													 }
+												 }));
+					}
+					else
+					{
+						if (clb.GetItemCheckState(selectIndex) == CheckState.Unchecked)
+						{
+							if (!((this.defaultChipLockFuseText.mMask[selectIndex - offset] == 0x80) || (this.defaultChipLockFuseText.mMask[selectIndex - offset] == 0x40) || (this.defaultChipLockFuseText.mMask[selectIndex - offset] == 0x20) || (this.defaultChipLockFuseText.mMask[selectIndex - offset] == 0x10) ||
+								  (this.defaultChipLockFuseText.mMask[selectIndex - offset] == 0x08) || (this.defaultChipLockFuseText.mMask[selectIndex - offset] == 0x04) || (this.defaultChipLockFuseText.mMask[selectIndex - offset] == 0x02) || (this.defaultChipLockFuseText.mMask[selectIndex - offset] == 0x01)))
+							{
+								clb.SetItemCheckState(selectIndex, CheckState.Checked);
+								return;
+							}
+							temp |= this.defaultChipLockFuseText.mMask[selectIndex - offset] | (this.defaultChipLockFuseText.mValue[selectIndex - offset]);
+						}
+						else
+						{
+							temp = temp & (~this.defaultChipLockFuseText.mMask[selectIndex - offset]) | (this.defaultChipLockFuseText.mValue[selectIndex - offset]);
+						}
+					}
+					this.defaultChipLock = (byte)temp;
+					if (lockFuse.InvokeRequired)
+					{
+						lockFuse.BeginInvoke((EventHandler)
+								 //cbb.Invoke((EventHandler)
+								 (delegate
+								 {
+									 lockFuse.Text = temp.ToString("X2");
+								 }));
+					}
+					else
+					{
+						lockFuse.Text = temp.ToString("X2");
+					}
+					return;
+				}
+				offset += this.defaultChipLockFuseText.mLength;
+			}
+		}
+
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="clbBits"></param>
+		/// <param name="clbText"></param>
+		/// <param name="index"></param>
+		/// <returns></returns>
+		public bool FuseCheckedListBoxRefresh(CheckedListBox clbBits, CheckedListBox clbText, int fuseVal,int index)
+		{
+			FuseCheckedListBoxBitsRefresh(clbBits, fuseVal,index);
+			return this.FuseCheckedListBoxTextRefresh(clbText, index);
+		}
+
 		#endregion
 
 		#region 保护函数
@@ -1106,40 +1683,94 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <param name="fuseBits"></param>
 		private void FuseCheckedListBoxBitsInit(CheckedListBox clb, CMcuFuncAVR8BitsParam fuseBits)
 		{
-			clb.Items.Clear();
+			if (clb.InvokeRequired)
+			{
+				clb.BeginInvoke((EventHandler)
+									 //cbb.Invoke((EventHandler)
+									 (delegate
+									 {
+										 clb.Items.Clear();
+									 }));
+			}
+			else
+			{
+				clb.Items.Clear();
+			}			
 			//---轮训解析数据
 			for (int i = 0; i < 8; i++)
 			{
-				//---检验是否为空
-				if (fuseBits == null)
+				if (clb.InvokeRequired)
 				{
-					clb.Items.Add("NC");
-					clb.SetItemCheckState(i, CheckState.Unchecked);
-					clb.SetItemCheckState(i, CheckState.Indeterminate);  //是控件处于不可选定状态
+					clb.BeginInvoke((EventHandler)
+										 //cbb.Invoke((EventHandler)
+										 (delegate
+										 {
+											 //---检验是否为空
+											 if (fuseBits == null)
+											 {
+												 clb.Items.Add("NC");
+												 clb.SetItemCheckState(i, CheckState.Unchecked);
+												 clb.SetItemCheckState(i, CheckState.Indeterminate);  //是控件处于不可选定状态
+											 }
+											 else
+											 {
+												 clb.Items.Add(fuseBits.mText[7 - i]);
+												 //---检验是不是NC参数
+												 if (fuseBits.mText[7 - i] == "NC")
+												 {
+													 clb.SetItemCheckState(i, CheckState.Unchecked);
+													 clb.SetItemCheckState(i, CheckState.Indeterminate);  //是控件处于不可选定状态
+												 }
+												 else
+												 {
+													 if (fuseBits.mValue[7 - i] != 0)
+													 {
+														 clb.SetItemCheckState(i, CheckState.Checked);
+													 }
+													 else
+													 {
+														 clb.SetItemCheckState(i, CheckState.Unchecked);
+													 }
+												 }
+											 }
+										 }));
 				}
 				else
 				{
-					clb.Items.Add(fuseBits.mText[7 - i]);
-					//---检验是不是NC参数
-					if (fuseBits.mText[7 - i] == "NC")
+					//---检验是否为空
+					if (fuseBits == null)
 					{
+						clb.Items.Add("NC");
 						clb.SetItemCheckState(i, CheckState.Unchecked);
 						clb.SetItemCheckState(i, CheckState.Indeterminate);  //是控件处于不可选定状态
 					}
 					else
 					{
-						if (fuseBits.mValue[7 - i] != 0)
+						clb.Items.Add(fuseBits.mText[7 - i]);
+						//---检验是不是NC参数
+						if (fuseBits.mText[7 - i] == "NC")
 						{
-							clb.SetItemCheckState(i, CheckState.Checked);
+							clb.SetItemCheckState(i, CheckState.Unchecked);
+							clb.SetItemCheckState(i, CheckState.Indeterminate);  //是控件处于不可选定状态
 						}
 						else
 						{
-							clb.SetItemCheckState(i, CheckState.Unchecked);
+							if (fuseBits.mValue[7 - i] != 0)
+							{
+								clb.SetItemCheckState(i, CheckState.Checked);
+							}
+							else
+							{
+								clb.SetItemCheckState(i, CheckState.Unchecked);
+							}
 						}
 					}
 				}
+				
 			}
 		}
+
+
 
 		/// <summary>
 		/// 组合Bit对应的Text值
@@ -1148,7 +1779,20 @@ namespace Harry.LabTools.LabMcuFunc
 		{
 			int offsetIndex = 0;
 			int i = 0;
-			clb.Items.Clear();
+			if (clb.InvokeRequired)
+			{
+				clb.BeginInvoke((EventHandler)
+									 //cbb.Invoke((EventHandler)
+									 (delegate
+									 {
+										 clb.Items.Clear();
+									 }));
+			}
+			else
+			{
+				clb.Items.Clear();
+			}
+			int fuse = 0;
 			int[] tempFuse = new int[this.ChipFuse.Length + 1];
 			Array.Copy(this.ChipFuse, tempFuse, (tempFuse.Length - 1));
 			//---当前加密位
@@ -1160,18 +1804,54 @@ namespace Harry.LabTools.LabMcuFunc
 			{
 				for (i = 0; i < temCMcuParam.mLength; i++)
 				{
-					clb.Items.Add(temCMcuParam.mText[i]);
-					if ((tempFuse[2] & temCMcuParam.mMask[i]) == temCMcuParam.mValue[i])
+					if (clb.InvokeRequired)
 					{
-						clb.SetItemCheckState(i + offsetIndex, CheckState.Checked);
+						clb.BeginInvoke((EventHandler)
+											 //cbb.Invoke((EventHandler)
+											 (delegate
+											 {
+												 clb.Items.Add(temCMcuParam.mText[i]);
+												 if ((tempFuse[2] & temCMcuParam.mMask[i]) == temCMcuParam.mValue[i])
+												 {
+													 clb.SetItemCheckState(i + offsetIndex, CheckState.Checked);
+												 }
+												 else
+												 {
+													 clb.SetItemCheckState(i + offsetIndex, CheckState.Unchecked);
+												 }
+											 }));
 					}
 					else
 					{
-						clb.SetItemCheckState(i + offsetIndex, CheckState.Unchecked);
-					}
+						clb.Items.Add(temCMcuParam.mText[i]);
+						if ((tempFuse[2] & temCMcuParam.mMask[i]) == temCMcuParam.mValue[i])
+						{
+							clb.SetItemCheckState(i + offsetIndex, CheckState.Checked);
+						}
+						else
+						{
+							clb.SetItemCheckState(i + offsetIndex, CheckState.Unchecked);
+						}
+					}					
 				}
-				externFuseValue.Text = tempFuse[2].ToString("X2");
 				offsetIndex += i;
+				fuse = Convert.ToInt32(externFuseValue.Text, 16);
+				if (fuse!= tempFuse[2])
+				{
+					if (externFuseValue.InvokeRequired)
+					{
+						externFuseValue.BeginInvoke((EventHandler)
+											 //cbb.Invoke((EventHandler)
+											 (delegate
+											 {
+												 externFuseValue.Text = tempFuse[2].ToString("X2");
+											 }));
+					}
+					else
+					{
+						externFuseValue.Text = tempFuse[2].ToString("X2");
+					}					
+				}
 			}
 			//---获取高位
 			temCMcuParam = this.ChipHighFuseText;
@@ -1180,18 +1860,54 @@ namespace Harry.LabTools.LabMcuFunc
 			{
 				for (i = 0; i < temCMcuParam.mLength; i++)
 				{
-					clb.Items.Add(temCMcuParam.mText[i]);
-					if ((tempFuse[1] & temCMcuParam.mMask[i]) == temCMcuParam.mValue[i])
+					if (clb.InvokeRequired)
 					{
-						clb.SetItemCheckState(i + offsetIndex, CheckState.Checked);
+						clb.BeginInvoke((EventHandler)
+											 //cbb.Invoke((EventHandler)
+											 (delegate
+											 {
+												 clb.Items.Add(temCMcuParam.mText[i]);
+												 if ((tempFuse[1] & temCMcuParam.mMask[i]) == temCMcuParam.mValue[i])
+												 {
+													 clb.SetItemCheckState(i + offsetIndex, CheckState.Checked);
+												 }
+												 else
+												 {
+													 clb.SetItemCheckState(i + offsetIndex, CheckState.Unchecked);
+												 }
+											 }));
 					}
 					else
 					{
-						clb.SetItemCheckState(i + offsetIndex, CheckState.Unchecked);
+						clb.Items.Add(temCMcuParam.mText[i]);
+						if ((tempFuse[1] & temCMcuParam.mMask[i]) == temCMcuParam.mValue[i])
+						{
+							clb.SetItemCheckState(i + offsetIndex, CheckState.Checked);
+						}
+						else
+						{
+							clb.SetItemCheckState(i + offsetIndex, CheckState.Unchecked);
+						}
 					}
 				}
-				highFuseValue.Text = tempFuse[1].ToString("X2");
 				offsetIndex += i;
+				fuse = Convert.ToInt32(highFuseValue.Text, 16);
+				if (fuse != tempFuse[1])
+				{
+					if (highFuseValue.InvokeRequired)
+					{
+						highFuseValue.BeginInvoke((EventHandler)
+											 //cbb.Invoke((EventHandler)
+											 (delegate
+											 {
+												 highFuseValue.Text = tempFuse[1].ToString("X2");
+											 }));
+					}
+					else
+					{
+						highFuseValue.Text = tempFuse[1].ToString("X2");
+					}					
+				}
 			}
 			//---获取低位
 			temCMcuParam = this.ChipLowFuseText;
@@ -1200,18 +1916,54 @@ namespace Harry.LabTools.LabMcuFunc
 			{
 				for (i = 0; i < temCMcuParam.mLength; i++)
 				{
-					clb.Items.Add(temCMcuParam.mText[i]);
-					if ((tempFuse[0] & temCMcuParam.mMask[i]) == temCMcuParam.mValue[i])
+					if (clb.InvokeRequired)
 					{
-						clb.SetItemCheckState(i + offsetIndex, CheckState.Checked);
+						clb.BeginInvoke((EventHandler)
+											 //cbb.Invoke((EventHandler)
+											 (delegate
+											 {
+												 clb.Items.Add(temCMcuParam.mText[i]);
+												 if ((tempFuse[0] & temCMcuParam.mMask[i]) == temCMcuParam.mValue[i])
+												 {
+													 clb.SetItemCheckState(i + offsetIndex, CheckState.Checked);
+												 }
+												 else
+												 {
+													 clb.SetItemCheckState(i + offsetIndex, CheckState.Unchecked);
+												 }
+											 }));
 					}
 					else
 					{
-						clb.SetItemCheckState(i + offsetIndex, CheckState.Unchecked);
+						clb.Items.Add(temCMcuParam.mText[i]);
+						if ((tempFuse[0] & temCMcuParam.mMask[i]) == temCMcuParam.mValue[i])
+						{
+							clb.SetItemCheckState(i + offsetIndex, CheckState.Checked);
+						}
+						else
+						{
+							clb.SetItemCheckState(i + offsetIndex, CheckState.Unchecked);
+						}
 					}
 				}
-				lowFuseValue.Text = tempFuse[0].ToString("X2");
 				offsetIndex += i;
+				fuse = Convert.ToInt32(lowFuseValue.Text, 16);
+				if (fuse != tempFuse[0])
+				{
+					if (lowFuseValue.InvokeRequired)
+					{
+						lowFuseValue.BeginInvoke((EventHandler)
+											 //cbb.Invoke((EventHandler)
+											 (delegate
+											 {
+												 lowFuseValue.Text = tempFuse[0].ToString("X2");
+											 }));
+					}
+					else
+					{
+						lowFuseValue.Text = tempFuse[0].ToString("X2");
+					}
+				}
 			}
 			//---获取加密位
 			temCMcuParam = this.ChipLockFuseText;
@@ -1220,18 +1972,55 @@ namespace Harry.LabTools.LabMcuFunc
 			{
 				for (i = 0; i < temCMcuParam.mLength; i++)
 				{
-					clb.Items.Add(temCMcuParam.mText[i]);
-					if ((tempFuse[tempFuse.Length-1] & temCMcuParam.mMask[i]) == temCMcuParam.mValue[i])
+					if (clb.InvokeRequired)
 					{
-						clb.SetItemCheckState(i + offsetIndex, CheckState.Checked);
+						clb.BeginInvoke((EventHandler)
+											 //cbb.Invoke((EventHandler)
+											 (delegate
+											 {
+												 clb.Items.Add(temCMcuParam.mText[i]);
+												 if ((tempFuse[tempFuse.Length-1] & temCMcuParam.mMask[i]) == temCMcuParam.mValue[i])
+												 {
+													 clb.SetItemCheckState(i + offsetIndex, CheckState.Checked);
+												 }
+												 else
+												 {
+													 clb.SetItemCheckState(i + offsetIndex, CheckState.Unchecked);
+												 }
+											 }));
 					}
 					else
 					{
-						clb.SetItemCheckState(i + offsetIndex, CheckState.Unchecked);
+						clb.Items.Add(temCMcuParam.mText[i]);
+						if ((tempFuse[tempFuse.Length - 1] & temCMcuParam.mMask[i]) == temCMcuParam.mValue[i])
+						{
+							clb.SetItemCheckState(i + offsetIndex, CheckState.Checked);
+						}
+						else
+						{
+							clb.SetItemCheckState(i + offsetIndex, CheckState.Unchecked);
+						}
 					}
 				}
-				lockFuseValue.Text = tempFuse[tempFuse.Length - 1].ToString("X2");
 				offsetIndex += i;
+				fuse = Convert.ToInt32(lockFuseValue.Text, 16);
+				if (fuse != tempFuse[tempFuse.Length - 1])
+				{
+					if (lockFuseValue.InvokeRequired)
+					{
+						lockFuseValue.BeginInvoke((EventHandler)
+											 //cbb.Invoke((EventHandler)
+											 delegate
+											 {
+												 lockFuseValue.Text = tempFuse[tempFuse.Length - 1].ToString("X2");
+											 }
+											 );
+					}
+					else
+					{
+						lockFuseValue.Text = tempFuse[tempFuse.Length - 1].ToString("X2");
+					}					
+				}
 			}
 		}
 
@@ -1241,25 +2030,165 @@ namespace Harry.LabTools.LabMcuFunc
 		private void OSCControlInit(Label oscText1, Label oscText2, Label oscText3, Label oscText4,
 							TextBox oscValue1, TextBox oscValue2, TextBox oscValue3, TextBox oscValue4)
 		{
-			oscText1.Visible = false;
-			oscText2.Visible = false;
-			oscText3.Visible = false;
-			oscText4.Visible = false;
+			if (oscText1.InvokeRequired)
+			{
+				oscText1.BeginInvoke((EventHandler)
+									 //cbb.Invoke((EventHandler)
+									 delegate
+									 {
+										 oscText1.Visible = false;
+									 }
+									 );
+			}
+			else
+			{
+				oscText1.Visible = false;
+			}
 
-			oscValue1.Visible = false;
-			oscValue2.Visible = false;
-			oscValue3.Visible = false;
-			oscValue4.Visible = false;
+			if (oscText2.InvokeRequired)
+			{
+				oscText2.BeginInvoke((EventHandler)
+									 //cbb.Invoke((EventHandler)
+									 delegate
+									 {
+										 oscText2.Visible = false;
+									 }
+									 );
+			}
+			else
+			{
+				oscText2.Visible = false;
+			}
+
+			if (oscText3.InvokeRequired)
+			{
+				oscText3.BeginInvoke((EventHandler)
+									 //cbb.Invoke((EventHandler)
+									 delegate
+									 {
+										 oscText3.Visible = false;
+									 }
+									 );
+			}
+			else
+			{
+				oscText3.Visible = false;
+			}
+
+			if (oscText4.InvokeRequired)
+			{
+				oscText4.BeginInvoke((EventHandler)
+									 //cbb.Invoke((EventHandler)
+									 delegate
+									 {
+										 oscText4.Visible = false;
+									 }
+									 );
+			}
+			else
+			{
+				oscText4.Visible = false;
+			}
+
+
+			if (oscValue1.InvokeRequired)
+			{
+				oscValue1.BeginInvoke((EventHandler)
+									 //cbb.Invoke((EventHandler)
+									 delegate
+									 {
+										 oscValue1.Visible = false;
+									 }
+									 );
+			}
+			else
+			{
+				oscValue1.Visible = false;
+			}
+
+			if (oscValue2.InvokeRequired)
+			{
+				oscValue2.BeginInvoke((EventHandler)
+									 //cbb.Invoke((EventHandler)
+									 delegate
+									 {
+										 oscValue2.Visible = false;
+									 }
+									 );
+			}
+			else
+			{
+				oscValue2.Visible = false;
+			}
+
+			if (oscValue3.InvokeRequired)
+			{
+				oscValue3.BeginInvoke((EventHandler)
+									 //cbb.Invoke((EventHandler)
+									 delegate
+									 {
+										 oscValue3.Visible = false;
+									 }
+									 );
+			}
+			else
+			{
+				oscValue3.Visible = false;
+			}
+
+			if (oscValue4.InvokeRequired)
+			{
+				oscValue4.BeginInvoke((EventHandler)
+									 //cbb.Invoke((EventHandler)
+									 delegate
+									 {
+										 oscValue4.Visible = false;
+									 }
+									 );
+			}
+			else
+			{
+				oscValue4.Visible = false;
+			}
 
 			for (int i = 0; i < this.ChipOSC.mLength; i++)
 			{
 				switch (i)
 				{
 					case 0:
-						oscText1.Visible = true;
-						oscValue1.Visible = true;
-						oscText1.Text = this.ChipOSC.mText[i];
-						oscValue1.Text = this.ChipOSC.mValue[i].ToString("X2");
+						if (oscText1.InvokeRequired)
+						{
+							oscText1.BeginInvoke((EventHandler)
+										 //cbb.Invoke((EventHandler)
+										 delegate
+										 {
+											 oscText1.Visible = true;
+											 oscText1.Text = this.ChipOSC.mText[i];
+										 }
+										 );
+						}
+						else
+						{
+							oscText1.Visible = true;
+							oscText1.Text = this.ChipOSC.mText[i];
+						}
+
+						if (oscValue1.InvokeRequired)
+						{
+							oscValue1.BeginInvoke((EventHandler)
+										 //cbb.Invoke((EventHandler)
+										 delegate
+										 {
+											 oscValue1.Visible = true;
+											 oscValue1.Text = this.ChipOSC.mValue[i].ToString("X2");
+										 }
+										 );
+						}
+						else
+						{
+							oscValue1.Visible = true;
+							oscValue1.Text = this.ChipOSC.mValue[i].ToString("X2");
+						}						
 						break;
 					case 1:
 						oscText2.Visible = true;
@@ -1285,6 +2214,7 @@ namespace Harry.LabTools.LabMcuFunc
 			}
 		}
 
+		
 		#endregion
 
 		#endregion

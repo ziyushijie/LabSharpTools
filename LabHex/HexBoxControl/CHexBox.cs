@@ -223,7 +223,7 @@ namespace Harry.LabTools.LabHexEdit
 			//---计算当前控件能够显示的最大行数
 			int iMaxRowCount = this.defaultMaxRow;//this.CalcYScaleMaxRow();
 			//---计算数据需要显示的行数
-			int iTotalRowCount = this.CalcYScaleTotalRow();
+			int iTotalRowCount = this.CalcYScaleTotalRow()+1;
 			//---当前位置
 			if (iTotalRowCount>iMaxRowCount)
 			{
