@@ -58,11 +58,11 @@
 			this.cCheckedListBoxEx_FuseText = new Harry.LabTools.LabControlPlus.CCheckedListBoxEx();
 			this.textBox_LockFuseValue = new System.Windows.Forms.TextBox();
 			this.label_LockFuseText = new System.Windows.Forms.Label();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
-			this.button3 = new System.Windows.Forms.Button();
-			this.button4 = new System.Windows.Forms.Button();
-			this.button5 = new System.Windows.Forms.Button();
+			this.button_ReadChipLock = new System.Windows.Forms.Button();
+			this.button_WriteChipLock = new System.Windows.Forms.Button();
+			this.button_ReadChipFuse = new System.Windows.Forms.Button();
+			this.button_DefaultChipFuse = new System.Windows.Forms.Button();
+			this.button_WriteChipFuse = new System.Windows.Forms.Button();
 			this.panel3 = new System.Windows.Forms.Panel();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.tabControl_ChipInfo.SuspendLayout();
@@ -448,58 +448,58 @@
 			this.label_LockFuseText.TabIndex = 8;
 			this.label_LockFuseText.Text = "加密位值";
 			// 
-			// button1
+			// button_ReadChipLock
 			// 
-			this.button1.Location = new System.Drawing.Point(25, 39);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
-			this.button1.TabIndex = 10;
-			this.button1.Text = "读取";
-			this.button1.UseVisualStyleBackColor = true;
+			this.button_ReadChipLock.Location = new System.Drawing.Point(25, 39);
+			this.button_ReadChipLock.Name = "button_ReadChipLock";
+			this.button_ReadChipLock.Size = new System.Drawing.Size(75, 23);
+			this.button_ReadChipLock.TabIndex = 10;
+			this.button_ReadChipLock.Text = "读取";
+			this.button_ReadChipLock.UseVisualStyleBackColor = true;
 			// 
-			// button2
+			// button_WriteChipLock
 			// 
-			this.button2.Location = new System.Drawing.Point(118, 39);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(75, 23);
-			this.button2.TabIndex = 11;
-			this.button2.Text = "写入";
-			this.button2.UseVisualStyleBackColor = true;
+			this.button_WriteChipLock.Location = new System.Drawing.Point(118, 39);
+			this.button_WriteChipLock.Name = "button_WriteChipLock";
+			this.button_WriteChipLock.Size = new System.Drawing.Size(75, 23);
+			this.button_WriteChipLock.TabIndex = 11;
+			this.button_WriteChipLock.Text = "写入";
+			this.button_WriteChipLock.UseVisualStyleBackColor = true;
 			// 
-			// button3
+			// button_ReadChipFuse
 			// 
-			this.button3.Location = new System.Drawing.Point(65, 39);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(75, 23);
-			this.button3.TabIndex = 11;
-			this.button3.Text = "读取";
-			this.button3.UseVisualStyleBackColor = true;
+			this.button_ReadChipFuse.Location = new System.Drawing.Point(65, 39);
+			this.button_ReadChipFuse.Name = "button_ReadChipFuse";
+			this.button_ReadChipFuse.Size = new System.Drawing.Size(75, 23);
+			this.button_ReadChipFuse.TabIndex = 11;
+			this.button_ReadChipFuse.Text = "读取";
+			this.button_ReadChipFuse.UseVisualStyleBackColor = true;
 			// 
-			// button4
+			// button_DefaultChipFuse
 			// 
-			this.button4.Location = new System.Drawing.Point(197, 39);
-			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(75, 23);
-			this.button4.TabIndex = 12;
-			this.button4.Text = "默认";
-			this.button4.UseVisualStyleBackColor = true;
+			this.button_DefaultChipFuse.Location = new System.Drawing.Point(197, 39);
+			this.button_DefaultChipFuse.Name = "button_DefaultChipFuse";
+			this.button_DefaultChipFuse.Size = new System.Drawing.Size(75, 23);
+			this.button_DefaultChipFuse.TabIndex = 12;
+			this.button_DefaultChipFuse.Text = "默认";
+			this.button_DefaultChipFuse.UseVisualStyleBackColor = true;
 			// 
-			// button5
+			// button_WriteChipFuse
 			// 
-			this.button5.Location = new System.Drawing.Point(340, 39);
-			this.button5.Name = "button5";
-			this.button5.Size = new System.Drawing.Size(75, 23);
-			this.button5.TabIndex = 13;
-			this.button5.Text = "写入";
-			this.button5.UseVisualStyleBackColor = true;
+			this.button_WriteChipFuse.Location = new System.Drawing.Point(340, 39);
+			this.button_WriteChipFuse.Name = "button_WriteChipFuse";
+			this.button_WriteChipFuse.Size = new System.Drawing.Size(75, 23);
+			this.button_WriteChipFuse.TabIndex = 13;
+			this.button_WriteChipFuse.Text = "写入";
+			this.button_WriteChipFuse.UseVisualStyleBackColor = true;
 			// 
 			// panel3
 			// 
 			this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.panel3.Controls.Add(this.button5);
-			this.panel3.Controls.Add(this.button4);
+			this.panel3.Controls.Add(this.button_WriteChipFuse);
+			this.panel3.Controls.Add(this.button_DefaultChipFuse);
 			this.panel3.Controls.Add(this.label_LowFuseText);
-			this.panel3.Controls.Add(this.button3);
+			this.panel3.Controls.Add(this.button_ReadChipFuse);
 			this.panel3.Controls.Add(this.textBox_LowFuseValue);
 			this.panel3.Controls.Add(this.textBox_ExternFuseValue);
 			this.panel3.Controls.Add(this.label_HighFuseText);
@@ -513,8 +513,8 @@
 			// panel1
 			// 
 			this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.panel1.Controls.Add(this.button2);
-			this.panel1.Controls.Add(this.button1);
+			this.panel1.Controls.Add(this.button_WriteChipLock);
+			this.panel1.Controls.Add(this.button_ReadChipLock);
 			this.panel1.Controls.Add(this.textBox_LockFuseValue);
 			this.panel1.Controls.Add(this.label_LockFuseText);
 			this.panel1.Location = new System.Drawing.Point(448, 235);
@@ -531,7 +531,7 @@
 			this.Controls.Add(this.tabControl_ChipInfo);
 			this.Name = "CMcuFormAVR8BitsFuseAndLockControl";
 			this.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-			this.Size = new System.Drawing.Size(655, 305);
+			this.Size = new System.Drawing.Size(655, 310);
 			this.tabControl_ChipInfo.ResumeLayout(false);
 			this.tabPage_ChipBits.ResumeLayout(false);
 			this.groupBox4.ResumeLayout(false);
@@ -580,11 +580,11 @@
 		private System.Windows.Forms.Label label_HighFuseText;
 		private System.Windows.Forms.TextBox textBox_LockFuseValue;
 		private System.Windows.Forms.Label label_LockFuseText;
-		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.Button button5;
-		private System.Windows.Forms.Button button4;
-		private System.Windows.Forms.Button button3;
+		private System.Windows.Forms.Button button_WriteChipLock;
+		private System.Windows.Forms.Button button_ReadChipLock;
+		private System.Windows.Forms.Button button_WriteChipFuse;
+		private System.Windows.Forms.Button button_DefaultChipFuse;
+		private System.Windows.Forms.Button button_ReadChipFuse;
 		private System.Windows.Forms.Panel panel3;
 		private System.Windows.Forms.Panel panel1;
 	}

@@ -19,12 +19,12 @@ namespace LabMcuForm
 		/// <summary>
 		/// 使用的通讯端口
 		/// </summary>
-		private CCommBase defaultCComm = null;
+		private CCommBase defaultCComm = new CCommSerial();
 
 		/// <summary>
 		/// MCU的参数
 		/// </summary>
-		private CMcuFuncBase defaultCMcuFunc = null;
+		private CMcuFuncBase defaultCMcuFunc = new CMcuFuncAVR8BitsISP();
 
 		#endregion
 
@@ -64,6 +64,21 @@ namespace LabMcuForm
 			set
 			{
 				this.cCommBaseControl_ChipCOMM = value;
+			}
+		}
+
+		/// <summary>
+		/// 熔丝位加密位
+		/// </summary>
+		public virtual TextBox mLockFuse
+		{
+			get
+			{
+				return this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.mLockFuse;
+			}
+			set
+			{
+				this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.mLockFuse = value;
 			}
 		}
 
@@ -116,12 +131,29 @@ namespace LabMcuForm
 		#region 私有函数
 
 		/// <summary>
-		/// 
+		/// 启动初始化
 		/// </summary>
 		private void Startup()
 		{
+			//---初始化MCU类型
+			this.McuTypeChanged("atmega8");
+			//---事件注册
 			this.timer_ChipRTCTime.Tick += new EventHandler(this.Timer_Tick);
+			this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.ComboBox_SelectedIndexChanged);
 		}
+
+
+		/// <summary>
+		/// MCU的类型变换
+		/// </summary>
+		/// <param name="chipName"></param>
+		private void McuTypeChanged(string chipName)
+		{
+			//---初始化芯片信息
+			this.defaultCMcuFunc.mMcuInfoParam.McuTypeInfo(chipName);
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Init(this.defaultCMcuFunc, this.cRichTextBoxEx_ChipMsg);
+		}
+
 
 		#endregion
 
@@ -156,7 +188,19 @@ namespace LabMcuForm
 			}
 		}
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
+		}
+
 		#endregion
+
 
 	}
 }

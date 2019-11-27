@@ -27,12 +27,17 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 		/// </summary>
 		private bool defaultIsRefreshFuseText = false;
 
+		/// <summary>
+		/// 消息窗体
+		/// </summary>
+		private RichTextBox defaultRichTextBoxMsg = null;
+
 		#endregion
 
 		#region 属性定义
 
 		/// <summary>
-		/// MCU功能的基类
+		/// MCU功能的属性为只读
 		/// </summary>
 		public virtual CMcuFuncBase mCMcuFunc
 		{
@@ -41,6 +46,22 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 				return this.defaultCMcuFunc;
 			}
 		}
+
+		/// <summary>
+		/// 加密熔丝位的属性为读写
+		/// </summary>
+		public virtual TextBox mLockFuse
+		{
+			get
+			{
+				return this.textBox_LockFuseValue;
+			}
+			set
+			{
+				this.textBox_LockFuseValue = value;
+			}
+		}
+
 
 		#endregion
 
@@ -70,7 +91,7 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 		/// </summary>
 		/// <param name="cCommBase"></param>
 		/// <param name="cMcuFuncInfoBaseParam"></param>
-		public CMcuFormAVR8BitsFuseAndLockControl(CMcuFuncBase cMcuFunc)
+		public CMcuFormAVR8BitsFuseAndLockControl(CMcuFuncBase cMcuFunc,RichTextBox msg=null)
 		{
 			InitializeComponent();
 			//---在内存中先绘制界面，禁止擦除背景
@@ -89,7 +110,7 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 			}
 			this.defaultCMcuFunc = cMcuFunc;
 			//---初始化
-			this.Init(cMcuFunc);
+			this.Init(cMcuFunc,msg);
 		}
 
 		#endregion
@@ -100,9 +121,12 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 		/// 
 		/// </summary>
 		/// <param name="cMcuFuncInfoBaseParam"></param>
-		public void Init(CMcuFuncBase cMcuFunc)
+		public void Init(CMcuFuncBase cMcuFunc,RichTextBox msg=null)
 		{
-			//---初始化芯片信息
+			if (cMcuFunc==null)
+			{
+				return;
+			}
 			//---初始化芯片信息
 			if (this.defaultCMcuFunc == null)
 			{
@@ -117,6 +141,11 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 																							this.textBox_LowFuseValue, this.textBox_HighFuseValue, this.textBox_ExternFuseValue, this.textBox_LockFuseValue
 																							);
 			this.RegistrationEventHandler();
+			//---消息显示
+			if (msg!=null)
+			{
+				this.defaultRichTextBoxMsg = msg;
+			}
 			
 		}
 
@@ -144,10 +173,10 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 			this.textBox_OSCValue3.Visible = false;
 			this.textBox_OSCValue4.Visible = false;
 
-			this.textBox_LockFuseValue.Text		= "00";
-			this.textBox_HighFuseValue.Text		= "00";
-			this.textBox_ExternFuseValue.Text	= "00";
-			this.textBox_LockFuseValue.Text		= "00";
+			this.textBox_LockFuseValue.Text = "00";
+			this.textBox_HighFuseValue.Text = "00";
+			this.textBox_ExternFuseValue.Text = "00";
+			this.textBox_LockFuseValue.Text = "00";
 
 			//---注册事件
 
@@ -173,10 +202,16 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 			this.textBox_ExternFuseValue.TextChanged += new EventHandler(this.TextBox_TextChanged);
 			this.textBox_LockFuseValue.TextChanged += new EventHandler(this.TextBox_TextChanged);
 
+			this.button_ReadCalibration.Click += new EventHandler(this.Button_Click);
+			this.button_ReadChipFuse.Click += new EventHandler(this.Button_Click);
+			this.button_DefaultChipFuse.Click += new EventHandler(this.Button_Click);
+			this.button_WriteChipFuse.Click += new EventHandler(this.Button_Click);
+
+			this.button_ReadChipLock.Click += new EventHandler(this.Button_Click);
+			this.button_WriteChipLock.Click += new EventHandler(this.Button_Click);
 
 		}
-
-
+		
 		#endregion
 
 		#region 事件定义
@@ -188,6 +223,10 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 		/// <param name="e"></param>
 		private void CheckedListBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			if (sender==null)
+			{
+				return;
+			}
 			CheckedListBox clb = (CheckedListBox)sender;
 			clb.Enabled = false;
 			if (clb.SelectedItem.ToString() == "NC")
@@ -237,6 +276,10 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 		/// <param name="e"></param>
 		private void TextBox_TextChanged(object sender, EventArgs e)
 		{
+			if (sender==null)
+			{
+				return;
+			}
 			TextBox tb = (TextBox)sender;
 			tb.Enabled = false;
 			switch (tb.Name)
@@ -264,8 +307,50 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 			tb.Focus();
 		}
 
+		/// <summary>
+		/// 按键点击事件
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Button_Click(object sender, EventArgs e)
+		{
+			if (sender == null)
+			{
+				return;
+			}
+			Button bt = (Button)sender;
+			bt.Enabled = false;
+			switch (bt.Name)
+			{
+				//---读取校准字
+				case "button_ReadCalibration":
+					break;
+				//---读取熔丝位
+				case "button_ReadChipFuse":
+					break;
+				//---默认熔丝位
+				case "button_DefaultChipFuse":
+					this.defaultCMcuFunc.CMcuFunc_DefaultChipFuse(this.textBox_LowFuseValue, this.textBox_HighFuseValue, this.textBox_ExternFuseValue,this.defaultRichTextBoxMsg);
+					break;
+				//---写入熔丝位
+				case "button_WriteChipFuse":
+					break;
+				//---读取加密位
+				case "button_ReadChipLock":
+					break;
+				//---写入加密位
+				case "button_WriteChipLock":
+					break;
+				default:
+					break;
+			}
+
+			bt.Enabled = true;
+			bt.Focus();
+		}
+
 		#endregion
 
-	
+
 	}
 }

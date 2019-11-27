@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Harry.LabTools.LabMcuFunc
 {
@@ -48,6 +49,15 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <returns></returns>
 		public virtual int CMcuFunc_EraseChip()
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 芯片擦除
+		/// </summary>
+		/// <returns></returns>
+		public virtual int CMcuFunc_EraseChip(TextBox lockFuse,RichTextBox msg)
 		{
 			return -1;
 		}
@@ -103,6 +113,26 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
+		/// 读取熔丝位
+		/// </summary>
+		/// <param name="chipFuse"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_ReadChipFuse(TextBox lowFuse, TextBox highFuse, TextBox externFuse, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 默认熔丝位
+		/// </summary>
+		/// <param name="chipFuse"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_DefaultChipFuse(TextBox lowFuse, TextBox highFuse, TextBox externFuse, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
 		/// 读取加密位
 		/// </summary>
 		/// <param name="fuse"></param>
@@ -113,7 +143,18 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
-		/// 读取熔丝位
+		/// 读取加密位
+		/// </summary>
+		/// <param name="lockFuse"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_ReadChipLock(TextBox lockFuse, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 写入熔丝位
 		/// </summary>
 		/// <param name="fuse"></param>
 		/// <returns></returns>
@@ -123,11 +164,32 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
-		/// 读取加密位
+		/// 写入熔丝位
+		/// </summary>
+		/// <param name="chipFuse"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_WriteChipFuse(TextBox lowFuse, TextBox highFuse, TextBox externFuse, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 写入加密位
 		/// </summary>
 		/// <param name="fuse"></param>
 		/// <returns></returns>
 		public virtual int CMcuFunc_WriteChipLock( byte chipLock)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 写入加密位
+		/// </summary>
+		/// <param name="lockFuse"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_WriteChipLock(TextBox lockFuse, RichTextBox msg)
 		{
 			return -1;
 		}
@@ -143,11 +205,32 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
+		/// 读取芯片的ID信息
+		/// </summary>
+		/// <param name="chipID"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_ReadChipID(TextBox chipID, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
 		/// 读取校准字
 		/// </summary>
 		/// <param name="chipCalibration"></param>
 		/// <returns></returns>
 		public virtual int CMcuFunc_ReadChipCalibration(ref byte[] chipCalibration)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 读取校准字
+		/// </summary>
+		/// <param name="chipCalibration"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_ReadChipCalibration(Label oscText1,Label oscText2,Label oscText3,Label oscText4,
+														TextBox oscValue1, TextBox oscValue2, TextBox oscValue3, TextBox oscValue4, RichTextBox msg)
 		{
 			return -1;
 		}

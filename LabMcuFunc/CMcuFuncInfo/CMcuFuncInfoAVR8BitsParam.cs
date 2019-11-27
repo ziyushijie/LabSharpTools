@@ -658,6 +658,15 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override int[] McuDefaultFuse()
+		{
+			return this.defaultChipOSC.mMask;
+		}
+
+		/// <summary>
 		/// 初始化控件
 		/// </summary>
 		public void FormControlInit(CheckedListBox lowFuseBits, CheckedListBox highFuseBits, CheckedListBox externFuseBits, CheckedListBox lockFuseBits,
@@ -730,9 +739,16 @@ namespace Harry.LabTools.LabMcuFunc
 				}
 				
 			}
-			if (index < 3)
+			if (index < 2)
 			{
-				this.defaultChipFuse[index] = (byte)temp;
+				if (this.defaultChipFuse.Length ==2)
+				{
+					this.defaultChipFuse[index] = (byte)temp;
+				}
+				else
+				{
+					temp = 0;
+				}
 			}
 			else
 			{
@@ -763,7 +779,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public void FuseCheckedListBoxBitsRefresh(CheckedListBox clb,int fuseVal, int index)
 		{
 			int val = 0;
-			if (index < 3)
+			if (index <2)
 			{
 				if (fuseVal!=this.defaultChipFuse[index])
 				{

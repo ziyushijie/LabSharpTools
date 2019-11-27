@@ -70,6 +70,16 @@ namespace Harry.LabTools.LabMcuFunc
 			return null;
 		}
 
+	
+		/// <summary>
+		/// 获取默认熔丝位
+		/// </summary>
+		/// <returns></returns>
+		public virtual int[] McuDefaultFuse()
+		{
+			return null;
+		}
+
 		#endregion
 
 		#region 保护函数

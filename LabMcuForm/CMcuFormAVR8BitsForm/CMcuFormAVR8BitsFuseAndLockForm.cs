@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace LabMcuForm
 {
-	public partial class CMcuFormAVR8BitsFuseAndLockForm :CMcuFormBaseForm
+	public partial class CMcuFormAVR8BitsFuseAndLockForm :Form//CMcuFormBaseForm
 	{
 
 		#region 变量定义
@@ -20,7 +20,7 @@ namespace LabMcuForm
 		/// <summary>
 		/// MCU功能的基类
 		/// </summary>
-		private CMcuFuncBase defaultCMcuFunc = new CMcuFuncBase();
+		private CMcuFuncBase defaultCMcuFunc = new CMcuFuncAVR8BitsISP();//new CMcuFuncBase();
 
 		#endregion
 
@@ -65,7 +65,7 @@ namespace LabMcuForm
 			//---初始化芯片信息
 			this.defaultCMcuFunc.mMcuInfoParam.McuTypeInfo(chipName);
 			//---初始化控件信息
-			this.cMcuControlAVR8BitsFuseAndLock1.Init(this.defaultCMcuFunc);
+			this.cMcuFormAVR8BitsFuseAndLockControl1.Init(this.defaultCMcuFunc);
 			//---注册事件函数
 			this.RegistrationEventHandler();
 		}
@@ -87,7 +87,7 @@ namespace LabMcuForm
 			{
 				this.defaultCMcuFunc = chipCMcue;
 				//---初始化控件信息
-				this.cMcuControlAVR8BitsFuseAndLock1.Init(this.defaultCMcuFunc);
+				this.cMcuFormAVR8BitsFuseAndLockControl1.Init(this.defaultCMcuFunc);
 			}
 			//---注册事件函数
 			this.RegistrationEventHandler();
@@ -110,7 +110,7 @@ namespace LabMcuForm
 			//---初始化芯片信息
 			this.defaultCMcuFunc.mMcuInfoParam.McuTypeInfo(chipName);
 			//---初始化控件信息
-			this.cMcuControlAVR8BitsFuseAndLock1.Init(this.defaultCMcuFunc);
+			this.cMcuFormAVR8BitsFuseAndLockControl1.Init(this.defaultCMcuFunc);
 			//---注册事件函数
 			this.RegistrationEventHandler();
 		}
@@ -154,7 +154,7 @@ namespace LabMcuForm
 		private void button1_Click(object sender, EventArgs e)
 		{
 			this.defaultCMcuFunc.mMcuInfoParam.McuTypeInfo("atmega8");
-			this.cMcuControlAVR8BitsFuseAndLock1.Init(this.defaultCMcuFunc);
+			this.cMcuFormAVR8BitsFuseAndLockControl1.Init(this.defaultCMcuFunc);
 		}
 
 		private void button2_Click(object sender, EventArgs e)
@@ -165,7 +165,7 @@ namespace LabMcuForm
 			if (cMcuForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 			{
 				this.defaultCMcuFunc = cMcuForm.mCMcuFunc;
-				this.cMcuControlAVR8BitsFuseAndLock1.Init(this.defaultCMcuFunc);
+				this.cMcuFormAVR8BitsFuseAndLockControl1.Init(this.defaultCMcuFunc);
 			}
 			//---资源释放
 			cMcuForm.Dispose();
