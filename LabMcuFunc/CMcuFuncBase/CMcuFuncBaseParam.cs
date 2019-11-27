@@ -1,4 +1,4 @@
-﻿using Harry.LabTools.LabComm;
+﻿using Harry.LabTools.LabCommType;
 using System;
 using System.Collections.Generic;
 using System.Linq;

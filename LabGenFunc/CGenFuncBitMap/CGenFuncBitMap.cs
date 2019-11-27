@@ -24,6 +24,10 @@ namespace Harry.LabTools.LabGenFunc
 		{
 			bool flag = true;
 			string img1_ref, img2_ref;
+			if ((img1==null)||(img2==null))
+			{
+				return false;
+			}
 			if (img1.Width == img2.Width && img1.Height == img2.Height)
 			{
 				for (int i = 0; i < img1.Width; i++)

@@ -79,9 +79,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LabComm\LabComm.csproj">
+    <ProjectReference Include="..\LabComm\LabCommType.csproj">
       <Project>{3FBD5434-D5CB-4E6F-95D3-3905E5DE178A}</Project>
-      <Name>LabComm</Name>
+      <Name>LabCommType</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

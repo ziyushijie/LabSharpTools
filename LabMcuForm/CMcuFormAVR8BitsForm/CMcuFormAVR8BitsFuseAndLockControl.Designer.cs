@@ -505,8 +505,7 @@
 			this.panel3.Controls.Add(this.label_HighFuseText);
 			this.panel3.Controls.Add(this.label_ExternFuseText);
 			this.panel3.Controls.Add(this.textBox_HighFuseValue);
-			this.panel3.Dock = System.Windows.Forms.DockStyle.Left;
-			this.panel3.Location = new System.Drawing.Point(0, 235);
+			this.panel3.Location = new System.Drawing.Point(4, 235);
 			this.panel3.Name = "panel3";
 			this.panel3.Size = new System.Drawing.Size(448, 70);
 			this.panel3.TabIndex = 3;
@@ -518,20 +517,19 @@
 			this.panel1.Controls.Add(this.button1);
 			this.panel1.Controls.Add(this.textBox_LockFuseValue);
 			this.panel1.Controls.Add(this.label_LockFuseText);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-			this.panel1.Location = new System.Drawing.Point(444, 235);
+			this.panel1.Location = new System.Drawing.Point(448, 235);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(211, 70);
+			this.panel1.Size = new System.Drawing.Size(204, 70);
 			this.panel1.TabIndex = 4;
 			// 
-			// CMcuControlAVR8BitsFuseAndLock
+			// CMcuFormAVR8BitsFuseAndLockControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.panel3);
 			this.Controls.Add(this.tabControl_ChipInfo);
-			this.Name = "CMcuControlAVR8BitsFuseAndLock";
+			this.Name = "CMcuFormAVR8BitsFuseAndLockControl";
 			this.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
 			this.Size = new System.Drawing.Size(655, 305);
 			this.tabControl_ChipInfo.ResumeLayout(false);

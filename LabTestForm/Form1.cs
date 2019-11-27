@@ -1,4 +1,4 @@
-﻿using Harry.LabTools.LabComm;
+﻿using Harry.LabTools.LabCommType;
 using Harry.LabTools.LabMcuFunc;
 using System;
 using System.Windows.Forms;
@@ -35,12 +35,22 @@ namespace LabTestForm
 
 		#region 事件函数
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			//this.usedComm = new CCommBase();//new CCommSerial();
-			//this.cCommBaseControl1.Init(this.usedComm);
+			this.usedComm =new CCommSerial();
+			this.cCommBaseControl1.Init(this.usedComm);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void button1_Click(object sender, EventArgs e)
 		{
 			this.usedMcu.mMcuInfoParam.McuTypeInfo("atmega8");

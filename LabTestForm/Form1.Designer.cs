@@ -33,7 +33,7 @@ namespace LabTestForm
 		{
 			this.cHexBox1 = new Harry.LabTools.LabHexEdit.CHexBox();
 			this.button1 = new System.Windows.Forms.Button();
-			this.cCommBaseControl1 = new Harry.LabTools.LabComm.CCommBaseControl();
+			this.cCommBaseControl1 = new Harry.LabTools.LabCommType.CCommBaseControl();
 			this.SuspendLayout();
 			// 
 			// cHexBox1
@@ -622,7 +622,7 @@ namespace LabTestForm
 		}
 
 		#endregion
-        private Harry.LabTools.LabComm.CCommBaseControl cCommBaseControl1;
+        private Harry.LabTools.LabCommType.CCommBaseControl cCommBaseControl1;
 		private Harry.LabTools.LabHexEdit.CHexBox cHexBox1;
 		private System.Windows.Forms.Button button1;
 	}

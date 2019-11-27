@@ -1,0 +1,34 @@
+﻿[*.cs]
+
+# CA2119: Seal methods that satisfy private interfaces
+dotnet_diagnostic.CA2119.severity = none
+
+# CA1816: Dispose methods should call SuppressFinalize
+dotnet_diagnostic.CA1816.severity = none
+
+# IDE0003: 删除限定
+dotnet_style_qualification_for_property = false:none
+
+# IDE0003: 删除限定
+dotnet_style_qualification_for_method = false:none
+
+# IDE0003: 删除限定
+dotnet_style_qualification_for_field = false:none
+
+# IDE0003: 删除限定
+dotnet_style_qualification_for_event = false:none
+
+# CA1707: 标识符不应包含下划线
+dotnet_diagnostic.CA1707.severity = none
+
+# CA1303: 请不要将文本作为本地化参数传递
+dotnet_diagnostic.CA1303.severity = none
+
+# CA2000: 丢失范围之前释放对象
+dotnet_diagnostic.CA2000.severity = none
+
+# IDE0047: 删除不必要的括号
+dotnet_diagnostic.IDE0047.severity = none
+
+# IDE0055: 修正格式
+dotnet_diagnostic.IDE0055.severity = none

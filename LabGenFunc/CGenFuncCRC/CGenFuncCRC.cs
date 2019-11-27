@@ -56,7 +56,10 @@ namespace Harry.LabTools.LabGenFunc
 			UInt32 nReg = 0xFFFFFFFF;//CRC寄存器
 			UInt32 nTemp = 0;
 			UInt32 byteIndex = 0, uIndex = 0;
-
+			if (cmd==null)
+			{
+				return 0;
+			}
 			//---开始计算CRC32的值
 			for (uIndex = 0; uIndex < length; uIndex++)
 			{
@@ -90,7 +93,10 @@ namespace Harry.LabTools.LabGenFunc
 			UInt32 nReg = 0xFFFFFFFF;//CRC寄存器
 			UInt32 nTemp = 0;
 			UInt32 byteIndex = 0, uIndex = 0;
-
+			if (cmd==null)
+			{
+				return 0;
+			}
 			//---开始计算CRC32的值
 			for (uIndex = 0; uIndex < length; uIndex++)
 			{
@@ -167,6 +173,10 @@ namespace Harry.LabTools.LabGenFunc
 			byte nTemp;
 			UInt32 nReg = 0;
 			UInt32 index = 0;
+			if (cmd==null)
+			{
+				return 0;
+			}
 			for (index = 0; index < length; index++)
 			{
 				nTemp = (byte)((nReg >> 8) ^ cmd[index]);
@@ -186,6 +196,10 @@ namespace Harry.LabTools.LabGenFunc
 			byte nTemp;
 			UInt32 nReg = 0;
 			UInt32 index = 0;
+			if (cmd == null)
+			{
+				return 0;
+			}
 			for (index = 0; index < length; index++)
 			{
 				nTemp = (byte)((nReg >> 8) ^ cmd[index]);
@@ -198,10 +212,13 @@ namespace Harry.LabTools.LabGenFunc
 
 		#region CRC8
 
+		/// <summary>
+		/// CRC8的类型
+		/// </summary>
 		public enum USE_CRC8_Type : byte
 		{
-			USE_CRC8_07H=0x07,
-			USE_CRC8_31H=0x31,
+			USE_CRC8_07H = 0x07,
+			USE_CRC8_31H = 0x31,
 		};
 
 		/// <summary>
@@ -261,6 +278,10 @@ namespace Harry.LabTools.LabGenFunc
 			byte nTemp;
 			byte nReg = 0;
 			UInt32 index = 0;
+			if (cmd == null)
+			{
+				return 0;
+			}
 			for (index = 0; index < length; index++)
 			{
 				nTemp = (byte)(nReg ^ cmd[index]);
@@ -294,6 +315,10 @@ namespace Harry.LabTools.LabGenFunc
 		{
 			UInt32 i = 0;
 			byte _return = 0;
+			if (cmd == null)
+			{
+				return 0;
+			}
 			for (i = 0; i < length; i++)
 			{
 				_return += cmd[i];

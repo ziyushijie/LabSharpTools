@@ -55,13 +55,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Harry.LabTools.LabGenFunc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\LabGenFunc\bin\Debug\Harry.LabTools.LabGenFunc.dll</HintPath>
-    </Reference>
-    <Reference Include="Harry.LabTools.LabWinAPI">
-      <HintPath>..\LabWinAPI\bin\Debug\Harry.LabTools.LabWinAPI.dll</HintPath>
-    </Reference>
     <Reference Include="SeeSharpTools.JY.GUI">
       <HintPath>..\..\SeeSharpTools\JY.GUI\obj\Debug\SeeSharpTools.JY.GUI.dll</HintPath>
     </Reference>
@@ -137,9 +130,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LabComm\LabComm.csproj">
+    <ProjectReference Include="..\LabCommType\LabCommType.csproj">
       <Project>{3FBD5434-D5CB-4E6F-95D3-3905E5DE178A}</Project>
-      <Name>LabComm</Name>
+      <Name>LabCommType</Name>
     </ProjectReference>
     <ProjectReference Include="..\LabControlPlus\LabControlPlus.csproj">
       <Project>{E54A51A6-A054-4F21-AC22-A827B5EF4D36}</Project>
@@ -148,6 +141,10 @@
     <ProjectReference Include="..\LabGenForm\LabGenForm.csproj">
       <Project>{FBA5494A-61A4-45B7-92FF-AA4F5F06BB49}</Project>
       <Name>LabGenForm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LabGenFunc\LabGenFunc.csproj">
+      <Project>{C64AEEA0-7A08-4786-9F1E-BD66608E190E}</Project>
+      <Name>LabGenFunc</Name>
     </ProjectReference>
     <ProjectReference Include="..\LabHex\LabHexEdit.csproj">
       <Project>{72D5A1AE-5BD4-4DC1-AF94-D760DB573C10}</Project>

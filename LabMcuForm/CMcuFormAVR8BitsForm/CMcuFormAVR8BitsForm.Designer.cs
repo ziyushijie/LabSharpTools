@@ -28,8 +28,14 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.cCommBaseControl1 = new Harry.LabTools.LabComm.CCommBaseControl();
+			this.components = new System.ComponentModel.Container();
+			this.cCommBaseControl_ChipCOMM = new Harry.LabTools.LabCommType.CCommBaseControl();
 			this.panel_ChipID = new System.Windows.Forms.Panel();
+			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.label8 = new System.Windows.Forms.Label();
+			this.textBox4 = new System.Windows.Forms.TextBox();
+			this.button6 = new System.Windows.Forms.Button();
+			this.trackBar1 = new System.Windows.Forms.TrackBar();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.button4 = new System.Windows.Forms.Button();
@@ -53,48 +59,67 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.panel_ChipMsg = new System.Windows.Forms.Panel();
+			this.cRichTextBoxEx_ChipMsg = new Harry.LabTools.LabControlPlus.CRichTextBoxEx();
+			this.panel_ChipFunc = new System.Windows.Forms.Panel();
+			this.panel_ChipCheckFunc = new System.Windows.Forms.Panel();
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse = new LabMcuForm.CMcuFormAVR8Bits.CMcuFormAVR8BitsFuseAndLockControl();
+			this.panel_ChipButtonFunc = new System.Windows.Forms.Panel();
+			this.toolStrip_ChipTool = new System.Windows.Forms.ToolStrip();
+			this.toolStripLabel_ChipStateName = new System.Windows.Forms.ToolStripLabel();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripLabel_ChipState = new System.Windows.Forms.ToolStripLabel();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripLabel_ChipTimeName = new System.Windows.Forms.ToolStripLabel();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripLabel_ChipTime = new System.Windows.Forms.ToolStripLabel();
+			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripProgressBar_ChipProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripLabel_ChipRTCTimerName = new System.Windows.Forms.ToolStripLabel();
+			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripLabel_ChipRTCTimer = new System.Windows.Forms.ToolStripLabel();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.tabControl2 = new System.Windows.Forms.TabControl();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.cHexBox1 = new Harry.LabTools.LabHexEdit.CHexBox();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
-			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.cHexBox2 = new Harry.LabTools.LabHexEdit.CHexBox();
+			this.menuStrip_ChipMenu = new System.Windows.Forms.MenuStrip();
 			this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.命令ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.编辑XToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.关于WToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.trackBar1 = new System.Windows.Forms.TrackBar();
-			this.button6 = new System.Windows.Forms.Button();
-			this.label8 = new System.Windows.Forms.Label();
-			this.textBox4 = new System.Windows.Forms.TextBox();
-			this.cHexBox1 = new Harry.LabTools.LabHexEdit.CHexBox();
-			this.cHexBox2 = new Harry.LabTools.LabHexEdit.CHexBox();
+			this.timer_ChipRTCTime = new System.Windows.Forms.Timer(this.components);
 			this.panel_ChipID.SuspendLayout();
+			this.groupBox3.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
 			this.groupBox2.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox_ChipType.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
+			this.panel_ChipMsg.SuspendLayout();
+			this.panel_ChipFunc.SuspendLayout();
+			this.toolStrip_ChipTool.SuspendLayout();
 			this.tabPage2.SuspendLayout();
 			this.tabControl2.SuspendLayout();
 			this.tabPage3.SuspendLayout();
 			this.tabPage4.SuspendLayout();
-			this.menuStrip1.SuspendLayout();
-			this.groupBox3.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+			this.menuStrip_ChipMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// cCommBaseControl1
+			// cCommBaseControl_ChipCOMM
 			// 
-			this.cCommBaseControl1.Dock = System.Windows.Forms.DockStyle.Right;
-			this.cCommBaseControl1.Location = new System.Drawing.Point(935, 3);
-			this.cCommBaseControl1.mCCOMM = null;
-			this.cCommBaseControl1.mCCommRichTextBox = null;
-			this.cCommBaseControl1.mIsShowCommParam = true;
-			this.cCommBaseControl1.Name = "cCommBaseControl1";
-			this.cCommBaseControl1.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-			this.cCommBaseControl1.Size = new System.Drawing.Size(262, 71);
-			this.cCommBaseControl1.TabIndex = 0;
+			this.cCommBaseControl_ChipCOMM.Dock = System.Windows.Forms.DockStyle.Right;
+			this.cCommBaseControl_ChipCOMM.Location = new System.Drawing.Point(939, 3);
+			this.cCommBaseControl_ChipCOMM.mCCOMM = null;
+			this.cCommBaseControl_ChipCOMM.mCCommRichTextBox = null;
+			this.cCommBaseControl_ChipCOMM.mIsShowCommParam = true;
+			this.cCommBaseControl_ChipCOMM.Name = "cCommBaseControl_ChipCOMM";
+			this.cCommBaseControl_ChipCOMM.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+			this.cCommBaseControl_ChipCOMM.Size = new System.Drawing.Size(262, 71);
+			this.cCommBaseControl_ChipCOMM.TabIndex = 0;
 			// 
 			// panel_ChipID
 			// 
@@ -103,13 +128,65 @@
 			this.panel_ChipID.Controls.Add(this.groupBox2);
 			this.panel_ChipID.Controls.Add(this.groupBox1);
 			this.panel_ChipID.Controls.Add(this.groupBox_ChipType);
-			this.panel_ChipID.Controls.Add(this.cCommBaseControl1);
+			this.panel_ChipID.Controls.Add(this.cCommBaseControl_ChipCOMM);
 			this.panel_ChipID.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel_ChipID.Location = new System.Drawing.Point(2, 2);
 			this.panel_ChipID.Name = "panel_ChipID";
 			this.panel_ChipID.Padding = new System.Windows.Forms.Padding(3);
-			this.panel_ChipID.Size = new System.Drawing.Size(1202, 79);
+			this.panel_ChipID.Size = new System.Drawing.Size(1206, 79);
 			this.panel_ChipID.TabIndex = 1;
+			// 
+			// groupBox3
+			// 
+			this.groupBox3.Controls.Add(this.label8);
+			this.groupBox3.Controls.Add(this.textBox4);
+			this.groupBox3.Controls.Add(this.button6);
+			this.groupBox3.Controls.Add(this.trackBar1);
+			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Left;
+			this.groupBox3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+			this.groupBox3.Location = new System.Drawing.Point(518, 3);
+			this.groupBox3.Name = "groupBox3";
+			this.groupBox3.Size = new System.Drawing.Size(411, 71);
+			this.groupBox3.TabIndex = 4;
+			this.groupBox3.TabStop = false;
+			this.groupBox3.Text = "时钟配置";
+			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.Location = new System.Drawing.Point(383, 17);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(23, 12);
+			this.label8.TabIndex = 11;
+			this.label8.Text = "KHz";
+			// 
+			// textBox4
+			// 
+			this.textBox4.Location = new System.Drawing.Point(333, 14);
+			this.textBox4.Name = "textBox4";
+			this.textBox4.Size = new System.Drawing.Size(45, 21);
+			this.textBox4.TabIndex = 10;
+			this.textBox4.Text = "200";
+			this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// button6
+			// 
+			this.button6.Location = new System.Drawing.Point(332, 42);
+			this.button6.Name = "button6";
+			this.button6.Size = new System.Drawing.Size(73, 23);
+			this.button6.TabIndex = 9;
+			this.button6.Text = "时钟设置";
+			this.button6.UseVisualStyleBackColor = true;
+			// 
+			// trackBar1
+			// 
+			this.trackBar1.Dock = System.Windows.Forms.DockStyle.Left;
+			this.trackBar1.Location = new System.Drawing.Point(3, 17);
+			this.trackBar1.Maximum = 19;
+			this.trackBar1.Name = "trackBar1";
+			this.trackBar1.Size = new System.Drawing.Size(323, 51);
+			this.trackBar1.TabIndex = 0;
+			this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.Both;
 			// 
 			// groupBox2
 			// 
@@ -276,7 +353,6 @@
 			this.comboBox2.Name = "comboBox2";
 			this.comboBox2.Size = new System.Drawing.Size(67, 20);
 			this.comboBox2.TabIndex = 2;
-			this.comboBox2.Text = "HVPP";
 			// 
 			// groupBox_ChipType
 			// 
@@ -300,7 +376,6 @@
 			this.comboBox1.Name = "comboBox1";
 			this.comboBox1.Size = new System.Drawing.Size(118, 20);
 			this.comboBox1.TabIndex = 2;
-			this.comboBox1.Text = "ATmega32U4";
 			// 
 			// button1
 			// 
@@ -335,33 +410,199 @@
 			this.tabControl1.Controls.Add(this.tabPage1);
 			this.tabControl1.Controls.Add(this.tabPage2);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabControl1.ItemSize = new System.Drawing.Size(56, 18);
 			this.tabControl1.Location = new System.Drawing.Point(2, 28);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
 			this.tabControl1.Size = new System.Drawing.Size(1218, 684);
+			this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
 			this.tabControl1.TabIndex = 2;
 			// 
 			// tabPage1
 			// 
 			this.tabPage1.BackColor = System.Drawing.Color.WhiteSmoke;
-			this.tabPage1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tabPage1.Controls.Add(this.panel_ChipMsg);
+			this.tabPage1.Controls.Add(this.panel_ChipFunc);
+			this.tabPage1.Controls.Add(this.panel_ChipButtonFunc);
+			this.tabPage1.Controls.Add(this.toolStrip_ChipTool);
 			this.tabPage1.Controls.Add(this.panel_ChipID);
 			this.tabPage1.Location = new System.Drawing.Point(4, 22);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
-			this.tabPage1.Size = new System.Drawing.Size(1208, 656);
+			this.tabPage1.Size = new System.Drawing.Size(1210, 658);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "编程";
+			this.tabPage1.UseVisualStyleBackColor = true;
+			// 
+			// panel_ChipMsg
+			// 
+			this.panel_ChipMsg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.panel_ChipMsg.Controls.Add(this.cRichTextBoxEx_ChipMsg);
+			this.panel_ChipMsg.Dock = System.Windows.Forms.DockStyle.Left;
+			this.panel_ChipMsg.Location = new System.Drawing.Point(2, 392);
+			this.panel_ChipMsg.Name = "panel_ChipMsg";
+			this.panel_ChipMsg.Size = new System.Drawing.Size(1038, 239);
+			this.panel_ChipMsg.TabIndex = 7;
+			// 
+			// cRichTextBoxEx_ChipMsg
+			// 
+			this.cRichTextBoxEx_ChipMsg.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.cRichTextBoxEx_ChipMsg.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.cRichTextBoxEx_ChipMsg.Location = new System.Drawing.Point(0, 0);
+			this.cRichTextBoxEx_ChipMsg.Name = "cRichTextBoxEx_ChipMsg";
+			this.cRichTextBoxEx_ChipMsg.Size = new System.Drawing.Size(1036, 237);
+			this.cRichTextBoxEx_ChipMsg.TabIndex = 0;
+			this.cRichTextBoxEx_ChipMsg.Text = "";
+			// 
+			// panel_ChipFunc
+			// 
+			this.panel_ChipFunc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.panel_ChipFunc.Controls.Add(this.panel_ChipCheckFunc);
+			this.panel_ChipFunc.Controls.Add(this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse);
+			this.panel_ChipFunc.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel_ChipFunc.Location = new System.Drawing.Point(2, 81);
+			this.panel_ChipFunc.Name = "panel_ChipFunc";
+			this.panel_ChipFunc.Size = new System.Drawing.Size(1038, 311);
+			this.panel_ChipFunc.TabIndex = 6;
+			// 
+			// panel_ChipCheckFunc
+			// 
+			this.panel_ChipCheckFunc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.panel_ChipCheckFunc.Location = new System.Drawing.Point(661, 6);
+			this.panel_ChipCheckFunc.Name = "panel_ChipCheckFunc";
+			this.panel_ChipCheckFunc.Size = new System.Drawing.Size(371, 299);
+			this.panel_ChipCheckFunc.TabIndex = 1;
+			// 
+			// cMcuFormAVR8BitsFuseAndLockControl_ChipFuse
+			// 
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Dock = System.Windows.Forms.DockStyle.Left;
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Location = new System.Drawing.Point(0, 0);
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.MaximumSize = new System.Drawing.Size(655, 305);
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.MinimumSize = new System.Drawing.Size(655, 305);
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Name = "cMcuFormAVR8BitsFuseAndLockControl_ChipFuse";
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Size = new System.Drawing.Size(655, 305);
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.TabIndex = 0;
+			// 
+			// panel_ChipButtonFunc
+			// 
+			this.panel_ChipButtonFunc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.panel_ChipButtonFunc.Dock = System.Windows.Forms.DockStyle.Right;
+			this.panel_ChipButtonFunc.Location = new System.Drawing.Point(1040, 81);
+			this.panel_ChipButtonFunc.Name = "panel_ChipButtonFunc";
+			this.panel_ChipButtonFunc.Size = new System.Drawing.Size(168, 550);
+			this.panel_ChipButtonFunc.TabIndex = 5;
+			// 
+			// toolStrip_ChipTool
+			// 
+			this.toolStrip_ChipTool.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.toolStrip_ChipTool.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel_ChipStateName,
+            this.toolStripSeparator1,
+            this.toolStripLabel_ChipState,
+            this.toolStripSeparator2,
+            this.toolStripLabel_ChipTimeName,
+            this.toolStripSeparator3,
+            this.toolStripLabel_ChipTime,
+            this.toolStripSeparator4,
+            this.toolStripProgressBar_ChipProgressBar,
+            this.toolStripSeparator5,
+            this.toolStripLabel_ChipRTCTimerName,
+            this.toolStripSeparator6,
+            this.toolStripLabel_ChipRTCTimer});
+			this.toolStrip_ChipTool.Location = new System.Drawing.Point(2, 631);
+			this.toolStrip_ChipTool.Name = "toolStrip_ChipTool";
+			this.toolStrip_ChipTool.Size = new System.Drawing.Size(1206, 25);
+			this.toolStrip_ChipTool.TabIndex = 4;
+			this.toolStrip_ChipTool.Text = "toolStrip1";
+			// 
+			// toolStripLabel_ChipStateName
+			// 
+			this.toolStripLabel_ChipStateName.Name = "toolStripLabel_ChipStateName";
+			this.toolStripLabel_ChipStateName.Size = new System.Drawing.Size(32, 22);
+			this.toolStripLabel_ChipStateName.Text = "状态";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripLabel_ChipState
+			// 
+			this.toolStripLabel_ChipState.AutoSize = false;
+			this.toolStripLabel_ChipState.Name = "toolStripLabel_ChipState";
+			this.toolStripLabel_ChipState.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+			this.toolStripLabel_ChipState.Size = new System.Drawing.Size(160, 22);
+			this.toolStripLabel_ChipState.Text = "空闲";
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripLabel_ChipTimeName
+			// 
+			this.toolStripLabel_ChipTimeName.Name = "toolStripLabel_ChipTimeName";
+			this.toolStripLabel_ChipTimeName.Size = new System.Drawing.Size(56, 22);
+			this.toolStripLabel_ChipTimeName.Text = "使用时间";
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripLabel_ChipTime
+			// 
+			this.toolStripLabel_ChipTime.AutoSize = false;
+			this.toolStripLabel_ChipTime.Name = "toolStripLabel_ChipTime";
+			this.toolStripLabel_ChipTime.Size = new System.Drawing.Size(96, 22);
+			this.toolStripLabel_ChipTime.Text = "00-00-00";
+			// 
+			// toolStripSeparator4
+			// 
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripProgressBar_ChipProgressBar
+			// 
+			this.toolStripProgressBar_ChipProgressBar.AutoSize = false;
+			this.toolStripProgressBar_ChipProgressBar.Name = "toolStripProgressBar_ChipProgressBar";
+			this.toolStripProgressBar_ChipProgressBar.Size = new System.Drawing.Size(578, 22);
+			// 
+			// toolStripSeparator5
+			// 
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripLabel_ChipRTCTimerName
+			// 
+			this.toolStripLabel_ChipRTCTimerName.Name = "toolStripLabel_ChipRTCTimerName";
+			this.toolStripLabel_ChipRTCTimerName.Size = new System.Drawing.Size(56, 22);
+			this.toolStripLabel_ChipRTCTimerName.Text = "当前时间";
+			// 
+			// toolStripSeparator6
+			// 
+			this.toolStripSeparator6.Name = "toolStripSeparator6";
+			this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripLabel_ChipRTCTimer
+			// 
+			this.toolStripLabel_ChipRTCTimer.AutoSize = false;
+			this.toolStripLabel_ChipRTCTimer.Name = "toolStripLabel_ChipRTCTimer";
+			this.toolStripLabel_ChipRTCTimer.Size = new System.Drawing.Size(148, 22);
+			this.toolStripLabel_ChipRTCTimer.Text = "0000-00-00-00-00-00";
 			// 
 			// tabPage2
 			// 
 			this.tabPage2.BackColor = System.Drawing.Color.WhiteSmoke;
 			this.tabPage2.Controls.Add(this.tabControl2);
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
+			this.tabPage2.Margin = new System.Windows.Forms.Padding(0);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Size = new System.Drawing.Size(1210, 658);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "编辑";
+			this.tabPage2.UseVisualStyleBackColor = true;
 			// 
 			// tabControl2
 			// 
@@ -369,140 +610,35 @@
 			this.tabControl2.Controls.Add(this.tabPage3);
 			this.tabControl2.Controls.Add(this.tabPage4);
 			this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabControl2.ItemSize = new System.Drawing.Size(56, 18);
 			this.tabControl2.Location = new System.Drawing.Point(0, 0);
+			this.tabControl2.Margin = new System.Windows.Forms.Padding(0);
 			this.tabControl2.Name = "tabControl2";
 			this.tabControl2.SelectedIndex = 0;
 			this.tabControl2.Size = new System.Drawing.Size(1210, 658);
+			this.tabControl2.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
 			this.tabControl2.TabIndex = 0;
 			// 
 			// tabPage3
 			// 
 			this.tabPage3.BackColor = System.Drawing.Color.WhiteSmoke;
 			this.tabPage3.Controls.Add(this.cHexBox1);
-			this.tabPage3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.tabPage3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
 			this.tabPage3.Location = new System.Drawing.Point(4, 4);
+			this.tabPage3.Margin = new System.Windows.Forms.Padding(0);
 			this.tabPage3.Name = "tabPage3";
+			this.tabPage3.Padding = new System.Windows.Forms.Padding(2);
 			this.tabPage3.Size = new System.Drawing.Size(1202, 632);
 			this.tabPage3.TabIndex = 0;
 			this.tabPage3.Text = "FLASH";
-			// 
-			// tabPage4
-			// 
-			this.tabPage4.BackColor = System.Drawing.Color.WhiteSmoke;
-			this.tabPage4.Controls.Add(this.cHexBox2);
-			this.tabPage4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.tabPage4.Location = new System.Drawing.Point(4, 4);
-			this.tabPage4.Name = "tabPage4";
-			this.tabPage4.Size = new System.Drawing.Size(1196, 626);
-			this.tabPage4.TabIndex = 1;
-			this.tabPage4.Text = "EEPROM";
-			// 
-			// menuStrip1
-			// 
-			this.menuStrip1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2);
-			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.文件ToolStripMenuItem,
-            this.命令ToolStripMenuItem,
-            this.编辑XToolStripMenuItem,
-            this.关于WToolStripMenuItem});
-			this.menuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-			this.menuStrip1.Location = new System.Drawing.Point(2, 2);
-			this.menuStrip1.Margin = new System.Windows.Forms.Padding(3);
-			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Padding = new System.Windows.Forms.Padding(3);
-			this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.menuStrip1.Size = new System.Drawing.Size(1218, 26);
-			this.menuStrip1.TabIndex = 3;
-			this.menuStrip1.Text = "menuStrip1";
-			// 
-			// 文件ToolStripMenuItem
-			// 
-			this.文件ToolStripMenuItem.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
-			this.文件ToolStripMenuItem.Padding = new System.Windows.Forms.Padding(2);
-			this.文件ToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
-			this.文件ToolStripMenuItem.Text = "文件(&Z)";
-			// 
-			// 命令ToolStripMenuItem
-			// 
-			this.命令ToolStripMenuItem.Name = "命令ToolStripMenuItem";
-			this.命令ToolStripMenuItem.Padding = new System.Windows.Forms.Padding(2);
-			this.命令ToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
-			this.命令ToolStripMenuItem.Text = "命令(&Y)";
-			// 
-			// 编辑XToolStripMenuItem
-			// 
-			this.编辑XToolStripMenuItem.Name = "编辑XToolStripMenuItem";
-			this.编辑XToolStripMenuItem.Padding = new System.Windows.Forms.Padding(2);
-			this.编辑XToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
-			this.编辑XToolStripMenuItem.Text = "编辑(&X)";
-			// 
-			// 关于WToolStripMenuItem
-			// 
-			this.关于WToolStripMenuItem.Name = "关于WToolStripMenuItem";
-			this.关于WToolStripMenuItem.Padding = new System.Windows.Forms.Padding(2);
-			this.关于WToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
-			this.关于WToolStripMenuItem.Text = "关于(&W)";
-			// 
-			// groupBox3
-			// 
-			this.groupBox3.Controls.Add(this.label8);
-			this.groupBox3.Controls.Add(this.textBox4);
-			this.groupBox3.Controls.Add(this.button6);
-			this.groupBox3.Controls.Add(this.trackBar1);
-			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Left;
-			this.groupBox3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-			this.groupBox3.Location = new System.Drawing.Point(518, 3);
-			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(411, 71);
-			this.groupBox3.TabIndex = 4;
-			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "时钟配置";
-			// 
-			// trackBar1
-			// 
-			this.trackBar1.Dock = System.Windows.Forms.DockStyle.Left;
-			this.trackBar1.Location = new System.Drawing.Point(3, 17);
-			this.trackBar1.Maximum = 19;
-			this.trackBar1.Name = "trackBar1";
-			this.trackBar1.Size = new System.Drawing.Size(323, 51);
-			this.trackBar1.TabIndex = 0;
-			this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.Both;
-			// 
-			// button6
-			// 
-			this.button6.Location = new System.Drawing.Point(332, 42);
-			this.button6.Name = "button6";
-			this.button6.Size = new System.Drawing.Size(73, 23);
-			this.button6.TabIndex = 9;
-			this.button6.Text = "时钟设置";
-			this.button6.UseVisualStyleBackColor = true;
-			// 
-			// label8
-			// 
-			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(383, 17);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(23, 12);
-			this.label8.TabIndex = 11;
-			this.label8.Text = "KHz";
-			// 
-			// textBox4
-			// 
-			this.textBox4.Location = new System.Drawing.Point(333, 14);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(45, 21);
-			this.textBox4.TabIndex = 10;
-			this.textBox4.Text = "200";
-			this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tabPage3.UseVisualStyleBackColor = true;
 			// 
 			// cHexBox1
 			// 
 			this.cHexBox1.BackColor = System.Drawing.Color.White;
 			this.cHexBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.cHexBox1.ImeMode = System.Windows.Forms.ImeMode.Disable;
-			this.cHexBox1.Location = new System.Drawing.Point(0, 0);
+			this.cHexBox1.Location = new System.Drawing.Point(2, 2);
 			this.cHexBox1.mExternalLineColor = System.Drawing.Color.DarkGray;
 			this.cHexBox1.mExternalLineWidth = 2;
 			this.cHexBox1.mFirstRowOffset = 4;
@@ -1043,16 +1179,30 @@
 			this.cHexBox1.mYScaleShowBit4 = Harry.LabTools.LabHexEdit.CHexBox.YScaleShowBit4.BIT4X4;
 			this.cHexBox1.mYScaleWidth = 86;
 			this.cHexBox1.Name = "cHexBox1";
-			this.cHexBox1.Size = new System.Drawing.Size(1202, 632);
+			this.cHexBox1.Size = new System.Drawing.Size(1198, 628);
 			this.cHexBox1.TabIndex = 0;
 			this.cHexBox1.Text = "cHexBox1";
+			// 
+			// tabPage4
+			// 
+			this.tabPage4.BackColor = System.Drawing.Color.WhiteSmoke;
+			this.tabPage4.Controls.Add(this.cHexBox2);
+			this.tabPage4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.tabPage4.Location = new System.Drawing.Point(4, 4);
+			this.tabPage4.Margin = new System.Windows.Forms.Padding(0);
+			this.tabPage4.Name = "tabPage4";
+			this.tabPage4.Padding = new System.Windows.Forms.Padding(2);
+			this.tabPage4.Size = new System.Drawing.Size(1202, 632);
+			this.tabPage4.TabIndex = 1;
+			this.tabPage4.Text = "EEPROM";
+			this.tabPage4.UseVisualStyleBackColor = true;
 			// 
 			// cHexBox2
 			// 
 			this.cHexBox2.BackColor = System.Drawing.Color.White;
 			this.cHexBox2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.cHexBox2.ImeMode = System.Windows.Forms.ImeMode.Disable;
-			this.cHexBox2.Location = new System.Drawing.Point(0, 0);
+			this.cHexBox2.Location = new System.Drawing.Point(2, 2);
 			this.cHexBox2.mExternalLineColor = System.Drawing.Color.DarkGray;
 			this.cHexBox2.mExternalLineWidth = 2;
 			this.cHexBox2.mFirstRowOffset = 4;
@@ -1593,9 +1743,63 @@
 			this.cHexBox2.mYScaleShowBit4 = Harry.LabTools.LabHexEdit.CHexBox.YScaleShowBit4.BIT4X4;
 			this.cHexBox2.mYScaleWidth = 86;
 			this.cHexBox2.Name = "cHexBox2";
-			this.cHexBox2.Size = new System.Drawing.Size(1196, 626);
+			this.cHexBox2.Size = new System.Drawing.Size(1198, 628);
 			this.cHexBox2.TabIndex = 1;
 			this.cHexBox2.Text = "cHexBox2";
+			// 
+			// menuStrip_ChipMenu
+			// 
+			this.menuStrip_ChipMenu.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.menuStrip_ChipMenu.GripMargin = new System.Windows.Forms.Padding(2);
+			this.menuStrip_ChipMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.文件ToolStripMenuItem,
+            this.命令ToolStripMenuItem,
+            this.编辑XToolStripMenuItem,
+            this.关于WToolStripMenuItem});
+			this.menuStrip_ChipMenu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+			this.menuStrip_ChipMenu.Location = new System.Drawing.Point(2, 2);
+			this.menuStrip_ChipMenu.Margin = new System.Windows.Forms.Padding(3);
+			this.menuStrip_ChipMenu.Name = "menuStrip_ChipMenu";
+			this.menuStrip_ChipMenu.Padding = new System.Windows.Forms.Padding(3);
+			this.menuStrip_ChipMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+			this.menuStrip_ChipMenu.Size = new System.Drawing.Size(1218, 26);
+			this.menuStrip_ChipMenu.TabIndex = 3;
+			this.menuStrip_ChipMenu.Text = "menuStrip1";
+			// 
+			// 文件ToolStripMenuItem
+			// 
+			this.文件ToolStripMenuItem.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
+			this.文件ToolStripMenuItem.Padding = new System.Windows.Forms.Padding(2);
+			this.文件ToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
+			this.文件ToolStripMenuItem.Text = "文件(&Z)";
+			// 
+			// 命令ToolStripMenuItem
+			// 
+			this.命令ToolStripMenuItem.Name = "命令ToolStripMenuItem";
+			this.命令ToolStripMenuItem.Padding = new System.Windows.Forms.Padding(2);
+			this.命令ToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
+			this.命令ToolStripMenuItem.Text = "命令(&Y)";
+			// 
+			// 编辑XToolStripMenuItem
+			// 
+			this.编辑XToolStripMenuItem.Name = "编辑XToolStripMenuItem";
+			this.编辑XToolStripMenuItem.Padding = new System.Windows.Forms.Padding(2);
+			this.编辑XToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
+			this.编辑XToolStripMenuItem.Text = "编辑(&X)";
+			// 
+			// 关于WToolStripMenuItem
+			// 
+			this.关于WToolStripMenuItem.Name = "关于WToolStripMenuItem";
+			this.关于WToolStripMenuItem.Padding = new System.Windows.Forms.Padding(2);
+			this.关于WToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
+			this.关于WToolStripMenuItem.Text = "关于(&W)";
+			// 
+			// timer_ChipRTCTime
+			// 
+			this.timer_ChipRTCTime.Enabled = true;
+			this.timer_ChipRTCTime.Interval = 1000;
+			this.timer_ChipRTCTime.Tag = "timer_ChipRTCTime";
 			// 
 			// CMcuFormAVR8BitsForm
 			// 
@@ -1603,12 +1807,16 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1222, 714);
 			this.Controls.Add(this.tabControl1);
-			this.Controls.Add(this.menuStrip1);
-			this.MainMenuStrip = this.menuStrip1;
+			this.Controls.Add(this.menuStrip_ChipMenu);
+			this.MainMenuStrip = this.menuStrip_ChipMenu;
 			this.Name = "CMcuFormAVR8BitsForm";
 			this.Padding = new System.Windows.Forms.Padding(2);
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "CMcuFormAVR8Bits";
 			this.panel_ChipID.ResumeLayout(false);
+			this.groupBox3.ResumeLayout(false);
+			this.groupBox3.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			this.groupBox1.ResumeLayout(false);
@@ -1617,15 +1825,17 @@
 			this.groupBox_ChipType.PerformLayout();
 			this.tabControl1.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
+			this.tabPage1.PerformLayout();
+			this.panel_ChipMsg.ResumeLayout(false);
+			this.panel_ChipFunc.ResumeLayout(false);
+			this.toolStrip_ChipTool.ResumeLayout(false);
+			this.toolStrip_ChipTool.PerformLayout();
 			this.tabPage2.ResumeLayout(false);
 			this.tabControl2.ResumeLayout(false);
 			this.tabPage3.ResumeLayout(false);
 			this.tabPage4.ResumeLayout(false);
-			this.menuStrip1.ResumeLayout(false);
-			this.menuStrip1.PerformLayout();
-			this.groupBox3.ResumeLayout(false);
-			this.groupBox3.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+			this.menuStrip_ChipMenu.ResumeLayout(false);
+			this.menuStrip_ChipMenu.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1633,7 +1843,7 @@
 
 		#endregion
 
-		private Harry.LabTools.LabComm.CCommBaseControl cCommBaseControl1;
+		private Harry.LabTools.LabCommType.CCommBaseControl cCommBaseControl_ChipCOMM;
 		private System.Windows.Forms.Panel panel_ChipID;
 		private System.Windows.Forms.GroupBox groupBox_ChipType;
 		private System.Windows.Forms.ComboBox comboBox1;
@@ -1662,7 +1872,7 @@
 		private System.Windows.Forms.TabControl tabControl2;
 		private System.Windows.Forms.TabPage tabPage3;
 		private System.Windows.Forms.TabPage tabPage4;
-		private System.Windows.Forms.MenuStrip menuStrip1;
+		private System.Windows.Forms.MenuStrip menuStrip_ChipMenu;
 		private System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 命令ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 编辑XToolStripMenuItem;
@@ -1674,5 +1884,26 @@
 		private System.Windows.Forms.TextBox textBox4;
 		private Harry.LabTools.LabHexEdit.CHexBox cHexBox1;
 		private Harry.LabTools.LabHexEdit.CHexBox cHexBox2;
+		private System.Windows.Forms.ToolStrip toolStrip_ChipTool;
+		private System.Windows.Forms.Panel panel_ChipMsg;
+		private System.Windows.Forms.Panel panel_ChipFunc;
+		private System.Windows.Forms.Panel panel_ChipCheckFunc;
+		private CMcuFormAVR8Bits.CMcuFormAVR8BitsFuseAndLockControl cMcuFormAVR8BitsFuseAndLockControl_ChipFuse;
+		private System.Windows.Forms.Panel panel_ChipButtonFunc;
+		private Harry.LabTools.LabControlPlus.CRichTextBoxEx cRichTextBoxEx_ChipMsg;
+		private System.Windows.Forms.ToolStripLabel toolStripLabel_ChipStateName;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripLabel toolStripLabel_ChipState;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripLabel toolStripLabel_ChipTimeName;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripLabel toolStripLabel_ChipTime;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar_ChipProgressBar;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+		private System.Windows.Forms.ToolStripLabel toolStripLabel_ChipRTCTimerName;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+		private System.Windows.Forms.ToolStripLabel toolStripLabel_ChipRTCTimer;
+		private System.Windows.Forms.Timer timer_ChipRTCTime;
 	}
 }
