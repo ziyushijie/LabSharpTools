@@ -13,6 +13,16 @@ namespace Harry.LabTools.LabCommType
 {
     public partial class CCommBaseControl : UserControl
     {
+
+		#region 委托事件
+
+		/// <summary>
+		/// 通讯设备同步事件
+		/// </summary>
+		public virtual event CCommChangeEvent EventHandlerCCommSynchronized = null;
+
+		#endregion
+
 		#region 变量定义
 
 		/// <summary>
@@ -225,11 +235,13 @@ namespace Harry.LabTools.LabCommType
 						else
 						{
 							this.button_COMM.Text = "关闭设备";
-						}                        
+						}   
                         this.pictureBox_COMM.Image= Properties.Resources.open;
-                        this.defaultCCOMM.EventCCommChange += this.EventDeviceChanged;
+                        this.defaultCCOMM.EventHandlerCCommChange += this.EventDeviceChanged;
 						this.defaultIsShowCommParam = false;
-                    }
+						//---执行设备的同步事件
+						this.EventHandlerCCommSynchronized?.Invoke();
+					}
                 }
             }
         }
@@ -261,8 +273,11 @@ namespace Harry.LabTools.LabCommType
 							this.button_COMM.Text = "打开设备";
 						}						
                         this.pictureBox_COMM.Image = Properties.Resources.lost;
-                        this.defaultCCOMM.EventCCommChange -= this.EventDeviceChanged;
+						//---设备移除事件
+						this.defaultCCOMM.EventHandlerCCommChange -= this.EventDeviceChanged;
 						this.defaultIsShowCommParam = true;
+						//---执行设备的同步事件
+						this.EventHandlerCCommSynchronized?.Invoke();
 					}
                 }
             }
@@ -296,7 +311,7 @@ namespace Harry.LabTools.LabCommType
                     this.BeginInvoke((EventHandler)
                                  (delegate
                                  {
-                                     if ((string.IsNullOrEmpty(this.comboBox_COMM.Text))|| ((this.defaultCCOMM.Name != this.comboBox_COMM.Text)))
+                                     if ((!string.IsNullOrEmpty(this.comboBox_COMM.Text))|| ((this.defaultCCOMM.Name != this.comboBox_COMM.Text)))
                                      {
 										 //if (this.pictureBox_COMM.Image.Flags == Properties.Resources.open.Flags)
 										 if (LabGenFunc.CGenFuncBitMap.GenFuncCompareBitMap((Bitmap)this.pictureBox_COMM.Image, Properties.Resources.open) == true)
@@ -616,8 +631,9 @@ namespace Harry.LabTools.LabCommType
 			switch (btn.Name)
 			{
 				case "button_COMM":
-					//---判断鼠标按下的按键
-					if (e.Button == MouseButtons.Right)
+					//---判断鼠标按下的按键，用于切换通讯端口的变化，如果是打开状态，
+					//---则当前端口不可配置，必须关闭之后在进行配置
+					if ((e.Button == MouseButtons.Right)&&(this.button_COMM.Text=="打开设备"))
 					{
 						this.ConfigCCOMMType();
 					}

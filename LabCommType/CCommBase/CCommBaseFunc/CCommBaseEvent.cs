@@ -28,12 +28,12 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 设备变化事件
 		/// </summary>
-		public virtual event CCommChangeEvent EventCCommChange = null;
-
+		public virtual event CCommChangeEvent EventHandlerCCommChange = null;
+		
 		/// <summary>
 		/// 数据接收事件
 		/// </summary>
-		public virtual event CCommEvent EventCCommReceData=null;
+		public virtual event CCommEvent EventHandlerCCommReceData=null;
 
 		#endregion
 

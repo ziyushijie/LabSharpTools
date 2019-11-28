@@ -58,7 +58,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_OpenConnect()
 		{
 			int _return = -1;
-			if ((this.mComm != null) && (this.mComm.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
 			{
 
 			}
@@ -166,7 +166,7 @@ namespace Harry.LabTools.LabMcuFunc
 		{
 			int _return = 0;
 			//---获取熔丝位
-			int[] fuse = this.mMcuInfoParam.McuDefaultFuse();
+			int[] fuse = this.mMcuInfoParam.McuDefaultFuseInfo();
 			if (fuse == null)
 			{
 				_return = 1;

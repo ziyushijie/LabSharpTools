@@ -133,13 +133,25 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 芯片类型
 		/// </summary>
-		public override string ChipType
+		public override string TypeChip
 		{
 			get
 			{
 				return "AVR";
 			}
 		}
+
+		/// <summary>
+		/// 芯片名称
+		/// </summary>
+		public override string TypeName
+		{
+			get
+			{
+				return this.ChipName;
+			}
+		}
+
 		/// <summary>
 		/// 芯片名称为读写属性
 		/// </summary>
@@ -638,32 +650,96 @@ namespace Harry.LabTools.LabMcuFunc
 		#region 公有函数
 
 		/// <summary>
-		/// 
+		/// MCU信息
 		/// </summary>
 		/// <param name="chipName"></param>
 		/// <returns></returns>
-		public override bool McuTypeInfo(string chipName)
+		public override bool McuTypeInfo(string chipName, ComboBox cbbInterface = null)
 		{
-			return this.AnalyseAVR8BitsMcuInfo(chipName);
+			bool _return = this.AnalyseAVR8BitsMcuInfo(chipName.ToLower());
+			if ((_return==true)&&(cbbInterface!=null))
+			{
+				_return = this.McuInterfaceInfo(cbbInterface);
+			}
+			return _return ;
 		}
 
 		/// <summary>
-		/// 
+		/// MCU列表信息
 		/// </summary>
 		/// <param name="chipName"></param>
 		/// <returns></returns>
-		public override string[] McuTypeList()
+		public override string[] McuListInfo(ComboBox cbbList = null)
 		{
-			return this.AnalyseAVR8BitsMcuList();
+			string[] _return = this.AnalyseAVR8BitsMcuList();
+			if ((_return!=null)&&(cbbList!=null))
+			{
+				if (cbbList.InvokeRequired)
+				{
+					cbbList.BeginInvoke((EventHandler)
+							 //cbb.Invoke((EventHandler)
+							 (delegate
+							 {
+								 cbbList.Items.Clear();
+								 cbbList.Items.AddRange(_return);
+								 cbbList.SelectedIndex = 0;
+							 }));
+				}
+				else
+				{
+					cbbList.Items.Clear();
+					cbbList.Items.AddRange(_return);
+					cbbList.SelectedIndex = 0;
+				}
+				
+			}
+			return _return;
 		}
 
 		/// <summary>
-		/// 
+		/// MCU默认熔丝位
 		/// </summary>
 		/// <returns></returns>
-		public override int[] McuDefaultFuse()
+		public override int[] McuDefaultFuseInfo()
 		{
 			return this.defaultChipOSC.mMask;
+		}
+
+		/// <summary>
+		/// MCU的接口信息
+		/// </summary>
+		/// <param name="cbbInterface"></param>
+		/// <returns></returns>
+		public override bool McuInterfaceInfo(ComboBox cbbInterface)
+		{
+			if (cbbInterface!=null)
+			{
+				if (cbbInterface.InvokeRequired)
+				{
+					cbbInterface.BeginInvoke((EventHandler)
+							 //cbb.Invoke((EventHandler)
+							 (delegate
+							 {
+								 cbbInterface.Items.Clear();
+								 if (this.defaultInterface != null)
+								 {
+									 cbbInterface.Items.AddRange(this.defaultInterface.mText);
+									 cbbInterface.SelectedIndex = 0;
+								 }
+							 }));
+				}
+				else
+				{
+					cbbInterface.Items.Clear();
+					if (this.defaultInterface!=null)
+					{
+						cbbInterface.Items.AddRange(this.defaultInterface.mText);
+						cbbInterface.SelectedIndex = 0;
+					}
+				}
+				return true;
+			}
+			return false;
 		}
 
 		/// <summary>

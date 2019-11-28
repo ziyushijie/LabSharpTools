@@ -12,7 +12,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 软件版本信息
 		/// </summary>
-		private byte[] defaultSoftwareVersion = new byte[] { 0x00, 0x00, 0x00, 0x00 };
+		private byte[] defaultSoftwareVersion = new byte[] { 0x00, 0x00, 0x00, 0x01 };
 
 		/// <summary>
 		/// 硬件版本信息

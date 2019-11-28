@@ -73,6 +73,7 @@ namespace Harry.LabTools.LabHexEdit
 			this.defaultVScrollBar.Width=this.defaultScrollBarWidth;
 			this.defaultVScrollBar.Minimum=0;
 			this.defaultVScrollBar.Maximum=0;
+			this.defaultVScrollBar.Height = this.defaultScrollBarWidth*2;
 
 			//---滑块滑动事件处理
 			defaultVScrollBar.Scroll+=new ScrollEventHandler(VScrollBar_Scroll);

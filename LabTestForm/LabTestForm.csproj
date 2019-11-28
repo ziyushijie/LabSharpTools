@@ -152,8 +152,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LabComm\LabCommType.csproj">
-      <Project>{3FBD5434-D5CB-4E6F-95D3-3905E5DE178A}</Project>
+    <ProjectReference Include="..\LabCommType\LabCommType.csproj">
+      <Project>{3fbd5434-d5cb-4e6f-95d3-3905e5de178a}</Project>
       <Name>LabCommType</Name>
     </ProjectReference>
     <ProjectReference Include="..\LabControlPlus\LabControlPlus.csproj">

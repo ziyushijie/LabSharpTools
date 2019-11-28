@@ -12,12 +12,12 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 设备变化事件
 		/// </summary>
-		public override event CCommChangeEvent EventCCommChange;
-
+		public override event CCommChangeEvent EventHandlerCCommChange;
+		
 		/// <summary>
 		/// 数据接收事件
 		/// </summary>
-		public override event CCommEvent EventCCommReceData;
+		public override event CCommEvent EventHandlerCCommReceData;
         #endregion
 
         #region 属性定义
@@ -75,9 +75,9 @@ namespace Harry.LabTools.LabCommType
 				//---设备拔出处理函数
 				this.RemoveDevice();
 				//---设备变化事件
-				if (this.EventCCommChange != null)
+				if (this.EventHandlerCCommChange != null)
 				{
-					this.EventCCommChange?.Invoke();
+					this.EventHandlerCCommChange?.Invoke();
 				}
 			}
 		}
@@ -99,9 +99,9 @@ namespace Harry.LabTools.LabCommType
 					//---设置状态为事件读取
 					this.defaultSerialSTATE = CCOMM_STATE.STATE_EVENTREAD;
 					//---执行委托函数,数据接收函数
-					if (this.EventCCommReceData!=null)
+					if (this.EventHandlerCCommReceData!=null)
 					{
-						this.EventCCommReceData?.Invoke(sender, e);
+						this.EventHandlerCCommReceData?.Invoke(sender, e);
 					}					
 					//---设置状态为空闲模式
 					this.defaultSerialSTATE = CCOMM_STATE.STATE_IDLE;

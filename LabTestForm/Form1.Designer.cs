@@ -31,10 +31,46 @@ namespace LabTestForm
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.cHexBox1 = new Harry.LabTools.LabHexEdit.CHexBox();
+			Harry.LabTools.LabCommType.CCommBase cCommBase1 = new Harry.LabTools.LabCommType.CCommBase();
 			this.button1 = new System.Windows.Forms.Button();
 			this.cCommBaseControl1 = new Harry.LabTools.LabCommType.CCommBaseControl();
+			this.cHexBox1 = new Harry.LabTools.LabHexEdit.CHexBox();
 			this.SuspendLayout();
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(886, 74);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(75, 23);
+			this.button1.TabIndex = 9;
+			this.button1.Text = "button1";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
+			// 
+			// cCommBaseControl1
+			// 
+			this.cCommBaseControl1.Location = new System.Drawing.Point(12, 12);
+			cCommBase1.Index = -1;
+			cCommBase1.IsChanged = false;
+			cCommBase1.IsFullParam = false;
+			cCommBase1.IsMultiCMD = false;
+			cCommBase1.mCCommComBox = null;
+			cCommBase1.mCCommForm = null;
+			cCommBase1.mCCommRichTextBox = null;
+			cCommBase1.mSerialParam = null;
+			cCommBase1.mUSBParam = null;
+			cCommBase1.Name = "";
+			cCommBase1.ReceData = null;
+			cCommBase1.SendData = null;
+			cCommBase1.Timeout = 200;
+			cCommBase1.Type = Harry.LabTools.LabCommType.CCOMM_TYPE.COMM_SERIAL;
+			this.cCommBaseControl1.mCCOMM = cCommBase1;
+			this.cCommBaseControl1.mCCommRichTextBox = null;
+			this.cCommBaseControl1.mIsShowCommParam = true;
+			this.cCommBaseControl1.Name = "cCommBaseControl1";
+			this.cCommBaseControl1.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+			this.cCommBaseControl1.Size = new System.Drawing.Size(262, 56);
+			this.cCommBaseControl1.TabIndex = 2;
 			// 
 			// cHexBox1
 			// 
@@ -581,38 +617,17 @@ namespace LabTestForm
 			this.cHexBox1.mYScaleShowBit4 = Harry.LabTools.LabHexEdit.CHexBox.YScaleShowBit4.BIT4X4;
 			this.cHexBox1.mYScaleWidth = 86;
 			this.cHexBox1.Name = "cHexBox1";
-			this.cHexBox1.Size = new System.Drawing.Size(824, 634);
-			this.cHexBox1.TabIndex = 3;
+			this.cHexBox1.Size = new System.Drawing.Size(837, 613);
+			this.cHexBox1.TabIndex = 10;
 			this.cHexBox1.Text = "cHexBox1";
-			// 
-			// button1
-			// 
-			this.button1.Location = new System.Drawing.Point(886, 74);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
-			this.button1.TabIndex = 9;
-			this.button1.Text = "button1";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
-			// 
-			// cCommBaseControl1
-			// 
-			this.cCommBaseControl1.Location = new System.Drawing.Point(12, 12);
-			//this.cCommBaseControl1.mCCOMM = null;
-			//this.cCommBaseControl1.mCCommRichTextBox = null;
-			//this.cCommBaseControl1.mIsShowCommParam = true;
-			this.cCommBaseControl1.Name = "cCommBaseControl1";
-			this.cCommBaseControl1.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-			this.cCommBaseControl1.Size = new System.Drawing.Size(262, 56);
-			this.cCommBaseControl1.TabIndex = 2;
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1432, 720);
-			this.Controls.Add(this.button1);
 			this.Controls.Add(this.cHexBox1);
+			this.Controls.Add(this.button1);
 			this.Controls.Add(this.cCommBaseControl1);
 			this.Name = "Form1";
 			this.Text = "Form1";
@@ -623,8 +638,8 @@ namespace LabTestForm
 
 		#endregion
         private Harry.LabTools.LabCommType.CCommBaseControl cCommBaseControl1;
-		private Harry.LabTools.LabHexEdit.CHexBox cHexBox1;
 		private System.Windows.Forms.Button button1;
+		private Harry.LabTools.LabHexEdit.CHexBox cHexBox1;
 	}
 }
 

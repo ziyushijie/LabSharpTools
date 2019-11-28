@@ -45,6 +45,10 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 			{
 				return this.defaultCMcuFunc;
 			}
+			set
+			{
+				this.defaultCMcuFunc = value;
+			}
 		}
 
 		/// <summary>

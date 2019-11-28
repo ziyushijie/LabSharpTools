@@ -13,6 +13,36 @@ namespace Harry.LabTools.LabMcuFunc
 
 		#region 属性定义
 
+		/// <summary>
+		/// 软件版本为读写属性
+		/// </summary>
+		public override byte[] mSoftwareVersion
+		{
+			get
+			{
+				return base.mSoftwareVersion;
+			}
+			set
+			{
+				base.mSoftwareVersion = value;
+			}
+		}
+
+		/// <summary>
+		/// 硬件版本为读写属性
+		/// </summary>
+		public override byte[] mHardwareVersion
+		{
+			get
+			{
+				return base.mHardwareVersion;
+			}
+			set
+			{
+				base.mHardwareVersion = value;
+			}
+		}
+
 		#endregion
 
 		#region 构造函数

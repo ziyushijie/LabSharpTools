@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Harry.LabTools.LabMcuFunc
 {
@@ -16,7 +17,18 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 芯片类型
 		/// </summary>
-		public virtual string ChipType
+		public virtual string TypeChip
+		{
+			get
+			{
+				return string.Empty;
+			}
+		}
+
+		/// <summary>
+		/// 芯片名称
+		/// </summary>
+		public virtual string TypeName
 		{
 			get
 			{
@@ -55,7 +67,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipName"></param>
 		/// <returns></returns>
-		public virtual bool McuTypeInfo(string chipName)
+		public virtual bool McuTypeInfo(string chipName, ComboBox cbbInterface=null)
 		{
 			return false;			
 		}
@@ -65,7 +77,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipName"></param>
 		/// <returns></returns>
-		public virtual string[] McuTypeList()
+		public virtual string[] McuListInfo(ComboBox cbbList=null)
 		{
 			return null;
 		}
@@ -75,9 +87,19 @@ namespace Harry.LabTools.LabMcuFunc
 		/// 获取默认熔丝位
 		/// </summary>
 		/// <returns></returns>
-		public virtual int[] McuDefaultFuse()
+		public virtual int[] McuDefaultFuseInfo()
 		{
 			return null;
+		}
+
+		/// <summary>
+		/// MCU的接口信息
+		/// </summary>
+		/// <param name="chipName"></param>
+		/// <returns></returns>
+		public virtual bool McuInterfaceInfo(ComboBox cbbInterface)
+		{
+			return false;
 		}
 
 		#endregion

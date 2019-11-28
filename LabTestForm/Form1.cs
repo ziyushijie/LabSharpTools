@@ -54,7 +54,7 @@ namespace LabTestForm
 		private void button1_Click(object sender, EventArgs e)
 		{
 			this.usedMcu.mMcuInfoParam.McuTypeInfo("atmega8");
-			this.usedMcu.mMcuInfoParam.McuTypeList();
+			this.usedMcu.mMcuInfoParam.McuListInfo();
 		}
 
 		#endregion

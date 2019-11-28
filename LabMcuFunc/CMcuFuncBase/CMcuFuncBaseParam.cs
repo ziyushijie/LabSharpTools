@@ -30,7 +30,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 使用的通讯端口信息
 		/// </summary>
-		private CCommBase defaultComm = null;
+		private CCommBase defaultCCOMM = null;
 
 		/// <summary>
 		/// 使用的MCU信息,默认初始化AVR的8Bit的Mcu
@@ -64,19 +64,19 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 通讯使用的端口为读写属性
 		/// </summary>
-		public virtual CCommBase mComm
+		public virtual CCommBase mCCOMM
 		{
 			get
 			{
-				return this.defaultComm;
+				return this.defaultCCOMM;
 			}
 			set
 			{
 				if (value == null)
 				{
-					this.defaultComm = new CCommBase();
+					this.defaultCCOMM = new CCommBase();
 				}
-				this.defaultComm = value;
+				this.defaultCCOMM = value;
 			}
 		}
 
@@ -126,11 +126,11 @@ namespace Harry.LabTools.LabMcuFunc
 		{
 			if (usedComm!=null)
 			{
-				if (this.defaultComm==null)
+				if (this.defaultCCOMM==null)
 				{
-					this.defaultComm = new CCommBase();
+					this.defaultCCOMM = new CCommBase();
 				}
-				this.defaultComm = usedComm;
+				this.defaultCCOMM = usedComm;
 			}
 		}
 

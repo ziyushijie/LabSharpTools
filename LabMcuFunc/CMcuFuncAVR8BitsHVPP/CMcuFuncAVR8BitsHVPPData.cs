@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Harry.LabTools.LabMcuFunc
 {
-	public partial class CMcuFuncAVR8BitsHVPP : CMcuFuncBase
+	public partial class CMcuFuncAVR8BitsHVPP 
 	{
 		#region 变量定义
 

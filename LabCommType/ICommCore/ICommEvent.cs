@@ -52,12 +52,12 @@ namespace Harry.LabTools.LabCommType
         /// <summary>
         /// 设备变化事件
         /// </summary>
-        event CCommChangeEvent EventCCommChange;
+        event CCommChangeEvent EventHandlerCCommChange;
 
 		/// <summary>
 		/// 数据接收事件
 		/// </summary>
-		event CCommEvent EventCCommReceData;
+		event CCommEvent EventHandlerCCommReceData;
 
 		#endregion
 

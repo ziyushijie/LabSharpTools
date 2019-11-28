@@ -29,3 +29,15 @@ dotnet_diagnostic.CA1305.severity = none
 
 # CA1304: 指定 CultureInfo
 dotnet_diagnostic.CA1304.severity = none
+
+# IDE0027: 使用访问器的表达式主体
+csharp_style_expression_bodied_accessors = true:none
+
+# CA2119: 密封满足私有接口的方法
+dotnet_diagnostic.CA2119.severity = none
+
+# IDE0025: 使用属性的表达式主体
+csharp_style_expression_bodied_properties = true:none
+
+# CA1819: 属性不应返回数组
+dotnet_diagnostic.CA1819.severity = none
