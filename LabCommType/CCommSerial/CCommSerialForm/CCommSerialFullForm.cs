@@ -27,8 +27,7 @@ namespace Harry.LabTools.LabCommType
 				return new CCommSerialParam(this.cCommSerial.mCCommName, this.cCommSerial.mBaudRate, this.cCommSerial.mStopBits, this.cCommSerial.mDataBits, this.cCommSerial.mParity,this.cCommSerial.mAddrID);
 			}
 		}
-
-
+		
 		/// <summary>
 		/// 接收数据校验方式
 		/// </summary>
@@ -48,6 +47,17 @@ namespace Harry.LabTools.LabCommType
 			get
 			{
 				return this.cCommSerial.mTxCRC;
+			}
+		}
+
+		/// <summary>
+		/// 每包字节的大小
+		/// </summary>
+		public override int mPerPackageMaxSize
+		{
+			get
+			{
+				return this.cCommSerial.mPerPackageMaxSize;
 			}
 		}
 
@@ -84,11 +94,11 @@ namespace Harry.LabTools.LabCommType
 		/// </summary>
 		/// <param name="text"></param>
 		/// <param name="isLimitedSize"></param>
-		public CCommSerialFullForm(CCommBase cComm, string text = null, bool isLimitedSize = false)
+		public CCommSerialFullForm(int perPackageSize, CCommBase cComm, string text = null, bool isLimitedSize = false)
 		{
 			InitializeComponent();
 
-			if ((text != "") && (text != string.Empty))
+			if ((!string.IsNullOrEmpty(text)))
 			{
 				this.cCommSerial.mButton.Text = text;
 			}
@@ -100,7 +110,7 @@ namespace Harry.LabTools.LabCommType
 				this.MinimumSize = this.Size;
 				this.MaximumSize = this.Size;
 			}
-			this.Init(cComm);
+			this.Init(perPackageSize, cComm);
 		}
 
 		/// <summary>
@@ -108,11 +118,11 @@ namespace Harry.LabTools.LabCommType
 		/// </summary>
 		/// <param name="text"></param>
 		/// <param name="isLimitedSize"></param>
-		public CCommSerialFullForm(ComboBox cbb, CCommBase cComm, string text = null, bool isLimitedSize = false)
+		public CCommSerialFullForm(int perPackageSize, ComboBox cbb, CCommBase cComm, string text = null, bool isLimitedSize = false)
 		{
 			InitializeComponent();
 
-			if ((text != "") && (text != string.Empty))
+			if ((!string.IsNullOrEmpty(text)))
 			{
 				this.cCommSerial.mButton.Text = text;
 			}
@@ -124,7 +134,7 @@ namespace Harry.LabTools.LabCommType
 				this.MinimumSize = this.Size;
 				this.MaximumSize = this.Size;
 			}
-			this.Init(cbb, cComm);
+			this.Init(perPackageSize, cbb, cComm);
 		}
 
 		/// <summary>
@@ -135,11 +145,11 @@ namespace Harry.LabTools.LabCommType
 		/// <param name="msg"></param>
 		/// <param name="text"></param>
 		/// <param name="isLimitedSize"></param>
-		public CCommSerialFullForm(ComboBox cbb, CCommBase cComm, RichTextBox msg = null, string text = null, bool isLimitedSize = false)
+		public CCommSerialFullForm(int perPackageSize, ComboBox cbb, CCommBase cComm, RichTextBox msg = null, string text = null, bool isLimitedSize = false)
 		{
 			InitializeComponent();
 
-			if ((text != "") && (text != string.Empty))
+			if ((!string.IsNullOrEmpty(text)))
 			{
 				this.cCommSerial.mButton.Text = text;
 			}
@@ -151,7 +161,7 @@ namespace Harry.LabTools.LabCommType
 				this.MinimumSize = this.Size;
 				this.MaximumSize = this.Size;
 			}
-			this.Init(cbb, cComm);
+			this.Init(perPackageSize, cbb, cComm);
 		}
 
 		#endregion
@@ -195,13 +205,13 @@ namespace Harry.LabTools.LabCommType
 		/// 
 		/// </summary>
 		/// <param name="cComm"></param>
-		private void Init(CCommBase cComm)
+		private void Init(int perPackageSize, CCommBase cComm)
 		{
 			if (cComm != null)
 			{
 				this.cCommSerial.RemoveComboBoxMouseDownClick();
 				this.cCommSerial.RemoveButtonClick();
-
+				this.cCommSerial.mPerPackageMaxSize = perPackageSize;
 				//---加载按钮事件
 				this.cCommSerial.mButton.Click += new EventHandler(this.ParamShowDialog_Click);
 			}
@@ -216,13 +226,14 @@ namespace Harry.LabTools.LabCommType
 		/// </summary>
 		/// <param name="cbb"></param>
 		/// <param name="cComm"></param>
-		private void Init(ComboBox cbb, CCommBase cComm)
+		private void Init(int perPackageSize, ComboBox cbb, CCommBase cComm)
 		{
 			if (cComm != null)
 			{
 				this.cCommSerial.RemoveComboBoxMouseDownClick();
 				this.cCommSerial.RemoveButtonClick();
 				this.cCommSerial.RefreshCOMM(cbb);
+				this.cCommSerial.mPerPackageMaxSize = perPackageSize;
 
 				//---传递端口类型
 				this.cCommSerial.mCCOMM = cComm;
@@ -239,6 +250,8 @@ namespace Harry.LabTools.LabCommType
 				this.cCommSerial.AnalyseParity(cComm.mSerialParam.mParity);
 				//---设备地址
 				this.cCommSerial.AnalyseAddrID(cComm.mSerialParam.mAddrID.ToString());
+				//---包大小
+				this.cCommSerial.AnalysePerPackageMaxSize(perPackageSize);
 				//---数据发送校验方式
 				this.cCommSerial.AnalyseTxCRC((int)cComm.SendData.mCRCMode);
 				//---数据接收校验方式
@@ -256,13 +269,14 @@ namespace Harry.LabTools.LabCommType
 		/// <param name="cbb"></param>
 		/// <param name="cComm"></param>
 		/// <param name="msg"></param>
-		private void Init(ComboBox cbb, CCommBase cComm, RichTextBox msg = null)
+		private void Init(int perPackageSize, ComboBox cbb, CCommBase cComm, RichTextBox msg = null)
 		{
 			if (cComm != null)
 			{
 				this.cCommSerial.RemoveComboBoxMouseDownClick();
 				this.cCommSerial.RemoveButtonClick();
 				this.cCommSerial.RefreshCOMM(cbb);
+				this.cCommSerial.mPerPackageMaxSize = perPackageSize;
 
 				//---传递端口类型
 				this.cCommSerial.mCCOMM = cComm;
@@ -280,6 +294,8 @@ namespace Harry.LabTools.LabCommType
 				this.cCommSerial.AnalyseParity(cComm.mSerialParam.mParity);
 				//---设备地址
 				this.cCommSerial.AnalyseAddrID(cComm.mSerialParam.mAddrID.ToString());
+				//---包大小
+				this.cCommSerial.AnalysePerPackageMaxSize(perPackageSize);
 				//---数据发送校验方式
 				this.cCommSerial.AnalyseTxCRC((int)cComm.SendData.mCRCMode);
 				//---数据接收校验方式

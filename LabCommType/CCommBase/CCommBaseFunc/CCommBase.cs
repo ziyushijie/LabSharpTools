@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Harry.LabTools.LabCommType
 {
-	public partial class CCommBase : IDisposable
+	public partial class CCommBase : IDisposable,ICloneable
 	{
 		#region 变量定义
 
@@ -14,7 +14,7 @@ namespace Harry.LabTools.LabCommType
 		#region 属性定义
 
 		#endregion
-		
+
 		#region 构造函数
 
 		public CCommBase()
@@ -63,6 +63,32 @@ namespace Harry.LabTools.LabCommType
 		#endregion
 
 		#region 私有函数
+
+		#endregion
+
+		#region 事件函数
+
+		#endregion
+
+		#region 克隆函数
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public object  Clone()
+		{
+			return this as object;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		object ICloneable.Clone()
+		{
+			return this.Clone();
+		}
 
 		#endregion
 

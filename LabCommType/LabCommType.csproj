@@ -125,11 +125,11 @@
     <Compile Include="CCommBase\CCommBaseForm\CCommBaseForm.Designer.cs">
       <DependentUpon>CCommBaseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CCommBase\CCommBaseForm\CCommBasePlusForm.cs">
+    <Compile Include="CCommBase\CCommBaseForm\CCommTypeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CCommBase\CCommBaseForm\CCommBasePlusForm.Designer.cs">
-      <DependentUpon>CCommBasePlusForm.cs</DependentUpon>
+    <Compile Include="CCommBase\CCommBaseForm\CCommTypeForm.Designer.cs">
+      <DependentUpon>CCommTypeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CCommBase\CCommBaseFunc\CCommBase.cs" />
     <Compile Include="CCommBase\CCommBaseFunc\CCommBaseControl.cs" />
@@ -242,8 +242,8 @@
     <EmbeddedResource Include="CCommBase\CCommBaseForm\CCommBaseForm.resx">
       <DependentUpon>CCommBaseForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CCommBase\CCommBaseForm\CCommBasePlusForm.resx">
-      <DependentUpon>CCommBasePlusForm.cs</DependentUpon>
+    <EmbeddedResource Include="CCommBase\CCommBaseForm\CCommTypeForm.resx">
+      <DependentUpon>CCommTypeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CCommSerial\CCommSerialControl\CCommSerialControl.resx">
       <DependentUpon>CCommSerialControl.cs</DependentUpon>

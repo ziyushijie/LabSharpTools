@@ -32,3 +32,12 @@ dotnet_diagnostic.IDE0047.severity = none
 
 # IDE0055: 修正格式
 dotnet_diagnostic.IDE0055.severity = none
+
+# IDE0025: 使用属性的表达式主体
+csharp_style_expression_bodied_properties = true:none
+
+# CA1305: 指定 IFormatProvider
+dotnet_diagnostic.CA1305.severity = none
+
+# CA1063: 正确实现 IDisposable
+dotnet_diagnostic.CA1063.severity = none

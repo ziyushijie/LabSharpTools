@@ -38,17 +38,29 @@ namespace Harry.LabTools.LabCommType
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="cbb"></param>
-        /// <param name="msg"></param>
-        public CCommSerial(ComboBox cbb = null, RichTextBox msg = null)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="cCommBase"></param>
+		public CCommSerial(CCommBase cCommBase)
+		{
+			if (cCommBase!=null)
+			{
+				//---参数的分析
+				base.AnalyseParam(cCommBase.PerPackageMaxSize, cCommBase.mSerialParam, cCommBase.mUSBParam, cCommBase.IsMultiAddr);
+			}			
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="cbb"></param>
+		/// <param name="msg"></param>
+		public CCommSerial(ComboBox cbb = null, RichTextBox msg = null)
         {
             this.Init(cbb, msg);
         }
-
-
+		
         #endregion
 
         #region 析构函数
@@ -525,6 +537,7 @@ namespace Harry.LabTools.LabCommType
 		#region 事件函数
 
 		#endregion
+
 	}
 
 	#region 系统硬件

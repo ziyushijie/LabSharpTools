@@ -16,7 +16,18 @@ namespace Harry.LabTools.LabCommType
 		#endregion
 
 		#region 属性函数
-		
+
+		/// <summary>
+		/// 每包字节的大小
+		/// </summary>
+		public override int mPerPackageMaxSize
+		{
+			get
+			{
+				return 0;
+			}
+		}
+
 		#endregion
 
 		#region 构造函数

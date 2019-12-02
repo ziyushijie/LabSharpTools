@@ -73,7 +73,16 @@ namespace Harry.LabTools.LabCommType
 			}
 		}
 
-
+		/// <summary>
+		/// 每包字节的大小
+		/// </summary>
+		public virtual int mPerPackageMaxSize
+		{
+			get
+			{
+				return 0;
+			}
+		}
 		#endregion
 
 		#region 构造函数

@@ -1,6 +1,6 @@
 ﻿namespace Harry.LabTools.LabCommType
 {
-	partial class CCommBasePlusForm
+	partial class CCommTypeForm
 	{
 		/// <summary>
 		/// Required designer variable.

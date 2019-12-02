@@ -10,7 +10,11 @@ using System.Windows.Forms;
 
 namespace Harry.LabTools.LabCommType
 {
-	public partial class CCommBasePlusForm : FloatPopupBaseForm
+
+	/// <summary>
+	/// 修改通讯方式，比如USB或者串口通讯
+	/// </summary>
+	public partial class CCommTypeForm : FloatPopupBaseForm
 	{
 		#region 变量定义
 
@@ -41,7 +45,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 
 		/// </summary>
-		public CCommBasePlusForm()
+		public CCommTypeForm()
 		{
 			InitializeComponent();
 			this.Startup();
@@ -50,7 +54,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 
 		/// </summary>
-		public CCommBasePlusForm(CCOMM_TYPE ccommType)
+		public CCommTypeForm(CCOMM_TYPE ccommType)
 		{
 			InitializeComponent();
 			this.defaulCCommType = ccommType;
@@ -64,7 +68,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 
 		/// </summary>
-		~CCommBasePlusForm()
+		~CCommTypeForm()
 		{
 			this.FreeResource();
 		}

@@ -41,3 +41,9 @@ csharp_style_expression_bodied_properties = true:none
 
 # CA1819: 属性不应返回数组
 dotnet_diagnostic.CA1819.severity = none
+
+# CA1028: 枚举存储应为 Int32
+dotnet_diagnostic.CA1028.severity = none
+
+# CA1303: 请不要将文本作为本地化参数传递
+dotnet_diagnostic.CA1303.severity = none

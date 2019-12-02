@@ -138,15 +138,42 @@ namespace Harry.LabTools.LabCommType
 				}
 			}
 		}
-		
-        #endregion
 
-        #region 构造函数
+
+		/// <summary>
+		/// 每包字节的大小
+		/// </summary>
+		public virtual int mPerPackageMaxSize
+		{
+			get
+			{
+				if (this.defaultCCOMM != null)
+				{
+					return this.defaultCCOMM.PerPackageMaxSize;
+				}
+				else
+				{
+					return 64;
+				}
+
+			}
+			set
+			{
+				if (this.defaultCCOMM != null)
+				{
+					this.defaultCCOMM.PerPackageMaxSize = value;
+				}
+			}
+		}
+
+		#endregion
+
+		#region 构造函数
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public  CCommBaseControl()
+		public CCommBaseControl()
 		{
 			 InitializeComponent();
 			 this.StartupInit(null);
@@ -316,8 +343,6 @@ namespace Harry.LabTools.LabCommType
 										 //if (this.pictureBox_COMM.Image.Flags == Properties.Resources.open.Flags)
 										 if (LabGenFunc.CGenFuncBitMap.GenFuncCompareBitMap((Bitmap)this.pictureBox_COMM.Image, Properties.Resources.open) == true)
 										 {
-                                             //---注销资源
-                                             this.defaultCCOMM.Dispose();
 											 if (this.button_COMM.InvokeRequired)
 											 {
 												 this.BeginInvoke((EventHandler)
@@ -331,8 +356,10 @@ namespace Harry.LabTools.LabCommType
 											 else
 											 {
 												 this.button_COMM.Text = "打开设备";
-											 }                                             
-                                             this.pictureBox_COMM.Image = Properties.Resources.lost;
+											 }
+											 //---注销资源
+											 this.defaultCCOMM.Dispose();
+											 this.pictureBox_COMM.Image = Properties.Resources.lost;
 											 this.defaultIsShowCommParam = true;
 										 }
                                      }
@@ -340,7 +367,7 @@ namespace Harry.LabTools.LabCommType
                 }
                 else
                 {
-					if ((string.IsNullOrEmpty(this.comboBox_COMM.Text)) || ((this.defaultCCOMM.Name != this.comboBox_COMM.Text)))
+					if (!(string.IsNullOrEmpty(this.comboBox_COMM.Text)) || ((this.defaultCCOMM.Name != this.comboBox_COMM.Text)))
                     {
 						//if (this.pictureBox_COMM.Image.Flags == Properties.Resources.open.Flags)
 						if (LabGenFunc.CGenFuncBitMap.GenFuncCompareBitMap((Bitmap)this.pictureBox_COMM.Image, Properties.Resources.open) == true)
@@ -473,7 +500,7 @@ namespace Harry.LabTools.LabCommType
 					if (this.defaultCCOMM.IsFullParam)
 					{
 						//---串行通讯对象的参数
-						p = new CCommSerialFullForm(this.comboBox_COMM, this.defaultCCOMM, this.defaultCCOMM.mCCommRichTextBox, "配置设备", true);
+						p = new CCommSerialFullForm(this.defaultCCOMM.PerPackageMaxSize,this.comboBox_COMM, this.defaultCCOMM, this.defaultCCOMM.mCCommRichTextBox, "配置设备", true);
 					}
 					else
 					{
@@ -493,16 +520,23 @@ namespace Harry.LabTools.LabCommType
 				//---判断对象是否可用
 				if (p!=null)
 				{
-					if (p.ShowDialog(this.comboBox_COMM, 0, this.comboBox_COMM.Height+4) == System.Windows.Forms.DialogResult.OK)
+					//---计算位置偏移，避免超出可见区域
+					int offset = 0;
+					if (this.Location.X>this.comboBox_COMM.Size.Width)
+					{
+						offset = this.comboBox_COMM.Location.X - p.Size.Width+24;
+					}
+					//---显示弹出窗体
+					if (p.ShowDialog(this.comboBox_COMM, offset, this.comboBox_COMM.Height+4) == System.Windows.Forms.DialogResult.OK)
 					{
 						//---解析参数
 						if (this.defaultCCOMM.IsFullParam)
 						{
-							this.defaultCCOMM.AnalyseParam(p.mCCommSrialParam, p.mCCommUSBParam,p.mRxCRC,p.mTxCRC,true);
+							this.defaultCCOMM.AnalyseParam(p.mPerPackageMaxSize,p.mCCommSrialParam, p.mCCommUSBParam,p.mRxCRC,p.mTxCRC,true);
 						}
 						else
 						{
-							this.defaultCCOMM.AnalyseParam(p.mCCommSrialParam, p.mCCommUSBParam);
+							this.defaultCCOMM.AnalyseParam(p.mPerPackageMaxSize, p.mCCommSrialParam, p.mCCommUSBParam);
 						}
 						//---检查端口是否发生变化
 						if (p.mCCommChanged == true)
@@ -517,6 +551,8 @@ namespace Harry.LabTools.LabCommType
 						{
 							CRichTextBoxPlus.AppendTextInfoTopWithDataTime(this.defaultCCOMM.mCCommRichTextBox, "通信端口参数配置成功。\r\n", Color.Black, false);
 						}
+						//---执行设备的同步事件
+						this.EventHandlerCCommSynchronized?.Invoke();
 					}
 					else
 					{
@@ -540,29 +576,56 @@ namespace Harry.LabTools.LabCommType
 		{
 			if (this.defaultCCOMM!=null)
 			{
-				CCommBasePlusForm p = new CCommBasePlusForm(this.defaultCCOMM.Type);
+				CCommTypeForm p = new CCommTypeForm(this.defaultCCOMM.Type);
 				if (p != null)
 				{
-					if (p.ShowDialog(this.button_COMM, 0, this.button_COMM.Height + 4) == System.Windows.Forms.DialogResult.OK)
+					//---计算位置偏移，避免超出可见区域
+					int offset = 0;
+					if (this.Location.X > this.button_COMM.Size.Width)
+					{
+						offset = -24;
+					}
+					if (p.ShowDialog(this.button_COMM, offset, this.button_COMM.Height +4) == System.Windows.Forms.DialogResult.OK)
 					{
 						if (this.defaultCCOMM.Type != p.mCCommType)
 						{
 							//if (p.mCCommType == CCOMM_TYPE.COMM_SERIAL)
 							if ((p.mCCommType == CCOMM_TYPE.COMM_SERIAL)&&(this.defaultCCOMM.GetType() == typeof(CCommUSB)))
 							{
-								this.defaultCCOMM = new CCommSerial(this.comboBox_COMM);
+								this.defaultCCOMM = new CCommSerial(this.comboBox_COMM,this.defaultCCOMM.mCCommRichTextBox);
 							}
 							//else if (p.mCCommType == CCOMM_TYPE.COMM_USB)
 							else if ((p.mCCommType == CCOMM_TYPE.COMM_USB) &&(this.defaultCCOMM.GetType() == typeof(CCommSerial)))
 							{
-								this.defaultCCOMM = new CCommUSB(this.comboBox_COMM);
+								this.defaultCCOMM = new CCommUSB(this.comboBox_COMM,this.defaultCCOMM.mCCommRichTextBox);
 							}
 							else 
 							{
 								MessageBox.Show("不支持的通讯端口,端口类型未发生更改!");
 								//this.defaultCCOMM = null;
 							}
+							//---切换端口的状态为初始值
+							if (this.button_COMM.InvokeRequired)
+							{
+								this.BeginInvoke((EventHandler)
+												(delegate
+												{
+													this.button_COMM.Text = "打开设备";
+												}
+												)
+												);
+							}
+							else
+							{
+								this.button_COMM.Text = "打开设备";
+							}
+							//---注销资源
+							this.defaultCCOMM.Dispose();
+							this.pictureBox_COMM.Image = Properties.Resources.lost;
+							this.defaultIsShowCommParam = true;
 						}
+						//---执行设备的同步事件
+						this.EventHandlerCCommSynchronized?.Invoke();
 					}
 					//---释放资源
 					p.FreeResource();

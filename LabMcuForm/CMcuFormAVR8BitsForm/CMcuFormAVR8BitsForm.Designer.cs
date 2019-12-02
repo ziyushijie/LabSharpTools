@@ -63,14 +63,35 @@
 			this.cRichTextBoxEx_ChipMsg = new Harry.LabTools.LabControlPlus.CRichTextBoxEx();
 			this.panel_ChipFunc = new System.Windows.Forms.Panel();
 			this.panel_ChipCheckFunc = new System.Windows.Forms.Panel();
+			this.label_EepromSize = new System.Windows.Forms.Label();
+			this.label_Eeprom = new System.Windows.Forms.Label();
+			this.label_FlashSize = new System.Windows.Forms.Label();
+			this.label_Flash = new System.Windows.Forms.Label();
+			this.button_AutoChip = new System.Windows.Forms.Button();
+			this.button_Erase = new System.Windows.Forms.Button();
+			this.cCheckedListBoxEx_Func2 = new Harry.LabTools.LabControlPlus.CCheckedListBoxEx();
+			this.cCheckedListBoxEx_Func1 = new Harry.LabTools.LabControlPlus.CCheckedListBoxEx();
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse = new LabMcuForm.CMcuFormAVR8Bits.CMcuFormAVR8BitsFuseAndLockControl();
 			this.panel_ChipButtonFunc = new System.Windows.Forms.Panel();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.button5 = new System.Windows.Forms.Button();
+			this.button_ReadROM = new System.Windows.Forms.Button();
+			this.button_WriteLock = new System.Windows.Forms.Button();
+			this.button_WriteFuse = new System.Windows.Forms.Button();
+			this.button_CheckEeprom = new System.Windows.Forms.Button();
+			this.button_WriteEeprom = new System.Windows.Forms.Button();
+			this.button_ReadEeprom = new System.Windows.Forms.Button();
+			this.button_CheckFlash = new System.Windows.Forms.Button();
+			this.button_WriteFlash = new System.Windows.Forms.Button();
+			this.button_ReadFlash = new System.Windows.Forms.Button();
+			this.button_ReadIDChip = new System.Windows.Forms.Button();
+			this.button_CheckEmpty = new System.Windows.Forms.Button();
+			this.button_EraseChip = new System.Windows.Forms.Button();
+			this.button_ChipAuto = new System.Windows.Forms.Button();
 			this.groupBox_FileFunc = new System.Windows.Forms.GroupBox();
-			this.button4 = new System.Windows.Forms.Button();
-			this.button3 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
+			this.button_SaveEepromFile = new System.Windows.Forms.Button();
+			this.button_SaveFlashFile = new System.Windows.Forms.Button();
+			this.button_LoadEepromFile = new System.Windows.Forms.Button();
+			this.button_LoadFlashFile = new System.Windows.Forms.Button();
 			this.toolStrip_ChipTool = new System.Windows.Forms.ToolStrip();
 			this.toolStripLabel_ChipRTCTimerName = new System.Windows.Forms.ToolStripLabel();
 			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
@@ -88,6 +109,7 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripLabel_ChipTime = new System.Windows.Forms.ToolStripLabel();
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripProgressBar_ChipBar = new System.Windows.Forms.ToolStripProgressBar();
 			this.tabPage_ChipEdit = new System.Windows.Forms.TabPage();
 			this.tabControl_ChipMemery = new System.Windows.Forms.TabControl();
 			this.tabPage_Flash = new System.Windows.Forms.TabPage();
@@ -102,20 +124,6 @@
 			this.ToolStripMenuItem_Edit = new System.Windows.Forms.ToolStripMenuItem();
 			this.ToolStripMenuItem_About = new System.Windows.Forms.ToolStripMenuItem();
 			this.timer_ChipRTCTime = new System.Windows.Forms.Timer(this.components);
-			this.button6 = new System.Windows.Forms.Button();
-			this.button7 = new System.Windows.Forms.Button();
-			this.button8 = new System.Windows.Forms.Button();
-			this.button9 = new System.Windows.Forms.Button();
-			this.button10 = new System.Windows.Forms.Button();
-			this.button11 = new System.Windows.Forms.Button();
-			this.button12 = new System.Windows.Forms.Button();
-			this.button13 = new System.Windows.Forms.Button();
-			this.button14 = new System.Windows.Forms.Button();
-			this.button15 = new System.Windows.Forms.Button();
-			this.button16 = new System.Windows.Forms.Button();
-			this.button17 = new System.Windows.Forms.Button();
-			this.toolStripProgressBar_ChipBar = new System.Windows.Forms.ToolStripProgressBar();
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse = new LabMcuForm.CMcuFormAVR8Bits.CMcuFormAVR8BitsFuseAndLockControl();
 			this.panel_ChipID.SuspendLayout();
 			this.groupBox_ChipClock.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.trackBar_ChipClock)).BeginInit();
@@ -126,6 +134,7 @@
 			this.tabPage_ChipFunc.SuspendLayout();
 			this.panel_ChipMsg.SuspendLayout();
 			this.panel_ChipFunc.SuspendLayout();
+			this.panel_ChipCheckFunc.SuspendLayout();
 			this.panel_ChipButtonFunc.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox_FileFunc.SuspendLayout();
@@ -213,7 +222,7 @@
 			this.trackBar_ChipClock.Location = new System.Drawing.Point(3, 17);
 			this.trackBar_ChipClock.Maximum = 19;
 			this.trackBar_ChipClock.Name = "trackBar_ChipClock";
-			this.trackBar_ChipClock.Size = new System.Drawing.Size(323, 45);
+			this.trackBar_ChipClock.Size = new System.Drawing.Size(323, 51);
 			this.trackBar_ChipClock.TabIndex = 0;
 			this.trackBar_ChipClock.TickStyle = System.Windows.Forms.TickStyle.Both;
 			// 
@@ -501,10 +510,123 @@
 			this.panel_ChipCheckFunc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel_ChipCheckFunc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.panel_ChipCheckFunc.Controls.Add(this.label_EepromSize);
+			this.panel_ChipCheckFunc.Controls.Add(this.label_Eeprom);
+			this.panel_ChipCheckFunc.Controls.Add(this.label_FlashSize);
+			this.panel_ChipCheckFunc.Controls.Add(this.label_Flash);
+			this.panel_ChipCheckFunc.Controls.Add(this.button_AutoChip);
+			this.panel_ChipCheckFunc.Controls.Add(this.button_Erase);
+			this.panel_ChipCheckFunc.Controls.Add(this.cCheckedListBoxEx_Func2);
+			this.panel_ChipCheckFunc.Controls.Add(this.cCheckedListBoxEx_Func1);
 			this.panel_ChipCheckFunc.Location = new System.Drawing.Point(661, 6);
 			this.panel_ChipCheckFunc.Name = "panel_ChipCheckFunc";
 			this.panel_ChipCheckFunc.Size = new System.Drawing.Size(427, 299);
 			this.panel_ChipCheckFunc.TabIndex = 1;
+			// 
+			// label_EepromSize
+			// 
+			this.label_EepromSize.AutoSize = true;
+			this.label_EepromSize.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.label_EepromSize.Location = new System.Drawing.Point(292, 256);
+			this.label_EepromSize.Name = "label_EepromSize";
+			this.label_EepromSize.Size = new System.Drawing.Size(47, 12);
+			this.label_EepromSize.TabIndex = 7;
+			this.label_EepromSize.Text = "0/8192";
+			// 
+			// label_Eeprom
+			// 
+			this.label_Eeprom.AutoSize = true;
+			this.label_Eeprom.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.label_Eeprom.Location = new System.Drawing.Point(239, 256);
+			this.label_Eeprom.Name = "label_Eeprom";
+			this.label_Eeprom.Size = new System.Drawing.Size(60, 12);
+			this.label_Eeprom.TabIndex = 6;
+			this.label_Eeprom.Text = "Eeprom：";
+			// 
+			// label_FlashSize
+			// 
+			this.label_FlashSize.AutoSize = true;
+			this.label_FlashSize.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.label_FlashSize.Location = new System.Drawing.Point(113, 256);
+			this.label_FlashSize.Name = "label_FlashSize";
+			this.label_FlashSize.Size = new System.Drawing.Size(40, 12);
+			this.label_FlashSize.TabIndex = 5;
+			this.label_FlashSize.Text = "0/512";
+			// 
+			// label_Flash
+			// 
+			this.label_Flash.AutoSize = true;
+			this.label_Flash.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.label_Flash.Location = new System.Drawing.Point(60, 256);
+			this.label_Flash.Name = "label_Flash";
+			this.label_Flash.Size = new System.Drawing.Size(53, 12);
+			this.label_Flash.TabIndex = 4;
+			this.label_Flash.Text = "Flash：";
+			// 
+			// button_AutoChip
+			// 
+			this.button_AutoChip.Location = new System.Drawing.Point(241, 222);
+			this.button_AutoChip.Name = "button_AutoChip";
+			this.button_AutoChip.Size = new System.Drawing.Size(120, 27);
+			this.button_AutoChip.TabIndex = 3;
+			this.button_AutoChip.Text = "自动";
+			this.button_AutoChip.UseVisualStyleBackColor = true;
+			// 
+			// button_Erase
+			// 
+			this.button_Erase.Location = new System.Drawing.Point(62, 222);
+			this.button_Erase.Name = "button_Erase";
+			this.button_Erase.Size = new System.Drawing.Size(120, 27);
+			this.button_Erase.TabIndex = 2;
+			this.button_Erase.Text = "擦除";
+			this.button_Erase.UseVisualStyleBackColor = true;
+			// 
+			// cCheckedListBoxEx_Func2
+			// 
+			this.cCheckedListBoxEx_Func2.BackColor = System.Drawing.Color.WhiteSmoke;
+			this.cCheckedListBoxEx_Func2.CheckOnClick = true;
+			this.cCheckedListBoxEx_Func2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.cCheckedListBoxEx_Func2.FormattingEnabled = true;
+			this.cCheckedListBoxEx_Func2.Items.AddRange(new object[] {
+            "数据自动重载",
+            "校验Flash",
+            "校验EEPROM",
+            "编程熔丝",
+            "加密芯片"});
+			this.cCheckedListBoxEx_Func2.Location = new System.Drawing.Point(241, 56);
+			this.cCheckedListBoxEx_Func2.Name = "cCheckedListBoxEx_Func2";
+			this.cCheckedListBoxEx_Func2.Size = new System.Drawing.Size(120, 130);
+			this.cCheckedListBoxEx_Func2.TabIndex = 1;
+			// 
+			// cCheckedListBoxEx_Func1
+			// 
+			this.cCheckedListBoxEx_Func1.BackColor = System.Drawing.Color.WhiteSmoke;
+			this.cCheckedListBoxEx_Func1.CheckOnClick = true;
+			this.cCheckedListBoxEx_Func1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.cCheckedListBoxEx_Func1.FormattingEnabled = true;
+			this.cCheckedListBoxEx_Func1.Items.AddRange(new object[] {
+            "数据改变下载",
+            "比较识别字",
+            "芯片擦除",
+            "空片检查",
+            "编程Flash",
+            "编程Eeprom"});
+			this.cCheckedListBoxEx_Func1.Location = new System.Drawing.Point(62, 56);
+			this.cCheckedListBoxEx_Func1.Name = "cCheckedListBoxEx_Func1";
+			this.cCheckedListBoxEx_Func1.Size = new System.Drawing.Size(120, 130);
+			this.cCheckedListBoxEx_Func1.TabIndex = 0;
+			// 
+			// cMcuFormAVR8BitsFuseAndLockControl_ChipFuse
+			// 
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Dock = System.Windows.Forms.DockStyle.Left;
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Location = new System.Drawing.Point(0, 0);
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.MaximumSize = new System.Drawing.Size(655, 305);
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.mCMcuFunc = null;
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.MinimumSize = new System.Drawing.Size(655, 305);
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Name = "cMcuFormAVR8BitsFuseAndLockControl_ChipFuse";
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Size = new System.Drawing.Size(655, 305);
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.TabIndex = 0;
 			// 
 			// panel_ChipButtonFunc
 			// 
@@ -520,19 +642,19 @@
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Controls.Add(this.button17);
-			this.groupBox1.Controls.Add(this.button16);
-			this.groupBox1.Controls.Add(this.button15);
-			this.groupBox1.Controls.Add(this.button14);
-			this.groupBox1.Controls.Add(this.button13);
-			this.groupBox1.Controls.Add(this.button12);
-			this.groupBox1.Controls.Add(this.button11);
-			this.groupBox1.Controls.Add(this.button10);
-			this.groupBox1.Controls.Add(this.button9);
-			this.groupBox1.Controls.Add(this.button8);
-			this.groupBox1.Controls.Add(this.button7);
-			this.groupBox1.Controls.Add(this.button6);
-			this.groupBox1.Controls.Add(this.button5);
+			this.groupBox1.Controls.Add(this.button_ReadROM);
+			this.groupBox1.Controls.Add(this.button_WriteLock);
+			this.groupBox1.Controls.Add(this.button_WriteFuse);
+			this.groupBox1.Controls.Add(this.button_CheckEeprom);
+			this.groupBox1.Controls.Add(this.button_WriteEeprom);
+			this.groupBox1.Controls.Add(this.button_ReadEeprom);
+			this.groupBox1.Controls.Add(this.button_CheckFlash);
+			this.groupBox1.Controls.Add(this.button_WriteFlash);
+			this.groupBox1.Controls.Add(this.button_ReadFlash);
+			this.groupBox1.Controls.Add(this.button_ReadIDChip);
+			this.groupBox1.Controls.Add(this.button_CheckEmpty);
+			this.groupBox1.Controls.Add(this.button_EraseChip);
+			this.groupBox1.Controls.Add(this.button_ChipAuto);
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox1.Location = new System.Drawing.Point(2, 132);
 			this.groupBox1.Name = "groupBox1";
@@ -542,23 +664,155 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "命令操作";
 			// 
-			// button5
+			// button_ReadROM
 			// 
-			this.button5.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button5.Location = new System.Drawing.Point(2, 16);
-			this.button5.Name = "button5";
-			this.button5.Padding = new System.Windows.Forms.Padding(1);
-			this.button5.Size = new System.Drawing.Size(102, 27);
-			this.button5.TabIndex = 1;
-			this.button5.Text = "自动";
-			this.button5.UseVisualStyleBackColor = true;
+			this.button_ReadROM.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button_ReadROM.Location = new System.Drawing.Point(2, 340);
+			this.button_ReadROM.Name = "button_ReadROM";
+			this.button_ReadROM.Padding = new System.Windows.Forms.Padding(1);
+			this.button_ReadROM.Size = new System.Drawing.Size(102, 27);
+			this.button_ReadROM.TabIndex = 13;
+			this.button_ReadROM.Text = "读取ROM页";
+			this.button_ReadROM.UseVisualStyleBackColor = true;
+			// 
+			// button_WriteLock
+			// 
+			this.button_WriteLock.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button_WriteLock.Location = new System.Drawing.Point(2, 313);
+			this.button_WriteLock.Name = "button_WriteLock";
+			this.button_WriteLock.Padding = new System.Windows.Forms.Padding(1);
+			this.button_WriteLock.Size = new System.Drawing.Size(102, 27);
+			this.button_WriteLock.TabIndex = 12;
+			this.button_WriteLock.Text = "编程加密位";
+			this.button_WriteLock.UseVisualStyleBackColor = true;
+			// 
+			// button_WriteFuse
+			// 
+			this.button_WriteFuse.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button_WriteFuse.Location = new System.Drawing.Point(2, 286);
+			this.button_WriteFuse.Name = "button_WriteFuse";
+			this.button_WriteFuse.Padding = new System.Windows.Forms.Padding(1);
+			this.button_WriteFuse.Size = new System.Drawing.Size(102, 27);
+			this.button_WriteFuse.TabIndex = 11;
+			this.button_WriteFuse.Text = "编程熔丝位";
+			this.button_WriteFuse.UseVisualStyleBackColor = true;
+			// 
+			// button_CheckEeprom
+			// 
+			this.button_CheckEeprom.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button_CheckEeprom.Location = new System.Drawing.Point(2, 259);
+			this.button_CheckEeprom.Name = "button_CheckEeprom";
+			this.button_CheckEeprom.Padding = new System.Windows.Forms.Padding(1);
+			this.button_CheckEeprom.Size = new System.Drawing.Size(102, 27);
+			this.button_CheckEeprom.TabIndex = 10;
+			this.button_CheckEeprom.Text = "校验Eeprom";
+			this.button_CheckEeprom.UseVisualStyleBackColor = true;
+			// 
+			// button_WriteEeprom
+			// 
+			this.button_WriteEeprom.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button_WriteEeprom.Location = new System.Drawing.Point(2, 232);
+			this.button_WriteEeprom.Name = "button_WriteEeprom";
+			this.button_WriteEeprom.Padding = new System.Windows.Forms.Padding(1);
+			this.button_WriteEeprom.Size = new System.Drawing.Size(102, 27);
+			this.button_WriteEeprom.TabIndex = 9;
+			this.button_WriteEeprom.Text = "写入Eeprom";
+			this.button_WriteEeprom.UseVisualStyleBackColor = true;
+			// 
+			// button_ReadEeprom
+			// 
+			this.button_ReadEeprom.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button_ReadEeprom.Location = new System.Drawing.Point(2, 205);
+			this.button_ReadEeprom.Name = "button_ReadEeprom";
+			this.button_ReadEeprom.Padding = new System.Windows.Forms.Padding(1);
+			this.button_ReadEeprom.Size = new System.Drawing.Size(102, 27);
+			this.button_ReadEeprom.TabIndex = 8;
+			this.button_ReadEeprom.Text = "读出Eeprom";
+			this.button_ReadEeprom.UseVisualStyleBackColor = true;
+			// 
+			// button_CheckFlash
+			// 
+			this.button_CheckFlash.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button_CheckFlash.Location = new System.Drawing.Point(2, 178);
+			this.button_CheckFlash.Name = "button_CheckFlash";
+			this.button_CheckFlash.Padding = new System.Windows.Forms.Padding(1);
+			this.button_CheckFlash.Size = new System.Drawing.Size(102, 27);
+			this.button_CheckFlash.TabIndex = 7;
+			this.button_CheckFlash.Text = "校验Flash";
+			this.button_CheckFlash.UseVisualStyleBackColor = true;
+			// 
+			// button_WriteFlash
+			// 
+			this.button_WriteFlash.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button_WriteFlash.Location = new System.Drawing.Point(2, 151);
+			this.button_WriteFlash.Name = "button_WriteFlash";
+			this.button_WriteFlash.Padding = new System.Windows.Forms.Padding(1);
+			this.button_WriteFlash.Size = new System.Drawing.Size(102, 27);
+			this.button_WriteFlash.TabIndex = 6;
+			this.button_WriteFlash.Text = "写入Flash";
+			this.button_WriteFlash.UseVisualStyleBackColor = true;
+			// 
+			// button_ReadFlash
+			// 
+			this.button_ReadFlash.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button_ReadFlash.Location = new System.Drawing.Point(2, 124);
+			this.button_ReadFlash.Name = "button_ReadFlash";
+			this.button_ReadFlash.Padding = new System.Windows.Forms.Padding(1);
+			this.button_ReadFlash.Size = new System.Drawing.Size(102, 27);
+			this.button_ReadFlash.TabIndex = 5;
+			this.button_ReadFlash.Text = "读取Flash";
+			this.button_ReadFlash.UseVisualStyleBackColor = true;
+			// 
+			// button_ReadIDChip
+			// 
+			this.button_ReadIDChip.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button_ReadIDChip.Location = new System.Drawing.Point(2, 97);
+			this.button_ReadIDChip.Name = "button_ReadIDChip";
+			this.button_ReadIDChip.Padding = new System.Windows.Forms.Padding(1);
+			this.button_ReadIDChip.Size = new System.Drawing.Size(102, 27);
+			this.button_ReadIDChip.TabIndex = 4;
+			this.button_ReadIDChip.Text = "读出识别字";
+			this.button_ReadIDChip.UseVisualStyleBackColor = true;
+			// 
+			// button_CheckEmpty
+			// 
+			this.button_CheckEmpty.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button_CheckEmpty.Location = new System.Drawing.Point(2, 70);
+			this.button_CheckEmpty.Name = "button_CheckEmpty";
+			this.button_CheckEmpty.Padding = new System.Windows.Forms.Padding(1);
+			this.button_CheckEmpty.Size = new System.Drawing.Size(102, 27);
+			this.button_CheckEmpty.TabIndex = 3;
+			this.button_CheckEmpty.Text = "查空";
+			this.button_CheckEmpty.UseVisualStyleBackColor = true;
+			// 
+			// button_EraseChip
+			// 
+			this.button_EraseChip.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button_EraseChip.Location = new System.Drawing.Point(2, 43);
+			this.button_EraseChip.Name = "button_EraseChip";
+			this.button_EraseChip.Padding = new System.Windows.Forms.Padding(1);
+			this.button_EraseChip.Size = new System.Drawing.Size(102, 27);
+			this.button_EraseChip.TabIndex = 2;
+			this.button_EraseChip.Text = "擦除";
+			this.button_EraseChip.UseVisualStyleBackColor = true;
+			// 
+			// button_ChipAuto
+			// 
+			this.button_ChipAuto.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button_ChipAuto.Location = new System.Drawing.Point(2, 16);
+			this.button_ChipAuto.Name = "button_ChipAuto";
+			this.button_ChipAuto.Padding = new System.Windows.Forms.Padding(1);
+			this.button_ChipAuto.Size = new System.Drawing.Size(102, 27);
+			this.button_ChipAuto.TabIndex = 1;
+			this.button_ChipAuto.Text = "自动";
+			this.button_ChipAuto.UseVisualStyleBackColor = true;
 			// 
 			// groupBox_FileFunc
 			// 
-			this.groupBox_FileFunc.Controls.Add(this.button4);
-			this.groupBox_FileFunc.Controls.Add(this.button3);
-			this.groupBox_FileFunc.Controls.Add(this.button2);
-			this.groupBox_FileFunc.Controls.Add(this.button1);
+			this.groupBox_FileFunc.Controls.Add(this.button_SaveEepromFile);
+			this.groupBox_FileFunc.Controls.Add(this.button_SaveFlashFile);
+			this.groupBox_FileFunc.Controls.Add(this.button_LoadEepromFile);
+			this.groupBox_FileFunc.Controls.Add(this.button_LoadFlashFile);
 			this.groupBox_FileFunc.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox_FileFunc.Location = new System.Drawing.Point(2, 4);
 			this.groupBox_FileFunc.Name = "groupBox_FileFunc";
@@ -568,49 +822,49 @@
 			this.groupBox_FileFunc.TabStop = false;
 			this.groupBox_FileFunc.Text = "文件操作";
 			// 
-			// button4
+			// button_SaveEepromFile
 			// 
-			this.button4.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button4.Location = new System.Drawing.Point(2, 97);
-			this.button4.Name = "button4";
-			this.button4.Padding = new System.Windows.Forms.Padding(1);
-			this.button4.Size = new System.Drawing.Size(102, 27);
-			this.button4.TabIndex = 3;
-			this.button4.Text = "保存Eeprom文件";
-			this.button4.UseVisualStyleBackColor = true;
+			this.button_SaveEepromFile.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button_SaveEepromFile.Location = new System.Drawing.Point(2, 97);
+			this.button_SaveEepromFile.Name = "button_SaveEepromFile";
+			this.button_SaveEepromFile.Padding = new System.Windows.Forms.Padding(1);
+			this.button_SaveEepromFile.Size = new System.Drawing.Size(102, 27);
+			this.button_SaveEepromFile.TabIndex = 3;
+			this.button_SaveEepromFile.Text = "保存Eeprom文件";
+			this.button_SaveEepromFile.UseVisualStyleBackColor = true;
 			// 
-			// button3
+			// button_SaveFlashFile
 			// 
-			this.button3.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button3.Location = new System.Drawing.Point(2, 70);
-			this.button3.Name = "button3";
-			this.button3.Padding = new System.Windows.Forms.Padding(1);
-			this.button3.Size = new System.Drawing.Size(102, 27);
-			this.button3.TabIndex = 2;
-			this.button3.Text = "保存Flash文件";
-			this.button3.UseVisualStyleBackColor = true;
+			this.button_SaveFlashFile.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button_SaveFlashFile.Location = new System.Drawing.Point(2, 70);
+			this.button_SaveFlashFile.Name = "button_SaveFlashFile";
+			this.button_SaveFlashFile.Padding = new System.Windows.Forms.Padding(1);
+			this.button_SaveFlashFile.Size = new System.Drawing.Size(102, 27);
+			this.button_SaveFlashFile.TabIndex = 2;
+			this.button_SaveFlashFile.Text = "保存Flash文件";
+			this.button_SaveFlashFile.UseVisualStyleBackColor = true;
 			// 
-			// button2
+			// button_LoadEepromFile
 			// 
-			this.button2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button2.Location = new System.Drawing.Point(2, 43);
-			this.button2.Name = "button2";
-			this.button2.Padding = new System.Windows.Forms.Padding(1);
-			this.button2.Size = new System.Drawing.Size(102, 27);
-			this.button2.TabIndex = 1;
-			this.button2.Text = "调入Eeprom文件";
-			this.button2.UseVisualStyleBackColor = true;
+			this.button_LoadEepromFile.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button_LoadEepromFile.Location = new System.Drawing.Point(2, 43);
+			this.button_LoadEepromFile.Name = "button_LoadEepromFile";
+			this.button_LoadEepromFile.Padding = new System.Windows.Forms.Padding(1);
+			this.button_LoadEepromFile.Size = new System.Drawing.Size(102, 27);
+			this.button_LoadEepromFile.TabIndex = 1;
+			this.button_LoadEepromFile.Text = "调入Eeprom文件";
+			this.button_LoadEepromFile.UseVisualStyleBackColor = true;
 			// 
-			// button1
+			// button_LoadFlashFile
 			// 
-			this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button1.Location = new System.Drawing.Point(2, 16);
-			this.button1.Name = "button1";
-			this.button1.Padding = new System.Windows.Forms.Padding(1);
-			this.button1.Size = new System.Drawing.Size(102, 27);
-			this.button1.TabIndex = 0;
-			this.button1.Text = "调入Flash文件";
-			this.button1.UseVisualStyleBackColor = true;
+			this.button_LoadFlashFile.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button_LoadFlashFile.Location = new System.Drawing.Point(2, 16);
+			this.button_LoadFlashFile.Name = "button_LoadFlashFile";
+			this.button_LoadFlashFile.Padding = new System.Windows.Forms.Padding(1);
+			this.button_LoadFlashFile.Size = new System.Drawing.Size(102, 27);
+			this.button_LoadFlashFile.TabIndex = 0;
+			this.button_LoadFlashFile.Text = "调入Flash文件";
+			this.button_LoadFlashFile.UseVisualStyleBackColor = true;
 			// 
 			// toolStrip_ChipTool
 			// 
@@ -732,6 +986,14 @@
 			// 
 			this.toolStripSeparator5.Name = "toolStripSeparator5";
 			this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripProgressBar_ChipBar
+			// 
+			this.toolStripProgressBar_ChipBar.AutoSize = false;
+			this.toolStripProgressBar_ChipBar.Margin = new System.Windows.Forms.Padding(3, 1, 1, 1);
+			this.toolStripProgressBar_ChipBar.Name = "toolStripProgressBar_ChipBar";
+			this.toolStripProgressBar_ChipBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.toolStripProgressBar_ChipBar.Size = new System.Drawing.Size(466, 22);
 			// 
 			// tabPage_ChipEdit
 			// 
@@ -2503,158 +2765,6 @@
 			this.timer_ChipRTCTime.Interval = 1000;
 			this.timer_ChipRTCTime.Tag = "timer_ChipRTCTime";
 			// 
-			// button6
-			// 
-			this.button6.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button6.Location = new System.Drawing.Point(2, 43);
-			this.button6.Name = "button6";
-			this.button6.Padding = new System.Windows.Forms.Padding(1);
-			this.button6.Size = new System.Drawing.Size(102, 27);
-			this.button6.TabIndex = 2;
-			this.button6.Text = "擦除";
-			this.button6.UseVisualStyleBackColor = true;
-			// 
-			// button7
-			// 
-			this.button7.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button7.Location = new System.Drawing.Point(2, 70);
-			this.button7.Name = "button7";
-			this.button7.Padding = new System.Windows.Forms.Padding(1);
-			this.button7.Size = new System.Drawing.Size(102, 27);
-			this.button7.TabIndex = 3;
-			this.button7.Text = "查空";
-			this.button7.UseVisualStyleBackColor = true;
-			// 
-			// button8
-			// 
-			this.button8.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button8.Location = new System.Drawing.Point(2, 97);
-			this.button8.Name = "button8";
-			this.button8.Padding = new System.Windows.Forms.Padding(1);
-			this.button8.Size = new System.Drawing.Size(102, 27);
-			this.button8.TabIndex = 4;
-			this.button8.Text = "读出识别字";
-			this.button8.UseVisualStyleBackColor = true;
-			// 
-			// button9
-			// 
-			this.button9.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button9.Location = new System.Drawing.Point(2, 124);
-			this.button9.Name = "button9";
-			this.button9.Padding = new System.Windows.Forms.Padding(1);
-			this.button9.Size = new System.Drawing.Size(102, 27);
-			this.button9.TabIndex = 5;
-			this.button9.Text = "读取Flash";
-			this.button9.UseVisualStyleBackColor = true;
-			// 
-			// button10
-			// 
-			this.button10.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button10.Location = new System.Drawing.Point(2, 151);
-			this.button10.Name = "button10";
-			this.button10.Padding = new System.Windows.Forms.Padding(1);
-			this.button10.Size = new System.Drawing.Size(102, 27);
-			this.button10.TabIndex = 6;
-			this.button10.Text = "写入Flash";
-			this.button10.UseVisualStyleBackColor = true;
-			// 
-			// button11
-			// 
-			this.button11.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button11.Location = new System.Drawing.Point(2, 178);
-			this.button11.Name = "button11";
-			this.button11.Padding = new System.Windows.Forms.Padding(1);
-			this.button11.Size = new System.Drawing.Size(102, 27);
-			this.button11.TabIndex = 7;
-			this.button11.Text = "校验Flash";
-			this.button11.UseVisualStyleBackColor = true;
-			// 
-			// button12
-			// 
-			this.button12.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button12.Location = new System.Drawing.Point(2, 205);
-			this.button12.Name = "button12";
-			this.button12.Padding = new System.Windows.Forms.Padding(1);
-			this.button12.Size = new System.Drawing.Size(102, 27);
-			this.button12.TabIndex = 8;
-			this.button12.Text = "读出Eeprom";
-			this.button12.UseVisualStyleBackColor = true;
-			// 
-			// button13
-			// 
-			this.button13.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button13.Location = new System.Drawing.Point(2, 232);
-			this.button13.Name = "button13";
-			this.button13.Padding = new System.Windows.Forms.Padding(1);
-			this.button13.Size = new System.Drawing.Size(102, 27);
-			this.button13.TabIndex = 9;
-			this.button13.Text = "写入Eeprom";
-			this.button13.UseVisualStyleBackColor = true;
-			// 
-			// button14
-			// 
-			this.button14.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button14.Location = new System.Drawing.Point(2, 259);
-			this.button14.Name = "button14";
-			this.button14.Padding = new System.Windows.Forms.Padding(1);
-			this.button14.Size = new System.Drawing.Size(102, 27);
-			this.button14.TabIndex = 10;
-			this.button14.Text = "校验Eeprom";
-			this.button14.UseVisualStyleBackColor = true;
-			// 
-			// button15
-			// 
-			this.button15.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button15.Location = new System.Drawing.Point(2, 286);
-			this.button15.Name = "button15";
-			this.button15.Padding = new System.Windows.Forms.Padding(1);
-			this.button15.Size = new System.Drawing.Size(102, 27);
-			this.button15.TabIndex = 11;
-			this.button15.Text = "编程熔丝位";
-			this.button15.UseVisualStyleBackColor = true;
-			// 
-			// button16
-			// 
-			this.button16.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button16.Location = new System.Drawing.Point(2, 313);
-			this.button16.Name = "button16";
-			this.button16.Padding = new System.Windows.Forms.Padding(1);
-			this.button16.Size = new System.Drawing.Size(102, 27);
-			this.button16.TabIndex = 12;
-			this.button16.Text = "编程加密位";
-			this.button16.UseVisualStyleBackColor = true;
-			// 
-			// button17
-			// 
-			this.button17.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button17.Location = new System.Drawing.Point(2, 340);
-			this.button17.Name = "button17";
-			this.button17.Padding = new System.Windows.Forms.Padding(1);
-			this.button17.Size = new System.Drawing.Size(102, 27);
-			this.button17.TabIndex = 13;
-			this.button17.Text = "读取ROM页";
-			this.button17.UseVisualStyleBackColor = true;
-			// 
-			// toolStripProgressBar_ChipBar
-			// 
-			this.toolStripProgressBar_ChipBar.AutoSize = false;
-			this.toolStripProgressBar_ChipBar.Margin = new System.Windows.Forms.Padding(3, 1, 1, 1);
-			this.toolStripProgressBar_ChipBar.Name = "toolStripProgressBar_ChipBar";
-			this.toolStripProgressBar_ChipBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.toolStripProgressBar_ChipBar.Size = new System.Drawing.Size(466, 22);
-			// 
-			// cMcuFormAVR8BitsFuseAndLockControl_ChipFuse
-			// 
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Dock = System.Windows.Forms.DockStyle.Left;
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Location = new System.Drawing.Point(0, 0);
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.MaximumSize = new System.Drawing.Size(655, 305);
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.mCMcuFunc = null;
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.MinimumSize = new System.Drawing.Size(655, 305);
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Name = "cMcuFormAVR8BitsFuseAndLockControl_ChipFuse";
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Size = new System.Drawing.Size(655, 305);
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.TabIndex = 0;
-			// 
 			// CMcuFormAVR8BitsForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2682,6 +2792,8 @@
 			this.tabPage_ChipFunc.PerformLayout();
 			this.panel_ChipMsg.ResumeLayout(false);
 			this.panel_ChipFunc.ResumeLayout(false);
+			this.panel_ChipCheckFunc.ResumeLayout(false);
+			this.panel_ChipCheckFunc.PerformLayout();
 			this.panel_ChipButtonFunc.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox_FileFunc.ResumeLayout(false);
@@ -2770,23 +2882,31 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.GroupBox groupBox_FileFunc;
-		private System.Windows.Forms.Button button4;
-		private System.Windows.Forms.Button button3;
-		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.Button button5;
-		private System.Windows.Forms.Button button17;
-		private System.Windows.Forms.Button button16;
-		private System.Windows.Forms.Button button15;
-		private System.Windows.Forms.Button button14;
-		private System.Windows.Forms.Button button13;
-		private System.Windows.Forms.Button button12;
-		private System.Windows.Forms.Button button11;
-		private System.Windows.Forms.Button button10;
-		private System.Windows.Forms.Button button9;
-		private System.Windows.Forms.Button button8;
-		private System.Windows.Forms.Button button7;
-		private System.Windows.Forms.Button button6;
+		private System.Windows.Forms.Button button_SaveEepromFile;
+		private System.Windows.Forms.Button button_SaveFlashFile;
+		private System.Windows.Forms.Button button_LoadEepromFile;
+		private System.Windows.Forms.Button button_LoadFlashFile;
+		private System.Windows.Forms.Button button_ChipAuto;
+		private System.Windows.Forms.Button button_ReadROM;
+		private System.Windows.Forms.Button button_WriteLock;
+		private System.Windows.Forms.Button button_WriteFuse;
+		private System.Windows.Forms.Button button_CheckEeprom;
+		private System.Windows.Forms.Button button_WriteEeprom;
+		private System.Windows.Forms.Button button_ReadEeprom;
+		private System.Windows.Forms.Button button_CheckFlash;
+		private System.Windows.Forms.Button button_WriteFlash;
+		private System.Windows.Forms.Button button_ReadFlash;
+		private System.Windows.Forms.Button button_ReadIDChip;
+		private System.Windows.Forms.Button button_CheckEmpty;
+		private System.Windows.Forms.Button button_EraseChip;
 		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar_ChipBar;
+		private Harry.LabTools.LabControlPlus.CCheckedListBoxEx cCheckedListBoxEx_Func2;
+		private Harry.LabTools.LabControlPlus.CCheckedListBoxEx cCheckedListBoxEx_Func1;
+		private System.Windows.Forms.Button button_AutoChip;
+		private System.Windows.Forms.Button button_Erase;
+		private System.Windows.Forms.Label label_Flash;
+		private System.Windows.Forms.Label label_FlashSize;
+		private System.Windows.Forms.Label label_EepromSize;
+		private System.Windows.Forms.Label label_Eeprom;
 	}
 }

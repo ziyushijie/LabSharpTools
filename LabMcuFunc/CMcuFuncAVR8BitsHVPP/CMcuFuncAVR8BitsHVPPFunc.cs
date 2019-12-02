@@ -1,4 +1,5 @@
 ﻿using Harry.LabTools.LabControlPlus;
+using Harry.LabTools.LabHexEdit;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -30,7 +31,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// 打开连接
 		/// </summary>
 		/// <returns></returns>
-		public override int CMcuFunc_OpenConnect()
+		public override int CMcuFunc_OpenConnect(RichTextBox msg)
 		{
 			int _return = -1;
 			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
@@ -48,19 +49,36 @@ namespace Harry.LabTools.LabMcuFunc
 		/// 关闭连接
 		/// </summary>
 		/// <returns></returns>
-		public override int CMcuFunc_CloseConnect()
+		public override int CMcuFunc_CloseConnect(RichTextBox msg)
 		{
-			return -1;
-		}
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
 
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
+		}
 
 		/// <summary>
 		/// 芯片擦除
 		/// </summary>
 		/// <returns></returns>
-		public override int CMcuFunc_EraseChip()
+		public override int CMcuFunc_EraseChip(RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -69,7 +87,16 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public override int CMcuFunc_EraseChip(TextBox lockFuse, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -77,9 +104,18 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_ReadChipFlash(ref byte[] chipFlash)
+		public override int CMcuFunc_ReadChipFlash(ref byte[] chipFlash, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -87,9 +123,37 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_WriteChipFlash(byte[] chipFlash)
+		public override int CMcuFunc_WriteChipFlash(byte[] chipFlash, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 校验Flash为空
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public override int CMcuFunc_CheckChipFlashEmpty(RichTextBox msg)
+		{
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -97,9 +161,18 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_ReadChipEeprom(ref byte[] chipEeprom)
+		public override int CMcuFunc_ReadChipEeprom(ref byte[] chipEeprom,RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -107,9 +180,37 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_WriteChipEeprom(byte[] chipEeprom)
+		public override int CMcuFunc_WriteChipEeprom(byte[] chipEeprom, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 校验Eeprom为空
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public override int CMcuFunc_CheckChipEepromEmpty(RichTextBox msg)
+		{
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -117,9 +218,18 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="fuse"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_ReadChipFuse(ref byte[] chipFuse)
+		public override int CMcuFunc_ReadChipFuse(ref byte[] chipFuse, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -129,7 +239,16 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public override int CMcuFunc_ReadChipFuse(TextBox lowFuse, TextBox highFuse, TextBox externFuse, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -148,31 +267,41 @@ namespace Harry.LabTools.LabMcuFunc
 			}
 			else
 			{
-				if (lowFuse.InvokeRequired)
+				//---低位熔丝位
+				if (lowFuse != null)
 				{
-					lowFuse.BeginInvoke((EventHandler)
-										(delegate
-										{
-											lowFuse.Text = fuse[0].ToString("X2");
-										}));
-				}
-				else
-				{
-					lowFuse.Text = fuse[0].ToString("X2");
-				}
-
-				if (highFuse.InvokeRequired)
-				{
-					highFuse.BeginInvoke((EventHandler)
+					if (lowFuse.InvokeRequired)
+					{
+						lowFuse.BeginInvoke((EventHandler)
 											(delegate
 											{
-												highFuse.Text = fuse[1].ToString("X2");
+												lowFuse.Text = fuse[0].ToString("X2");
 											}));
+					}
+					else
+					{
+						lowFuse.Text = fuse[0].ToString("X2");
+					}
 				}
-				else
+
+				//---高位熔丝位
+				if (highFuse != null)
 				{
-					highFuse.Text = fuse[1].ToString("X2");
+					if (highFuse.InvokeRequired)
+					{
+						highFuse.BeginInvoke((EventHandler)
+												(delegate
+												{
+													highFuse.Text = fuse[1].ToString("X2");
+												}));
+					}
+					else
+					{
+						highFuse.Text = fuse[1].ToString("X2");
+					}
 				}
+
+				//---拓展为熔丝位
 				int tempFuse = 0;
 				if (fuse.Length > 2)
 				{
@@ -182,19 +311,21 @@ namespace Harry.LabTools.LabMcuFunc
 				{
 					tempFuse = 0;
 				}
-				if (externFuse.InvokeRequired)
+				if (externFuse != null)
 				{
-					externFuse.BeginInvoke((EventHandler)
-										(delegate
-										{
-											externFuse.Text = tempFuse.ToString("X2");
-										}));
+					if (externFuse.InvokeRequired)
+					{
+						externFuse.BeginInvoke((EventHandler)
+											(delegate
+											{
+												externFuse.Text = tempFuse.ToString("X2");
+											}));
+					}
+					else
+					{
+						externFuse.Text = tempFuse.ToString("X2");
+					}
 				}
-				else
-				{
-					externFuse.Text = tempFuse.ToString("X2");
-				}
-
 				if (msg != null)
 				{
 					CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "默认熔丝位恢复成功!", Color.Black);
@@ -208,9 +339,18 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="fuse"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_ReadChipLock(ref byte chipLock)
+		public override int CMcuFunc_ReadChipLock(ref byte chipLock, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -221,7 +361,29 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public override int CMcuFunc_ReadChipLock(TextBox lockFuse, RichTextBox msg)
 		{
-			return -1;
+			byte tempLock = 0;
+			int _return = this.CMcuFunc_ReadChipLock(ref tempLock, msg);
+
+			//---校验读取结果
+			if (_return == 0)
+			{
+				if (lockFuse != null)
+				{
+					if (lockFuse.InvokeRequired)
+					{
+						lockFuse.BeginInvoke((EventHandler)
+											(delegate
+											{
+												lockFuse.Text = tempLock.ToString("X2");
+											}));
+					}
+					else
+					{
+						lockFuse.Text = tempLock.ToString("X2");
+					}
+				}
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -229,9 +391,19 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="fuse"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_WriteChipFuse(byte[] chipFuse)
+		public override int CMcuFunc_WriteChipFuse(byte[] chipFuse, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+				//---熔丝位的个数
+				int length = this.mMcuInfoParam.McuDefaultFuseInfo().Length;
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -241,7 +413,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public override int CMcuFunc_WriteChipFuse(TextBox lowFuse, TextBox highFuse, TextBox externFuse, RichTextBox msg)
 		{
-			return -1;
+			return this.CMcuFunc_WriteChipFuse(new byte[] { Convert.ToByte(lowFuse.Text), Convert.ToByte(highFuse.Text), Convert.ToByte(externFuse.Text) }, msg);
 		}
 
 		/// <summary>
@@ -249,9 +421,18 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="fuse"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_WriteChipLock(byte chipLock)
+		public override int CMcuFunc_WriteChipLock(byte chipLock, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -262,7 +443,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public override int CMcuFunc_WriteChipLock(TextBox lockFuse, RichTextBox msg)
 		{
-			return -1;
+			return this.CMcuFunc_WriteChipLock(Convert.ToByte(lockFuse.Text), msg);
 		}
 
 		/// <summary>
@@ -270,9 +451,18 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipID"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_ReadChipID(ref byte[] chipID)
+		public override int CMcuFunc_ReadChipID(ref byte[] chipID, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -290,9 +480,18 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipCalibration"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_ReadChipCalibration(ref byte[] chipCalibration)
+		public override int CMcuFunc_ReadChipCalibration(ref byte[] chipCalibration, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -311,9 +510,18 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipRom"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_ReadChipRom(ref byte[] chipRom)
+		public override int CMcuFunc_ReadChipRom(ref byte[] chipRom, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -321,9 +529,18 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipClock"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_SetProg(byte chipClock)
+		public override int CMcuFunc_SetProg(byte chipClock, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
 		}
 
 		#endregion

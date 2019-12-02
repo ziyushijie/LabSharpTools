@@ -137,7 +137,34 @@ namespace Harry.LabTools.LabCommType
 				return this.comboBox_Parity.Text;
 			}
 		}
-		
+
+		/// <summary>
+		/// 每包字节的大小
+		/// </summary>
+		public override int mPerPackageMaxSize
+		{
+			get
+			{
+				if (this.mCCOMM != null)
+				{
+					return this.mCCOMM.PerPackageMaxSize;
+				}
+				else
+				{
+					return 64;
+				}
+
+			}
+			set
+			{
+				if (this.mCCOMM != null)
+				{
+					this.mCCOMM.PerPackageMaxSize = value;
+				}
+			}
+		}
+
+
 		#endregion
 
 		#region 构造函数

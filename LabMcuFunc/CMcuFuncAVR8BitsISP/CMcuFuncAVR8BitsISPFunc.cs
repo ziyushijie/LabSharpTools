@@ -1,4 +1,5 @@
 ﻿using Harry.LabTools.LabControlPlus;
+using Harry.LabTools.LabHexEdit;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -55,7 +56,159 @@ namespace Harry.LabTools.LabMcuFunc
 		/// 打开连接
 		/// </summary>
 		/// <returns></returns>
-		public override int CMcuFunc_OpenConnect()
+		public override int CMcuFunc_OpenConnect(RichTextBox msg)
+		{
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+				byte[] cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_OPEN_CLOSE, 0x01 };
+				byte[] res = null;
+				//---发送并读取命令
+				_return = this.mCCOMM.SendCmdAndReadResponse(cmd, ref res);
+				//---校验结果
+				if (_return == 0)
+				{
+					if (this.mCCOMM.ReceCheckPass)
+					{
+						this.mMsgText = "ISP编程-接口打开成功!";
+					}
+					else
+					{
+						_return = 1;
+						this.mMsgText = "ISP编程-接口打开命令校验错误!";
+					}
+				}
+				else
+				{					
+					this.mMsgText = this.mCCOMM.LogMessage;
+				}
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			if (msg != null)
+			{
+				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.mMsgText, (_return==0?Color.Black:Color.Red));
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 关闭连接
+		/// </summary>
+		/// <returns></returns>
+		public override int CMcuFunc_CloseConnect( RichTextBox msg)
+		{
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+				byte[] cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_OPEN_CLOSE, 0x00 };
+				byte[] res = null;
+				//---发送并读取命令
+				_return = this.mCCOMM.SendCmdAndReadResponse(cmd, ref res);
+				//---校验结果
+				if (_return == 0)
+				{
+					if (this.mCCOMM.ReceCheckPass)
+					{
+						this.mMsgText = "ISP编程-接口关闭成功!";
+					}
+					else
+					{
+						_return = 1;
+						this.mMsgText = "ISP编程-接口关闭命令校验错误!";
+					}
+				}
+				else
+				{
+					this.mMsgText = this.mCCOMM.LogMessage;
+				}
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			if (msg != null)
+			{
+				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.mMsgText, (_return == 0 ? Color.Black : Color.Red));
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 芯片擦除
+		/// </summary>
+		/// <returns></returns>
+		public override int CMcuFunc_EraseChip(RichTextBox msg)
+		{
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+				byte[] cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_ERASE, 0x00 };
+				byte[] res = null;
+				//---发送并读取命令
+				_return = this.mCCOMM.SendCmdAndReadResponse(cmd, ref res);
+				//---校验结果
+				if (_return == 0)
+				{
+					if (this.mCCOMM.ReceCheckPass)
+					{
+						this.mMsgText = "ISP编程-擦除成功!";
+					}
+					else
+					{
+						_return = 1;
+						this.mMsgText = "ISP编程-擦除命令校验错误!";
+					}
+				}
+				else
+				{
+					this.mMsgText = this.mCCOMM.LogMessage;
+				}
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			if (msg != null)
+			{
+				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.mMsgText, (_return == 0 ? Color.Black : Color.Red));
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 芯片擦除
+		/// </summary>
+		/// <returns></returns>
+		public override int CMcuFunc_EraseChip(TextBox lockFuse, RichTextBox msg)
+		{
+			int _return = this.CMcuFunc_EraseChip(msg);
+			if (_return==0)
+			{
+				if (lockFuse.InvokeRequired)
+				{
+					lockFuse.BeginInvoke((EventHandler)
+											(delegate
+											{
+												lockFuse.Text = "FF";
+											}));
+				}
+				else
+				{
+					lockFuse.Text = "FF";
+				}
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 读取Flash
+		/// </summary>
+		/// <param name="flash"></param>
+		/// <returns></returns>
+		public override int CMcuFunc_ReadChipFlash(ref byte[] chipFlash, RichTextBox msg)
 		{
 			int _return = -1;
 			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
@@ -70,51 +223,41 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
-		/// 关闭连接
-		/// </summary>
-		/// <returns></returns>
-		public override int CMcuFunc_CloseConnect()
-		{
-			return -1;
-		}
-
-
-		/// <summary>
-		/// 芯片擦除
-		/// </summary>
-		/// <returns></returns>
-		public override int CMcuFunc_EraseChip()
-		{
-			return -1;
-		}
-
-		/// <summary>
-		/// 芯片擦除
-		/// </summary>
-		/// <returns></returns>
-		public override int CMcuFunc_EraseChip(TextBox lockFuse, RichTextBox msg)
-		{
-			return -1;
-		}
-
-		/// <summary>
-		/// 读取Flash
-		/// </summary>
-		/// <param name="flash"></param>
-		/// <returns></returns>
-		public override int CMcuFunc_ReadChipFlash(ref byte[] chipFlash)
-		{
-			return -1;
-		}
-
-		/// <summary>
 		/// 编程Flash
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_WriteChipFlash(byte[] chipFlash)
+		public override int CMcuFunc_WriteChipFlash(byte[] chipFlash, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 校验Flash为空
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public override int CMcuFunc_CheckChipFlashEmpty(RichTextBox msg)
+		{
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -122,7 +265,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_ReadChipEeprom(ref byte[] chipEeprom)
+		public override int CMcuFunc_ReadChipEeprom(ref byte[] chipEeprom, RichTextBox msg)
 		{
 			return -1;
 		}
@@ -132,7 +275,17 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_WriteChipEeprom(byte[] chipEeprom)
+		public override int CMcuFunc_WriteChipEeprom(byte[] chipEeprom, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 校验Eeprom为空
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public override int CMcuFunc_CheckChipEepromEmpty(RichTextBox msg)
 		{
 			return -1;
 		}
@@ -142,7 +295,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="fuse"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_ReadChipFuse(ref byte[] chipFuse)
+		public override int CMcuFunc_ReadChipFuse(ref byte[] chipFuse, RichTextBox msg)
 		{
 			return -1;
 		}
@@ -233,7 +386,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="fuse"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_ReadChipLock(ref byte chipLock)
+		public override int CMcuFunc_ReadChipLock(ref byte chipLock, RichTextBox msg)
 		{
 			return -1;
 		}
@@ -254,7 +407,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="fuse"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_WriteChipFuse(byte[] chipFuse)
+		public override int CMcuFunc_WriteChipFuse(byte[] chipFuse, RichTextBox msg)
 		{
 			return -1;
 		}
@@ -274,7 +427,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="fuse"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_WriteChipLock(byte chipLock)
+		public override int CMcuFunc_WriteChipLock(byte chipLock, RichTextBox msg)
 		{
 			return -1;
 		}
@@ -295,7 +448,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipID"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_ReadChipID(ref byte[] chipID)
+		public override int CMcuFunc_ReadChipID(ref byte[] chipID, RichTextBox msg)
 		{
 			return -1;
 		}
@@ -315,7 +468,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipCalibration"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_ReadChipCalibration(ref byte[] chipCalibration)
+		public override int CMcuFunc_ReadChipCalibration(ref byte[] chipCalibration, RichTextBox msg)
 		{
 			return -1;
 		}
@@ -336,7 +489,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipRom"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_ReadChipRom(ref byte[] chipRom)
+		public override int CMcuFunc_ReadChipRom(ref byte[] chipRom, RichTextBox msg)
 		{
 			return -1;
 		}
@@ -346,7 +499,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipClock"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_SetProg(byte chipClock)
+		public override int CMcuFunc_SetProg(byte chipClock, RichTextBox msg)
 		{
 			return -1;
 		}

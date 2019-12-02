@@ -141,6 +141,21 @@ namespace Harry.LabTools.LabCommType
 
 		#region 公有函数
 
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		public void Init(int val, bool isID = true)
+		{
+			if (isID)
+			{
+				this.mID = val;
+			}
+			else
+			{
+				this.mSize = val;
+			}
+		}
+
 		#endregion
 
 		#region 私有函数

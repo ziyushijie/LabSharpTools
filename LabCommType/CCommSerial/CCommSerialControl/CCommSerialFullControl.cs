@@ -97,6 +97,33 @@ namespace Harry.LabTools.LabCommType
 			}
 		}
 
+		/// <summary>
+		/// 每包字节的大小
+		/// </summary>
+		public override int mPerPackageMaxSize
+		{
+			get
+			{
+				//if (this.mCCOMM != null)
+				//{
+				//	return this.mCCOMM.PerPackageMaxSize;
+				//}
+				//else
+				//{
+				//	return Convert.ToInt32(this.textBox_PackageSize.Text);
+				//}
+				return Convert.ToInt32(this.textBox_PackageSize.Text);
+			}
+			set
+			{
+				this.textBox_PackageSize.Text = value.ToString();
+				if (this.mCCOMM!=null)
+				{
+					this.mCCOMM.PerPackageMaxSize = value;
+				}				
+			}
+		}
+
 		#endregion
 
 		#region 构造函数
@@ -129,6 +156,14 @@ namespace Harry.LabTools.LabCommType
 			this.textBox_AddrID.Text = addrID;
 		}
 
+		/// <summary>
+		/// 配置设备ID信息
+		/// </summary>
+		/// <param name="addrID"></param>
+		public virtual void AnalysePerPackageMaxSize(int perPackageMaxSize)
+		{
+			this.textBox_PackageSize.Text = perPackageMaxSize.ToString();
+		}
 		/// <summary>
 		/// 分析数据接收CRC的模式
 		/// </summary>

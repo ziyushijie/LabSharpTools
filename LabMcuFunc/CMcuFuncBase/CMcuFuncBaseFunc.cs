@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Harry.LabTools.LabHexEdit;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,7 +30,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// 打开连接
 		/// </summary>
 		/// <returns></returns>
-		public virtual int CMcuFunc_OpenConnect()
+		public virtual int CMcuFunc_OpenConnect(RichTextBox msg)
 		{
 			return -1;
 		}
@@ -38,7 +39,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// 关闭连接
 		/// </summary>
 		/// <returns></returns>
-		public virtual int CMcuFunc_CloseConnect()
+		public virtual int CMcuFunc_CloseConnect(RichTextBox msg)
 		{
 			return -1;
 		}
@@ -48,7 +49,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// 芯片擦除
 		/// </summary>
 		/// <returns></returns>
-		public virtual int CMcuFunc_EraseChip()
+		public virtual int CMcuFunc_EraseChip( RichTextBox msg)
 		{
 			return -1;
 		}
@@ -67,9 +68,37 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_ReadChipFlash(ref byte[] chipFlash)
+		public virtual int CMcuFunc_ReadChipFlash(ref byte[] chipFlash, RichTextBox msg)
 		{
 			return -1;
+		}
+
+		/// <summary>
+		/// 读取Flash
+		/// </summary>
+		/// <param name="chb">Hex编辑器控件</param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_ReadChipFlash(CHexBox chb, RichTextBox msg)
+		{
+			int _return = -1;
+			byte[] tempRom = null;
+			_return = this.CMcuFunc_ReadChipFlash(ref tempRom,msg);
+			if ((_return == 0) && (tempRom != null))
+			{
+				if (chb.InvokeRequired)
+				{
+					chb.BeginInvoke((EventHandler)
+										(delegate
+										{
+											chb.AddData(tempRom);
+										}));
+				}
+				else
+				{
+					chb.AddData(tempRom);
+				}
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -77,7 +106,27 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_WriteChipFlash( byte[] chipFlash)
+		public virtual int CMcuFunc_WriteChipFlash( byte[] chipFlash, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 编程Flash
+		/// </summary>
+		/// <param name="chb">Hex编辑器控件</param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_WriteChipFlash(CHexBox chb, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 校验Flash为空
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_CheckChipFlashEmpty(RichTextBox msg)
 		{
 			return -1;
 		}
@@ -87,9 +136,37 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_ReadChipEeprom(ref byte[] chipEeprom)
+		public virtual int CMcuFunc_ReadChipEeprom(ref byte[] chipEeprom, RichTextBox msg)
 		{
 			return -1;
+		}
+
+		/// <summary>
+		/// 读取Eeprom
+		/// </summary>
+		/// <param name="chb">Hex编辑器控件</param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_ReadChipEeprom(CHexBox chb, RichTextBox msg)
+		{
+			int _return = -1;
+			byte[] tempRom = null;
+			_return = this.CMcuFunc_ReadChipEeprom(ref tempRom,msg);
+			if ((_return == 0) && (tempRom != null))
+			{
+				if (chb.InvokeRequired)
+				{
+					chb.BeginInvoke((EventHandler)
+										(delegate
+										{
+											chb.AddData(tempRom);
+										}));
+				}
+				else
+				{
+					chb.AddData(tempRom);
+				}
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -97,7 +174,27 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_WriteChipEeprom(byte[] chipEeprom)
+		public virtual int CMcuFunc_WriteChipEeprom(byte[] chipEeprom, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 编程Eeprom
+		/// </summary>
+		/// <param name="chb">Hex编辑器控件</param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_WriteChipEeprom(CHexBox chb, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 校验Eeprom为空
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_CheckChipEepromEmpty(RichTextBox msg)
 		{
 			return -1;
 		}
@@ -107,7 +204,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="fuse"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_ReadChipFuse(ref byte[] chipFuse)
+		public virtual int CMcuFunc_ReadChipFuse(ref byte[] chipFuse, RichTextBox msg)
 		{
 			return -1;
 		}
@@ -137,7 +234,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="fuse"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_ReadChipLock(ref byte chipLock)
+		public virtual int CMcuFunc_ReadChipLock(ref byte chipLock, RichTextBox msg)
 		{
 			return -1;
 		}
@@ -158,7 +255,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="fuse"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_WriteChipFuse( byte[] chipFuse)
+		public virtual int CMcuFunc_WriteChipFuse( byte[] chipFuse, RichTextBox msg)
 		{
 			return -1;
 		}
@@ -178,7 +275,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="fuse"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_WriteChipLock( byte chipLock)
+		public virtual int CMcuFunc_WriteChipLock( byte chipLock, RichTextBox msg)
 		{
 			return -1;
 		}
@@ -199,7 +296,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipID"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_ReadChipID(ref byte[] chipID)
+		public virtual int CMcuFunc_ReadChipID(ref byte[] chipID, RichTextBox msg)
 		{
 			return -1;
 		}
@@ -219,7 +316,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipCalibration"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_ReadChipCalibration(ref byte[] chipCalibration)
+		public virtual int CMcuFunc_ReadChipCalibration(ref byte[] chipCalibration, RichTextBox msg)
 		{
 			return -1;
 		}
@@ -240,9 +337,37 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipRom"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_ReadChipRom(ref byte[] chipRom)
+		public virtual int CMcuFunc_ReadChipRom(ref byte[] chipRom, RichTextBox msg)
 		{
 			return -1;
+		}
+
+		/// <summary>
+		/// 读取ROM信息
+		/// </summary>
+		/// <param name="chb">Hex编辑器控件</param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_ReadChipRom(CHexBox chb, RichTextBox msg)
+		{
+			int _return = -1;
+			byte[] tempRom = null;
+			_return = this.CMcuFunc_ReadChipRom(ref tempRom,msg);
+			if ((_return == 0) && (tempRom != null))
+			{
+				if (chb.InvokeRequired)
+				{
+					chb.BeginInvoke((EventHandler)
+										(delegate
+										{
+											chb.AddData(tempRom);
+										}));
+				}
+				else
+				{
+					chb.AddData(tempRom);
+				}
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -250,7 +375,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipClock"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_SetProg(byte chipClock)
+		public virtual int CMcuFunc_SetProg(byte chipClock, RichTextBox msg)
 		{
 			return -1;
 		}

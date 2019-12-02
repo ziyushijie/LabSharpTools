@@ -36,6 +36,82 @@ namespace Harry.LabTools.LabMcuFunc
 			}
 		}
 
+		/// <summary>
+		/// Flash存储器的字节数
+		/// </summary>
+		public virtual long TypeFlashByteNum
+		{
+			get
+			{
+				return 0;
+			}
+		}
+
+		/// <summary>
+		/// Flash存储器的页数
+		/// </summary>
+		public virtual int TypeFlashPageNum
+		{
+			get
+			{
+				return 0;
+			}
+		}
+
+		/// <summary>
+		/// Flash存储器的每页的字数
+		/// </summary>
+		public virtual int TypeFlashPerPageWordNum
+		{
+			get
+			{
+				return 0;
+			}
+		}
+
+		/// <summary>
+		/// Flash存储器的每页的字数
+		/// </summary>
+		public virtual int TypeFlashPerPageByteNum
+		{
+			get
+			{
+				return (this.TypeFlashPerPageWordNum*2);
+			}
+		}
+
+		/// <summary>
+		/// Eeprom存储器的字节数
+		/// </summary>
+		public virtual int TypeEepromByteNum
+		{
+			get
+			{
+				return 0;
+			}
+		}
+
+		/// <summary>
+		/// Eeprom存储器的页数
+		/// </summary>
+		public virtual int TypeEepromPageNum
+		{
+			get
+			{
+				return 0;
+			}
+		}
+
+		/// <summary>
+		/// Eeprom存储器的每页的字数
+		/// </summary>
+		public virtual int TypeEepromPerPageByteNum
+		{
+			get
+			{
+				return 0;
+			}
+		}
 
 		#endregion
 
@@ -55,19 +131,19 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <param name="cMcuFuncInfoBaseParam"></param>
 		public CMcuFuncInfoBaseParam(CMcuFuncInfoBaseParam cMcuFuncInfoBaseParam)
 		{
-		
+			
 		}
 
 		#endregion
 
 		#region 公有函数
 
-		/// <summary>
-		/// 初始化类型MCU的信息
-		/// </summary>
-		/// <param name="chipName"></param>
-		/// <returns></returns>
-		public virtual bool McuTypeInfo(string chipName, ComboBox cbbInterface=null)
+	/// <summary>
+	/// 初始化类型MCU的信息
+	/// </summary>
+	/// <param name="chipName"></param>
+	/// <returns></returns>
+	public virtual bool McuTypeInfo(string chipName, ComboBox cbbInterface=null)
 		{
 			return false;			
 		}

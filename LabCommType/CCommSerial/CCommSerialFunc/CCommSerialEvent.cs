@@ -18,6 +18,7 @@ namespace Harry.LabTools.LabCommType
 		/// 数据接收事件
 		/// </summary>
 		public override event CCommEvent EventHandlerCCommReceData;
+
         #endregion
 
         #region 属性定义

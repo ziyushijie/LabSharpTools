@@ -12,7 +12,7 @@
     <ProjectGuid>{A5C10F9B-7B36-4478-A5B8-71C55EF90AA9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Harry.LabTools.LabMdiForm</RootNamespace>
-    <AssemblyName>Harry.LabTools.LabForm</AssemblyName>
+    <AssemblyName>Harry.LabTools.LabMdiForm</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -97,6 +97,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include=".editorconfig" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

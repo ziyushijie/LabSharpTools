@@ -197,6 +197,21 @@ namespace Harry.LabTools.LabCommType
 			}
 		}
 
+		/// <summary>
+		/// 每包字节的大小
+		/// </summary>
+		public virtual int PerPackageMaxSize
+		{
+			get
+			{
+				return 64;
+			}
+			set
+			{
+			
+			}
+		}
+
 		#endregion
 
 		#region 串口属性
@@ -289,7 +304,7 @@ namespace Harry.LabTools.LabCommType
 		/// </summary>
 		/// <param name="serialParam"></param>
 		/// <param name="uSBParam"></param>
-		public virtual void  AnalyseParam( CCommSerialParam serialParam,CCommUSBParam usbParam,bool isUpAddrID=false)
+		public virtual void  AnalyseParam( int perPackageSize,CCommSerialParam serialParam,CCommUSBParam usbParam,bool isUpAddrID=false)
 		{
 			if ((serialParam!=null)&&(this.mSerialParam!=null))
 			{
@@ -311,6 +326,7 @@ namespace Harry.LabTools.LabCommType
 				this.mUSBParam.mVID=mUSBParam.mVID;
 				this.mUSBParam.mPID=mUSBParam.mPID;
 			}
+			this.PerPackageMaxSize = perPackageSize;
 		}
 
 		/// <summary>
@@ -318,7 +334,7 @@ namespace Harry.LabTools.LabCommType
 		/// </summary>
 		/// <param name="serialParam"></param>
 		/// <param name="uSBParam"></param>
-		public virtual void AnalyseParam(CCommSerialParam serialParam, CCommUSBParam usbParam,CCOMM_CRC rxCRC, CCOMM_CRC txCRC, bool isUpAddrID = false)
+		public virtual void AnalyseParam(int perPackageSize, CCommSerialParam serialParam, CCommUSBParam usbParam,CCOMM_CRC rxCRC, CCOMM_CRC txCRC, bool isUpAddrID = false)
 		{
 			if ((serialParam != null) && (this.mSerialParam != null))
 			{
@@ -328,7 +344,7 @@ namespace Harry.LabTools.LabCommType
 				this.mSerialParam.mDataBits = serialParam.mDataBits	;
 				this.mSerialParam.mParity	= serialParam.mParity	;
 				//---是否需要更新ID
-				if (isUpAddrID)
+				if ((isUpAddrID)&&(this.mSerialParam.mAddrID != serialParam.mAddrID))
 				{
 					this.mSerialParam.mAddrID = serialParam.mAddrID;
 				}
@@ -344,6 +360,7 @@ namespace Harry.LabTools.LabCommType
 			this.SendData.mCRCMode = txCRC;
 			//---接收数据校验方式
 			this.ReceData.mCRCMode = rxCRC;
+			this.PerPackageMaxSize = perPackageSize;
 		}
 
 		#endregion

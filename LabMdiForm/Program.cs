@@ -15,9 +15,14 @@ namespace Harry.LabTools.LabMdiForm
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+			//---创建登录界面
 			LabLoginForm frmLogin = new LabLoginForm();
+			//--检查登录界面
 			if (frmLogin.ShowDialog() == DialogResult.OK)
 			{
+				//---释放登录界面的志愿
+				frmLogin.Dispose();
+				//---创建主界面
 				Application.Run(new LabMdiForm());
 			}
 		}

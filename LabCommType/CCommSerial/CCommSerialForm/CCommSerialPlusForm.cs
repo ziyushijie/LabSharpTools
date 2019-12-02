@@ -28,7 +28,6 @@ namespace Harry.LabTools.LabCommType
 			}
 		}
 
-
 		/// <summary>
 		/// 
 		/// </summary>
@@ -37,6 +36,17 @@ namespace Harry.LabTools.LabCommType
 			get
 			{
 				return this.cCommSerial.mCCOMM.IsChanged;
+			}
+		}
+
+		/// <summary>
+		/// 每包字节的大小
+		/// </summary>
+		public override int mPerPackageMaxSize
+		{
+			get
+			{
+				return this.cCommSerial.mPerPackageMaxSize;
 			}
 		}
 
@@ -76,7 +86,7 @@ namespace Harry.LabTools.LabCommType
 		{
 			InitializeComponent();
 
-			if ((text!="")&&(text!=string.Empty))
+			if (!string.IsNullOrEmpty(text))
 			{
 				this.cCommSerial.mButton.Text=text;
 			}
@@ -100,7 +110,7 @@ namespace Harry.LabTools.LabCommType
 		{
 			InitializeComponent();
 
-			if ((text!="")&&(text!=string.Empty))
+			if (!string.IsNullOrEmpty(text))
 			{
 				this.cCommSerial.mButton.Text=text;
 			}
@@ -127,7 +137,7 @@ namespace Harry.LabTools.LabCommType
 		{
 			InitializeComponent();
 
-			if ((text != "") && (text != string.Empty))
+			if(!string.IsNullOrEmpty(text))
 			{
 				this.cCommSerial.mButton.Text = text;
 			}

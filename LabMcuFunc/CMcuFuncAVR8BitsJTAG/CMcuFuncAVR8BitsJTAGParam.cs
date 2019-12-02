@@ -73,6 +73,16 @@ namespace Harry.LabTools.LabMcuFunc
 			}
 		}
 
+		/// <summary>
+		/// 编程时钟属性为只读属性
+		/// </summary>
+		public override string[] mChipClock
+		{
+			get
+			{
+				return new string[] { "0.5", "1", "2", "4", "8", "16", "32", "64", "128", "256", "163.94", "328.95", "657.89", "1315", "2625", "5250", "1050", "2100" };
+			}
+		}
 
 		#endregion
 

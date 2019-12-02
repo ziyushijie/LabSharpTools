@@ -484,6 +484,15 @@ namespace Harry.LabTools.LabCommType
 			set;
 		}
 
+		/// <summary>
+		/// 每包数据的大小
+		/// </summary>
+		int PerPackageMaxSize
+		{
+			get;
+			set;
+		}
+
 		#endregion
 
 		#region 串口参数

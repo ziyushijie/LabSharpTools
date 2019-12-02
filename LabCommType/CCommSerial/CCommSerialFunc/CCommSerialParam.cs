@@ -68,6 +68,11 @@ namespace Harry.LabTools.LabCommType
 		/// </summary>
 		private bool defaultFullParam = true;
 
+		/// <summary>
+		/// 每包传输数据的字节数
+		/// </summary>
+		private int defaultPerPackageMaxSize = 64;
+
 		#endregion
 
 		#region 公共属性
@@ -133,7 +138,7 @@ namespace Harry.LabTools.LabCommType
 		{
 			get
 			{
-				if ((this.Name=="")||(this.Name==string.Empty))
+				if(!string.IsNullOrEmpty(this.Name))
 				{
 					return 0;
 				}
@@ -291,6 +296,23 @@ namespace Harry.LabTools.LabCommType
 			set
 			{
 				this.defaultFullParam = value;
+			}
+		}
+
+		/// <summary>
+		/// 每包字节的大小
+		/// </summary>
+		public override int PerPackageMaxSize
+		{
+			get
+			{
+				return this.defaultPerPackageMaxSize;
+			}
+			set
+			{
+				this.defaultPerPackageMaxSize = value;
+				this.defaultSerialReceData.Init(value, false);
+				this.defaultSerialSendData.Init(value, false);
 			}
 		}
 

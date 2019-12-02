@@ -41,7 +41,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// 消息显示信息
 		/// </summary>
 		private string defaultMsgText = string.Empty;
-
+		
 		#endregion
 
 		#region 属性定义
@@ -111,6 +111,17 @@ namespace Harry.LabTools.LabMcuFunc
 			set
 			{
 				this.defaultMsgText = value;
+			}
+		}
+
+		/// <summary>
+		/// 编程时钟的属性为读写属性
+		/// </summary>
+		public virtual string[] mChipClock
+		{
+			get
+			{
+				return null;
 			}
 		}
 

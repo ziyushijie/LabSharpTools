@@ -131,7 +131,7 @@ namespace Harry.LabTools.LabMcuFunc
 		#region 属性定义
 
 		/// <summary>
-		/// 芯片类型
+		/// 芯片类型属性为只读
 		/// </summary>
 		public override string TypeChip
 		{
@@ -142,7 +142,7 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
-		/// 芯片名称
+		/// 芯片名称属性为只读
 		/// </summary>
 		public override string TypeName
 		{
@@ -152,6 +152,82 @@ namespace Harry.LabTools.LabMcuFunc
 			}
 		}
 
+		/// <summary>
+		/// Flash存储器的字节数属性为只读
+		/// </summary>
+		public override long TypeFlashByteNum
+		{
+			get
+			{
+				return (((long)this.defaultChipFlashPageNum) * this.defaultChipFlashPerPageWordNum * 2);
+			}
+		}
+
+		/// <summary>
+		/// Flash存储器的页数属性为只读
+		/// </summary>
+		public override int TypeFlashPageNum
+		{
+			get
+			{
+				return this.defaultChipFlashPageNum;
+			}
+		}
+
+		/// <summary>
+		/// Flash存储器的每页的字数属性为只读
+		/// </summary>
+		public override int TypeFlashPerPageWordNum
+		{
+			get
+			{
+				return this.defaultChipFlashPerPageWordNum;
+			}
+		}
+
+		/// <summary>
+		/// Flash存储器的每页的字数属性为只读
+		/// </summary>
+		public override int TypeFlashPerPageByteNum
+		{
+			get
+			{
+				return (this.defaultChipFlashPerPageWordNum*2);
+			}
+		}
+
+		/// <summary>
+		/// Eeprom存储器的字节数属性为只读
+		/// </summary>
+		public override int TypeEepromByteNum
+		{
+			get
+			{
+				return (this.defaultChipEepromPageNum * this.defaultChipEepromPerPageByteNum);
+			}
+		}
+
+		/// <summary>
+		/// Eeprom存储器的页数属性为只读
+		/// </summary>
+		public override int TypeEepromPageNum
+		{
+			get
+			{
+				return this.defaultChipEepromPageNum;
+			}
+		}
+
+		/// <summary>
+		/// Eeprom存储器的每页的字数属性为只读
+		/// </summary>
+		public override int TypeEepromPerPageByteNum
+		{
+			get
+			{
+				return this.defaultChipEepromPerPageByteNum;
+			}
+		}
 		/// <summary>
 		/// 芯片名称为读写属性
 		/// </summary>

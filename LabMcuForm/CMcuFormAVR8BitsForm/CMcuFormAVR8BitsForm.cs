@@ -1,4 +1,5 @@
 ﻿using Harry.LabTools.LabCommType;
+using Harry.LabTools.LabControlPlus;
 using Harry.LabTools.LabMcuFunc;
 using System;
 using System.Collections.Generic;
@@ -126,6 +127,9 @@ namespace LabMcuForm
 
 
 			this.Shown += new System.EventHandler(this.Form_Shown);
+			this.Resize += new System.EventHandler(this.Form_Resize);
+			//---窗体关闭事件
+			this.FormClosing += new FormClosingEventHandler(this.Form_Closing);
 		}
 
 		/// <summary>
@@ -139,6 +143,9 @@ namespace LabMcuForm
 
 			this.toolStripProgressBar_ChipBar.Width += 28;
 
+			this.toolStripProgressBar_ChipBar.Tag = this.toolStripProgressBar_ChipBar.Width.ToString();
+			this.toolStrip_ChipTool.Tag = this.toolStrip_ChipTool.Width.ToString();
+
 			if (this.defaultCComm==usedCComm)
 			{
 				this.defaultCComm = new CCommBase();
@@ -150,6 +157,26 @@ namespace LabMcuForm
 			}
 			this.defaultCMcuFunc = usedCMcuFunc;
 			this.Shown += new System.EventHandler(this.Form_Shown);
+			this.Resize += new System.EventHandler(this.Form_Resize);
+			//---窗体关闭事件
+			this.FormClosing += new FormClosingEventHandler(this.Form_Closing);
+		}
+
+		#endregion
+
+		#region	析构函数
+
+		/// <summary>
+		/// 析构函数
+		/// </summary>
+		~CMcuFormAVR8BitsForm()
+		{
+			if (this.defaultCComm!=null)
+			{
+				this.defaultCComm.Dispose();
+			}
+			//---垃圾回收
+			GC.SuppressFinalize(this);
 		}
 
 		#endregion
@@ -178,6 +205,8 @@ namespace LabMcuForm
 			//---初始化版本信息
 			this.toolStripLabel_Version.Text =	this.defaultCMcuFunc.mSoftwareVersion[0].ToString("X2") + "-" + this.defaultCMcuFunc.mSoftwareVersion[1].ToString("X2") + "-" +
 												this.defaultCMcuFunc.mSoftwareVersion[2].ToString("X2") + "-" + this.defaultCMcuFunc.mSoftwareVersion[3].ToString("X2");
+			//--- 初始化当前系统时间
+			this.toolStripLabel_ChipRTCTimer.Text = DateTime.Now.ToString();
 			//---事件注册
 			this.RegistrationEventHandler();
 
@@ -197,8 +226,31 @@ namespace LabMcuForm
 			//---接口类型发生变化
 			//this.comboBox_ChipInterface.SelectedIndexChanged += new System.EventHandler(this.ComboBox_SelectedIndexChanged);
 			this.button_SetChipInterface.Click += new EventHandler(this.Button_Click);
+			//---Buton事件
+			this.button_ReadChipID.Click += new EventHandler(this.Button_Click);
+			this.button_ReadChipRefPWR.Click += new EventHandler(this.Button_Click);
+			this.button_SetChipPWR.Click += new EventHandler(this.Button_Click);
+			this.button_ReadChipPWR.Click += new EventHandler(this.Button_Click);
+			this.button_SetChipClock.Click += new EventHandler(this.Button_Click);
 
-			
+			this.button_LoadFlashFile.Click += new EventHandler(this.Button_Click);
+			this.button_LoadEepromFile.Click += new EventHandler(this.Button_Click);
+			this.button_SaveFlashFile.Click += new EventHandler(this.Button_Click);
+			this.button_SaveEepromFile.Click += new EventHandler(this.Button_Click);
+			this.button_ChipAuto.Click += new EventHandler(this.Button_Click);
+			this.button_EraseChip.Click += new EventHandler(this.Button_Click);
+			this.button_CheckEmpty.Click += new EventHandler(this.Button_Click);
+			this.button_ReadIDChip.Click += new EventHandler(this.Button_Click);
+			this.button_ReadFlash.Click += new EventHandler(this.Button_Click);
+			this.button_WriteFlash.Click += new EventHandler(this.Button_Click);
+			this.button_CheckFlash.Click += new EventHandler(this.Button_Click);
+			this.button_ReadEeprom.Click += new EventHandler(this.Button_Click);
+			this.button_WriteEeprom.Click += new EventHandler(this.Button_Click);
+			this.button_CheckEeprom.Click += new EventHandler(this.Button_Click);
+			this.button_WriteFuse.Click += new EventHandler(this.Button_Click);
+			this.button_WriteLock.Click += new EventHandler(this.Button_Click);
+			this.button_ReadROM.Click += new EventHandler(this.Button_Click);
+
 		}
 
 		/// <summary>
@@ -237,9 +289,104 @@ namespace LabMcuForm
 		/// <param name="e"></param>
 		private void Form_Shown(Object sender, EventArgs e)
 		{
-			this.StartupInit();
+			Form fm = (Form)sender;
+			switch (fm.Name)
+			{
+				case "CMcuFormAVR8BitsForm":
+					this.StartupInit();
+					break;
+				default:
+					break;
+			}
+			fm.Focus();
 		}
-		
+
+		/// <summary>
+		/// 窗体大小发生变化的时候
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Form_Resize(object sender, EventArgs e)
+		{
+			Form fm = (Form)sender;
+			switch (fm.Name)
+			{
+				case "CMcuFormAVR8BitsForm":
+					int offset = (this.toolStrip_ChipTool.Size.Width - int.Parse(this.toolStrip_ChipTool.Tag.ToString()));
+					//---判断大小
+					if (offset > 0)
+					{
+						this.toolStripProgressBar_ChipBar.Width = int.Parse(this.toolStripProgressBar_ChipBar.Tag.ToString()) + offset;
+					}
+					else
+					{
+						if (this.toolStripProgressBar_ChipBar.Width != int.Parse(this.toolStripProgressBar_ChipBar.Tag.ToString()))
+						{
+							this.toolStripProgressBar_ChipBar.Width = int.Parse(this.toolStripProgressBar_ChipBar.Tag.ToString());
+						}
+					}
+					break;
+				default:
+					break;
+			}
+			fm.Focus();
+		}
+
+		/// <summary>
+		/// 窗体关闭
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Form_Closing(object sender, FormClosingEventArgs e)
+		{
+			Form fm = (Form)sender;
+			fm.Enabled = false;
+			switch (fm.Name)
+			{
+				case "CMcuFormAVR8BitsForm":
+					if (e.CloseReason == CloseReason.MdiFormClosing)
+					{
+						return;
+					}
+					else if (e.CloseReason == CloseReason.UserClosing)
+					{
+						if (DialogResult.OK == CMessageBoxPlus.Show(this, "你确定要关闭应用程序吗？", "关闭提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question))
+						{
+							//---为保证Application.Exit();时不再弹出提示，所以将FormClosing事件取消
+							this.FormClosing -= new FormClosingEventHandler(this.Form_Closing);
+							//---检查通讯端口
+							if (this.defaultCComm!= null)
+							{
+								//---关闭端口
+								while (true)
+								{
+									if (this.defaultCComm.COMMSTATE == CCOMM_STATE.STATE_IDLE)
+									{	
+										break;
+									}
+									Application.DoEvents();
+								}
+								this.defaultCComm.CloseDevice();
+							}
+							//---确认关闭事件
+							e.Cancel = false;
+							//---退出当前窗体
+							this.Dispose();
+						}
+						else
+						{
+							//---取消关闭事件
+							e.Cancel = true;
+						}
+					}
+					break;
+				default:
+					break;
+			}
+			fm.Enabled = true;
+			fm.Focus();
+		}
+
 		/// <summary>
 		/// 定时器滴答
 		/// </summary>
@@ -349,6 +496,50 @@ namespace LabMcuForm
 						this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.mCMcuFunc = this.defaultCMcuFunc;
 					}
 					break;
+				case "button_ReadChipID":
+					break;
+				case "button_ReadChipRefPWR":
+					break;
+				case "button_SetChipPWR":
+					break;
+				case "button_ReadChipPWR":
+					break;
+				case "button_SetChipClock":
+					break;
+				case "button_LoadFlashFile":
+					break;
+				case "button_LoadEepromFile":
+					break;
+				case "button_SaveFlashFile":
+					break;
+				case "button_SaveEepromFile":
+					break;
+				case "button_Auto":
+					break;
+				case "button_EraseChip":
+					break;
+				case "button_CheckEmpty":
+					break;
+				case "button_ReadIDChip":
+					break;
+				case "button_ReadFlash":
+					break;
+				case "button_WriteFlash":
+					break;
+				case "button_CheckFlash":
+					break;
+				case "button_ReadEeprom":
+					break;
+				case "button_WriteEeprom":
+					break;
+				case "button_CheckEeprom":
+					break;
+				case "button_WriteFuse":
+					break;
+				case "button_WriteLock":
+					break;
+				case "button_ReadROM":
+					break;
 				default:
 					break;
 			}
@@ -357,6 +548,5 @@ namespace LabMcuForm
 			bt.Focus();
 		}
 		#endregion
-
 	}
 }
