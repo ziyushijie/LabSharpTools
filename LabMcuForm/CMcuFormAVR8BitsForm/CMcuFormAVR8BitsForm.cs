@@ -360,7 +360,7 @@ namespace LabMcuForm
 								//---关闭端口
 								while (true)
 								{
-									if (this.defaultCComm.COMMSTATE == CCOMM_STATE.STATE_IDLE)
+									if (this.defaultCComm.mCOMMSTATE == CCOMM_STATE.STATE_IDLE)
 									{	
 										break;
 									}
@@ -428,7 +428,7 @@ namespace LabMcuForm
 				case "comboBox_ChipType":
 					if (!string.IsNullOrEmpty(this.comboBox_ChipType.Text))
 					{
-						if (this.comboBox_ChipType.Text!=this.defaultCMcuFunc.mMcuInfoParam.TypeName)
+						if (this.comboBox_ChipType.Text!=this.defaultCMcuFunc.mMcuInfoParam.mTypeName)
 						{
 							this.McuTypeChanged(this.comboBox_ChipType.Text);
 						}

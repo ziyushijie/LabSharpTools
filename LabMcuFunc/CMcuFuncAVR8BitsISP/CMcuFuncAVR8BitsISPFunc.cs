@@ -41,7 +41,7 @@ namespace Harry.LabTools.LabMcuFunc
 		#endregion
 
 		#region 属性定义
-
+		
 		#endregion
 
 		#region 构造函数
@@ -59,7 +59,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_OpenConnect(RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 				byte[] cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_OPEN_CLOSE, 0x01 };
 				byte[] res = null;
@@ -68,19 +68,19 @@ namespace Harry.LabTools.LabMcuFunc
 				//---校验结果
 				if (_return == 0)
 				{
-					if (this.mCCOMM.ReceCheckPass)
+					if (this.mCCOMM.mReceCheckPass)
 					{
-						this.mMsgText = "ISP编程-接口打开成功!";
+						this.mMsgText = "ISP编程：接口打开成功!";
 					}
 					else
 					{
 						_return = 1;
-						this.mMsgText = "ISP编程-接口打开命令校验错误!";
+						this.mMsgText = "ISP编程：接口打开命令校验错误!";
 					}
 				}
 				else
 				{					
-					this.mMsgText = this.mCCOMM.LogMessage;
+					this.mMsgText = this.mCCOMM.mLogMsg;
 				}
 			}
 			else
@@ -101,7 +101,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_CloseConnect( RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 				byte[] cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_OPEN_CLOSE, 0x00 };
 				byte[] res = null;
@@ -110,19 +110,19 @@ namespace Harry.LabTools.LabMcuFunc
 				//---校验结果
 				if (_return == 0)
 				{
-					if (this.mCCOMM.ReceCheckPass)
+					if (this.mCCOMM.mReceCheckPass)
 					{
-						this.mMsgText = "ISP编程-接口关闭成功!";
+						this.mMsgText = "ISP编程：接口关闭成功!";
 					}
 					else
 					{
 						_return = 1;
-						this.mMsgText = "ISP编程-接口关闭命令校验错误!";
+						this.mMsgText = "ISP编程：接口关闭命令校验错误!";
 					}
 				}
 				else
 				{
-					this.mMsgText = this.mCCOMM.LogMessage;
+					this.mMsgText = this.mCCOMM.mLogMsg;
 				}
 			}
 			else
@@ -143,7 +143,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_EraseChip(RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 				byte[] cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_ERASE, 0x00 };
 				byte[] res = null;
@@ -152,19 +152,19 @@ namespace Harry.LabTools.LabMcuFunc
 				//---校验结果
 				if (_return == 0)
 				{
-					if (this.mCCOMM.ReceCheckPass)
+					if (this.mCCOMM.mReceCheckPass)
 					{
-						this.mMsgText = "ISP编程-擦除成功!";
+						this.mMsgText = "ISP编程：擦除成功!";
 					}
 					else
 					{
 						_return = 1;
-						this.mMsgText = "ISP编程-擦除命令校验错误!";
+						this.mMsgText = "ISP编程：擦除命令校验错误!";
 					}
 				}
 				else
 				{
-					this.mMsgText = this.mCCOMM.LogMessage;
+					this.mMsgText = this.mCCOMM.mLogMsg;
 				}
 			}
 			else
@@ -211,7 +211,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_ReadChipFlash(ref byte[] chipFlash, RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -230,7 +230,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_WriteChipFlash(byte[] chipFlash, RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -249,13 +249,44 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_CheckChipFlashEmpty(RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
-
+				byte[] cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_ERASE, 0x01 };
+				byte[] res = null;
+				//---发送并读取命令
+				_return = this.mCCOMM.SendCmdAndReadResponse(cmd, ref res);
+				//---校验结果
+				if (_return == 0)
+				{
+					if (this.mCCOMM.mReceCheckPass)
+					{
+						if (this.mCCOMM.mReceData.mArray[this.mCCOMM.mReceData.mIndexOffset] == 0x00)
+						{
+							this.mMsgText = "ISP编程：Flash为空!";
+						}
+						else
+						{
+							this.mMsgText = "ISP编程：Flash不为空!";
+						}
+					}
+					else
+					{
+						_return = 1;
+						this.mMsgText = "ISP编程：Flash查空命令校验错误!";
+					}
+				}
+				else
+				{
+					this.mMsgText = this.mCCOMM.mLogMsg;
+				}
 			}
 			else
 			{
 				this.mMsgText = "通讯端口初始化失败!";
+			}
+			if (msg != null)
+			{
+				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.mMsgText, (_return == 0 ? Color.Black : Color.Red));
 			}
 			return _return;
 		}
@@ -287,7 +318,47 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public override int CMcuFunc_CheckChipEepromEmpty(RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
+			{
+				byte[] cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_ERASE, 0x01 };
+				byte[] res = null;
+				//---发送并读取命令
+				_return = this.mCCOMM.SendCmdAndReadResponse(cmd, ref res);
+				//---校验结果
+				if (_return == 0)
+				{
+					if (this.mCCOMM.mReceCheckPass)
+					{
+						if (this.mCCOMM.mReceData.mArray[this.mCCOMM.mReceData.mIndexOffset]==0x00)
+						{
+							this.mMsgText = "ISP编程：Eeprom为空!";
+						}
+						else
+						{
+							this.mMsgText = "ISP编程：Eeprom不为空!";
+						}
+					}
+					else
+					{
+						_return = 1;
+						this.mMsgText = "ISP编程：Eeprom查空命令校验错误!";
+					}
+				}
+				else
+				{
+					this.mMsgText = this.mCCOMM.mLogMsg;
+				}
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			if (msg != null)
+			{
+				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.mMsgText, (_return == 0 ? Color.Black : Color.Red));
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -297,7 +368,36 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public override int CMcuFunc_ReadChipFuse(ref byte[] chipFuse, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
+			{
+				byte[] cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_FUSE_LOCK_READ, 0x00 };
+				byte[] res = null;
+				//---发送并读取命令
+				_return = this.mCCOMM.SendCmdAndReadResponse(cmd, ref res);
+				//---校验结果
+				if (_return == 0)
+				{
+					if (this.mCCOMM.mReceCheckPass)
+					{
+						this.mMsgText = "ISP编程：擦除成功!";
+					}
+					else
+					{
+						_return = 1;
+						this.mMsgText = "ISP编程：擦除命令校验错误!";
+					}
+				}
+				else
+				{
+					this.mMsgText = this.mCCOMM.mLogMsg;
+				}
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -307,7 +407,16 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public override int CMcuFunc_ReadChipFuse(TextBox lowFuse, TextBox highFuse, TextBox externFuse, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
+			{
+
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			return _return;
 		}
 
 		/// <summary>

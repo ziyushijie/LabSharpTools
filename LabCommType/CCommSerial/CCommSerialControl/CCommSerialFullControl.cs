@@ -119,7 +119,7 @@ namespace Harry.LabTools.LabCommType
 				this.textBox_PackageSize.Text = value.ToString();
 				if (this.mCCOMM!=null)
 				{
-					this.mCCOMM.PerPackageMaxSize = value;
+					this.mCCOMM.mPerPackageMaxSize = value;
 				}				
 			}
 		}

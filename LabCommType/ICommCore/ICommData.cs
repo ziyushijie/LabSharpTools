@@ -8,7 +8,7 @@ namespace Harry.LabTools.LabCommType
 	/// <summary>
 	/// CRC校验方式
 	/// </summary>
-	public enum CCOMM_CRC : byte
+	public enum CCOMM_CRC : int
 	{
 		CRC_NONE			= 0,			//---无校验方式
 		CRC_CHECKSUM		= 1,			//---检验和
@@ -27,51 +27,224 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 数据
 		/// </summary>
-		public List<byte> mByte = null;
+		private List<byte> defaultByte = null;
 
 		/// <summary>
 		/// CRC的结果
 		/// </summary>
-		public UInt32 mCRCResult = 0;
+		private UInt32 defaultCRCResult = 0;
 
 		/// <summary>
 		/// 数据的长度
 		/// </summary>
-		public int mLength = 0;
+		private int defaultLength = 0;
 
 		/// <summary>
 		/// CRC的方式
 		/// </summary>
-		public CCOMM_CRC mCRCMode = CCOMM_CRC.CRC_NONE;
+		private CCOMM_CRC defaultCRCMode = CCOMM_CRC.CRC_NONE;
 
 		/// <summary>
 		/// 父命令
 		/// </summary>
-		public byte mParentCMD = 0;
+		private byte defaultParentCMD = 0;
 
 		/// <summary>
 		/// 子命令
 		/// </summary>
-		public byte mChildCMD = 0;
+		private byte defaultChildCMD = 0;
 
 		/// <summary>
 		/// 数据发送的长度
 		/// </summary>
-		public int mSize = 64;
+		private int defaultSize = 64;
 
 		/// <summary>
 		/// 数据报头信息
 		/// </summary>
-		public int mID = 0x00;
+		private int defaultID = 0x00;
 
 		/// <summary>
 		/// 结果标志位
 		/// </summary>
-		public int mFlagResult = -1;
+		private int defaultFlagResult = -1;
+
+		/// <summary>
+		/// 数据命令的偏移
+		/// </summary>
+		private uint defaultIndexOffset = 0;
 
 		#endregion
 
 		#region 属性定义
+
+		/// <summary>
+		/// 数据缓存区属性为读写属性
+		/// </summary>
+		public virtual List<byte> mByte
+		{
+			get
+			{
+				return this.defaultByte;
+			}
+			set
+			{
+				this.defaultByte = value;
+			}
+		}
+
+		/// <summary>
+		/// 数据缓存区的数组
+		/// </summary>
+		public virtual byte[] mArray
+		{
+			get
+			{
+				if (this.defaultByte.Count > 0)
+				{
+					return this.defaultByte.ToArray();
+				}
+				else
+				{
+					return null;
+				}
+			}
+		}
+
+		/// <summary>
+		/// 校验结果属性为读写属性
+		/// </summary>
+		public UInt32 mCRCResult
+		{
+			get
+			{
+				return this.defaultCRCResult;
+			}
+			set
+			{
+				this.defaultCRCResult = value;
+			}
+		}
+
+		/// <summary>
+		/// 数据长度属性为读写属性
+		/// </summary>
+		public virtual int mLength
+		{
+			get
+			{
+				return this.defaultLength;
+			}
+			set
+			{
+				this.defaultLength = value;
+			}
+		}
+
+		/// <summary>
+		/// CRC校验模式属性为读写属性
+		/// </summary>
+		public virtual CCOMM_CRC mCRCMode
+		{
+			get
+			{
+				return this.defaultCRCMode;
+			}
+			set
+			{
+				this.defaultCRCMode = value;
+			}
+		}
+
+		/// <summary>
+		/// 父命令属性为读写属性
+		/// </summary>
+		public virtual byte mParentCMD
+		{
+			get
+			{
+				return this.defaultParentCMD;
+			}
+			set
+			{
+				this.defaultParentCMD = value;
+			}
+		}
+
+		/// <summary>
+		/// 子命令属性为读写属性
+		/// </summary>
+		public virtual byte mChildCMD
+		{
+			get
+			{
+				return this.defaultChildCMD;
+			}
+			set
+			{
+				this.defaultChildCMD = value;
+			}
+		}
+
+		/// <summary>
+		/// 缓存区的大小属性为读写属性
+		/// </summary>
+		public virtual int mSize
+		{
+			get
+			{
+				return this.defaultSize;
+			}
+			set
+			{
+				this.defaultSize = value;
+			}
+		}
+
+		/// <summary>
+		/// 通讯ID信息属性为读写属性
+		/// </summary>
+		public virtual int mID
+		{
+			get
+			{
+				return this.defaultID;
+			}
+			set
+			{
+				this.defaultID = value;
+			}
+		}
+
+		/// <summary>
+		/// 数据结果属性为读写属性
+		/// </summary>
+		public virtual int mFlagResult
+		{
+			get
+			{
+				return this.defaultFlagResult;
+			}
+			set
+			{
+				this.defaultFlagResult=value;
+			}
+		}
+
+		/// <summary>
+		/// 数据索引的偏移
+		/// </summary>
+		public virtual  uint mIndexOffset
+		{
+			get
+			{
+				return this.defaultIndexOffset;
+			}
+			set
+			{
+				this.defaultIndexOffset = value;
+			}
+		}
 
 		#endregion
 
@@ -92,11 +265,11 @@ namespace Harry.LabTools.LabCommType
 		{
 			if (isID)
 			{
-				this.mID = val;
+				this.defaultID = val;
 			}
 			else
 			{
-				this.mSize = val;
+				this.defaultSize = val;
 			}
 		}
 
@@ -107,8 +280,8 @@ namespace Harry.LabTools.LabCommType
 		/// <param name="size"></param>
 		public CCommData(int id,int size)
 		{
-			this.mID = id;
-			this.mSize = size;
+			this.defaultID = id;
+			this.defaultSize = size;
 		}
 
 		/// <summary>
@@ -119,9 +292,9 @@ namespace Harry.LabTools.LabCommType
 		/// <param name="crcMode"></param>
 		public CCommData(int id, int size,CCOMM_CRC crcMode)
 		{
-			this.mID = id;
-			this.mSize = size;
-			this.mCRCMode = crcMode;
+			this.defaultID = id;
+			this.defaultSize = size;
+			this.defaultCRCMode = crcMode;
 		}
 
 		#endregion
@@ -148,11 +321,11 @@ namespace Harry.LabTools.LabCommType
 		{
 			if (isID)
 			{
-				this.mID = val;
+				this.defaultID = val;
 			}
 			else
 			{
-				this.mSize = val;
+				this.defaultSize = val;
 			}
 		}
 
@@ -177,7 +350,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 接收数据
 		/// </summary>
-		CCommData ReceData
+		CCommData mReceData
 		{
 			get;
 			set;
@@ -187,7 +360,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 发送数据
 		/// </summary>
-		CCommData SendData
+		CCommData mSendData
 		{
 			get;
 			set;
@@ -196,7 +369,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 接收校验通过
 		/// </summary>
-		bool ReceCheckPass
+		bool mReceCheckPass
 		{
 			get;
 		}

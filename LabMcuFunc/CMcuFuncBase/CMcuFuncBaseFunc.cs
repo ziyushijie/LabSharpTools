@@ -15,6 +15,24 @@ namespace Harry.LabTools.LabMcuFunc
 
 		#region 属性定义
 
+		/// <summary>
+		/// 功能函数的执行步序1
+		/// </summary>
+		public virtual int mFuncStep1Mask
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// 功能函数的执行步序2
+		/// </summary>
+		public virtual int mFuncStep2Mask
+		{
+			get;
+			set;
+		}
+
 		#endregion
 
 		#region 构造函数

@@ -9,7 +9,7 @@ namespace Harry.LabTools.LabCommType
 	/// <summary>
 	/// 通信状态
 	/// </summary>
-	public enum CCOMM_STATE : byte
+	public enum CCOMM_STATE : Int32
 	{
 		STATE_IDLE				= 0,			//---空闲状态
 		STATE_POLLREAD			= 1,			//---轮训读取状态
@@ -21,7 +21,7 @@ namespace Harry.LabTools.LabCommType
 	/// <summary>
 	/// 通讯端口的类型
 	/// </summary>
-	public enum CCOMM_TYPE : byte
+	public enum CCOMM_TYPE : Int32
 	{
 		COMM_SERIAL				=0,				//---串口通讯
 		COMM_USB				=1,				//---USB通讯
@@ -252,12 +252,12 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 
 		/// </summary>
-		public int defaultVID = -1;
+		private int defaultVID = -1;
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public int defaultPID = -1;
+		private int defaultPID = -1;
 
 		#endregion
 
@@ -366,7 +366,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 使用的通讯方式
 		/// </summary>
-		CCOMM_TYPE Type
+		CCOMM_TYPE mType
 		{
 			get;
 			set;
@@ -375,7 +375,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 通断端口名称
 		/// </summary>
-		string Name
+		string mName
 		{
 			get;
 			set;
@@ -384,7 +384,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 通讯接口的序号
 		/// </summary>
-		int Index
+		int mIndex
 		{
 			get;
 			set;
@@ -394,7 +394,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 通讯端口的信息
 		/// </summary>
-		string Info
+		string mInfo
 		{
 			get;
 		}
@@ -402,7 +402,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 超时时间
 		/// </summary>
-		int Timeout
+		int mTimeout
 		{
 			get;
 			set;
@@ -411,7 +411,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 是不是多地址通讯，false---不是，true---是
 		/// </summary>
-		bool IsMultiAddr
+		bool mIsMultiAddr
 		{
 			get;
 		}
@@ -419,7 +419,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 是不是复合命令，比如主命令加子命令,仅仅针对接收有效
 		/// </summary>
-		bool IsMultiCMD
+		bool mIsMultiCMD
 		{
 			get;
 			set;
@@ -428,7 +428,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 通讯端口是够打开，false---关闭，true---打开
 		/// </summary>
-		bool IsOpen
+		bool mIsOpen
 		{
 			get;
 		}
@@ -436,7 +436,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 通讯过程中消息信息
 		/// </summary>
-		string LogMessage
+		string mLogMsg
 		{
 			get;
 		}
@@ -444,7 +444,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 通讯状态
 		/// </summary>
-		CCOMM_STATE COMMSTATE
+		CCOMM_STATE mCOMMSTATE
 		{
 			get;
 		}
@@ -452,7 +452,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 使用的时间
 		/// </summary>
-		TimeSpan UsedTime
+		TimeSpan mUsedTime
 		{
 			get;
 		}
@@ -461,7 +461,7 @@ namespace Harry.LabTools.LabCommType
         /// <summary>
         /// 设备连接状态
         /// </summary>
-        bool IsConnected
+        bool mIsConnected
         {
             get;
         }
@@ -469,7 +469,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 设备是否发生变化
 		/// </summary>
-		bool IsChanged
+		bool mIsChanged
 		{
 			get;
 			set;
@@ -478,7 +478,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 是否显示全部全部配置参数
 		/// </summary>
-		bool IsFullParam
+		bool mIsFullParam
 		{
 			get;
 			set;
@@ -487,7 +487,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 每包数据的大小
 		/// </summary>
-		int PerPackageMaxSize
+		int mPerPackageMaxSize
 		{
 			get;
 			set;

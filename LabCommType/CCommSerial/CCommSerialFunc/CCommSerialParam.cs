@@ -80,7 +80,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 使用的通讯端口
 		/// </summary>
-		public override CCOMM_TYPE Type
+		public override CCOMM_TYPE mType
 		{
 			get
 			{
@@ -88,14 +88,14 @@ namespace Harry.LabTools.LabCommType
 			}
 			set
 			{
-				base.Type = value;
+				base.mType = value;
 			}
 		}
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public override string Name
+		public override string mName
 		{
 			get
 			{
@@ -119,7 +119,8 @@ namespace Harry.LabTools.LabCommType
 						
 					}
 				}
-				if ((value==string.Empty)||(value==string.Empty))
+				//if ((value==string.Empty)||(value==string.Empty))
+				if(!string.IsNullOrEmpty(value))
 				{
 					this.defaultSerialPort.PortName = "COM1";
 				}
@@ -134,29 +135,29 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 
 		/// </summary>
-		public override int Index
+		public override int mIndex
 		{
 			get
 			{
-				if(!string.IsNullOrEmpty(this.Name))
+				if(!string.IsNullOrEmpty(this.mName))
 				{
 					return 0;
 				}
 				else
 				{
-					return int.Parse(Regex.Replace(this.Name, @"[^\d]*", ""));
+					return int.Parse(Regex.Replace(this.mName, @"[^\d]*", ""));
 				}
 			}
 			set
 			{
-				this.Name = "COM" + value.ToString();
+				this.mName = "COM" + value.ToString();
 			}
 		}
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public override string Info
+		public override string mInfo
 		{
 			get
 			{
@@ -167,7 +168,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 
 		/// </summary>
-		public override int Timeout
+		public override int mTimeout
 		{
 			get
 			{
@@ -182,7 +183,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 
 		/// </summary>
-		public override bool IsMultiAddr
+		public override bool mIsMultiAddr
 		{
 			get
 			{
@@ -193,7 +194,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 是不是复合命令
 		/// </summary>
-		public override bool IsMultiCMD
+		public override bool mIsMultiCMD
 		{
 			get
 			{
@@ -209,7 +210,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 端口是否打开
 		/// </summary>
-		public override bool IsOpen
+		public override bool mIsOpen
 		{
 			get
 			{
@@ -227,7 +228,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 消息Log信息
 		/// </summary>
-		public override string LogMessage
+		public override string mLogMsg
 		{
 			get
 			{
@@ -238,7 +239,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 通讯状态
 		/// </summary>
-		public override CCOMM_STATE COMMSTATE
+		public override CCOMM_STATE mCOMMSTATE
 		{
 			get
 			{
@@ -250,7 +251,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 使用的时间
 		/// </summary>
-		public override TimeSpan UsedTime
+		public override TimeSpan mUsedTime
 		{
 			get
 			{
@@ -261,7 +262,7 @@ namespace Harry.LabTools.LabCommType
         /// <summary>
         /// 设备连接状态
         /// </summary>
-        public override bool IsConnected
+        public override bool mIsConnected
         {
             get
             {
@@ -272,7 +273,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 
 		/// </summary>
-		public override bool IsChanged
+		public override bool mIsChanged
 		{
 			get
 			{
@@ -287,7 +288,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 
 		/// </summary>
-		public override bool IsFullParam
+		public override bool mIsFullParam
 		{
 			get
 			{
@@ -302,7 +303,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 每包字节的大小
 		/// </summary>
-		public override int PerPackageMaxSize
+		public override int mPerPackageMaxSize
 		{
 			get
 			{
@@ -390,11 +391,14 @@ namespace Harry.LabTools.LabCommType
                 }
 				else
 				{
-					this.defaultSerialParam=new CCommSerialParam(value.mName,value.mBaudRate,value.mStopBits,value.mDataBits,value.mParity);
+					if (value!=null)
+					{
+						this.defaultSerialParam = new CCommSerialParam(value.mName, value.mBaudRate, value.mStopBits, value.mDataBits, value.mParity);
+					}					
 				}
                 if (value!=null)
                 {
-                    this.Name = value.mName;
+                    this.mName = value.mName;
                 }
             }
 		}
@@ -444,13 +448,13 @@ namespace Harry.LabTools.LabCommType
 			System.IO.Ports.Parity _return;//= new Parity();
 
 			//---奇校验
-			if (parityBits.StartsWith("奇") || parityBits.StartsWith("Odd") || parityBits.StartsWith("ODD") || parityBits.StartsWith("odd") || parityBits.StartsWith("oDD"))
+			if (parityBits.StartsWith("奇",System.StringComparison.CurrentCultureIgnoreCase) || parityBits.StartsWith("Odd", System.StringComparison.CurrentCultureIgnoreCase) || parityBits.StartsWith("ODD", System.StringComparison.CurrentCultureIgnoreCase) || parityBits.StartsWith("odd", System.StringComparison.CurrentCultureIgnoreCase) || parityBits.StartsWith("oDD", System.StringComparison.CurrentCultureIgnoreCase))
 			{
 				_return = System.IO.Ports.Parity.Odd;
 			}
 
 			//---偶校验
-			else if (parityBits.StartsWith("偶") || parityBits.StartsWith("Even") || parityBits.StartsWith("EVEN") || parityBits.StartsWith("even") || parityBits.StartsWith("eVEN"))
+			else if (parityBits.StartsWith("偶", System.StringComparison.CurrentCultureIgnoreCase) || parityBits.StartsWith("Even", System.StringComparison.CurrentCultureIgnoreCase) || parityBits.StartsWith("EVEN", System.StringComparison.CurrentCultureIgnoreCase) || parityBits.StartsWith("even", System.StringComparison.CurrentCultureIgnoreCase) || parityBits.StartsWith("eVEN", System.StringComparison.CurrentCultureIgnoreCase))
 			{
 				_return = System.IO.Ports.Parity.Even;
 			}

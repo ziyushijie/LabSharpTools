@@ -2,14 +2,14 @@
 
 namespace Harry.LabTools.LabGenFunc
 {
-	public partial class CGenFuncCRC
+	public static partial class CGenFuncCRC
     {
 		#region CRC32
 
 		/// <summary>
 		/// CRC32表
 		/// </summary>
-		private static UInt32[] defaultCRC32Tab = new UInt32[256]
+		private static readonly UInt32[] defaultCRC32Tab = new UInt32[256]
 		{
 			0x00000000,0x04C11DB7,0x09823B6E,0x0D4326D9,0x130476DC,0x17C56B6B,0x1A864DB2,0x1E475005,
 			0x2608EDB8,0x22C9F00F,0x2F8AD6D6,0x2B4BCB61,0x350C9B64,0x31CD86D3,0x3C8EA00A,0x384FBDBD,
@@ -126,7 +126,7 @@ namespace Harry.LabTools.LabGenFunc
 		/// <summary>
 		/// CRC16表
 		/// </summary>
-		private static UInt16[] defaultCRC16Table = new UInt16[256]
+		private static readonly UInt16[] defaultCRC16Table = new UInt16[256]
 		{
 			0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50a5, 0x60c6, 0x70e7,
 			0x8108, 0x9129, 0xa14a, 0xb16b, 0xc18c, 0xd1ad, 0xe1ce, 0xf1ef,

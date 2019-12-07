@@ -23,7 +23,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 接收数据
 		/// </summary>
-		public override CCommData ReceData
+		public override CCommData mReceData
 		{
 			get
 			{
@@ -38,7 +38,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 发送数据
 		/// </summary>
-		public override CCommData SendData
+		public override CCommData mSendData
 		{
 			get
 			{
@@ -53,7 +53,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 数据校验通过
 		/// </summary>
-		public override bool ReceCheckPass
+		public override bool mReceCheckPass
 		{
 			get
 			{
@@ -102,11 +102,11 @@ namespace Harry.LabTools.LabCommType
 
 					cmd[1] = (byte)(length >> 8);
 					cmd[2] = (byte)(length);
-					if (this.IsMultiAddr)
+					if (this.mIsMultiAddr)
 					{
 						id = cmd[3];
 						this.defaultSerialReceData.mParentCMD = cmd[4];
-						if (this.IsMultiCMD)
+						if (this.mIsMultiCMD)
 						{
 							this.defaultSerialReceData.mChildCMD = cmd[5];
 							this.defaultSerialReceData.mFlagResult = cmd[6];
@@ -121,7 +121,7 @@ namespace Harry.LabTools.LabCommType
 					{
 
 						this.defaultSerialReceData.mParentCMD = cmd[3];
-						if (this.IsMultiCMD)
+						if (this.mIsMultiCMD)
 						{
 							this.defaultSerialReceData.mChildCMD = cmd[4];
 							this.defaultSerialReceData.mFlagResult = cmd[5];
@@ -136,11 +136,11 @@ namespace Harry.LabTools.LabCommType
 				else
 				{
 					cmd[1] = (byte)(length);
-					if (this.IsMultiAddr)
+					if (this.mIsMultiAddr)
 					{
 						id = cmd[2];
 						this.defaultSerialReceData.mParentCMD = cmd[3];
-						if (this.IsMultiCMD)
+						if (this.mIsMultiCMD)
 						{
 							this.defaultSerialReceData.mChildCMD = cmd[4];
 							this.defaultSerialReceData.mFlagResult = cmd[5];
@@ -154,7 +154,7 @@ namespace Harry.LabTools.LabCommType
 					else
 					{
 						this.defaultSerialReceData.mParentCMD = cmd[2];
-						if (this.IsMultiCMD)
+						if (this.mIsMultiCMD)
 						{
 							this.defaultSerialReceData.mChildCMD = cmd[3];
 							this.defaultSerialReceData.mFlagResult = cmd[4];
@@ -254,7 +254,7 @@ namespace Harry.LabTools.LabCommType
 				{
 					this.defaultSerialSendData.mByte.Clear();
 				}
-				if (this.IsMultiAddr == true)
+				if (this.mIsMultiAddr == true)
 				{
 					//---通过报头判断是否需要进行
 					if (cmd[0] == this.defaultSerialParam.mAddrID)
@@ -304,7 +304,7 @@ namespace Harry.LabTools.LabCommType
 					this.defaultSerialSendData.mByte[1] = (byte)(this.defaultSerialSendData.mLength>>8);
 					this.defaultSerialSendData.mByte[2] = (byte)(this.defaultSerialSendData.mLength);
 					this.defaultSerialSendData.mParentCMD = this.defaultSerialSendData.mByte[3];
-					if (this.IsMultiCMD)
+					if (this.mIsMultiCMD)
 					{
 						this.defaultSerialSendData.mChildCMD = this.defaultSerialSendData.mByte[4];
 					}
@@ -317,7 +317,7 @@ namespace Harry.LabTools.LabCommType
 				{
 					this.defaultSerialSendData.mByte[1] = (byte)(this.defaultSerialSendData.mLength);
 					this.defaultSerialSendData.mParentCMD = this.defaultSerialSendData.mByte[2];
-					if (this.IsMultiCMD)
+					if (this.mIsMultiCMD)
 					{
 						this.defaultSerialSendData.mChildCMD = this.defaultSerialSendData.mByte[3];
 					}

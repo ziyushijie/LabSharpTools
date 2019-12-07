@@ -87,7 +87,7 @@ namespace Harry.LabTools.LabCommType
 			{
 				if (this.mCCOMM != null)
 				{
-					return this.mCCOMM.PerPackageMaxSize;
+					return this.mCCOMM.mPerPackageMaxSize;
 				}
 				else
 				{
@@ -99,7 +99,7 @@ namespace Harry.LabTools.LabCommType
 			{
 				if (this.mCCOMM != null)
 				{
-					this.mCCOMM.PerPackageMaxSize = value;
+					this.mCCOMM.mPerPackageMaxSize = value;
 				}
 			}
 		}

@@ -243,7 +243,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 芯片名称
 		/// </summary>
-		string ChipName
+		string mChipName
 		{
 			get;
 			set;
@@ -252,7 +252,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 芯片的总接口
 		/// </summary>
-		string[] ChipInterfaceName
+		string[] mChipInterfaceName
 		{
 			get;
 		}
@@ -260,7 +260,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 当前芯片的支持的编程接口
 		/// </summary>
-		CMcuFuncAVR8BitsParam ChipInterface
+		CMcuFuncAVR8BitsParam mChipInterface
 		{
 			get;
 			//set;
@@ -269,7 +269,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 设备的ID信息
 		/// </summary>
-		byte[] ChipID
+		byte[] mChipID
 		{
 			get;
 			set;
@@ -278,7 +278,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 设备的JTAG的信息
 		/// </summary>
-		int IDChip
+		int mIDChip
 		{
 			get;
 			set;
@@ -287,7 +287,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 设备的熔丝位
 		/// </summary>
-		byte[] ChipFuse
+		byte[] mChipFuse
 		{
 			get;
 			set;
@@ -296,7 +296,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 设备的加密位
 		/// </summary>
-		byte ChipLock
+		byte mChipLock
 		{
 			get;
 			set;
@@ -305,7 +305,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Flash的页数
 		/// </summary>
-		int ChipFlashPageNum
+		int mChipFlashPageNum
 		{
 			get;
 			set;
@@ -314,7 +314,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Flash的每页的字大小
 		/// </summary>
-		int ChipFlashPerPageWordNum
+		int mChipFlashPerPageWordNum
 		{
 			get;
 			set;
@@ -323,7 +323,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Flash的每页的字大小
 		/// </summary>
-		int ChipFlashPerPageByteNum
+		int mChipFlashPerPageByteNum
 		{
 			get;
 		}
@@ -331,7 +331,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 芯片ROM页的字大小
 		/// </summary>
-		int ChipRomWordSize
+		int mChipRomWordSize
 		{
 			get;
 		}
@@ -339,7 +339,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// ROM页的字节大小
 		/// </summary>
-		int ChipRomByteSize
+		int mChipRomByteSize
 		{
 			get;
 		}
@@ -347,7 +347,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Flash的字节大小
 		/// </summary>
-		long ChipFlashByteSize
+		long mChipFlashByteSize
 		{
 			get;
 		}
@@ -355,7 +355,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Flash的字大小
 		/// </summary>
-		long ChipFlashWordSize
+		long mChipFlashWordSize
 		{
 			get;
 		}
@@ -363,7 +363,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Eeprom的页数
 		/// </summary>
-		int ChipEepromPageNum
+		int mChipEepromPageNum
 		{
 			get;
 			set;
@@ -372,7 +372,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Eeprom的每页的字节数
 		/// </summary>
-		int ChipEepromPerPageByteNum
+		int mChipEepromPerPageByteNum
 		{
 			get;
 			set;
@@ -381,7 +381,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Eeprom的字节大小
 		/// </summary>
-		long ChipEepromByteSize
+		long mChipEepromByteSize
 		{
 			get;
 		}
@@ -389,7 +389,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 设备的校准字
 		/// </summary>
-		CMcuFuncAVR8BitsParam ChipOSC
+		CMcuFuncAVR8BitsParam mChipOSC
 		{
 			get;
 			set;
@@ -398,7 +398,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 低位熔丝位
 		/// </summary>
-		CMcuFuncAVR8BitsParam ChipLowFuseBits
+		CMcuFuncAVR8BitsParam mChipLowFuseBits
 		{
 			get;
 			set;
@@ -407,7 +407,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 低位熔丝位
 		/// </summary>
-		CMcuFuncAVR8BitsParam ChipLowFuseText
+		CMcuFuncAVR8BitsParam mChipLowFuseText
 		{
 			get;
 			set;
@@ -416,7 +416,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 高位熔丝位
 		/// </summary>
-		CMcuFuncAVR8BitsParam ChipHighFuseBits
+		CMcuFuncAVR8BitsParam mChipHighFuseBits
 		{
 			get;
 			set;
@@ -425,7 +425,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 高位熔丝位
 		/// </summary>
-		CMcuFuncAVR8BitsParam ChipHighFuseText
+		CMcuFuncAVR8BitsParam mChipHighFuseText
 		{
 			get;
 			set;
@@ -434,7 +434,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 拓展位熔丝位
 		/// </summary>
-		CMcuFuncAVR8BitsParam ChipExternFuseBits
+		CMcuFuncAVR8BitsParam mChipExternFuseBits
 		{
 			get;
 			set;
@@ -443,7 +443,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 拓展位熔丝位
 		/// </summary>
-		CMcuFuncAVR8BitsParam ChipExternFuseText
+		CMcuFuncAVR8BitsParam mChipExternFuseText
 		{
 			get;
 			set;
@@ -452,7 +452,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 加密位熔丝位
 		/// </summary>
-		CMcuFuncAVR8BitsParam ChipLockFuseBits
+		CMcuFuncAVR8BitsParam mChipLockFuseBits
 		{
 			get;
 			set;
@@ -461,7 +461,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 加密位熔丝位
 		/// </summary>
-		CMcuFuncAVR8BitsParam ChipLockFuseText
+		CMcuFuncAVR8BitsParam mChipLockFuseText
 		{
 			get;
 			set;

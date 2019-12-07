@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Harry.LabTools.LabGenFunc
 {
-	public partial class CGenFuncEvent
+	public static partial class CGenFuncEvent
 	{
 		#region 函数定义
 

@@ -253,9 +253,9 @@ namespace Harry.LabTools.LabCommType
 				//---包大小
 				this.cCommSerial.AnalysePerPackageMaxSize(perPackageSize);
 				//---数据发送校验方式
-				this.cCommSerial.AnalyseTxCRC((int)cComm.SendData.mCRCMode);
+				this.cCommSerial.AnalyseTxCRC((int)cComm.mSendData.mCRCMode);
 				//---数据接收校验方式
-				this.cCommSerial.AnalyseRxCRC((int)cComm.ReceData.mCRCMode);
+				this.cCommSerial.AnalyseRxCRC((int)cComm.mReceData.mCRCMode);
 			}
 			else
 			{
@@ -297,9 +297,9 @@ namespace Harry.LabTools.LabCommType
 				//---包大小
 				this.cCommSerial.AnalysePerPackageMaxSize(perPackageSize);
 				//---数据发送校验方式
-				this.cCommSerial.AnalyseTxCRC((int)cComm.SendData.mCRCMode);
+				this.cCommSerial.AnalyseTxCRC((int)cComm.mSendData.mCRCMode);
 				//---数据接收校验方式
-				this.cCommSerial.AnalyseRxCRC((int)cComm.ReceData.mCRCMode);
+				this.cCommSerial.AnalyseRxCRC((int)cComm.mReceData.mCRCMode);
 			}
 			else
 			{

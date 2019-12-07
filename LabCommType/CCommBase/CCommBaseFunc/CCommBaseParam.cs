@@ -22,7 +22,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 通讯端口的类型
 		/// </summary>
-		public virtual CCOMM_TYPE Type
+		public virtual CCOMM_TYPE mType
 		{
 			get
 			{
@@ -37,7 +37,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 
 		/// </summary>
-		public virtual string Name
+		public virtual string mName
 		{
 			get
 			{
@@ -51,7 +51,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 
 		/// </summary>
-		public virtual int Index
+		public virtual int mIndex
 		{
 			get
 			{
@@ -65,7 +65,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 
 		/// </summary>
-		public virtual string Info
+		public virtual string mInfo
 		{
 			get
 			{
@@ -76,7 +76,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 
 		/// </summary>
-		public virtual int Timeout
+		public virtual int mTimeout
 		{
 			get
 			{
@@ -90,7 +90,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 
 		/// </summary>
-		public virtual bool IsMultiAddr
+		public virtual bool mIsMultiAddr
 		{
 			get
 			{
@@ -101,7 +101,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 
 		/// </summary>
-		public virtual bool IsMultiCMD
+		public virtual bool mIsMultiCMD
 		{
 			get
 			{
@@ -116,7 +116,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 端口是否打开
 		/// </summary>
-		public virtual bool IsOpen
+		public virtual bool mIsOpen
 		{
 			get
 			{
@@ -127,7 +127,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 消息信息
 		/// </summary>
-		public virtual string LogMessage
+		public virtual string mLogMsg
 		{
 			get
 			{
@@ -138,7 +138,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 通讯状态
 		/// </summary>
-		public virtual CCOMM_STATE COMMSTATE
+		public virtual CCOMM_STATE mCOMMSTATE
 		{
 			get
 			{
@@ -149,7 +149,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 使用的时间
 		/// </summary>
-		public virtual TimeSpan UsedTime
+		public virtual TimeSpan mUsedTime
 		{
 			get
 			{
@@ -160,7 +160,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 设备连接状态
 		/// </summary>
-		public virtual bool IsConnected
+		public virtual bool mIsConnected
 		{
 			get
 			{
@@ -171,7 +171,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 设备是否发生变化,TRUE---发生变化，FALSE---未变化
 		/// </summary>
-		public virtual bool IsChanged
+		public virtual bool mIsChanged
 		{
 			get
 			{
@@ -186,7 +186,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 
 		/// </summary>
-		public virtual bool IsFullParam
+		public virtual bool mIsFullParam
 		{
 			get
 			{
@@ -200,7 +200,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 每包字节的大小
 		/// </summary>
-		public virtual int PerPackageMaxSize
+		public virtual int mPerPackageMaxSize
 		{
 			get
 			{
@@ -319,14 +319,14 @@ namespace Harry.LabTools.LabCommType
 					this.mSerialParam.mAddrID = serialParam.mAddrID;
 				}
 
-				this.Name = this.mSerialParam.mName;
+				this.mName = this.mSerialParam.mName;
             }
 			if ((usbParam!=null)&&(this.mUSBParam!=null))
 			{
 				this.mUSBParam.mVID=mUSBParam.mVID;
 				this.mUSBParam.mPID=mUSBParam.mPID;
 			}
-			this.PerPackageMaxSize = perPackageSize;
+			this.mPerPackageMaxSize = perPackageSize;
 		}
 
 		/// <summary>
@@ -348,7 +348,7 @@ namespace Harry.LabTools.LabCommType
 				{
 					this.mSerialParam.mAddrID = serialParam.mAddrID;
 				}
-				this.Name = this.mSerialParam.mName;
+				this.mName = this.mSerialParam.mName;
 				
 			}
 			if ((usbParam != null) && (this.mUSBParam != null))
@@ -357,10 +357,10 @@ namespace Harry.LabTools.LabCommType
 				this.mUSBParam.mPID = mUSBParam.mPID;
 			}
 			//---发送数据校验方式
-			this.SendData.mCRCMode = txCRC;
+			this.mSendData.mCRCMode = txCRC;
 			//---接收数据校验方式
-			this.ReceData.mCRCMode = rxCRC;
-			this.PerPackageMaxSize = perPackageSize;
+			this.mReceData.mCRCMode = rxCRC;
+			this.mPerPackageMaxSize = perPackageSize;
 		}
 
 		#endregion

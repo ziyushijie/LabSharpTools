@@ -17,7 +17,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 使用的通讯端口
 		/// </summary>
-		public override CCOMM_TYPE Type
+		public override CCOMM_TYPE mType
 		{
 			get
 			{
@@ -25,7 +25,7 @@ namespace Harry.LabTools.LabCommType
 			}
 			set
 			{
-				base.Type = value;
+				base.mType = value;
 			}
 		}
 

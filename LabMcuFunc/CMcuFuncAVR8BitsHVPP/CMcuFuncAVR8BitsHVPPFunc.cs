@@ -34,7 +34,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_OpenConnect(RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -52,7 +52,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_CloseConnect(RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -70,7 +70,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_EraseChip(RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -88,7 +88,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_EraseChip(TextBox lockFuse, RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -107,7 +107,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_ReadChipFlash(ref byte[] chipFlash, RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -126,7 +126,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_WriteChipFlash(byte[] chipFlash, RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -145,7 +145,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_CheckChipFlashEmpty(RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -164,7 +164,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_ReadChipEeprom(ref byte[] chipEeprom,RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -183,7 +183,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_WriteChipEeprom(byte[] chipEeprom, RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -202,7 +202,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_CheckChipEepromEmpty(RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -221,7 +221,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_ReadChipFuse(ref byte[] chipFuse, RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -240,7 +240,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_ReadChipFuse(TextBox lowFuse, TextBox highFuse, TextBox externFuse, RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -342,7 +342,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_ReadChipLock(ref byte chipLock, RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -394,7 +394,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_WriteChipFuse(byte[] chipFuse, RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 				//---熔丝位的个数
 				int length = this.mMcuInfoParam.McuDefaultFuseInfo().Length;
@@ -424,7 +424,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_WriteChipLock(byte chipLock, RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -454,7 +454,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_ReadChipID(ref byte[] chipID, RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -483,7 +483,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_ReadChipCalibration(ref byte[] chipCalibration, RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -513,7 +513,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_ReadChipRom(ref byte[] chipRom, RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}
@@ -532,7 +532,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_SetProg(byte chipClock, RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}

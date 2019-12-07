@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Harry.LabTools.LabMcuFunc
 {
-	public  class CMcuFuncInfoBaseParam
+	public  class CMcuFuncInfoBaseParam:ICloneable
 	{
 		#region 变量定义
 
@@ -17,7 +17,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 芯片类型
 		/// </summary>
-		public virtual string TypeChip
+		public virtual string mTypeChip
 		{
 			get
 			{
@@ -28,7 +28,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 芯片名称
 		/// </summary>
-		public virtual string TypeName
+		public virtual string mTypeName
 		{
 			get
 			{
@@ -39,7 +39,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Flash存储器的字节数
 		/// </summary>
-		public virtual long TypeFlashByteNum
+		public virtual long mTypeFlashByteNum
 		{
 			get
 			{
@@ -50,7 +50,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Flash存储器的页数
 		/// </summary>
-		public virtual int TypeFlashPageNum
+		public virtual int mTypeFlashPageNum
 		{
 			get
 			{
@@ -61,7 +61,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Flash存储器的每页的字数
 		/// </summary>
-		public virtual int TypeFlashPerPageWordNum
+		public virtual int mTypeFlashPerPageWordNum
 		{
 			get
 			{
@@ -72,18 +72,18 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Flash存储器的每页的字数
 		/// </summary>
-		public virtual int TypeFlashPerPageByteNum
+		public virtual int mTypeFlashPerPageByteNum
 		{
 			get
 			{
-				return (this.TypeFlashPerPageWordNum*2);
+				return (this.mTypeFlashPerPageWordNum*2);
 			}
 		}
 
 		/// <summary>
 		/// Eeprom存储器的字节数
 		/// </summary>
-		public virtual int TypeEepromByteNum
+		public virtual int mTypeEepromByteNum
 		{
 			get
 			{
@@ -94,7 +94,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Eeprom存储器的页数
 		/// </summary>
-		public virtual int TypeEepromPageNum
+		public virtual int mTypeEepromPageNum
 		{
 			get
 			{
@@ -105,7 +105,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Eeprom存储器的每页的字数
 		/// </summary>
-		public virtual int TypeEepromPerPageByteNum
+		public virtual int mTypeEepromPerPageByteNum
 		{
 			get
 			{
@@ -178,6 +178,8 @@ namespace Harry.LabTools.LabMcuFunc
 			return false;
 		}
 
+
+
 		#endregion
 
 		#region 保护函数
@@ -189,6 +191,28 @@ namespace Harry.LabTools.LabMcuFunc
 		#endregion
 
 		#region 事件函数
+
+		#endregion
+
+		#region 克隆函数
+
+		/// <summary>
+		/// 克隆对象
+		/// </summary>
+		/// <returns></returns>
+		public object Clone()
+		{
+			return this as object;
+		}
+
+		/// <summary>
+		/// 克隆
+		/// </summary>
+		/// <returns></returns>
+		object ICloneable.Clone()
+		{
+			return this.Clone();
+		}
 
 		#endregion
 	}

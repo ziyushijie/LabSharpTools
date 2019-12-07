@@ -154,6 +154,7 @@
 			this.cCommBaseControl_ChipCOMM.mCCOMM = null;
 			this.cCommBaseControl_ChipCOMM.mCCommRichTextBox = null;
 			this.cCommBaseControl_ChipCOMM.mIsShowCommParam = true;
+			this.cCommBaseControl_ChipCOMM.mPerPackageMaxSize = 64;
 			this.cCommBaseControl_ChipCOMM.Name = "cCommBaseControl_ChipCOMM";
 			this.cCommBaseControl_ChipCOMM.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
 			this.cCommBaseControl_ChipCOMM.Size = new System.Drawing.Size(262, 71);
@@ -584,6 +585,7 @@
 			// cCheckedListBoxEx_Func2
 			// 
 			this.cCheckedListBoxEx_Func2.BackColor = System.Drawing.Color.WhiteSmoke;
+			this.cCheckedListBoxEx_Func2.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.cCheckedListBoxEx_Func2.CheckOnClick = true;
 			this.cCheckedListBoxEx_Func2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
 			this.cCheckedListBoxEx_Func2.FormattingEnabled = true;
@@ -595,12 +597,13 @@
             "加密芯片"});
 			this.cCheckedListBoxEx_Func2.Location = new System.Drawing.Point(241, 56);
 			this.cCheckedListBoxEx_Func2.Name = "cCheckedListBoxEx_Func2";
-			this.cCheckedListBoxEx_Func2.Size = new System.Drawing.Size(120, 130);
+			this.cCheckedListBoxEx_Func2.Size = new System.Drawing.Size(120, 126);
 			this.cCheckedListBoxEx_Func2.TabIndex = 1;
 			// 
 			// cCheckedListBoxEx_Func1
 			// 
 			this.cCheckedListBoxEx_Func1.BackColor = System.Drawing.Color.WhiteSmoke;
+			this.cCheckedListBoxEx_Func1.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.cCheckedListBoxEx_Func1.CheckOnClick = true;
 			this.cCheckedListBoxEx_Func1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
 			this.cCheckedListBoxEx_Func1.FormattingEnabled = true;
@@ -613,7 +616,7 @@
             "编程Eeprom"});
 			this.cCheckedListBoxEx_Func1.Location = new System.Drawing.Point(62, 56);
 			this.cCheckedListBoxEx_Func1.Name = "cCheckedListBoxEx_Func1";
-			this.cCheckedListBoxEx_Func1.Size = new System.Drawing.Size(120, 130);
+			this.cCheckedListBoxEx_Func1.Size = new System.Drawing.Size(120, 126);
 			this.cCheckedListBoxEx_Func1.TabIndex = 0;
 			// 
 			// cMcuFormAVR8BitsFuseAndLockControl_ChipFuse

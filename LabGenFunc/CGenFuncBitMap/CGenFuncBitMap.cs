@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Harry.LabTools.LabGenFunc
 {
-	public partial class CGenFuncBitMap
+	public static partial class CGenFuncBitMap
 	{
 
 		#region 函数定义

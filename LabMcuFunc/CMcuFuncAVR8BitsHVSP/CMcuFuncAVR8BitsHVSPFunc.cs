@@ -34,7 +34,7 @@ namespace Harry.LabTools.LabMcuFunc
 		public override int CMcuFunc_OpenConnect( RichTextBox msg)
 		{
 			int _return = -1;
-			if ((this.mCCOMM != null) && (this.mCCOMM.IsOpen == true))
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 
 			}

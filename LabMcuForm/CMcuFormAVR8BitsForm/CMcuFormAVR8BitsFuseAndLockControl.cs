@@ -194,7 +194,7 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 			this.cCheckedListBoxEx_LowFuseBits.SelectedIndexChanged += new EventHandler(this.CheckedListBox_SelectedIndexChanged);
 			this.cCheckedListBoxEx_HighFuseBits.SelectedIndexChanged += new EventHandler(this.CheckedListBox_SelectedIndexChanged);
 			//---校验拓展熔丝位
-			if (((CMcuFuncInfoAVR8BitsParam)this.defaultCMcuFunc.mMcuInfoParam).ChipExternFuseBits != null)
+			if (((CMcuFuncInfoAVR8BitsParam)this.defaultCMcuFunc.mMcuInfoParam).mChipExternFuseBits != null)
 			{
 				this.cCheckedListBoxEx_ExternFuseBits.SelectedIndexChanged += new EventHandler(this.CheckedListBox_SelectedIndexChanged);
 			}

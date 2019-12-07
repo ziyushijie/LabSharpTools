@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Harry.LabTools.LabGenFunc
 {
-	public partial class CGenFuncDelay
+	public static partial class CGenFuncDelay
 	{
 
 		#region 变量定义

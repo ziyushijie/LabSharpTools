@@ -17,7 +17,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 接收数据
 		/// </summary>
-		public virtual CCommData ReceData
+		public virtual CCommData mReceData
 		{
 			get
 			{
@@ -32,7 +32,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 发送数据
 		/// </summary>
-		public virtual CCommData SendData
+		public virtual CCommData mSendData
 		{
 			get
 			{
@@ -47,7 +47,7 @@ namespace Harry.LabTools.LabCommType
 		/// <summary>
 		/// 数据校验通过
 		/// </summary>
-		public virtual bool ReceCheckPass
+		public virtual bool mReceCheckPass
 		{
 			get
 			{

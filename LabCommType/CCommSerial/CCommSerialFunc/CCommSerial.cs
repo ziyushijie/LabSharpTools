@@ -47,7 +47,7 @@ namespace Harry.LabTools.LabCommType
 			if (cCommBase!=null)
 			{
 				//---参数的分析
-				base.AnalyseParam(cCommBase.PerPackageMaxSize, cCommBase.mSerialParam, cCommBase.mUSBParam, cCommBase.IsMultiAddr);
+				base.AnalyseParam(cCommBase.mPerPackageMaxSize, cCommBase.mSerialParam, cCommBase.mUSBParam, cCommBase.mIsMultiAddr);
 			}			
 		}
 
@@ -89,6 +89,10 @@ namespace Harry.LabTools.LabCommType
 		#endregion
 
 		#region 公有函数
+
+		#endregion
+
+		#region 保护函数
 
 		#endregion
 
@@ -436,7 +440,7 @@ namespace Harry.LabTools.LabCommType
 			for (int index = 0; index < argNames.Length; index++)
 			{
 				//---判断端口名称是否合法
-				if (argNames[index].StartsWith("COM") || argNames[index].StartsWith("com"))
+				if (argNames[index].StartsWith("COM",System.StringComparison.CurrentCultureIgnoreCase) || argNames[index].StartsWith("com", System.StringComparison.CurrentCultureIgnoreCase))
 				{
 					//---去除字符串中非数字字符
 					string str = Regex.Replace(argNames[index], @"[^\d]*", "");
@@ -531,9 +535,8 @@ namespace Harry.LabTools.LabCommType
 			return _return;
 		}
 
-
 		#endregion
-
+		
 		#region 事件函数
 
 		#endregion

@@ -50,20 +50,20 @@ namespace LabTestForm
 			// cCommBaseControl1
 			// 
 			this.cCommBaseControl1.Location = new System.Drawing.Point(12, 12);
-			cCommBase1.Index = -1;
-			cCommBase1.IsChanged = false;
-			cCommBase1.IsFullParam = false;
-			cCommBase1.IsMultiCMD = false;
+			cCommBase1.mIndex = -1;
+			cCommBase1.mIsChanged = false;
+			cCommBase1.mIsFullParam = false;
+			cCommBase1.mIsMultiCMD = false;
 			cCommBase1.mCCommComBox = null;
 			cCommBase1.mCCommForm = null;
 			cCommBase1.mCCommRichTextBox = null;
 			cCommBase1.mSerialParam = null;
 			cCommBase1.mUSBParam = null;
-			cCommBase1.Name = "";
-			cCommBase1.ReceData = null;
-			cCommBase1.SendData = null;
-			cCommBase1.Timeout = 200;
-			cCommBase1.Type = Harry.LabTools.LabCommType.CCOMM_TYPE.COMM_SERIAL;
+			cCommBase1.mName = "";
+			cCommBase1.mReceData = null;
+			cCommBase1.mSendData = null;
+			cCommBase1.mTimeout = 200;
+			cCommBase1.mType = Harry.LabTools.LabCommType.CCOMM_TYPE.COMM_SERIAL;
 			this.cCommBaseControl1.mCCOMM = cCommBase1;
 			this.cCommBaseControl1.mCCommRichTextBox = null;
 			this.cCommBaseControl1.mIsShowCommParam = true;

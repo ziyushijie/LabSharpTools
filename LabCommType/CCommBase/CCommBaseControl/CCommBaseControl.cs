@@ -149,7 +149,7 @@ namespace Harry.LabTools.LabCommType
 			{
 				if (this.defaultCCOMM != null)
 				{
-					return this.defaultCCOMM.PerPackageMaxSize;
+					return this.defaultCCOMM.mPerPackageMaxSize;
 				}
 				else
 				{
@@ -161,7 +161,7 @@ namespace Harry.LabTools.LabCommType
 			{
 				if (this.defaultCCOMM != null)
 				{
-					this.defaultCCOMM.PerPackageMaxSize = value;
+					this.defaultCCOMM.mPerPackageMaxSize = value;
 				}
 			}
 		}
@@ -228,7 +228,7 @@ namespace Harry.LabTools.LabCommType
         {
             if (this.defaultCCOMM != null)
             {
-				// this.defaultCCOMM.Dispose();
+				 //this.defaultCCOMM.Dispose();
 				GC.SuppressFinalize(this.defaultCCOMM);
 			}
             GC.SuppressFinalize(this);
@@ -338,7 +338,7 @@ namespace Harry.LabTools.LabCommType
                     this.BeginInvoke((EventHandler)
                                  (delegate
                                  {
-                                     if ((!string.IsNullOrEmpty(this.comboBox_COMM.Text))|| ((this.defaultCCOMM.Name != this.comboBox_COMM.Text)))
+                                     if ((!string.IsNullOrEmpty(this.comboBox_COMM.Text))|| ((this.defaultCCOMM.mName != this.comboBox_COMM.Text)))
                                      {
 										 //if (this.pictureBox_COMM.Image.Flags == Properties.Resources.open.Flags)
 										 if (LabGenFunc.CGenFuncBitMap.GenFuncCompareBitMap((Bitmap)this.pictureBox_COMM.Image, Properties.Resources.open) == true)
@@ -367,7 +367,7 @@ namespace Harry.LabTools.LabCommType
                 }
                 else
                 {
-					if (!(string.IsNullOrEmpty(this.comboBox_COMM.Text)) || ((this.defaultCCOMM.Name != this.comboBox_COMM.Text)))
+					if (!(string.IsNullOrEmpty(this.comboBox_COMM.Text)) || ((this.defaultCCOMM.mName != this.comboBox_COMM.Text)))
                     {
 						//if (this.pictureBox_COMM.Image.Flags == Properties.Resources.open.Flags)
 						if (LabGenFunc.CGenFuncBitMap.GenFuncCompareBitMap((Bitmap)this.pictureBox_COMM.Image, Properties.Resources.open) == true)
@@ -495,12 +495,12 @@ namespace Harry.LabTools.LabCommType
 			{
 				CCommBaseForm p=null;
 				//---检查对象类型
-				if ((this.defaultCCOMM.GetType() == typeof(CCommSerial)) && (this.defaultCCOMM.Type == CCOMM_TYPE.COMM_SERIAL))
+				if ((this.defaultCCOMM.GetType() == typeof(CCommSerial)) && (this.defaultCCOMM.mType == CCOMM_TYPE.COMM_SERIAL))
 				{
-					if (this.defaultCCOMM.IsFullParam)
+					if (this.defaultCCOMM.mIsFullParam)
 					{
 						//---串行通讯对象的参数
-						p = new CCommSerialFullForm(this.defaultCCOMM.PerPackageMaxSize,this.comboBox_COMM, this.defaultCCOMM, this.defaultCCOMM.mCCommRichTextBox, "配置设备", true);
+						p = new CCommSerialFullForm(this.defaultCCOMM.mPerPackageMaxSize,this.comboBox_COMM, this.defaultCCOMM, this.defaultCCOMM.mCCommRichTextBox, "配置设备", true);
 					}
 					else
 					{
@@ -508,7 +508,7 @@ namespace Harry.LabTools.LabCommType
 						p = new CCommSerialPlusForm(this.comboBox_COMM, this.defaultCCOMM, this.defaultCCOMM.mCCommRichTextBox, "配置设备", true);
 					}
 				}
-				else if ((this.defaultCCOMM.GetType() == typeof(CCommUSB)) && (this.defaultCCOMM.Type == CCOMM_TYPE.COMM_USB))
+				else if ((this.defaultCCOMM.GetType() == typeof(CCommUSB)) && (this.defaultCCOMM.mType == CCOMM_TYPE.COMM_USB))
 				{
 					//---USB通讯对象的参数
 					p = new CCommUSBPlusForm();
@@ -530,7 +530,7 @@ namespace Harry.LabTools.LabCommType
 					if (p.ShowDialog(this.comboBox_COMM, offset, this.comboBox_COMM.Height+4) == System.Windows.Forms.DialogResult.OK)
 					{
 						//---解析参数
-						if (this.defaultCCOMM.IsFullParam)
+						if (this.defaultCCOMM.mIsFullParam)
 						{
 							this.defaultCCOMM.AnalyseParam(p.mPerPackageMaxSize,p.mCCommSrialParam, p.mCCommUSBParam,p.mRxCRC,p.mTxCRC,true);
 						}
@@ -576,7 +576,7 @@ namespace Harry.LabTools.LabCommType
 		{
 			if (this.defaultCCOMM!=null)
 			{
-				CCommTypeForm p = new CCommTypeForm(this.defaultCCOMM.Type);
+				CCommTypeForm p = new CCommTypeForm(this.defaultCCOMM.mType);
 				if (p != null)
 				{
 					//---计算位置偏移，避免超出可见区域
@@ -587,7 +587,7 @@ namespace Harry.LabTools.LabCommType
 					}
 					if (p.ShowDialog(this.button_COMM, offset, this.button_COMM.Height +4) == System.Windows.Forms.DialogResult.OK)
 					{
-						if (this.defaultCCOMM.Type != p.mCCommType)
+						if (this.defaultCCOMM.mType != p.mCCommType)
 						{
 							//if (p.mCCommType == CCOMM_TYPE.COMM_SERIAL)
 							if ((p.mCCommType == CCOMM_TYPE.COMM_SERIAL)&&(this.defaultCCOMM.GetType() == typeof(CCommUSB)))
@@ -763,10 +763,10 @@ namespace Harry.LabTools.LabCommType
 							//---鼠标右键配置通信端口的参数
 							this.ConfigCCOMMParam();
 							//---判断是否端口发生了变化
-							if ((!string.IsNullOrEmpty(this.comboBox_COMM.Text)) && (!string.IsNullOrEmpty(this.defaultCCOMM.Name)) && (this.defaultCCOMM.Name != this.comboBox_COMM.Text))
+							if ((!string.IsNullOrEmpty(this.comboBox_COMM.Text)) && (!string.IsNullOrEmpty(this.defaultCCOMM.mName)) && (this.defaultCCOMM.mName != this.comboBox_COMM.Text))
 							{
 								//---数据位
-								index = this.comboBox_COMM.Items.IndexOf(this.defaultCCOMM.Name);
+								index = this.comboBox_COMM.Items.IndexOf(this.defaultCCOMM.mName);
 								if (index < 0)
 								{
 									this.comboBox_COMM.SelectedIndex = 0;

@@ -35,7 +35,7 @@ namespace Harry.LabTools.LabCommType
 		{
 			get
 			{
-				return this.cCommSerial.mCCOMM.IsChanged;
+				return this.cCommSerial.mCCOMM.mIsChanged;
 			}
 		}
 
@@ -149,7 +149,7 @@ namespace Harry.LabTools.LabCommType
 				this.MinimumSize = this.Size;
 				this.MaximumSize = this.Size;
 			}
-			this.Init(cbb, cComm);
+			this.Init(cbb, cComm,msg);
 		}
 
 		#endregion

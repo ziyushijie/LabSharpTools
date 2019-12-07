@@ -20,7 +20,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 设备支持的编程接口
 		/// </summary>
-		private string[] defaultInterfaceName = new string[4] { "ISP", "JTAG", "HVPP", "HVSP" };
+		private readonly string[] defaultInterfaceName = new string[4] { "ISP", "JTAG", "HVPP", "HVSP" };
 
 		/// <summary>
 		/// 当前设备的名称
@@ -133,7 +133,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 芯片类型属性为只读
 		/// </summary>
-		public override string TypeChip
+		public override string mTypeChip
 		{
 			get
 			{
@@ -144,18 +144,18 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 芯片名称属性为只读
 		/// </summary>
-		public override string TypeName
+		public override string mTypeName
 		{
 			get
 			{
-				return this.ChipName;
+				return this.mChipName;
 			}
 		}
 
 		/// <summary>
 		/// Flash存储器的字节数属性为只读
 		/// </summary>
-		public override long TypeFlashByteNum
+		public override long mTypeFlashByteNum
 		{
 			get
 			{
@@ -166,7 +166,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Flash存储器的页数属性为只读
 		/// </summary>
-		public override int TypeFlashPageNum
+		public override int mTypeFlashPageNum
 		{
 			get
 			{
@@ -177,7 +177,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Flash存储器的每页的字数属性为只读
 		/// </summary>
-		public override int TypeFlashPerPageWordNum
+		public override int mTypeFlashPerPageWordNum
 		{
 			get
 			{
@@ -188,7 +188,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Flash存储器的每页的字数属性为只读
 		/// </summary>
-		public override int TypeFlashPerPageByteNum
+		public override int mTypeFlashPerPageByteNum
 		{
 			get
 			{
@@ -199,7 +199,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Eeprom存储器的字节数属性为只读
 		/// </summary>
-		public override int TypeEepromByteNum
+		public override int mTypeEepromByteNum
 		{
 			get
 			{
@@ -210,7 +210,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Eeprom存储器的页数属性为只读
 		/// </summary>
-		public override int TypeEepromPageNum
+		public override int mTypeEepromPageNum
 		{
 			get
 			{
@@ -221,7 +221,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Eeprom存储器的每页的字数属性为只读
 		/// </summary>
-		public override int TypeEepromPerPageByteNum
+		public override int mTypeEepromPerPageByteNum
 		{
 			get
 			{
@@ -231,7 +231,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 芯片名称为读写属性
 		/// </summary>
-		public virtual string ChipName
+		public virtual string mChipName
 		{
 			get
 			{
@@ -246,7 +246,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 支持的总编程接口为只读属性
 		/// </summary>
-		public virtual string[] ChipInterfaceName
+		public virtual string[] mChipInterfaceName
 		{
 			get
 			{
@@ -257,7 +257,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 当前设备支持的编程接口为只读属性
 		/// </summary>
-		public virtual CMcuFuncAVR8BitsParam ChipInterface
+		public virtual CMcuFuncAVR8BitsParam mChipInterface
 		{
 			get
 			{
@@ -279,7 +279,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Chip的ID信息为读写属性
 		/// </summary>
-		public virtual byte[] ChipID
+		public virtual byte[] mChipID
 		{
 			get
 			{
@@ -299,7 +299,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// JTAG的ID信息为读写属性
 		/// </summary>
-		public virtual int IDChip
+		public virtual int mIDChip
 		{
 			get
 			{
@@ -314,7 +314,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 熔丝位为读写属性
 		/// </summary>
-		public virtual byte[] ChipFuse
+		public virtual byte[] mChipFuse
 		{
 			get
 			{
@@ -349,7 +349,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 加密位为读写属性
 		/// </summary>
-		public virtual byte ChipLock
+		public virtual byte mChipLock
 		{
 			get
 			{
@@ -364,7 +364,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Flash的页数为读写属性
 		/// </summary>
-		public virtual int ChipFlashPageNum
+		public virtual int mChipFlashPageNum
 		{
 			get
 			{
@@ -379,7 +379,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 每页Flash的字数为读写属性
 		/// </summary>
-		public virtual int ChipFlashPerPageWordNum
+		public virtual int mChipFlashPerPageWordNum
 		{
 			get
 			{
@@ -394,7 +394,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 每页Flash的字节数为只读属性
 		/// </summary>
-		public virtual int ChipFlashPerPageByteNum
+		public virtual int mChipFlashPerPageByteNum
 		{
 			get
 			{
@@ -405,7 +405,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 芯片ROM页的字大小为只读属性
 		/// </summary>
-		public virtual int ChipRomWordSize
+		public virtual int mChipRomWordSize
 		{
 			get
 			{
@@ -416,7 +416,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// ROM页的字节大小为只读属性
 		/// </summary>
-		public virtual int ChipRomByteSize
+		public virtual int mChipRomByteSize
 		{
 			get
 			{
@@ -427,7 +427,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Flash的总字节数为只读属性
 		/// </summary>
-		public virtual long ChipFlashByteSize
+		public virtual long mChipFlashByteSize
 		{
 			get
 			{
@@ -438,7 +438,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Flash的总字数为只读属性
 		/// </summary>
-		public virtual long ChipFlashWordSize
+		public virtual long mChipFlashWordSize
 		{
 			get
 			{
@@ -449,7 +449,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Eeprom的页数为读写属性
 		/// </summary>
-		public virtual int ChipEepromPageNum
+		public virtual int mChipEepromPageNum
 		{
 			get
 			{
@@ -464,7 +464,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Eeprom的每页字节数为读写属性
 		/// </summary>
-		public virtual int ChipEepromPerPageByteNum
+		public virtual int mChipEepromPerPageByteNum
 		{
 			get
 			{
@@ -479,7 +479,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// Eeprom的总字节数为读写属性
 		/// </summary>
-		public virtual long ChipEepromByteSize
+		public virtual long mChipEepromByteSize
 		{
 			get
 			{
@@ -490,7 +490,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 内部OSC的校准字为读写属性
 		/// </summary>
-		public CMcuFuncAVR8BitsParam ChipOSC
+		public CMcuFuncAVR8BitsParam mChipOSC
 		{
 			get
 			{
@@ -512,7 +512,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 熔丝位低位值为读写属性
 		/// </summary>
-		public CMcuFuncAVR8BitsParam ChipLowFuseBits
+		public CMcuFuncAVR8BitsParam mChipLowFuseBits
 		{
 			get
 			{
@@ -534,7 +534,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 熔丝位低位值为读写属性
 		/// </summary>
-		public CMcuFuncAVR8BitsParam ChipLowFuseText
+		public CMcuFuncAVR8BitsParam mChipLowFuseText
 		{
 			get
 			{
@@ -556,7 +556,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 熔丝位高位值为读写属性
 		/// </summary>
-		public CMcuFuncAVR8BitsParam ChipHighFuseBits
+		public CMcuFuncAVR8BitsParam mChipHighFuseBits
 		{
 			get
 			{
@@ -578,7 +578,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 熔丝位高位值为读写属性
 		/// </summary>
-		public CMcuFuncAVR8BitsParam ChipHighFuseText
+		public CMcuFuncAVR8BitsParam mChipHighFuseText
 		{
 			get
 			{
@@ -600,7 +600,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 熔丝位拓展位值为读写属性
 		/// </summary>
-		public CMcuFuncAVR8BitsParam ChipExternFuseBits
+		public CMcuFuncAVR8BitsParam mChipExternFuseBits
 		{
 			get
 			{
@@ -622,7 +622,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 熔丝位拓展位值为读写属性
 		/// </summary>
-		public CMcuFuncAVR8BitsParam ChipExternFuseText
+		public CMcuFuncAVR8BitsParam mChipExternFuseText
 		{
 			get
 			{
@@ -644,7 +644,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 熔丝位加密位值为读写属性
 		/// </summary>
-		public CMcuFuncAVR8BitsParam ChipLockFuseBits
+		public CMcuFuncAVR8BitsParam mChipLockFuseBits
 		{
 			get
 			{
@@ -666,7 +666,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 熔丝位加密位值为读写属性
 		/// </summary>
-		public CMcuFuncAVR8BitsParam ChipLockFuseText
+		public CMcuFuncAVR8BitsParam mChipLockFuseText
 		{
 			get
 			{
@@ -827,10 +827,10 @@ namespace Harry.LabTools.LabMcuFunc
 									TextBox oscValue1,TextBox oscValue2,TextBox oscValue3,TextBox oscValue4,
 									TextBox lowFuseValue, TextBox highFuseValue, TextBox externFuseValue, TextBox lockFuseValue)
 		{
-			this.FuseCheckedListBoxBitsInit(lowFuseBits, this.ChipLowFuseBits);
-			this.FuseCheckedListBoxBitsInit(highFuseBits, this.ChipHighFuseBits);
-			this.FuseCheckedListBoxBitsInit(externFuseBits, this.ChipExternFuseBits);
-			this.FuseCheckedListBoxBitsInit(lockFuseBits, this.ChipLockFuseBits);
+			this.FuseCheckedListBoxBitsInit(lowFuseBits, this.mChipLowFuseBits);
+			this.FuseCheckedListBoxBitsInit(highFuseBits, this.mChipHighFuseBits);
+			this.FuseCheckedListBoxBitsInit(externFuseBits, this.mChipExternFuseBits);
+			this.FuseCheckedListBoxBitsInit(lockFuseBits, this.mChipLockFuseBits);
 			this.FuseCheckedListBoxTextInit(fuseText, lowFuseValue,highFuseValue,externFuseValue,lockFuseValue);
 			this.OSCControlInit(oscText1,oscText2,oscText3,oscText4,
 								oscValue1, oscValue2, oscValue3, oscValue4);
@@ -1506,7 +1506,7 @@ namespace Harry.LabTools.LabMcuFunc
 					}
 				}
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				this.defaultMsgText = e.ToString();
 				//---打印Debug信息
@@ -1532,7 +1532,7 @@ namespace Harry.LabTools.LabMcuFunc
 				{
 					//---获取设备的ID信息
 					case "ID":
-						this.ChipID = this.AnalyseChipAVR8BitsMcuXml(xn.InnerText, 16);
+						this.mChipID = this.AnalyseChipAVR8BitsMcuXml(xn.InnerText, 16);
 						_return += 1;
 						break;
 					//---获取芯片的ChipID
@@ -1542,7 +1542,7 @@ namespace Harry.LabTools.LabMcuFunc
 						break;
 					//---获取设备的熔丝位
 					case "FUSE":
-						this.ChipFuse = this.AnalyseChipAVR8BitsMcuXml(xn.InnerText, 16);
+						this.mChipFuse = this.AnalyseChipAVR8BitsMcuXml(xn.InnerText, 16);
 						_return += 1;
 						break;
 					//---获取设备的加密位
@@ -1961,12 +1961,12 @@ namespace Harry.LabTools.LabMcuFunc
 				clb.Items.Clear();
 			}
 			int fuse = 0;
-			int[] tempFuse = new int[this.ChipFuse.Length + 1];
-			Array.Copy(this.ChipFuse, tempFuse, (tempFuse.Length - 1));
+			int[] tempFuse = new int[this.mChipFuse.Length + 1];
+			Array.Copy(this.mChipFuse, tempFuse, (tempFuse.Length - 1));
 			//---当前加密位
-			tempFuse[tempFuse.Length - 1] = this.ChipLock;
+			tempFuse[tempFuse.Length - 1] = this.mChipLock;
 			//---获取拓展位
-			CMcuFuncAVR8BitsParam temCMcuParam = this.ChipExternFuseText;
+			CMcuFuncAVR8BitsParam temCMcuParam = this.mChipExternFuseText;
 			//---校验熔丝位
 			if (temCMcuParam != null)
 			{
@@ -2022,7 +2022,7 @@ namespace Harry.LabTools.LabMcuFunc
 				}
 			}
 			//---获取高位
-			temCMcuParam = this.ChipHighFuseText;
+			temCMcuParam = this.mChipHighFuseText;
 			//---校验熔丝位
 			if (temCMcuParam != null)
 			{
@@ -2078,7 +2078,7 @@ namespace Harry.LabTools.LabMcuFunc
 				}
 			}
 			//---获取低位
-			temCMcuParam = this.ChipLowFuseText;
+			temCMcuParam = this.mChipLowFuseText;
 			//---校验熔丝位
 			if (temCMcuParam != null)
 			{
@@ -2134,7 +2134,7 @@ namespace Harry.LabTools.LabMcuFunc
 				}
 			}
 			//---获取加密位
-			temCMcuParam = this.ChipLockFuseText;
+			temCMcuParam = this.mChipLockFuseText;
 			//---校验加密位
 			if (temCMcuParam != null)
 			{
@@ -2319,7 +2319,7 @@ namespace Harry.LabTools.LabMcuFunc
 				oscValue4.Visible = false;
 			}
 
-			for (int i = 0; i < this.ChipOSC.mLength; i++)
+			for (int i = 0; i < this.mChipOSC.mLength; i++)
 			{
 				switch (i)
 				{
@@ -2331,14 +2331,14 @@ namespace Harry.LabTools.LabMcuFunc
 										 delegate
 										 {
 											 oscText1.Visible = true;
-											 oscText1.Text = this.ChipOSC.mText[i];
+											 oscText1.Text = this.mChipOSC.mText[i];
 										 }
 										 );
 						}
 						else
 						{
 							oscText1.Visible = true;
-							oscText1.Text = this.ChipOSC.mText[i];
+							oscText1.Text = this.mChipOSC.mText[i];
 						}
 
 						if (oscValue1.InvokeRequired)
@@ -2348,33 +2348,33 @@ namespace Harry.LabTools.LabMcuFunc
 										 delegate
 										 {
 											 oscValue1.Visible = true;
-											 oscValue1.Text = this.ChipOSC.mValue[i].ToString("X2");
+											 oscValue1.Text = this.mChipOSC.mValue[i].ToString("X2");
 										 }
 										 );
 						}
 						else
 						{
 							oscValue1.Visible = true;
-							oscValue1.Text = this.ChipOSC.mValue[i].ToString("X2");
+							oscValue1.Text = this.mChipOSC.mValue[i].ToString("X2");
 						}						
 						break;
 					case 1:
 						oscText2.Visible = true;
 						oscValue2.Visible = true;
-						oscText2.Text = this.ChipOSC.mText[i];
-						oscValue2.Text = this.ChipOSC.mValue[i].ToString("X2");
+						oscText2.Text = this.mChipOSC.mText[i];
+						oscValue2.Text = this.mChipOSC.mValue[i].ToString("X2");
 						break;
 					case 2:
 						oscText3.Visible = true;
 						oscValue3.Visible = true;
-						oscText3.Text = this.ChipOSC.mText[i];
-						oscValue3.Text = this.ChipOSC.mValue[i].ToString("X2");
+						oscText3.Text = this.mChipOSC.mText[i];
+						oscValue3.Text = this.mChipOSC.mValue[i].ToString("X2");
 						break;
 					case 3:
 						oscText4.Visible = true;
 						oscValue4.Visible = true;
-						oscText4.Text = this.ChipOSC.mText[i];
-						oscValue4.Text = this.ChipOSC.mValue[i].ToString("X2");
+						oscText4.Text = this.mChipOSC.mText[i];
+						oscValue4.Text = this.mChipOSC.mValue[i].ToString("X2");
 						break;
 					default:
 						break;

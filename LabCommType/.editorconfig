@@ -41,3 +41,18 @@ dotnet_diagnostic.CA1305.severity = none
 
 # CA1063: 正确实现 IDisposable
 dotnet_diagnostic.CA1063.severity = none
+
+# CA1031: 不捕获常规异常类型
+dotnet_diagnostic.CA1031.severity = none
+
+# IDE0059: 不需要赋值
+csharp_style_unused_value_assignment_preference = discard_variable:none
+
+# IDE0060: 删除未使用的参数
+dotnet_code_quality_unused_parameters = all:none
+
+# IDE0069: 应释放可释放的字段
+dotnet_diagnostic.IDE0069.severity = none
+
+# CA2227: 集合属性应为只读
+dotnet_diagnostic.CA2227.severity = none
