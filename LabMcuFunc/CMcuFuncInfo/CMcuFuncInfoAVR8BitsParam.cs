@@ -37,6 +37,11 @@ namespace Harry.LabTools.LabMcuFunc
 		private CMcuFuncAVR8BitsParam defaultInterface = null;//new byte[] { (byte)AVR8BITS_PROG_INTERFACE.ISP, (byte)AVR8BITS_PROG_INTERFACE.HVPP };
 
 		/// <summary>
+		/// 芯片是否支持轮训模式，true---支持，false---不支持，编程通过延时指定
+		/// </summary>
+		private bool defaultChipPollReady = false;
+
+		/// <summary>
 		/// 设备ID信息
 		/// </summary>
 		private byte[] defaultChipID = null;// new byte[] { 0x1E, 0x93, 0x07 };
@@ -79,7 +84,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 设备的校准字
 		/// </summary>
-		private CMcuFuncAVR8BitsParam defaultChipOSC = null;
+		private CMcuFuncAVR8BitsParam defaultChipOSCCalibration = null;
 
 		/// <summary>
 		/// 低位熔丝位,Bits信息
@@ -153,81 +158,16 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
-		/// Flash存储器的字节数属性为只读
+		/// mcu的类型为读写属性
 		/// </summary>
-		public override long mTypeFlashByteNum
+		public override MCU_INFO_TYPE mTypeMcuInfo
 		{
 			get
 			{
-				return (((long)this.defaultChipFlashPageNum) * this.defaultChipFlashPerPageWordNum * 2);
+				return MCU_INFO_TYPE.MCU_AVR8BITS;
 			}
 		}
 
-		/// <summary>
-		/// Flash存储器的页数属性为只读
-		/// </summary>
-		public override int mTypeFlashPageNum
-		{
-			get
-			{
-				return this.defaultChipFlashPageNum;
-			}
-		}
-
-		/// <summary>
-		/// Flash存储器的每页的字数属性为只读
-		/// </summary>
-		public override int mTypeFlashPerPageWordNum
-		{
-			get
-			{
-				return this.defaultChipFlashPerPageWordNum;
-			}
-		}
-
-		/// <summary>
-		/// Flash存储器的每页的字数属性为只读
-		/// </summary>
-		public override int mTypeFlashPerPageByteNum
-		{
-			get
-			{
-				return (this.defaultChipFlashPerPageWordNum*2);
-			}
-		}
-
-		/// <summary>
-		/// Eeprom存储器的字节数属性为只读
-		/// </summary>
-		public override int mTypeEepromByteNum
-		{
-			get
-			{
-				return (this.defaultChipEepromPageNum * this.defaultChipEepromPerPageByteNum);
-			}
-		}
-
-		/// <summary>
-		/// Eeprom存储器的页数属性为只读
-		/// </summary>
-		public override int mTypeEepromPageNum
-		{
-			get
-			{
-				return this.defaultChipEepromPageNum;
-			}
-		}
-
-		/// <summary>
-		/// Eeprom存储器的每页的字数属性为只读
-		/// </summary>
-		public override int mTypeEepromPerPageByteNum
-		{
-			get
-			{
-				return this.defaultChipEepromPerPageByteNum;
-			}
-		}
 		/// <summary>
 		/// 芯片名称为读写属性
 		/// </summary>
@@ -274,6 +214,17 @@ namespace Harry.LabTools.LabMcuFunc
 			//		this.defaultInterface.Init(value);
 			//	}
 			//}
+		}
+
+		/// <summary>
+		/// Chip支持轮序模式未只读属性
+		/// </summary>
+		public virtual bool mPollReady
+		{
+			get
+			{
+				return this.defaultChipPollReady;
+			}
 		}
 
 		/// <summary>
@@ -338,12 +289,19 @@ namespace Harry.LabTools.LabMcuFunc
 		{
 			get
 			{
-				byte[] _return = new byte[this.defaultChipFuse.Length];
-				for (int i = 0; i < _return.Length; i++)
+				if (this.defaultChipFuse != null)
 				{
-					_return[i] = (byte)this.defaultChipOSC.mMask[i];
+					byte[] _return = new byte[this.defaultChipFuse.Length];
+					for (int i = 0; i < _return.Length; i++)
+					{
+						_return[i] = (byte)this.defaultChipOSCCalibration.mMask[i];
+					}
+					return _return;
 				}
-				return _return;
+				else
+				{
+					return null;
+				}
 			}
 		}
 		/// <summary>
@@ -490,21 +448,21 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 内部OSC的校准字为读写属性
 		/// </summary>
-		public CMcuFuncAVR8BitsParam mChipOSC
+		public CMcuFuncAVR8BitsParam mChipOSCCalibration
 		{
 			get
 			{
-				return this.defaultChipOSC;
+				return this.defaultChipOSCCalibration;
 			}
 			set
 			{
-				if (this.defaultChipOSC == null)
+				if (this.defaultChipOSCCalibration == null)
 				{
-					this.defaultChipOSC = new CMcuFuncAVR8BitsParam(value);
+					this.defaultChipOSCCalibration = new CMcuFuncAVR8BitsParam(value);
 				}
 				else
 				{
-					this.defaultChipOSC.Init(value);
+					this.defaultChipOSCCalibration.Init(value);
 				}
 			}
 		}
@@ -732,7 +690,9 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public override bool McuTypeInfo(string chipName, ComboBox cbbInterface = null)
 		{
+			//---解析MCU的基本信息
 			bool _return = this.AnalyseAVR8BitsMcuInfo(chipName.ToLower());
+			//---判断解析结果和校验接口控件
 			if ((_return==true)&&(cbbInterface!=null))
 			{
 				_return = this.McuInterfaceInfo(cbbInterface);
@@ -778,7 +738,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public override int[] McuDefaultFuseInfo()
 		{
-			return this.defaultChipOSC.mMask;
+			return this.defaultChipOSCCalibration.mMask;
 		}
 
 		/// <summary>
@@ -1493,12 +1453,15 @@ namespace Harry.LabTools.LabMcuFunc
 					switch (str.ToUpper())
 					{
 						case "CHIP":
+							//---从XML文件中解析设备的基本信息
 							this.AnalyseChipAVR8BitsMcuChipXml(xmlElement.GetAttribute("ID").ToString(),xmlNode);
 							break;
 						case "FUSEBITS":
+							//---从XML文件中解析熔丝每BIT的含义
 							this.AnalyseChipAVR8BitsMcuFuseBitsXml(xmlElement.GetAttribute("ID").ToString(), xmlNode);
 							break;
 						case "FUSETEXT":
+							//---从XML文件中解析熔丝的文本信息
 							this.AnalyseChipAVR8BitsMcuFuseTextXml(xmlElement.GetAttribute("ID").ToString(), xmlNode);
 							break;
 						default:
@@ -1566,11 +1529,15 @@ namespace Harry.LabTools.LabMcuFunc
 						break;
 					//---获取内部RC的信息
 					case "OSC":
-						this.defaultChipOSC = new CMcuFuncAVR8BitsParam(this.AnalyseChipAVR8BitsMcuXml("内部RC频率",xn.InnerText));
+						this.defaultChipOSCCalibration = new CMcuFuncAVR8BitsParam(this.AnalyseChipAVR8BitsMcuXml("内部RC频率",xn.InnerText));
 						_return += 1;
 						break;
 					case "INTERFACE":
 						this.defaultInterface=new CMcuFuncAVR8BitsParam(this.AnalyseChipAVR8BitsMcuXml("可用编程接口",xn.InnerText));
+						_return += 1;
+						break;
+					case "POLLREADY":
+						this.defaultChipPollReady = (Convert.ToUInt16(xn.InnerText, 16)==0)?false:true;
 						_return += 1;
 						break;
 					default:
@@ -1585,9 +1552,9 @@ namespace Harry.LabTools.LabMcuFunc
 				return false;
 			}
 			//---作为默认熔丝位
-			this.defaultChipOSC.mMask = new int[this.defaultChipFuse.Length];
+			this.defaultChipOSCCalibration.mMask = new int[this.defaultChipFuse.Length];
 			//---拷贝数据
-			Array.Copy(this.defaultChipFuse, this.defaultChipOSC.mMask, this.defaultChipFuse.Length);
+			Array.Copy(this.defaultChipFuse, this.defaultChipOSCCalibration.mMask, this.defaultChipFuse.Length);
 
 			this.defaultChipName = chipName;
 			return true;
@@ -2319,7 +2286,7 @@ namespace Harry.LabTools.LabMcuFunc
 				oscValue4.Visible = false;
 			}
 
-			for (int i = 0; i < this.mChipOSC.mLength; i++)
+			for (int i = 0; i < this.mChipOSCCalibration.mLength; i++)
 			{
 				switch (i)
 				{
@@ -2331,14 +2298,14 @@ namespace Harry.LabTools.LabMcuFunc
 										 delegate
 										 {
 											 oscText1.Visible = true;
-											 oscText1.Text = this.mChipOSC.mText[i];
+											 oscText1.Text = this.mChipOSCCalibration.mText[i];
 										 }
 										 );
 						}
 						else
 						{
 							oscText1.Visible = true;
-							oscText1.Text = this.mChipOSC.mText[i];
+							oscText1.Text = this.mChipOSCCalibration.mText[i];
 						}
 
 						if (oscValue1.InvokeRequired)
@@ -2348,33 +2315,33 @@ namespace Harry.LabTools.LabMcuFunc
 										 delegate
 										 {
 											 oscValue1.Visible = true;
-											 oscValue1.Text = this.mChipOSC.mValue[i].ToString("X2");
+											 oscValue1.Text = this.mChipOSCCalibration.mValue[i].ToString("X2");
 										 }
 										 );
 						}
 						else
 						{
 							oscValue1.Visible = true;
-							oscValue1.Text = this.mChipOSC.mValue[i].ToString("X2");
+							oscValue1.Text = this.mChipOSCCalibration.mValue[i].ToString("X2");
 						}						
 						break;
 					case 1:
 						oscText2.Visible = true;
 						oscValue2.Visible = true;
-						oscText2.Text = this.mChipOSC.mText[i];
-						oscValue2.Text = this.mChipOSC.mValue[i].ToString("X2");
+						oscText2.Text = this.mChipOSCCalibration.mText[i];
+						oscValue2.Text = this.mChipOSCCalibration.mValue[i].ToString("X2");
 						break;
 					case 2:
 						oscText3.Visible = true;
 						oscValue3.Visible = true;
-						oscText3.Text = this.mChipOSC.mText[i];
-						oscValue3.Text = this.mChipOSC.mValue[i].ToString("X2");
+						oscText3.Text = this.mChipOSCCalibration.mText[i];
+						oscValue3.Text = this.mChipOSCCalibration.mValue[i].ToString("X2");
 						break;
 					case 3:
 						oscText4.Visible = true;
 						oscValue4.Visible = true;
-						oscText4.Text = this.mChipOSC.mText[i];
-						oscValue4.Text = this.mChipOSC.mValue[i].ToString("X2");
+						oscText4.Text = this.mChipOSCCalibration.mText[i];
+						oscValue4.Text = this.mChipOSCCalibration.mValue[i].ToString("X2");
 						break;
 					default:
 						break;

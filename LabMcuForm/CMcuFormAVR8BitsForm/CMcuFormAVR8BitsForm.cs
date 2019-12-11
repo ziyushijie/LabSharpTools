@@ -45,7 +45,7 @@ namespace LabMcuForm
 		/// <summary>
 		/// MCU的参数
 		/// </summary>
-		private CMcuFuncBase defaultCMcuFunc = new CMcuFuncAVR8BitsISP();
+		private CMcuFuncAVR8BitsBase defaultCMcuFunc = new CMcuFuncAVR8BitsISP();
 
 		#endregion
 
@@ -69,7 +69,7 @@ namespace LabMcuForm
 		/// <summary>
 		/// MCU功能的属性为只读
 		/// </summary>
-		public virtual CMcuFuncBase mCMcuFunc
+		public virtual CMcuFuncAVR8BitsBase mCMcuFunc
 		{
 			get
 			{
@@ -107,6 +107,24 @@ namespace LabMcuForm
 			}
 		}
 
+		/// <summary>
+		/// 器件类型
+		/// </summary>
+		public virtual MCU_INFO_TYPE mTypeMcuInfo
+		{
+			get
+			{
+				if (this.mCMcuFunc != null)
+				{
+					return this.mCMcuFunc.mMcuInfoParam.mTypeMcuInfo;
+				}
+				else
+				{
+					return MCU_INFO_TYPE.MCU_NONE;
+				}
+			}
+		}
+
 		#endregion
 
 		#region 构造函数
@@ -135,7 +153,7 @@ namespace LabMcuForm
 		/// <summary>
 		/// 有参构造函数
 		/// </summary>
-		public CMcuFormAVR8BitsForm(CCommBase usedCComm, CMcuFuncBase usedCMcuFunc)
+		public CMcuFormAVR8BitsForm(CCommBase usedCComm, CMcuFuncAVR8BitsBase usedCMcuFunc)
 		{
 			InitializeComponent();
 			//---限定最小尺寸
@@ -151,9 +169,14 @@ namespace LabMcuForm
 				this.defaultCComm = new CCommBase();
 			}
 			this.defaultCComm = usedCComm;
+			//---检查设备函数
 			if (this.defaultCMcuFunc==null)
 			{
-				this.defaultCMcuFunc = new CMcuFuncBase();
+				this.defaultCMcuFunc = new CMcuFuncAVR8BitsBase();
+			}
+			if (us)
+			{
+
 			}
 			this.defaultCMcuFunc = usedCMcuFunc;
 			this.Shown += new System.EventHandler(this.Form_Shown);
@@ -239,17 +262,17 @@ namespace LabMcuForm
 			this.button_SaveEepromFile.Click += new EventHandler(this.Button_Click);
 			this.button_ChipAuto.Click += new EventHandler(this.Button_Click);
 			this.button_EraseChip.Click += new EventHandler(this.Button_Click);
-			this.button_CheckEmpty.Click += new EventHandler(this.Button_Click);
+			this.button_CheckChipEmpty.Click += new EventHandler(this.Button_Click);
 			this.button_ReadIDChip.Click += new EventHandler(this.Button_Click);
-			this.button_ReadFlash.Click += new EventHandler(this.Button_Click);
-			this.button_WriteFlash.Click += new EventHandler(this.Button_Click);
-			this.button_CheckFlash.Click += new EventHandler(this.Button_Click);
-			this.button_ReadEeprom.Click += new EventHandler(this.Button_Click);
-			this.button_WriteEeprom.Click += new EventHandler(this.Button_Click);
-			this.button_CheckEeprom.Click += new EventHandler(this.Button_Click);
-			this.button_WriteFuse.Click += new EventHandler(this.Button_Click);
-			this.button_WriteLock.Click += new EventHandler(this.Button_Click);
-			this.button_ReadROM.Click += new EventHandler(this.Button_Click);
+			this.button_ReadChipFlash.Click += new EventHandler(this.Button_Click);
+			this.button_WriteChipFlash.Click += new EventHandler(this.Button_Click);
+			this.button_CheckChipFlash.Click += new EventHandler(this.Button_Click);
+			this.button_ReadChipEeprom.Click += new EventHandler(this.Button_Click);
+			this.button_WriteChipEeprom.Click += new EventHandler(this.Button_Click);
+			this.button_CheckChipEeprom.Click += new EventHandler(this.Button_Click);
+			this.button_WriteChipFuse.Click += new EventHandler(this.Button_Click);
+			this.button_WriteChipLock.Click += new EventHandler(this.Button_Click);
+			this.button_ReadChipROM.Click += new EventHandler(this.Button_Click);
 
 		}
 
@@ -263,6 +286,16 @@ namespace LabMcuForm
 			this.defaultCMcuFunc.mMcuInfoParam.McuTypeInfo(chipName, this.comboBox_ChipInterface);
 			//---依据芯片的类型进行控件的初始化
 			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Init(this.defaultCMcuFunc, this.cRichTextBoxEx_ChipMsg);
+			//-->>>依据芯片进行Memery的信息初始化---开始
+			//---初始化Flash信息
+			this.cHexBox_Flash.AddData(this.defaultCMcuFunc.mMcuInfoParam.mChipFlashByteSize);
+			//---初始化Eeprom信息
+			this.cHexBox_Eeprom.AddData(this.defaultCMcuFunc.mMcuInfoParam.mChipEepromByteSize);
+			//---初始化ROM信息
+			this.cHexBox_ROM.AddData(this.defaultCMcuFunc.mMcuInfoParam.mChipFlashPerPageByteNum);
+			//--<<<依据芯片进行Memery的信息初始化---结束
+			this.label_EepromSize.Text = "0/" + this.defaultCMcuFunc.mMcuInfoParam.mChipEepromByteSize.ToString();
+			this.label_FlashSize.Text = "0/" + this.defaultCMcuFunc.mMcuInfoParam.mChipFlashByteSize.ToString();
 		}
 
 		/// <summary>
@@ -436,6 +469,25 @@ namespace LabMcuForm
 					break;
 				//---芯片接口发生变化
 				case "comboBox_ChipInterface":
+					//if ((this.defaultCMcuFunc!=null)&&(this.comboBox_ChipInterface.SelectedIndex>=0))
+					//{
+					//	if (this.defaultCMcuFunc.mMcuInfoParam.mChipInterfaceName[this.comboBox_ChipInterface.SelectedIndex] == "JTAG")
+					//	{
+					//		this.defaultCMcuFunc = new CMcuFuncAVR8BitsJTAG(this.defaultCMcuFunc);
+					//	}
+					//	else if (this.defaultCMcuFunc.mMcuInfoParam.mChipInterfaceName[this.comboBox_ChipInterface.SelectedIndex] == "HVPP")
+					//	{
+					//		this.defaultCMcuFunc = new CMcuFuncAVR8BitsHVPP(this.defaultCMcuFunc);
+					//	}
+					//	else if (this.defaultCMcuFunc.mMcuInfoParam.mChipInterfaceName[this.comboBox_ChipInterface.SelectedIndex] == "HVSP")
+					//	{
+					//		this.defaultCMcuFunc = new CMcuFuncAVR8BitsHVSP(this.defaultCMcuFunc);
+					//	}
+					//	else
+					//	{
+					//		this.defaultCMcuFunc=new CMcuFuncAVR8BitsISP(this.defaultCMcuFunc);
+					//	}
+					//}
 					break;
 				default:
 					break;

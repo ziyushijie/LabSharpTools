@@ -17,7 +17,7 @@ namespace LabTestForm
 		/// <summary>
 		/// 
 		/// </summary>
-		private CMcuFuncBase usedMcu = new CMcuFuncBase();
+		private CMcuFuncAVR8BitsBase usedMcu = new CMcuFuncAVR8BitsBase();
 
 		#endregion
 

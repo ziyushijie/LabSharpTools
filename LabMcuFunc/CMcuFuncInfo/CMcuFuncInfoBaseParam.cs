@@ -6,7 +6,16 @@ using System.Windows.Forms;
 
 namespace Harry.LabTools.LabMcuFunc
 {
-	public  class CMcuFuncInfoBaseParam:ICloneable
+	/// <summary>
+	/// 支持的MCU类型
+	/// </summary>
+	public enum MCU_INFO_TYPE : int
+	{
+		MCU_NONE	=0,
+		MCU_AVR8BITS = 1,            //---AVR的8BIT的MCU
+	};
+	
+	public class CMcuFuncInfoBaseParam:ICloneable
 	{
 		#region 变量定义
 
@@ -37,79 +46,13 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
-		/// Flash存储器的字节数
+		/// 
 		/// </summary>
-		public virtual long mTypeFlashByteNum
+	    public virtual MCU_INFO_TYPE mTypeMcuInfo
 		{
 			get
 			{
-				return 0;
-			}
-		}
-
-		/// <summary>
-		/// Flash存储器的页数
-		/// </summary>
-		public virtual int mTypeFlashPageNum
-		{
-			get
-			{
-				return 0;
-			}
-		}
-
-		/// <summary>
-		/// Flash存储器的每页的字数
-		/// </summary>
-		public virtual int mTypeFlashPerPageWordNum
-		{
-			get
-			{
-				return 0;
-			}
-		}
-
-		/// <summary>
-		/// Flash存储器的每页的字数
-		/// </summary>
-		public virtual int mTypeFlashPerPageByteNum
-		{
-			get
-			{
-				return (this.mTypeFlashPerPageWordNum*2);
-			}
-		}
-
-		/// <summary>
-		/// Eeprom存储器的字节数
-		/// </summary>
-		public virtual int mTypeEepromByteNum
-		{
-			get
-			{
-				return 0;
-			}
-		}
-
-		/// <summary>
-		/// Eeprom存储器的页数
-		/// </summary>
-		public virtual int mTypeEepromPageNum
-		{
-			get
-			{
-				return 0;
-			}
-		}
-
-		/// <summary>
-		/// Eeprom存储器的每页的字数
-		/// </summary>
-		public virtual int mTypeEepromPerPageByteNum
-		{
-			get
-			{
-				return 0;
+				return MCU_INFO_TYPE.MCU_NONE;
 			}
 		}
 
@@ -138,12 +81,12 @@ namespace Harry.LabTools.LabMcuFunc
 
 		#region 公有函数
 
-	/// <summary>
-	/// 初始化类型MCU的信息
-	/// </summary>
-	/// <param name="chipName"></param>
-	/// <returns></returns>
-	public virtual bool McuTypeInfo(string chipName, ComboBox cbbInterface=null)
+		/// <summary>
+		/// 初始化类型MCU的信息
+		/// </summary>
+		/// <param name="chipName"></param>
+		/// <returns></returns>
+		public virtual bool McuTypeInfo(string chipName, ComboBox cbbInterface=null)
 		{
 			return false;			
 		}

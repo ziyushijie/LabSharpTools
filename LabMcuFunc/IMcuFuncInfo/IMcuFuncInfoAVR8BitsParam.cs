@@ -267,6 +267,14 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
+		/// 当前芯片是否需要轮训接口,属性为只读
+		/// </summary>
+		bool mPollReady
+		{
+			get;
+		}
+
+		/// <summary>
 		/// 设备的ID信息
 		/// </summary>
 		byte[] mChipID
@@ -389,7 +397,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 设备的校准字
 		/// </summary>
-		CMcuFuncAVR8BitsParam mChipOSC
+		CMcuFuncAVR8BitsParam mChipOSCCalibration
 		{
 			get;
 			set;

@@ -51,8 +51,8 @@
     <Reference Include="HidLibrary, Version=3.2.46.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\hidlibrary.3.2.46.0\lib\HidLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="NativeUsbLib, Version=1.4.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NativeUsbLib.1.4.7\lib\net20\NativeUsbLib.dll</HintPath>
+    <Reference Include="NativeUsbLib, Version=1.4.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NativeUsbLib.1.4.8\lib\net20\NativeUsbLib.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -72,28 +72,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsBase\CMcuFuncAVR8BitsBase.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsBase\CMcuFuncAVR8BitsBaseData.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsBase\CMcuFuncAVR8BitsBaseFunc.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsBase\CMcuFuncAVR8BitsBaseParam.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsHVPP\CMcuFuncAVR8BitsHVPP.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsHVPP\CMcuFuncAVR8BitsHVPPData.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsHVPP\CMcuFuncAVR8BitsHVPPFunc.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsHVPP\CMcuFuncAVR8BitsHVPPParam.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsHVSP\CMcuFuncAVR8BitsHVSP.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsHVSP\CMcuFuncAVR8BitsHVSPData.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsHVSP\CMcuFuncAVR8BitsHVSPFunc.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsHVSP\CMcuFuncAVR8BitsHVSPParam.cs" />
     <Compile Include="CMcuFuncBase\CMcuFuncBase.cs" />
-    <Compile Include="CMcuFuncBase\CMcuFuncBaseData.cs" />
-    <Compile Include="CMcuFuncBase\CMcuFuncBaseFunc.cs" />
-    <Compile Include="CMcuFuncBase\CMcuFuncBaseParam.cs" />
-    <Compile Include="CMcuFuncAVR8BitsHVPP\CMcuFuncAVR8BitsHVPP.cs" />
-    <Compile Include="CMcuFuncAVR8BitsHVPP\CMcuFuncAVR8BitsHVPPData.cs" />
-    <Compile Include="CMcuFuncAVR8BitsHVPP\CMcuFuncAVR8BitsHVPPFunc.cs" />
-    <Compile Include="CMcuFuncAVR8BitsHVPP\CMcuFuncAVR8BitsHVPPParam.cs" />
-    <Compile Include="CMcuFuncAVR8BitsHVSP\CMcuFuncAVR8BitsHVSP.cs" />
-    <Compile Include="CMcuFuncAVR8BitsHVSP\CMcuFuncAVR8BitsHVSPData.cs" />
-    <Compile Include="CMcuFuncAVR8BitsHVSP\CMcuFuncAVR8BitsHVSPFunc.cs" />
-    <Compile Include="CMcuFuncAVR8BitsHVSP\CMcuFuncAVR8BitsHVSPParam.cs" />
     <Compile Include="CMcuFuncInfo\CMcuFuncInfoAVR8BitsParam.cs" />
     <Compile Include="CMcuFuncInfo\CMcuFuncInfoBaseParam.cs" />
-    <Compile Include="CMcuFuncAVR8BitsISP\CMcuFuncAVR8BitsISPFunc.cs" />
-    <Compile Include="CMcuFuncAVR8BitsISP\CMcuFuncAVR8BitsISP.cs" />
-    <Compile Include="CMcuFuncAVR8BitsISP\CMcuFuncAVR8BitsISPData.cs" />
-    <Compile Include="CMcuFuncAVR8BitsISP\CMcuFuncAVR8BitsISPParam.cs" />
-    <Compile Include="CMcuFuncAVR8BitsJTAG\CMcuFuncAVR8BitsJTAG.cs" />
-    <Compile Include="CMcuFuncAVR8BitsJTAG\CMcuFuncAVR8BitsJTAGData.cs" />
-    <Compile Include="CMcuFuncAVR8BitsJTAG\CMcuFuncAVR8BitsJTAGFunc.cs" />
-    <Compile Include="CMcuFuncAVR8BitsJTAG\CMcuFuncAVR8BitsJTAGParam.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsISP\CMcuFuncAVR8BitsISPFunc.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsISP\CMcuFuncAVR8BitsISP.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsISP\CMcuFuncAVR8BitsISPData.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsISP\CMcuFuncAVR8BitsISPParam.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsJTAG\CMcuFuncAVR8BitsJTAG.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsJTAG\CMcuFuncAVR8BitsJTAGData.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsJTAG\CMcuFuncAVR8BitsJTAGFunc.cs" />
+    <Compile Include="CMcuFuncAVR8Bits\CMcuFuncAVR8BitsJTAG\CMcuFuncAVR8BitsJTAGParam.cs" />
     <Compile Include="IMcuFuncInfo\IMcuFuncInfoData.cs" />
     <Compile Include="IMcuFuncInfo\IMcuFuncInfoEvent.cs" />
     <Compile Include="IMcuFuncInfo\IMcuFuncInfoFunc.cs" />
@@ -101,9 +102,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LabCommType\LabCommType.csproj">
+    <ProjectReference Include="..\LabCommType\LabCommPort.csproj">
       <Project>{3fbd5434-d5cb-4e6f-95d3-3905e5de178a}</Project>
-      <Name>LabCommType</Name>
+      <Name>LabCommPort</Name>
     </ProjectReference>
     <ProjectReference Include="..\LabControlPlus\LabControlPlus.csproj">
       <Project>{E54A51A6-A054-4F21-AC22-A827B5EF4D36}</Project>

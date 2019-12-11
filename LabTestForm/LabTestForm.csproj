@@ -77,8 +77,8 @@
     <Reference Include="HidLibrary, Version=3.2.46.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\hidlibrary.3.2.46.0\lib\HidLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="NativeUsbLib, Version=1.4.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NativeUsbLib.1.4.7\lib\net20\NativeUsbLib.dll</HintPath>
+    <Reference Include="NativeUsbLib, Version=1.4.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NativeUsbLib.1.4.8\lib\net20\NativeUsbLib.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -152,9 +152,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LabCommType\LabCommType.csproj">
+    <ProjectReference Include="..\LabCommType\LabCommPort.csproj">
       <Project>{3fbd5434-d5cb-4e6f-95d3-3905e5de178a}</Project>
-      <Name>LabCommType</Name>
+      <Name>LabCommPort</Name>
     </ProjectReference>
     <ProjectReference Include="..\LabControlPlus\LabControlPlus.csproj">
       <Project>{E54A51A6-A054-4F21-AC22-A827B5EF4D36}</Project>

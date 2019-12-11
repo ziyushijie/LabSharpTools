@@ -20,7 +20,7 @@ namespace LabMcuForm
 		/// <summary>
 		/// MCU功能的基类
 		/// </summary>
-		private CMcuFuncBase defaultCMcuFunc = new CMcuFuncAVR8BitsISP();//new CMcuFuncBase();
+		private CMcuFuncAVR8BitsBase defaultCMcuFunc = new CMcuFuncAVR8BitsISP();//new CMcuFuncBase();
 
 		#endregion
 
@@ -29,7 +29,7 @@ namespace LabMcuForm
 		/// <summary>
 		/// MCU功能的基类
 		/// </summary>
-		public virtual CMcuFuncBase mCMcuFunc
+		public virtual CMcuFuncAVR8BitsBase mCMcuFunc
 		{
 			get
 			{
@@ -60,7 +60,7 @@ namespace LabMcuForm
 			InitializeComponent();
 			if (this.defaultCMcuFunc==null)
 			{
-				this.defaultCMcuFunc = new CMcuFuncBase();
+				this.defaultCMcuFunc = new CMcuFuncAVR8BitsBase();
 			}
 			//---初始化芯片信息
 			this.defaultCMcuFunc.mMcuInfoParam.McuTypeInfo(chipName);
@@ -74,13 +74,13 @@ namespace LabMcuForm
 		/// 构造函数
 		/// </summary>
 		/// <param name="chipCMcue"></param>
-		public CMcuFormAVR8BitsFuseAndLockForm(CMcuFuncBase chipCMcue)
+		public CMcuFormAVR8BitsFuseAndLockForm(CMcuFuncAVR8BitsBase chipCMcue)
 		{
 			InitializeComponent();
 			//---检查自身类是否为空
 			if (this.defaultCMcuFunc == null)
 			{
-				this.defaultCMcuFunc = new CMcuFuncBase();
+				this.defaultCMcuFunc = new CMcuFuncAVR8BitsBase();
 			}
 			//---检查传递类是否为空
 			if (chipCMcue!=null)
@@ -98,13 +98,13 @@ namespace LabMcuForm
 		/// </summary>
 		/// <param name="chipName"></param>
 		/// <param name="chipCMcue"></param>
-		public CMcuFormAVR8BitsFuseAndLockForm(string chipName,CMcuFuncBase chipCMcue)
+		public CMcuFormAVR8BitsFuseAndLockForm(string chipName,CMcuFuncAVR8BitsBase chipCMcue)
 		{
 			InitializeComponent();
 			//---检验对象是否存在
 			if (this.defaultCMcuFunc == null)
 			{
-				this.defaultCMcuFunc = new CMcuFuncBase();
+				this.defaultCMcuFunc = new CMcuFuncAVR8BitsBase();
 			}
 			this.defaultCMcuFunc = chipCMcue;
 			//---初始化芯片信息
