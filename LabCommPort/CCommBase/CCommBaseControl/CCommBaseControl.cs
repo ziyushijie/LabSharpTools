@@ -249,20 +249,32 @@ namespace Harry.LabTools.LabCommType
                 {
                     if(this.defaultCCOMM.OpenDevice(this.comboBox_COMM.Text, this.defaultCCOMM.mCCommRichTextBox)==0)
                     {
+						//---切换按钮的功能
 						if (this.button_COMM.InvokeRequired)
 						{
-							this.BeginInvoke((EventHandler)
+							this.button_COMM.BeginInvoke((EventHandler)
 											(delegate
 											{
 												this.button_COMM.Text = "关闭设备";
-											}
-											)
-											);
+											}));
 						}
 						else
 						{
 							this.button_COMM.Text = "关闭设备";
-						}   
+						}
+						//---屏蔽端口的选择
+						if (this.comboBox_COMM.InvokeRequired)
+						{
+							this.comboBox_COMM.BeginInvoke((EventHandler)
+												(delegate
+												{
+													this.comboBox_COMM.Enabled = false;
+												}));
+						}
+						else
+						{
+							this.comboBox_COMM.Enabled = false;
+						}
                         this.pictureBox_COMM.Image= Properties.Resources.open;
                         this.defaultCCOMM.EventHandlerCCommChange += this.EventDeviceChanged;
 						this.defaultIsShowCommParam = false;
@@ -284,22 +296,33 @@ namespace Harry.LabTools.LabCommType
                 {
                    if( this.defaultCCOMM.CloseDevice(this.defaultCCOMM.mCCommRichTextBox)==0)
                    {
-
+						//---切换按键的功能
 						if (this.button_COMM.InvokeRequired)
 						{
-							this.BeginInvoke((EventHandler)
+							this.button_COMM.BeginInvoke((EventHandler)
 											(delegate
 											{
 												this.button_COMM.Text = "打开设备";
-											}
-											)
-											);
+											}));
 						}
 						else
 						{
 							this.button_COMM.Text = "打开设备";
-						}						
-                        this.pictureBox_COMM.Image = Properties.Resources.lost;
+						}
+						//---使能端口的选择
+						if (this.comboBox_COMM.InvokeRequired)
+						{
+							this.comboBox_COMM.BeginInvoke((EventHandler)
+												(delegate
+												{
+													this.comboBox_COMM.Enabled = true;
+												}));
+						}
+						else
+						{
+							this.comboBox_COMM.Enabled = true;
+						}
+						this.pictureBox_COMM.Image = Properties.Resources.lost;
 						//---设备移除事件
 						this.defaultCCOMM.EventHandlerCCommChange -= this.EventDeviceChanged;
 						this.defaultIsShowCommParam = true;
@@ -345,7 +368,7 @@ namespace Harry.LabTools.LabCommType
 										 {
 											 if (this.button_COMM.InvokeRequired)
 											 {
-												 this.BeginInvoke((EventHandler)
+												 this.button_COMM.BeginInvoke((EventHandler)
 																 (delegate
 																 {
 																	 this.button_COMM.Text = "打开设备";
@@ -356,6 +379,19 @@ namespace Harry.LabTools.LabCommType
 											 else
 											 {
 												 this.button_COMM.Text = "打开设备";
+											 }
+											 //---使能端口的选择
+											 if (this.comboBox_COMM.InvokeRequired)
+											 {
+												 this.comboBox_COMM.BeginInvoke((EventHandler)
+																	 (delegate
+																	 {
+																		 this.comboBox_COMM.Enabled = true;
+																	 }));
+											 }
+											 else
+											 {
+												 this.comboBox_COMM.Enabled = true;
 											 }
 											 //---注销资源
 											 this.defaultCCOMM.Dispose();
@@ -374,7 +410,7 @@ namespace Harry.LabTools.LabCommType
 						{
 							if (this.button_COMM.InvokeRequired)
 							{
-								this.BeginInvoke((EventHandler)
+								this.button_COMM.BeginInvoke((EventHandler)
 												(delegate
 												{
 													this.button_COMM.Text = "打开设备";
@@ -385,6 +421,19 @@ namespace Harry.LabTools.LabCommType
 							else
 							{
 								this.button_COMM.Text = "打开设备";
+							}
+							//---使能端口的选择
+							if (this.comboBox_COMM.InvokeRequired)
+							{
+								this.comboBox_COMM.BeginInvoke((EventHandler)
+													(delegate
+													{
+														this.comboBox_COMM.Enabled = true;
+													}));
+							}
+							else
+							{
+								this.comboBox_COMM.Enabled = true;
 							}
 							//---注销资源
 							this.defaultCCOMM.Dispose();
@@ -549,7 +598,7 @@ namespace Harry.LabTools.LabCommType
 						}
 						if (this.defaultCCOMM.mCCommRichTextBox != null)
 						{
-							CRichTextBoxPlus.AppendTextInfoTopWithDataTime(this.defaultCCOMM.mCCommRichTextBox, "通信端口参数配置成功。\r\n", Color.Black, false);
+							CRichTextBoxPlus.AppendTextInfoTopWithDataTime(this.defaultCCOMM.mCCommRichTextBox, "通信端口参数配置成功。", Color.Black);
 						}
 						//---执行设备的同步事件
 						this.EventHandlerCCommSynchronized?.Invoke();
@@ -558,7 +607,7 @@ namespace Harry.LabTools.LabCommType
 					{
 						if (this.defaultCCOMM.mCCommRichTextBox != null)
 						{
-							CRichTextBoxPlus.AppendTextInfoTopWithDataTime(this.defaultCCOMM.mCCommRichTextBox, "通信端口参数配置失败。\r\n", Color.Red, false);
+							CRichTextBoxPlus.AppendTextInfoTopWithDataTime(this.defaultCCOMM.mCCommRichTextBox, "通信端口参数配置失败。", Color.Red);
 						}
 					}
 					//---释放资源

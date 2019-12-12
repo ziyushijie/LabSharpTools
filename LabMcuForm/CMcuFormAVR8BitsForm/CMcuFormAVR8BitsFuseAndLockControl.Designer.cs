@@ -195,6 +195,7 @@
 			// 
 			// textBox_OSCValue4
 			// 
+			this.textBox_OSCValue4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
 			this.textBox_OSCValue4.Location = new System.Drawing.Point(49, 104);
 			this.textBox_OSCValue4.Name = "textBox_OSCValue4";
 			this.textBox_OSCValue4.Size = new System.Drawing.Size(48, 21);
@@ -213,6 +214,7 @@
 			// 
 			// textBox_OSCValue3
 			// 
+			this.textBox_OSCValue3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
 			this.textBox_OSCValue3.Location = new System.Drawing.Point(49, 77);
 			this.textBox_OSCValue3.Name = "textBox_OSCValue3";
 			this.textBox_OSCValue3.Size = new System.Drawing.Size(48, 21);
@@ -231,6 +233,7 @@
 			// 
 			// textBox_OSCValue2
 			// 
+			this.textBox_OSCValue2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
 			this.textBox_OSCValue2.Location = new System.Drawing.Point(49, 50);
 			this.textBox_OSCValue2.Name = "textBox_OSCValue2";
 			this.textBox_OSCValue2.Size = new System.Drawing.Size(48, 21);
@@ -249,6 +252,7 @@
 			// 
 			// textBox_OSCValue1
 			// 
+			this.textBox_OSCValue1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
 			this.textBox_OSCValue1.Location = new System.Drawing.Point(49, 23);
 			this.textBox_OSCValue1.Name = "textBox_OSCValue1";
 			this.textBox_OSCValue1.Size = new System.Drawing.Size(48, 21);
@@ -413,7 +417,7 @@
 			this.tabPage_ChipText.Location = new System.Drawing.Point(4, 4);
 			this.tabPage_ChipText.Name = "tabPage_ChipText";
 			this.tabPage_ChipText.Padding = new System.Windows.Forms.Padding(2);
-			this.tabPage_ChipText.Size = new System.Drawing.Size(647, 197);
+			this.tabPage_ChipText.Size = new System.Drawing.Size(507, 176);
 			this.tabPage_ChipText.TabIndex = 1;
 			this.tabPage_ChipText.Text = "向导模式";
 			// 
@@ -426,7 +430,7 @@
 			this.cCheckedListBoxEx_FuseText.HorizontalScrollbar = true;
 			this.cCheckedListBoxEx_FuseText.Location = new System.Drawing.Point(2, 2);
 			this.cCheckedListBoxEx_FuseText.Name = "cCheckedListBoxEx_FuseText";
-			this.cCheckedListBoxEx_FuseText.Size = new System.Drawing.Size(641, 191);
+			this.cCheckedListBoxEx_FuseText.Size = new System.Drawing.Size(501, 170);
 			this.cCheckedListBoxEx_FuseText.TabIndex = 0;
 			// 
 			// textBox_LockFuseValue

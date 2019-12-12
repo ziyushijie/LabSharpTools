@@ -349,7 +349,7 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 					break;
 				//---写入加密位
 				case "button_WriteChipLock":
-					this.defaultCMcuFunc.CMcuFunc_ReadChipLock(this.textBox_LockFuseValue, this.defaultRichTextBoxMsg);
+					this.defaultCMcuFunc.CMcuFunc_WriteChipLock(this.textBox_LockFuseValue, this.defaultRichTextBoxMsg);
 					break;
 				default:
 					break;

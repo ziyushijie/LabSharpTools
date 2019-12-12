@@ -120,7 +120,7 @@ namespace Harry.LabTools.LabCommType
 					}
 				}
 				//if ((value==string.Empty)||(value==string.Empty))
-				if(!string.IsNullOrEmpty(value))
+				if(string.IsNullOrEmpty(value))
 				{
 					this.defaultSerialPort.PortName = "COM1";
 				}
@@ -139,7 +139,7 @@ namespace Harry.LabTools.LabCommType
 		{
 			get
 			{
-				if(!string.IsNullOrEmpty(this.mName))
+				if(string.IsNullOrEmpty(this.mName))
 				{
 					return 0;
 				}

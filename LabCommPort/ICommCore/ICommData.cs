@@ -100,7 +100,7 @@ namespace Harry.LabTools.LabCommType
 		{
 			get
 			{
-				if (this.defaultByte.Count > 0)
+				if ((this.defaultByte!=null)&&(this.defaultByte.Count > 0))
 				{
 					return this.defaultByte.ToArray();
 				}

@@ -85,7 +85,7 @@ namespace Harry.LabTools.LabCommType
 					//---获取设备的名称信息
 					this.mName = "COM" + this.defaultSerialIndexMemu[_return].ToString();
 				}
-				this.defaultSerialMsg = "端口刷新成功！\r\n";
+				this.defaultSerialMsg = "端口刷新成功！";
 				_return = 0;
 			}
 			else
@@ -109,7 +109,7 @@ namespace Harry.LabTools.LabCommType
 						cbb.SelectedIndex = -1;
 					}
 				}
-				this.defaultSerialMsg = "端口刷新失败！\r\n";
+				this.defaultSerialMsg = "端口刷新失败！";
 			}
 
 
@@ -120,7 +120,7 @@ namespace Harry.LabTools.LabCommType
 
 			if (msg != null)
 			{
-				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.defaultSerialMsg, (_return == 0 ? Color.Black : Color.Red), false);
+				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.defaultSerialMsg, (_return == 0 ? Color.Black : Color.Red));
 			}
 
 			return _return;
@@ -179,7 +179,7 @@ namespace Harry.LabTools.LabCommType
 					}
 				}
                 _return = 1;
-                this.defaultSerialMsg = "获取设备失败，请插入设备！\r\n";
+                this.defaultSerialMsg = "获取设备失败，请插入设备！";
 			}
 			else
 			{
@@ -197,7 +197,7 @@ namespace Harry.LabTools.LabCommType
 					//---UI显示插入的设备
 					if (portIndex < 0)
 					{
-                        this.defaultSerialMsg += "COM" + addNames[i].ToString() + "设备插入！\r\n";
+                        this.defaultSerialMsg += "COM" + addNames[i].ToString() + "设备插入！";
 					}
 				}
 
@@ -281,7 +281,7 @@ namespace Harry.LabTools.LabCommType
 
             if (this.mCCommRichTextBox != null)
             {
-                CRichTextBoxPlus.AppendTextInfoTopWithDataTime(this.mCCommRichTextBox, this.defaultSerialMsg,(_return==0?Color.Black:Color.Red), false);
+                CRichTextBoxPlus.AppendTextInfoTopWithDataTime(this.mCCommRichTextBox, this.defaultSerialMsg,(_return==0?Color.Black:Color.Red));
             }
             return _return;
 		}
@@ -322,7 +322,7 @@ namespace Harry.LabTools.LabCommType
 					}
 				}
                 _return = 1;
-                this.defaultSerialMsg = "获取设备失败，请插入设备！\r\n";
+                this.defaultSerialMsg = "获取设备失败，请插入设备！";
 			}
 			else
 			{
@@ -353,7 +353,7 @@ namespace Harry.LabTools.LabCommType
                             }
 						}
                         _return = 2;
-                        this.defaultSerialMsg += "COM" + this.defaultSerialIndexMemu[i].ToString() + "设备移除！\r\n";
+                        this.defaultSerialMsg += "COM" + this.defaultSerialIndexMemu[i].ToString() + "设备移除！";
 					}
 				}
 
@@ -457,7 +457,7 @@ namespace Harry.LabTools.LabCommType
 			}
             if (this.mCCommRichTextBox != null)
             {
-                CRichTextBoxPlus.AppendTextInfoTopWithDataTime(this.mCCommRichTextBox, this.defaultSerialMsg, (_return == 0 ? Color.Black : Color.Red), false);
+                CRichTextBoxPlus.AppendTextInfoTopWithDataTime(this.mCCommRichTextBox, this.defaultSerialMsg, (_return == 0 ? Color.Black : Color.Red));
             }
             return _return;
 		}
@@ -485,11 +485,11 @@ namespace Harry.LabTools.LabCommType
 			}
 			else
 			{
-				this.defaultSerialMsg = "端口：" + this.mName + "初始化异常！\r\n";
+				this.defaultSerialMsg = "端口：" + this.mName + "初始化异常！";
 			}
 			if ((msg != null) && (_return != 0))
 			{
-				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.defaultSerialMsg, Color.Red, false);
+				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.defaultSerialMsg, Color.Red);
 			}
 			return _return;
 		}
@@ -519,7 +519,7 @@ namespace Harry.LabTools.LabCommType
 				}
 				else
 				{
-					this.defaultSerialMsg = "端口：" + this.mName + "初始化异常！\r\n";
+					this.defaultSerialMsg = "端口：" + this.mName + "初始化异常！";
 				}
 			}
 			if ((msg!=null)&&(_return!=0))
@@ -551,16 +551,16 @@ namespace Harry.LabTools.LabCommType
 				}
 				else
 				{
-					this.defaultSerialMsg = "未收到响应数据！\r\n";
+					this.defaultSerialMsg = "未收到响应数据！";
 				}
 			}
 			else
 			{
-				this.defaultSerialMsg = "端口：" + this.mName + "初始化异常！\r\n";
+				this.defaultSerialMsg = "端口：" + this.mName + "初始化异常！";
 			}
 			if ((msg != null) && (_return != 0))
 			{
-				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.defaultSerialMsg, Color.Red, false);
+				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.defaultSerialMsg, Color.Red);
 			}
 			this.defaultSerialTimeout = timeout;
 			//---结束时间
@@ -595,7 +595,7 @@ namespace Harry.LabTools.LabCommType
 			}
 			if ((msg != null) && (_return != 0))
 			{
-				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.defaultSerialMsg, Color.Red, false);
+				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.defaultSerialMsg, Color.Red);
 			}
 			this.defaultSerialTimeout = timeout;
 			//---结束时间
@@ -692,9 +692,7 @@ namespace Harry.LabTools.LabCommType
 					if (this.defaultSerialPort.PortName != argName)
 					{
 						this.defaultSerialPort.PortName = argName;
-					}
-
-					
+					}					
 					//---查空操作
 					if (this.defaultSerialParam == null)
 					{
@@ -702,25 +700,21 @@ namespace Harry.LabTools.LabCommType
 					}
 					//---使用的设备端口
 					this.mName = argName;
-
 					//---波特率
 					if (this.defaultSerialPort.BaudRate != int.Parse(this.defaultSerialParam.mBaudRate))
 					{
 						this.defaultSerialPort.BaudRate = int.Parse(this.defaultSerialParam.mBaudRate);
 					}
-
 					//---校验位
 					if (this.defaultSerialPort.Parity != this.GetParityBits(this.defaultSerialParam.mParity))
 					{
 						this.defaultSerialPort.Parity = this.GetParityBits(this.defaultSerialParam.mParity);
 					}
-
 					//---停止位
 					if (this.defaultSerialPort.StopBits != this.GetStopBits(this.defaultSerialParam.mStopBits))
 					{
 						this.defaultSerialPort.StopBits = this.GetStopBits(this.defaultSerialParam.mStopBits);
 					}
-
 					//---数据位
 					if (this.defaultSerialPort.DataBits != int.Parse(this.defaultSerialParam.mDataBits))
 					{
@@ -735,13 +729,13 @@ namespace Harry.LabTools.LabCommType
 						{
 							//---端口状态，错误
 							this.defaultSerialSTATE = CCOMM_STATE.STATE_ERROR;
-							this.defaultSerialMsg = "端口：" + this.mName + "打开失败!\r\n";
+							this.defaultSerialMsg = "端口：" + this.mName + "打开失败!";
 							_return = 2;
 						}
 						else
 						{
                             this.defaultConnected = true;
-                            this.defaultSerialMsg = "端口：" + this.mName + "打开成功!\r\n";
+                            this.defaultSerialMsg = "端口：" + this.mName + "打开成功!";
 							//---注册事件接收函数
 							this.defaultSerialPort.DataReceived += new SerialDataReceivedEventHandler(this.EventDataReceivedHandler);
 							_return = 0;
@@ -749,7 +743,7 @@ namespace Harry.LabTools.LabCommType
 					}
 					catch 
 					{
-						this.defaultSerialMsg = "端口：" + this.mName + "打开异常!\r\n";
+						this.defaultSerialMsg = "端口：" + this.mName + "打开异常!";
 						_return = 3;
 					}
 					
@@ -758,7 +752,7 @@ namespace Harry.LabTools.LabCommType
 				{
 					//---端口状态，错误
 					this.defaultSerialSTATE = CCOMM_STATE.STATE_ERROR;
-					this.defaultSerialMsg = "端口：" + argName + "初始化失败!\r\n";
+					this.defaultSerialMsg = "端口：" + argName + "初始化失败!";
 					_return = 4;
 				}
 			}
@@ -777,7 +771,7 @@ namespace Harry.LabTools.LabCommType
 				//---消息显示
 				if (msg != null)
 				{
-					CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.defaultSerialMsg, _return == 0 ? Color.Black : Color.Red, false);
+					CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.defaultSerialMsg, _return == 0 ? Color.Black : Color.Red);
 				}
 			}
 			return _return;
@@ -848,7 +842,7 @@ namespace Harry.LabTools.LabCommType
                     {
                         this.defaultConnected = false;
                         _return = 0;
-                        this.defaultSerialMsg = "端口:" + this.mName.ToString() + "关闭成功!\r\n";
+                        this.defaultSerialMsg = "端口:" + this.mName.ToString() + "关闭成功!";
                         //---注销事件接收函数
                         this.defaultSerialPort.DataReceived -= new SerialDataReceivedEventHandler(this.EventDataReceivedHandler);
                         //---释放端口使用的资源
@@ -856,25 +850,25 @@ namespace Harry.LabTools.LabCommType
                     }
                     else
                     {
-                        this.defaultSerialMsg = "端口:" + this.mName.ToString() + "关闭失败!\r\n";
+                        this.defaultSerialMsg = "端口:" + this.mName.ToString() + "关闭失败!";
                         _return = 1;
                     }
                 }
                 catch
                 {
-                    this.defaultSerialMsg = "端口:" + this.mName.ToString() + "关闭异常!\r\n";
+                    this.defaultSerialMsg = "端口:" + this.mName.ToString() + "关闭异常!";
                     _return = 2;
                 }
             }
             else
             {
-                this.defaultSerialMsg = "端口资源已释放!\r\n";
+                this.defaultSerialMsg = "端口资源已释放!";
                 _return = 3;
             }
 			//---消息显示
             if (msg != null)
             {
-                CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.defaultSerialMsg, _return == 0 ? Color.Black : Color.Red, false);
+                CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.defaultSerialMsg, _return == 0 ? Color.Black : Color.Red);
             }
             return _return;
 		}
@@ -890,17 +884,17 @@ namespace Harry.LabTools.LabCommType
             int _return = -1;
             if (this.defaultSerialPort == null)
             {
-                this.defaultSerialMsg = "端口资源已释放!\r\n";
+                this.defaultSerialMsg = "端口资源已释放!";
                 _return = 1;
             }
             else if(this.defaultSerialPort.PortName!=argName)
             {
-                this.defaultSerialMsg = "释放端口名称不匹配!\r\n";
+                this.defaultSerialMsg = "释放端口名称不匹配!";
                 _return = 2;
             }
             else if(this.defaultSerialPort.IsOpen==false)
             {
-                this.defaultSerialMsg = "端口:"+argName+"已关闭!\r\n";
+                this.defaultSerialMsg = "端口:"+argName+"已关闭!";
                 this.defaultSerialPort.Dispose();
                 _return = 3;
             }
@@ -913,7 +907,7 @@ namespace Harry.LabTools.LabCommType
                     {
                         this.defaultConnected = false;
                         _return = 0;
-                        this.defaultSerialMsg = "端口:" + this.mName.ToString() + "关闭成功!\r\n";
+                        this.defaultSerialMsg = "端口:" + this.mName.ToString() + "关闭成功!";
                         //---注销事件接收函数
                         this.defaultSerialPort.DataReceived -= new SerialDataReceivedEventHandler(this.EventDataReceivedHandler);
                         //---释放端口使用的资源
@@ -921,20 +915,20 @@ namespace Harry.LabTools.LabCommType
                     }
                     else
                     {
-                        this.defaultSerialMsg = "端口:" + this.mName.ToString() + "关闭失败!\r\n";
+                        this.defaultSerialMsg = "端口:" + this.mName.ToString() + "关闭失败!";
                         _return = 4;
                     }
                 }
                 catch
                 {
-                    this.defaultSerialMsg = "端口:" + this.mName.ToString() + "关闭异常!\r\n";
+                    this.defaultSerialMsg = "端口:" + this.mName.ToString() + "关闭异常!";
                     _return = 5;
                 }
             }
             //---消息显示
             if (msg != null)
             {
-                CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.defaultSerialMsg, _return == 0 ? Color.Black : Color.Red, false);
+                CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.defaultSerialMsg, _return == 0 ? Color.Black : Color.Red);
             }
             return _return;
         }

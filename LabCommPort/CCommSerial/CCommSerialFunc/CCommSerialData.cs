@@ -87,7 +87,7 @@ namespace Harry.LabTools.LabCommType
 			this.defaultSerialMsg = "";
 			if ((cmd == null) || (cmd.Length == 0))
 			{
-				this.defaultSerialMsg = "接收数据为空！\r\n";
+				this.defaultSerialMsg = "接收数据为空！";
 				//_return = false;
 			}
 			else
@@ -95,7 +95,7 @@ namespace Harry.LabTools.LabCommType
 				int length = cmd[1];
 				int id = 0;
 				//---获取数据长度
-				this.defaultSerialReceData.mLength = cmd.Length-1;
+				this.defaultSerialReceData.mLength = cmd.Length-2;
 				if (this.defaultSerialReceData.mSize>250)
 				{
 					length = (length << 8) + cmd[2];
@@ -175,16 +175,20 @@ namespace Harry.LabTools.LabCommType
 						}
 					}
 				}
-				if (id != this.defaultSerialParam.mAddrID)
+				if (this.mIsMultiCMD)
 				{
-					this.defaultSerialMsg = "设备通讯地址不匹配！\r\n";
+					if (id != this.defaultSerialParam.mAddrID)
+					{
+						this.defaultSerialMsg = "设备通讯地址不匹配！";
+						_return = false;
+					}
 				}
 				else
 				{
 					//---校验数据长度
 					if (this.defaultSerialReceData.mLength != length)
 					{
-						this.defaultSerialMsg = "接收数据的长度校验错误！\r\n";
+						this.defaultSerialMsg = "接收数据的长度校验错误！";
 						//_return = false;
 					}
 					else
@@ -245,7 +249,7 @@ namespace Harry.LabTools.LabCommType
 			this.defaultSerialMsg = "";
 ;			if ((cmd == null) || (cmd.Length == 0))
 			{
-				this.defaultSerialMsg = "发送数据为空！\r\n";
+				this.defaultSerialMsg = "发送数据为空！";
 				//_return = false;
 			}
 			else
@@ -324,6 +328,7 @@ namespace Harry.LabTools.LabCommType
 				}
 				else
 				{
+					this.defaultSerialSendData.mLength -= 2;
 					this.defaultSerialSendData.mByte[1] = (byte)(this.defaultSerialSendData.mLength);
 					this.defaultSerialSendData.mParentCMD = this.defaultSerialSendData.mByte[2];
 					if (this.mIsMultiCMD)

@@ -137,17 +137,12 @@ namespace LabMcuForm
 			InitializeComponent();
 			//---限定最小尺寸
 			this.MinimumSize = this.Size;
-
+			//---修改自适应宽度的进度条
 			this.toolStripProgressBar_ChipBar.Width += 28;
-
 			this.toolStripProgressBar_ChipBar.Tag = this.toolStripProgressBar_ChipBar.Width.ToString();
 			this.toolStrip_ChipTool.Tag = this.toolStrip_ChipTool.Width.ToString();
-
-
-			this.Shown += new System.EventHandler(this.Form_Shown);
-			this.Resize += new System.EventHandler(this.Form_Resize);
-			//---窗体关闭事件
-			this.FormClosing += new FormClosingEventHandler(this.Form_Closing);
+			//---窗体事件处理
+			this.FormEventHandler();
 		}
 
 		/// <summary>
@@ -158,31 +153,29 @@ namespace LabMcuForm
 			InitializeComponent();
 			//---限定最小尺寸
 			this.MinimumSize = this.Size;
-
+			//---修改自适应宽度的进度条
 			this.toolStripProgressBar_ChipBar.Width += 28;
-
 			this.toolStripProgressBar_ChipBar.Tag = this.toolStripProgressBar_ChipBar.Width.ToString();
 			this.toolStrip_ChipTool.Tag = this.toolStrip_ChipTool.Width.ToString();
-
+			//---检查通讯端口
 			if (this.defaultCComm==usedCComm)
 			{
 				this.defaultCComm = new CCommBase();
 			}
+			//---通讯接口
 			this.defaultCComm = usedCComm;
 			//---检查设备函数
 			if (this.defaultCMcuFunc==null)
 			{
 				this.defaultCMcuFunc = new CMcuFuncAVR8BitsBase();
 			}
-			if (us)
+			//---校验类型
+			if ((usedCMcuFunc!=null)&&(usedCMcuFunc.mMcuInfoParam.mTypeMcuInfo!=MCU_INFO_TYPE.MCU_AVR8BITS))
 			{
-
+				this.defaultCMcuFunc = usedCMcuFunc;
 			}
-			this.defaultCMcuFunc = usedCMcuFunc;
-			this.Shown += new System.EventHandler(this.Form_Shown);
-			this.Resize += new System.EventHandler(this.Form_Resize);
-			//---窗体关闭事件
-			this.FormClosing += new FormClosingEventHandler(this.Form_Closing);
+			//---窗体事件处理
+			this.FormEventHandler();
 		}
 
 		#endregion
@@ -194,7 +187,7 @@ namespace LabMcuForm
 		/// </summary>
 		~CMcuFormAVR8BitsForm()
 		{
-			if (this.defaultCComm!=null)
+			if (this.defaultCComm != null)
 			{
 				this.defaultCComm.Dispose();
 			}
@@ -236,7 +229,20 @@ namespace LabMcuForm
 		}
 
 		/// <summary>
-		/// 事件注册函数
+		/// 窗体事件处理
+		/// </summary>
+		private void FormEventHandler()
+		{
+			//---窗体显示事件
+			this.Shown += new System.EventHandler(this.Form_Shown);
+			//---窗体尺寸事件
+			this.Resize += new System.EventHandler(this.Form_Resize);
+			//---窗体关闭事件
+			this.FormClosing += new FormClosingEventHandler(this.Form_Closing);
+		}
+
+		/// <summary>
+		/// 注册事件函数
 		/// </summary>
 		private void RegistrationEventHandler()
 		{
@@ -373,7 +379,7 @@ namespace LabMcuForm
 		private void Form_Closing(object sender, FormClosingEventArgs e)
 		{
 			Form fm = (Form)sender;
-			fm.Enabled = false;
+			//fm.Enabled = false;
 			switch (fm.Name)
 			{
 				case "CMcuFormAVR8BitsForm":
@@ -416,7 +422,7 @@ namespace LabMcuForm
 				default:
 					break;
 			}
-			fm.Enabled = true;
+			//fm.Enabled = true;
 			fm.Focus();
 		}
 
@@ -454,7 +460,7 @@ namespace LabMcuForm
 				return;
 			}
 			ComboBox cbb = (ComboBox)sender;
-			cbb.Enabled = false;
+			//cbb.Enabled = false;
 			switch (cbb.Name)
 			{
 				//---芯片类型发生变化
@@ -492,8 +498,7 @@ namespace LabMcuForm
 				default:
 					break;
 			}
-
-			cbb.Enabled = true;
+			//cbb.Enabled = true;
 			cbb.Focus();
 		}
 
@@ -509,7 +514,7 @@ namespace LabMcuForm
 				return;
 			}
 			Button bt = (Button)sender;
-			bt.Enabled = false;
+			//bt.Enabled = false;
 			switch (bt.Name)
 			{
 				//---设备接口发生变化
@@ -569,6 +574,7 @@ namespace LabMcuForm
 				case "button_Auto":
 					break;
 				case "button_EraseChip":
+					this.defaultCMcuFunc.CMcuFunc_EraseChip(this.mLockFuse, this.cRichTextBoxEx_ChipMsg);
 					break;
 				case "button_CheckEmpty":
 					break;
@@ -595,8 +601,7 @@ namespace LabMcuForm
 				default:
 					break;
 			}
-
-			bt.Enabled = true;
+			//bt.Enabled = true;
 			bt.Focus();
 		}
 		#endregion

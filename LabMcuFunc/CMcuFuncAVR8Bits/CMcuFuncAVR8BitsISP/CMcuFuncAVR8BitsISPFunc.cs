@@ -690,7 +690,7 @@ namespace Harry.LabTools.LabMcuFunc
 					{
 						this.mMsgText = "ISP编程：加密位读取成功!";
 						//---获取加密位信息
-						chipLock = this.mCCOMM.mReceData.mArray[this.mCCOMM.mFirstCMDIndex + 1];
+						chipLock = this.mCCOMM.mReceData.mArray[this.mCCOMM.mReceData.mIndexOffset];
 					}
 					else
 					{
@@ -824,7 +824,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public override int CMcuFunc_WriteChipLock(TextBox lockFuse, RichTextBox msg)
 		{
-			return this.CMcuFunc_WriteChipLock(Convert.ToByte(lockFuse.Text), msg);
+			return this.CMcuFunc_WriteChipLock(Convert.ToByte(lockFuse.Text,16), msg);
 		}
 
 		/// <summary>
@@ -921,7 +921,7 @@ namespace Harry.LabTools.LabMcuFunc
 			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 				//---发送命令
-				byte[] cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_CALIBRATIONBYTE_READ,(byte)(this.mMcuInfoParam.mChipOSCCalibration.mName.Length) };
+				byte[] cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_CALIBRATIONBYTE_READ,(byte)(this.mMcuInfoParam.mChipOSCCalibration.mText.Length) };
 				//---读取命令
 				byte[] res = null;
 				//---发送并读取命令
@@ -933,7 +933,7 @@ namespace Harry.LabTools.LabMcuFunc
 					{
 						this.mMsgText = "ISP编程：校准字读取成功!";
 						//---申请缓存区
-						chipCalibration = new byte[this.mMcuInfoParam.mChipOSCCalibration.mName.Length];
+						chipCalibration = new byte[this.mMcuInfoParam.mChipOSCCalibration.mText.Length];
 						//---拷贝数据
 						Array.Copy(this.mCCOMM.mReceData.mArray, this.mCCOMM.mReceData.mIndexOffset, chipCalibration, 0, chipCalibration.Length);
 					}
@@ -969,7 +969,86 @@ namespace Harry.LabTools.LabMcuFunc
 			byte[] chipCalibration = null;
 			//---读取校准字
 			int _return = this.CMcuFunc_ReadChipCalibration(ref chipCalibration, msg);
-
+			//---校验读取结果
+			if ((_return==0)&&(chipCalibration!=null))
+			{
+				for (int i = 0; i < chipCalibration.Length; i++)
+				{
+					switch (i)
+					{
+						case 0:
+							if (oscValue1.Visible==true)
+							{
+								if (oscValue1.InvokeRequired)
+								{
+									oscValue1.BeginInvoke((EventHandler)
+											(delegate
+											{
+												oscValue1.Text = chipCalibration[i].ToString("X2");
+											}));
+								}
+								else
+								{
+									oscValue1.Text = chipCalibration[i].ToString("X2");
+								}
+							}
+							break;
+						case 1:
+							if (oscValue2.Visible == true)
+							{
+								if (oscValue2.InvokeRequired)
+								{
+									oscValue2.BeginInvoke((EventHandler)
+											(delegate
+											{
+												oscValue2.Text = chipCalibration[i].ToString("X2");
+											}));
+								}
+								else
+								{
+									oscValue2.Text = chipCalibration[i].ToString("X2");
+								}
+							}
+							break;
+						case 2:
+							if (oscValue3.Visible == true)
+							{
+								if (oscValue3.InvokeRequired)
+								{
+									oscValue3.BeginInvoke((EventHandler)
+											(delegate
+											{
+												oscValue3.Text = chipCalibration[i].ToString("X2");
+											}));
+								}
+								else
+								{
+									oscValue3.Text = chipCalibration[i].ToString("X2");
+								}
+							}
+							break;
+						case 3:
+							if (oscValue4.Visible == true)
+							{
+								if (oscValue4.InvokeRequired)
+								{
+									oscValue4.BeginInvoke((EventHandler)
+											(delegate
+											{
+												oscValue4.Text = chipCalibration[i].ToString("X2");
+											}));
+								}
+								else
+								{
+									oscValue4.Text = chipCalibration[i].ToString("X2");
+								}
+							}
+							break;
+						default:
+							break;
+					}
+				}
+			}
 			return _return;
 		}
 

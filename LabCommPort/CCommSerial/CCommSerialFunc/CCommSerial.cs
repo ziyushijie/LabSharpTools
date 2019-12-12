@@ -109,8 +109,6 @@ namespace Harry.LabTools.LabCommType
 			List<byte> cmd = new List<byte>();
 			//---接收数据步序
 			byte taskStep = 0;
-			//---时间计数器
-			DateTime startTime = DateTime.Now;
 			//---数据存储的临时变量
 			int temp;
 			//---通信端口为接收状态,不响应其他操作(阻塞操作)
@@ -121,6 +119,8 @@ namespace Harry.LabTools.LabCommType
 			this.defaultSerialSTATE = CCOMM_STATE.STATE_POLLREAD;
 			// CRC的计算结果
 			UInt32 crcVal = 0;
+			//---时间计数器
+			DateTime startTime = DateTime.Now;
 			//---数据的读取---阻塞读取
 			while (isWork)
 			{
@@ -139,10 +139,11 @@ namespace Harry.LabTools.LabCommType
 								taskStep = 1;
 								//---重置时间标签
 								startTime = DateTime.Now;
+								//---进入数据接收状态
+								_return = 0;
 							}
 						}
 						break;
-
 					case 1:         //---获取数据长度
 						if (this.defaultSerialPort.BytesToRead > 0)
 						{
@@ -163,10 +164,11 @@ namespace Harry.LabTools.LabCommType
 								//---数据长度不合法，重新接收数据
 								cmd.Clear();
 								taskStep = 0;
+								//---重新进入数据接收状态
+								_return = -2;
 							}
 						}
 						break;
-
 					case 2:         //---获取数据
 						if (this.defaultSerialPort.BytesToRead > 0)
 						{
@@ -177,27 +179,24 @@ namespace Harry.LabTools.LabCommType
 							startTime = DateTime.Now;
 						}
 						break;
-
 					case 3:
 					default:
 						isWork = false;
-						this.defaultSerialMsg = "接收数据的逻辑异常！\r\n";
+						this.defaultSerialMsg = "接收数据的逻辑异常！";
 						_return = 1;
 						break;
 				}
-
 				//---计算时间
 				TimeSpan endTime = DateTime.Now - startTime;
 				//---判断是否发生超时错误
-				if (endTime.TotalMilliseconds > timeout)
+				if (endTime.TotalMilliseconds > (timeout+1))
 				{
 					//---退出while循环
 					isWork = false;
-					this.defaultSerialMsg += "接收数据发生超时错误！\r\n";
+					this.defaultSerialMsg += "接收数据发生超时错误！";
 					_return = 2;
 					break;
 				}
-
 				//---判断接收到的数据
 				if ((_return == 0) && (taskStep == 2) && (cmd != null) && (cmd.Count > 2) && ((cmd.Count - 2) == cmd[1]))
 				{
@@ -235,7 +234,7 @@ namespace Harry.LabTools.LabCommType
 					{
 						if (this.defaultSerialReceData.mCRCResult != crcVal)
 						{
-							this.defaultSerialMsg += "接收数据发生CRC校验错误！\r\n";
+							this.defaultSerialMsg += "接收数据发生CRC校验错误！";
 							_return = 3;
 						}
 					}
@@ -295,6 +294,8 @@ namespace Harry.LabTools.LabCommType
 								taskStep = 1;
 								//---重置时间标签
 								startTime = DateTime.Now;
+								//---进入数据接收状态
+								_return = 0;
 							}
 						}
 						break;
@@ -333,6 +334,8 @@ namespace Harry.LabTools.LabCommType
 								//---数据长度不合法，重新接收数据
 								cmd.Clear();
 								taskStep = 0;
+								//---重新进入数据接收状态
+								_return = -2;
 							}
 						}
 						break;
@@ -350,7 +353,7 @@ namespace Harry.LabTools.LabCommType
 					case 4:
 					default:
 						isWork = false;
-						this.defaultSerialMsg = "接收数据的逻辑异常！\r\n";
+						this.defaultSerialMsg = "接收数据的逻辑异常！";
 						_return = 1;
 						break;
 				}
@@ -362,7 +365,7 @@ namespace Harry.LabTools.LabCommType
 				{
 					//---退出while循环
 					isWork = false;
-					this.defaultSerialMsg += "接收数据发生超市错误！\r\n";
+					this.defaultSerialMsg += "接收数据发生超市错误！";
 					_return = 2;
 					break;
 				}
@@ -407,7 +410,7 @@ namespace Harry.LabTools.LabCommType
 					{
 						if (this.defaultSerialReceData.mCRCResult != crcVal)
 						{
-							this.defaultSerialMsg += "接收数据发生CRC校验错误！\r\n";
+							this.defaultSerialMsg += "接收数据发生CRC校验错误！";
 							_return = 3;
 						}
 					}

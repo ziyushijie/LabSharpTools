@@ -152,7 +152,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LabCommType\LabCommPort.csproj">
+    <ProjectReference Include="..\LabCommPort\LabCommPort.csproj">
       <Project>{3fbd5434-d5cb-4e6f-95d3-3905e5de178a}</Project>
       <Name>LabCommPort</Name>
     </ProjectReference>
