@@ -162,6 +162,7 @@ namespace Harry.LabTools.LabHexEdit
 		{
 			//===资源回收
 			GC.SuppressFinalize(this);
+			
 		}
 
 		#endregion
@@ -173,12 +174,13 @@ namespace Harry.LabTools.LabHexEdit
 		/// </summary>
 		/// <param name="str"></param>
 		/// <returns></returns>
-		public virtual bool AnalyseHexLine(string str)
+		public bool AnalyseHexLine(string str)
 		{
 			//---将数据记录行的首位空格去除并装换成大写模式
 			str = str.Trim().ToUpper();
 			//---判断字符串是否合法
-			if ((str==string.Empty)||(str==""))
+			//if ((str==string.Empty)||(str==""))
+			if (string.IsNullOrEmpty(str))
 			{
 				this.defaultLogMessage = "Hex数据为空!";
 				return false;
@@ -437,12 +439,14 @@ namespace Harry.LabTools.LabHexEdit
 		/// <returns></returns>
 		private bool IsHexNumber(string hexString)
 		{
-			if ((hexString == string.Empty) || (hexString == null))
+			//if ((hexString == string.Empty) || (hexString == null))
+			if(string.IsNullOrEmpty(hexString))
 			{
 				return false;
 			}
 			hexString = hexString.Trim().ToUpper();
-			if (hexString == "")
+			//if (hexString == "")
+			if(string.IsNullOrEmpty(hexString))
 			{
 				return false;
 			}

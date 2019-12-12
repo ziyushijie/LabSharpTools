@@ -58,12 +58,13 @@ namespace Harry.LabTools.LabMcuFunc
 			OpenFileDialog flashFile = new OpenFileDialog();
 			flashFile.AddExtension = true;
 			flashFile.DefaultExt = "hex";
-			flashFile.Filter = " hex files(*.hex)|*.hex|All files(*.*)|*.*";
+			flashFile.Filter = " files(*.hex)|*.hex|All files(*.*)|*.*";
 			flashFile.FilterIndex = 0;
 			//---选择文件
 			if ((flashFile.ShowDialog() == DialogResult.OK) && (!string.IsNullOrEmpty(flashFile.FileName)))
 			{
 				CHexFile loadFlash = new CHexFile(flashFile.FileName);
+				//---校验文件的解析
 				if (loadFlash.mIsOK)
 				{
 					flash = new byte[loadFlash.mSTOPAddr];
@@ -115,7 +116,7 @@ namespace Harry.LabTools.LabMcuFunc
 					}
 				}
 			}
-			return -1;
+			return _return;
 		}
 
 		/// <summary>
@@ -126,7 +127,46 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public virtual int CMcuFunc_LoadFlashFile(CHexBox chb, Label flashSize,  RichTextBox msg)
 		{
-			return -1;
+			byte[] flash = null;
+			int _return = this.CMcuFunc_LoadFlashFile(ref flash, msg);
+			//---校验结果
+			if ((_return == 0) && (flash != null))
+			{
+				//---显示固件的大小
+				if (flashSize!=null)
+				{
+					if (flashSize.InvokeRequired)
+					{
+						flashSize.BeginInvoke((EventHandler)
+										(delegate
+										{
+											flashSize.Text = flash.Length.ToString() + "/" + this.mMcuInfoParam.mChipFlashByteSize.ToString();
+										}));
+					}
+					else
+					{
+						flashSize.Text = flash.Length.ToString() + "/" + this.mMcuInfoParam.mChipFlashByteSize.ToString();
+					}
+				}
+				
+				//---刷新数据到Hex控件中
+				if (chb != null)
+				{
+					if (chb.InvokeRequired)
+					{
+						chb.BeginInvoke((EventHandler)
+										(delegate
+										{
+											chb.AddData(flash, this.mMcuInfoParam.mChipFlashByteSize);
+										}));
+					}
+					else
+					{
+						chb.AddData(flash, this.mMcuInfoParam.mChipFlashByteSize);
+					}
+				}
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -137,7 +177,37 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public virtual int CMcuFunc_LoadEepromhFile(ref byte[] eeprom, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			OpenFileDialog eepromFile = new OpenFileDialog();
+			eepromFile.AddExtension = true;
+			eepromFile.DefaultExt = "hex";
+			eepromFile.Filter = " files(*.hex)|*.hex|All files(*.*)|*.*";
+			eepromFile.FilterIndex = 0;
+			//---选择文件
+			if ((eepromFile.ShowDialog() == DialogResult.OK) && (!string.IsNullOrEmpty(eepromFile.FileName)))
+			{
+				CHexFile loadFlash = new CHexFile(eepromFile.FileName);
+				//---校验文件的解析
+				if (loadFlash.mIsOK)
+				{
+					eeprom = new byte[loadFlash.mSTOPAddr];
+					//---填充默认数据是0xFF
+					CGenFuncMem.GenFuncMemset(ref eeprom, 0xFF);
+					//---数组拷贝
+					Array.Copy(loadFlash.mDataMap, 0, eeprom, loadFlash.mSTARTAddr, loadFlash.mDataMap.Length);
+					//---消息显示
+					if (msg != null)
+					{
+						CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "调入Eeprom文件:" + eepromFile.FileName, Color.Black);
+					}
+					_return = 0;
+				}
+				else
+				{
+					MessageBox.Show("Eeprom文件加载失败", "消息提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -148,7 +218,28 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public virtual int CMcuFunc_LoadEepromhFile(CHexBox chb, RichTextBox msg)
 		{
-			return -1;
+			byte[] eeprom = null;
+			int _return = this.CMcuFunc_LoadFlashFile(ref eeprom, msg);
+			//---校验结果
+			if ((_return == 0) && (eeprom != null))
+			{
+				if (chb != null)
+				{
+					if (chb.InvokeRequired)
+					{
+						chb.BeginInvoke((EventHandler)
+										(delegate
+										{
+											chb.AddData(eeprom, this.mMcuInfoParam.mChipEepromByteSize);
+										}));
+					}
+					else
+					{
+						chb.AddData(eeprom, this.mMcuInfoParam.mChipEepromByteSize);
+					}
+				}
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -159,7 +250,46 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public virtual int CMcuFunc_LoadEepromhFile(CHexBox chb, Label eepromSize, RichTextBox msg)
 		{
-			return -1;
+			byte[] eeprom = null;
+			int _return = this.CMcuFunc_LoadFlashFile(ref eeprom, msg);
+			//---校验结果
+			if ((_return == 0) && (eeprom != null))
+			{
+				//---显示固件的大小
+				if (eepromSize != null)
+				{
+					if (eepromSize.InvokeRequired)
+					{
+						eepromSize.BeginInvoke((EventHandler)
+										(delegate
+										{
+											eepromSize.Text = eeprom.Length.ToString() + "/" + this.mMcuInfoParam.mChipEepromByteSize.ToString();
+										}));
+					}
+					else
+					{
+						eepromSize.Text = eeprom.Length.ToString() + "/" + this.mMcuInfoParam.mChipEepromByteSize.ToString();
+					}
+				}
+
+				//---刷新数据到Hex控件中
+				if (chb != null)
+				{
+					if (chb.InvokeRequired)
+					{
+						chb.BeginInvoke((EventHandler)
+										(delegate
+										{
+											chb.AddData(eeprom, this.mMcuInfoParam.mChipFlashByteSize);
+										}));
+					}
+					else
+					{
+						chb.AddData(eeprom, this.mMcuInfoParam.mChipFlashByteSize);
+					}
+				}
+			}
+			return _return;
 		}
 
 		#endregion

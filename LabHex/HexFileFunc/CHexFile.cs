@@ -169,6 +169,7 @@ namespace Harry.LabTools.LabHexEdit
 				HexType lastHexType = HexType.DATA_RECORD;
 				long tempAddr=0;
 				byte[] buffer = null;
+				//---校验数据是否有效
 				if ((this.defaultCHexLine == null) || (this.defaultCHexLine.Count == 0))
 				{
 					_return = 0;
@@ -176,6 +177,7 @@ namespace Harry.LabTools.LabHexEdit
 				}
 				else
 				{
+					//---遍历数据从而获得结束地址
 					for (int i = 0; i < this.defaultCHexLine.Count; i++)
 					{
 						switch (this.defaultCHexLine[i].Type)
@@ -268,7 +270,8 @@ namespace Harry.LabTools.LabHexEdit
 		{
 			get
 			{
-				return this.GetHexFileDataMap();
+				byte[] _return= this.GetHexFileDataMap();
+				return _return;
 			}
 		}
 
@@ -293,7 +296,12 @@ namespace Harry.LabTools.LabHexEdit
 			this.defaultIsOK = this.AnalyseHexFile(hexPath);
 		}
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="val"></param>
+		/// <param name="num"></param>
+		/// <param name="addr"></param>
 		public CHexFile(byte[] val, int num = 16, long addr = 0)
 		{
 			this.SaveHexFile(val, num, addr);
@@ -325,7 +333,7 @@ namespace Harry.LabTools.LabHexEdit
 		/// </summary>
 		/// <param name="filePath"></param>
 		/// <returns></returns>
-		public virtual bool AnalyseHexFile(string filePath)
+		public bool AnalyseHexFile(string filePath)
 		{
 			//---检查文件是否存在
 			if (!File.Exists(filePath))
@@ -379,12 +387,12 @@ namespace Harry.LabTools.LabHexEdit
 		/// </summary>
 		/// <param name="length"></param>
 		/// <returns></returns>
-		public virtual byte[] GetHexFileDataMap()
+		public byte[] GetHexFileDataMap()
 		{
 			//---创建缓存区
 			byte[] _return = new byte[this.mSTOPAddr];
 			//---校验缓存区的申请
-			if (_return == null)
+			if ((_return == null)||(_return.Length==0))
 			{
 				this.defaultLogMessage = "缓存区申请失败!\r\n";
 				return null;
@@ -433,7 +441,7 @@ namespace Harry.LabTools.LabHexEdit
 		/// <param name="isHighFirst">true---高位在前，false---地位在前</param>
 		/// <param name="fillVal">填充的数据</param>
 		/// <returns></returns>
-		public virtual byte[] GetHexFileDataMap(long maxSize,bool isHighFirst=false,byte fillVal=0xFF)
+		public byte[] GetHexFileDataMap(long maxSize,bool isHighFirst=false,byte fillVal=0xFF)
 		{
 			//---创建缓存区
 			byte[] _return = null;
@@ -498,7 +506,7 @@ namespace Harry.LabTools.LabHexEdit
 		/// <param name="addr">存储起始地址</param>
 		/// <param name="isHighFirst">true---给定的数据是高位在前，false---给定的数据是地位在前</param>
 		/// <returns></returns>
-		public virtual string SaveHexFile(byte[] val, int num=16, long addr=0, bool isHighFirst = false)
+		public string SaveHexFile(byte[] val, int num=16, long addr=0, bool isHighFirst = false)
 		{
 			string _return = "";
 			//---如果给定的数据是高位在前，需要将数据转换为低位在前，Hex文件默认是低位在前高位在后的格式
