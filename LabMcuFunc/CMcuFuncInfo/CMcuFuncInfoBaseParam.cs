@@ -86,7 +86,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipName"></param>
 		/// <returns></returns>
-		public virtual bool McuTypeInfo(string chipName, ComboBox cbbInterface=null)
+		public virtual bool McuTypeInfo(string chipName, ComboBox cbbInterface=null,TextBox tbChipID=null)
 		{
 			return false;			
 		}

@@ -57,6 +57,31 @@ namespace Harry.LabTools.LabGenFunc
 			return true;
 		}
 
+		/// <summary>
+		/// 比较两个数组是否想相等
+		/// </summary>
+		/// <param name="aArray"></param>
+		/// <param name="bArray"></param>
+		/// <returns></returns>
+		public static bool GenFuncEqual(byte[] aArray, byte[] bArray)
+		{
+			if ((aArray == null) || (bArray == null) || (aArray.Length != bArray.Length))
+			{
+				return false;
+			}
+			else
+			{
+				for (int i = 0; i < aArray.Length; i++)
+				{
+					if (aArray[i]!=bArray[i])
+					{
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
 		#endregion
 	}
 }

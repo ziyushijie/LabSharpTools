@@ -50,23 +50,25 @@ namespace LabTestForm
 			// cCommBaseControl1
 			// 
 			this.cCommBaseControl1.Location = new System.Drawing.Point(12, 12);
+			cCommBase1.mCCommComBox = null;
+			cCommBase1.mCCommForm = null;
+			cCommBase1.mCCommRichTextBox = null;
 			cCommBase1.mIndex = -1;
 			cCommBase1.mIsChanged = false;
 			cCommBase1.mIsFullParam = false;
 			cCommBase1.mIsMultiCMD = false;
-			cCommBase1.mCCommComBox = null;
-			cCommBase1.mCCommForm = null;
-			cCommBase1.mCCommRichTextBox = null;
-			cCommBase1.mSerialParam = null;
-			cCommBase1.mUSBParam = null;
 			cCommBase1.mName = "";
+			cCommBase1.mPerPackageMaxSize = 64;
 			cCommBase1.mReceData = null;
 			cCommBase1.mSendData = null;
+			cCommBase1.mSerialParam = null;
 			cCommBase1.mTimeout = 200;
 			cCommBase1.mType = Harry.LabTools.LabCommType.CCOMM_TYPE.COMM_SERIAL;
+			cCommBase1.mUSBParam = null;
 			this.cCommBaseControl1.mCCOMM = cCommBase1;
 			this.cCommBaseControl1.mCCommRichTextBox = null;
 			this.cCommBaseControl1.mIsShowCommParam = true;
+			this.cCommBaseControl1.mPerPackageMaxSize = 64;
 			this.cCommBaseControl1.Name = "cCommBaseControl1";
 			this.cCommBaseControl1.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
 			this.cCommBaseControl1.Size = new System.Drawing.Size(262, 56);
@@ -77,6 +79,8 @@ namespace LabTestForm
 			this.cHexBox1.BackColor = System.Drawing.Color.White;
 			this.cHexBox1.ImeMode = System.Windows.Forms.ImeMode.Disable;
 			this.cHexBox1.Location = new System.Drawing.Point(12, 74);
+			this.cHexBox1.mDataFontColorA = System.Drawing.SystemColors.HotTrack;
+			this.cHexBox1.mDataFontColorB = System.Drawing.Color.MidnightBlue;
 			this.cHexBox1.mExternalLineColor = System.Drawing.Color.DarkGray;
 			this.cHexBox1.mExternalLineWidth = 2;
 			this.cHexBox1.mFirstRowOffset = 4;

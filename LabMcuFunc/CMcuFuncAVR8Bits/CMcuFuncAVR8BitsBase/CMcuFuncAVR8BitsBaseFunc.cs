@@ -1,6 +1,9 @@
-﻿using Harry.LabTools.LabHexEdit;
+﻿using Harry.LabTools.LabControlPlus;
+using Harry.LabTools.LabGenFunc;
+using Harry.LabTools.LabHexEdit;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -41,9 +44,128 @@ namespace Harry.LabTools.LabMcuFunc
 
 		#region 公有函数
 
+		#region Hex文件操作
+
+		/// <summary>
+		/// 加载Flash文件
+		/// </summary>
+		/// <param name="flash"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_LoadFlashFile(ref byte[] flash, RichTextBox msg)
+		{
+			int _return = -1;
+			OpenFileDialog flashFile = new OpenFileDialog();
+			flashFile.AddExtension = true;
+			flashFile.DefaultExt = "hex";
+			flashFile.Filter = " hex files(*.hex)|*.hex|All files(*.*)|*.*";
+			flashFile.FilterIndex = 0;
+			//---选择文件
+			if ((flashFile.ShowDialog() == DialogResult.OK) && (!string.IsNullOrEmpty(flashFile.FileName)))
+			{
+				CHexFile loadFlash = new CHexFile(flashFile.FileName);
+				if (loadFlash.mIsOK)
+				{
+					flash = new byte[loadFlash.mSTOPAddr];
+					//---填充默认数据是0xFF
+					CGenFuncMem.GenFuncMemset(ref flash, 0xFF);
+					//---数组拷贝
+					Array.Copy(loadFlash.mDataMap,0, flash, loadFlash.mSTARTAddr,loadFlash.mDataMap.Length);
+					//---消息显示
+					if (msg!=null)
+					{
+						CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "调入Flash文件:" + flashFile.FileName, Color.Black);
+					}
+					_return = 0;
+				}
+				else
+				{
+					MessageBox.Show("Flash文件加载失败","消息提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
+			return _return;
+		}
+
+		/// <summary>
+		/// 加载Flash文件
+		/// </summary>
+		/// <param name="chb"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_LoadFlashFile(CHexBox chb, RichTextBox msg)
+		{
+			byte[] flash = null;
+			int _return = this.CMcuFunc_LoadFlashFile(ref flash, msg);
+			//---校验结果
+			if ((_return==0)&&(flash!=null))
+			{
+				if (chb!=null)
+				{
+					if (chb.InvokeRequired)
+					{
+						chb.BeginInvoke((EventHandler)
+										(delegate
+										{
+											chb.AddData(flash, this.mMcuInfoParam.mChipFlashByteSize);
+										}));
+					}
+					else
+					{
+						chb.AddData(flash,this.mMcuInfoParam.mChipFlashByteSize);
+					}
+				}
+			}
+			return -1;
+		}
+
+		/// <summary>
+		/// 加载Flash文件
+		/// </summary>
+		/// <param name="chb"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_LoadFlashFile(CHexBox chb, Label flashSize,  RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 加载Eeprom
+		/// </summary>
+		/// <param name="flash"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_LoadEepromhFile(ref byte[] eeprom, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 加载Eeprom
+		/// </summary>
+		/// <param name="chb"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_LoadEepromhFile(CHexBox chb, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 加载Eeprom
+		/// </summary>
+		/// <param name="chb"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_LoadEepromhFile(CHexBox chb, Label eepromSize, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		#endregion
 
 		#region 编程常规使用函数
-		
+
 		/// <summary>
 		/// 打开连接
 		/// </summary>
@@ -140,6 +262,26 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
+		/// 校验Flash
+		/// </summary>
+		/// <param name="flash"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_CheckChipFlash(byte[] chipFlash, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 校验Flash
+		/// </summary>
+		/// <param name="chb">Hex编辑器控件</param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_CheckChipFlash(CHexBox chb, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
 		/// 校验Flash为空
 		/// </summary>
 		/// <param name="msg"></param>
@@ -203,6 +345,27 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <param name="chb">Hex编辑器控件</param>
 		/// <returns></returns>
 		public virtual int CMcuFunc_WriteChipEeprom(CHexBox chb, RichTextBox msg)
+		{
+			return -1;
+		}
+
+
+		/// <summary>
+		/// 校验Flash
+		/// </summary>
+		/// <param name="flash"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_CheckChipEeprom(byte[] chipEeprom, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 校验Flash
+		/// </summary>
+		/// <param name="chb">Hex编辑器控件</param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_CheckChipEeprom(CHexBox chb, RichTextBox msg)
 		{
 			return -1;
 		}
@@ -324,7 +487,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipID"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_ReadChipID(TextBox chipID, RichTextBox msg)
+		public virtual int CMcuFunc_ReadChipID(RichTextBox msg,Form form=null)
 		{
 			return -1;
 		}

@@ -322,8 +322,14 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 			{
 				return;
 			}
+			//---校验通讯端口
+			if ((this.defaultCMcuFunc.mCCOMM==null) ||(this.defaultCMcuFunc.mCCOMM.mIsOpen == false))
+			{
+				MessageBox.Show("通讯端口初始化异常!", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
 			Button bt = (Button)sender;
-			bt.Enabled = false;
+			//bt.Enabled = false;
 			switch (bt.Name)
 			{
 				//---读取校准字
@@ -354,7 +360,7 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 				default:
 					break;
 			}
-			bt.Enabled = true;
+			//bt.Enabled = true;
 			bt.Focus();
 		}
 

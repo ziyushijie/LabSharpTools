@@ -688,7 +688,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipName"></param>
 		/// <returns></returns>
-		public override bool McuTypeInfo(string chipName, ComboBox cbbInterface = null)
+		public override bool McuTypeInfo(string chipName, ComboBox cbbInterface = null, TextBox tbChipID = null)
 		{
 			//---解析MCU的基本信息
 			bool _return = this.AnalyseAVR8BitsMcuInfo(chipName.ToLower());
@@ -696,6 +696,23 @@ namespace Harry.LabTools.LabMcuFunc
 			if ((_return==true)&&(cbbInterface!=null))
 			{
 				_return = this.McuInterfaceInfo(cbbInterface);
+			}
+			//---校验ChipID
+			if ((_return==true)&&(tbChipID!=null))
+			{
+				if (tbChipID.InvokeRequired)
+				{
+					tbChipID.BeginInvoke((EventHandler)
+							 //cbb.Invoke((EventHandler)
+							 (delegate
+							 {
+								 tbChipID.Text = this.mChipID[0].ToString("X2") + ":" + this.mChipID[1].ToString("X2") + ":" + this.mChipID[2].ToString("X2");
+							 }));
+				}
+				else
+				{
+					tbChipID.Text = this.mChipID[0].ToString("X2") + ":" + this.mChipID[1].ToString("X2") + ":" + this.mChipID[2].ToString("X2");
+				}
 			}
 			return _return ;
 		}

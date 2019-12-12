@@ -475,9 +475,48 @@ namespace Harry.LabTools.LabHexEdit
 		private EncodingType defaultDataEncodingType = EncodingType.ANSI;
 
 		/// <summary>
-		/// 数据的字体的颜色
+		/// 数据的字体的颜色A
 		/// </summary>
-		private Color defaultDataFontColor = Color.Black;
+		private Color defaultDataFontColorA = Color.HotPink;//Color.Black;
+
+		/// <summary>
+		/// 数据的字体的颜色A为读写属性
+		/// </summary>
+		public Color mDataFontColorA
+		{
+			get
+			{
+				return this.defaultDataFontColorA;
+			}
+			set
+			{
+				this.defaultDataFontColorA = value;
+				//---重新绘制窗体
+				this.Invalidate();
+			}
+		}
+
+		/// <summary>
+		/// 数据的字体的颜色A
+		/// </summary>
+		private Color defaultDataFontColorB = Color.MidnightBlue;
+
+		/// <summary>
+		/// 数据的字体的颜色B为读写属性
+		/// </summary>
+		public Color mDataFontColorB
+		{
+			get
+			{
+				return this.defaultDataFontColorB;
+			}
+			set
+			{
+				this.defaultDataFontColorB = value;
+				//---重新绘制窗体
+				this.Invalidate();
+			}
+		}
 
 		/// <summary>
 		/// 数据地址偏移

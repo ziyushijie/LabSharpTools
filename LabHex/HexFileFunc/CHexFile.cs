@@ -212,7 +212,7 @@ namespace Harry.LabTools.LabHexEdit
 								(this.defaultCHexLine[i].Addr) += (_return & 0xFFFF0000);
 								break;
 							case HexType.END_OF_FILE_RECORD:                    //1
-								_return = 0;
+								//_return = 0;
 								break;
 							case HexType.EXTEND_SEGMENT_ADDRESS_RECORD:			//2
 								buffer = new byte[2] { this.defaultCHexLine[i].InfoData[1], this.defaultCHexLine[i].InfoData[0]};
@@ -264,12 +264,11 @@ namespace Harry.LabTools.LabHexEdit
 		/// 数据信息
 		/// </summary>
 
-		public virtual byte[] DataMap
+		public virtual byte[] mDataMap
 		{
 			get
 			{
 				return this.GetHexFileDataMap();
-
 			}
 		}
 

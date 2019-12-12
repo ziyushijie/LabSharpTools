@@ -11,6 +11,11 @@ namespace Harry.LabTools.LabCommType
 	public partial class CCommSerial
 	{
 		#region 变量定义
+		
+		/// <summary>
+		/// 上一次的接收是不是错误，true---正常，false---异常
+		/// </summary>
+		private bool defaultLastReceIsOK = true;
 
 		#endregion
 
@@ -588,10 +593,15 @@ namespace Harry.LabTools.LabCommType
 			{
 				_return = this.Analyse8BitsData(timeout);
 			}
-			if (_return==0)
+			if (_return == 0)
 			{
 				cmd = new byte[this.defaultSerialReceData.mByte.Count];
 				this.defaultSerialReceData.mByte.CopyTo(cmd);
+			}
+			else
+			{	
+				//---接收发生错误
+				this.defaultLastReceIsOK = false;
 			}
 			if ((msg != null) && (_return != 0))
 			{
@@ -613,6 +623,16 @@ namespace Harry.LabTools.LabCommType
 		/// <returns></returns>
 		public override int SendCmdAndReadResponse(byte[] cmd, ref byte[] res, int timeout = 200, RichTextBox msg = null)
 		{
+			//---校验上一次的接收状态
+			if (this.defaultLastReceIsOK == false)
+			{
+				//---清空接收缓存区
+				this.defaultSerialPort.DiscardInBuffer();
+				//---清空发送缓存区
+				this.defaultSerialPort.DiscardOutBuffer();
+				//---置位上一次的数据接收为正常
+				this.defaultLastReceIsOK = true;
+			}
 			//---获取开始时间标签
 			DateTime nowTime = DateTime.Now;
 			int _return = this.WriteCmdToDevice(cmd, msg);

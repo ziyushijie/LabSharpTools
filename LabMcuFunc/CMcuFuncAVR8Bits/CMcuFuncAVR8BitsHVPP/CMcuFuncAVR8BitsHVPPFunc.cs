@@ -470,7 +470,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipID"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_ReadChipID(TextBox chipID, RichTextBox msg)
+		public override int CMcuFunc_ReadChipID(RichTextBox msg, Form form = null)
 		{
 			return -1;
 		}

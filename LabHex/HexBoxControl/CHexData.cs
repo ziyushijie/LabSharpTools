@@ -41,8 +41,10 @@ namespace Harry.LabTools.LabHexEdit
 				//---数据栏的背景色
 				Brush backGroundBrushA = new SolidBrush(this.defaultFontBackGroundColor);
 				Brush backGroundBrushB = new SolidBrush(this.defaultFontBackGroundColor);
-				//---设置数据栏字体颜色
-				Brush fontBrush = new SolidBrush(this.defaultDataFontColor);
+				//---设置数据栏字体颜色A
+				Brush fontBrushA = new SolidBrush(this.defaultDataFontColorA);
+				//---设置数据栏字体颜色A
+				Brush fontBrushB = new SolidBrush(this.defaultDataFontColorB);
 				//---设置绘制数据区域的矩形图形
 				Rectangle nowRectangleA = new Rectangle();
 				Rectangle nowRectangleB = new Rectangle();
@@ -54,9 +56,12 @@ namespace Harry.LabTools.LabHexEdit
 				int dataOffset = this.defaultRowNowNum * this.defaultRowShowNum;
 				//---计算数据的高度
 				int iHeight = nowPointA.Y+ (fontHeight + this.defaultColStaffWidth)/(this.defaultFirstRowOffset);
+				//---数据字体颜色变化一次
+				int dataColorChange = 0;
 				//---界面显示多少列
 				for (int ix = this.defaultRowNowNum; ix < this.defaultRowNowNum + iMaxRowCount; ix++)
 				{
+					dataColorChange = 0;
 					//---数据长度超出
 					if (iTotalRowCount <= ix)
 					{
@@ -96,7 +101,19 @@ namespace Harry.LabTools.LabHexEdit
 
 							//---显示数据字符串信息
 							strMsg = this.defaultNowData[iy].ToString("X2");
-							e.Graphics.DrawString(strMsg, this.defaultFont, fontBrush, nowPointB);
+							dataColorChange++;
+							if (dataColorChange<3)
+							{
+								e.Graphics.DrawString(strMsg, this.defaultFont, fontBrushA, nowPointB);
+							}
+							else
+							{	
+								e.Graphics.DrawString(strMsg, this.defaultFont, fontBrushB, nowPointB);
+								if (dataColorChange ==4)
+								{
+									dataColorChange = 0;
+								}
+							}
 							nowPointB.X += fontWidthA + this.defaultRowStaffWidth;
 							
 							//---绘制字符串信息
@@ -115,11 +132,21 @@ namespace Harry.LabTools.LabHexEdit
 								else
 								{
 									strMsg= ".";
-									backGroundBrushB = new SolidBrush(Color.Yellow);
-									e.Graphics.FillRectangle(backGroundBrushB, nowRectangleB);
-									backGroundBrushB = new SolidBrush(Color.White);
+									//strMsg = Convert.ToChar(this.defaultNowData[iy]).ToString();
+									//---是否用颜色表示
+									if (this.defaultShowChangeFlag == true)
+									{
+										backGroundBrushB = new SolidBrush(Color.Yellow);
+										e.Graphics.FillRectangle(backGroundBrushB, nowRectangleB);
+										backGroundBrushB = new SolidBrush(Color.White);
+									}
+									else
+									{
+										e.Graphics.FillRectangle(backGroundBrushA, nowRectangleB);
+									}
 								}
-								e.Graphics.DrawString(strMsg, this.defaultFont, fontBrush, nowPointC);
+								//e.Graphics.DrawString(strMsg, this.defaultFont, fontBrushA, nowPointC);
+								e.Graphics.DrawString(strMsg, this.defaultFont, new SolidBrush(Color.Black), nowPointC);
 								nowPointC.X += fontWidthB;
 							}
 						}
@@ -331,6 +358,52 @@ namespace Harry.LabTools.LabHexEdit
 			this.VScrollBarShow();
 			//重新绘制窗体
 			this.Invalidate();
+			return true;
+		}
+
+		/// <summary>
+		/// 添加数据
+		/// </summary>
+		/// <param name="dat"></param>
+		/// <param name="length"></param>
+		/// <returns></returns>
+		public bool AddData(byte[] dat, long length)
+		{
+			//--数据的合法性
+			if ((dat == null) || (dat.Length > length))
+			{
+				return false;
+			}
+			else
+			{
+				if ((this.defaultNowData == null) || (this.defaultNowData.Length != length))
+				{
+					//---重新置位缓存区的大小
+					Array.Resize<byte>(ref this.defaultNowData, (int)length);
+					Array.Resize<byte>(ref this.defaultLastData, (int)length);
+				}
+				//---填充默认数据是0xFF
+				CGenFuncMem.GenFuncMemset(ref this.defaultNowData, 0xFF);
+				//---数组拷贝
+				Array.Copy(dat, this.defaultNowData, dat.Length);
+				//---判断是否显示不同
+				if (this.defaultShowChangeFlag != true)
+				{
+					Array.Copy(dat, this.defaultLastData, dat.Length);
+				}
+				//---数据显示的最大行数
+				this.defaultTotalRow = this.CalcYScaleTotalRow();
+				//---创建并显示光标
+				this.OnFindCaret();
+				//---滑块指向开始
+				this.defaultVScrollBar.Value = 0;
+				//---置位当前显示的行号位0
+				this.defaultRowNowNum = 0;
+				//---显示垂直滚动条
+				this.VScrollBarShow();
+				//---重新绘制窗体
+				this.Invalidate();
+			}
 			return true;
 		}
 

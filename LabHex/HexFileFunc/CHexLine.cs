@@ -324,6 +324,15 @@ namespace Harry.LabTools.LabHexEdit
 					this.defaultLogMessage = "Hex格式不识别错误!";
 					return false;
 			}
+			//---将数据的个数解析为偶数
+			if ((this.defaultLength&0x01)!=0)
+			{
+				this.defaultLength += 1;
+				//---修改缓存区的大小为指定大小
+				Array.Resize<byte>(ref this.defaultInfoData, this.defaultLength);
+				//---补偿最后一个数据为0xFF
+				this.defaultInfoData[this.defaultInfoData.Length - 1] = 0xFF;
+			}
 			return true;
 		}
 

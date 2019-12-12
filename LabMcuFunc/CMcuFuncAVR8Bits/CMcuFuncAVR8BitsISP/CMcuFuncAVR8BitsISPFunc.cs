@@ -1,4 +1,5 @@
 ﻿using Harry.LabTools.LabControlPlus;
+using Harry.LabTools.LabGenFunc;
 using Harry.LabTools.LabHexEdit;
 using System;
 using System.Collections.Generic;
@@ -296,6 +297,36 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
+		/// 编程Flash
+		/// </summary>
+		/// <param name="chb">Hex编辑器控件</param>
+		/// <returns></returns>
+		public override int CMcuFunc_WriteChipFlash(CHexBox chb, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 校验Flash
+		/// </summary>
+		/// <param name="flash"></param>
+		/// <returns></returns>
+		public override int CMcuFunc_CheckChipFlash(byte[] chipFlash, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 校验Flash
+		/// </summary>
+		/// <param name="chb">Hex编辑器控件</param>
+		/// <returns></returns>
+		public override int CMcuFunc_CheckChipFlash(CHexBox chb, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
 		/// 校验Flash为空
 		/// </summary>
 		/// <param name="msg"></param>
@@ -398,6 +429,26 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <param name="flash"></param>
 		/// <returns></returns>
 		public override int CMcuFunc_WriteChipEeprom(byte[] chipEeprom, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 校验Eeprom
+		/// </summary>
+		/// <param name="flash"></param>
+		/// <returns></returns>
+		public override int CMcuFunc_CheckChipEeprom(byte[] chipEeprom, RichTextBox msg)
+		{
+			return -1;
+		}
+
+		/// <summary>
+		/// 校验Eeprom
+		/// </summary>
+		/// <param name="chb">Hex编辑器控件</param>
+		/// <returns></returns>
+		public override int CMcuFunc_CheckChipEeprom(CHexBox chb, RichTextBox msg)
 		{
 			return -1;
 		}
@@ -757,7 +808,52 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public override int CMcuFunc_WriteChipFuse(byte[] chipFuse, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			//---校验通讯接口
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
+			{
+				//---发送命令
+				byte[] cmd = null;
+				//---校验拓展位
+				if (this.mMcuInfoParam.mChipFuse.Length > 2)
+				{
+					cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_FUSE_WRITE,0x01, chipFuse[0], chipFuse[1], chipFuse[2] };
+				}
+				else
+				{
+					cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_FUSE_WRITE,0x00, chipFuse[0], chipFuse[1]};
+				}				
+				//---读取命令
+				byte[] res = null;
+				//---发送并读取命令
+				_return = this.mCCOMM.SendCmdAndReadResponse(cmd, ref res);
+				//---校验结果
+				if (_return == 0)
+				{
+					if (this.mCCOMM.mReceCheckPass)
+					{
+						this.mMsgText = "ISP编程：熔丝位写入成功!";
+					}
+					else
+					{
+						_return = 1;
+						this.mMsgText = "ISP编程：熔丝位写入命令校验错误!";
+					}
+				}
+				else
+				{
+					this.mMsgText = this.mCCOMM.mLogMsg;
+				}
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			if (msg != null)
+			{
+				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.mMsgText, (_return == 0 ? Color.Black : Color.Red));
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -767,7 +863,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public override int CMcuFunc_WriteChipFuse(TextBox lowFuse, TextBox highFuse, TextBox externFuse, RichTextBox msg)
 		{
-			return -1;
+			return this.CMcuFunc_WriteChipFuse(new byte[] {Convert.ToByte(lowFuse.Text,16),Convert.ToByte(highFuse.Text,16),Convert.ToByte(externFuse.Text,16)}, msg);
 		}
 
 		/// <summary>
@@ -849,15 +945,23 @@ namespace Harry.LabTools.LabMcuFunc
 				{
 					if (this.mCCOMM.mReceCheckPass)
 					{
-						this.mMsgText = "ISP编程：ChipID读取成功!";
-						//---申请缓存区
-						chipID = new byte[this.mMcuInfoParam.mChipID.Length];
-						//---拷贝数据
-						Array.Copy(this.mCCOMM.mReceData.mArray, this.mCCOMM.mReceData.mIndexOffset, chipID, 0, chipID.Length);
+						if ((this.mCCOMM.mReceData.mLength - this.mCCOMM.mReceData.mIndexOffset) == this.mMcuInfoParam.mChipID.Length)
+						{
+							this.mMsgText = "ISP编程：ChipID读取成功!";
+							//---申请缓存区
+							chipID = new byte[this.mMcuInfoParam.mChipID.Length];
+							//---拷贝数据
+							Array.Copy(this.mCCOMM.mReceData.mArray, this.mCCOMM.mReceData.mIndexOffset, chipID, 0, chipID.Length);
+						}
+						else
+						{
+							this.mMsgText = "ISP编程：ChipID读取成功，但数据不完整!";
+							_return = 1;
+						}
 					}
 					else
 					{
-						_return = 1;
+						_return = 2;
 						this.mMsgText = "ISP编程：ChipID读取命令校验错误!";
 					}
 				}
@@ -882,29 +986,30 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chipID"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_ReadChipID(TextBox chipID, RichTextBox msg)
+		public override int CMcuFunc_ReadChipID(RichTextBox msg, Form form = null)
 		{
 			byte[] tempID = null;
 			//---读取ChipID
 			int _return = this.CMcuFunc_ReadChipID(ref tempID, msg);
 			//---校验读取结果
-			if ((_return==0)&&(tempID!=null)&&(tempID.Length==3))
+			if (_return==0)
 			{
-				if (chipID!=null)
+				if (CGenFuncEqual.GenFuncEqual(tempID, this.mMcuInfoParam.mChipID)==false)
 				{
-					if (chipID.InvokeRequired)
+					if (form != null)
 					{
-						chipID.BeginInvoke((EventHandler)
-											(delegate
-											{
-												chipID.Text = tempID[0].ToString("X2")+":"+ tempID[2].ToString("X2") + ":"+ tempID[2].ToString("X2");
-											}));
+						CMessageBoxPlus.Show(form, "芯片识别字不匹配\r\n读出识别字：" +
+													tempID[0].ToString("X2") + ":" + tempID[1].ToString("X2") + ":" + tempID[2].ToString("X2"), 
+													"消息提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 					}
 					else
 					{
-						chipID.Text = tempID[0].ToString("X2") + ":" + tempID[2].ToString("X2") + ":" + tempID[2].ToString("X2");
+						MessageBox.Show("芯片识别字不匹配\r\n读出识别字：" +
+													tempID[0].ToString("X2") + ":" + tempID[1].ToString("X2") + ":" + tempID[2].ToString("X2"),
+													"消息提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 					}
 				}
+				
 			}
 			return _return;
 		}
