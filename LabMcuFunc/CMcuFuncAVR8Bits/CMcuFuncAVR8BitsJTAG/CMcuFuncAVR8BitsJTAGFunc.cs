@@ -1,5 +1,4 @@
 ﻿using Harry.LabTools.LabControlPlus;
-using Harry.LabTools.LabHexEdit;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

@@ -578,16 +578,19 @@ namespace LabMcuForm
 					break;
 				//---加载Flash数据
 				case "button_LoadFlashFile":
-					this.defaultCMcuFunc.CMcuFunc_LoadFlashFile(this.cHexBox_Flash, cRichTextBoxEx_ChipMsg);
+					this.defaultCMcuFunc.CMcuFunc_LoadFlashHexFile(this.cHexBox_Flash,this.label_FlashSize, cRichTextBoxEx_ChipMsg);
 					break;
 				//---加载Eeprom
 				case "button_LoadEepromFile":
+					this.defaultCMcuFunc.CMcuFunc_LoadEepromHexFile(this.cHexBox_Eeprom, this.label_EepromSize, cRichTextBoxEx_ChipMsg);
 					break;
 				//---保存Flash
 				case "button_SaveFlashFile":
+					this.defaultCMcuFunc.CMcuFunc_SaveFlashHexFile(this.cHexBox_Flash, cRichTextBoxEx_ChipMsg);
 					break;
 				//---保存EEPROM文件
 				case "button_SaveEepromFile":
+					this.defaultCMcuFunc.CMcuFunc_SaveEepromHexFile(this.cHexBox_Eeprom, this.cRichTextBoxEx_ChipMsg);
 					break;
 				//---自动
 				case "button_AutoChip":

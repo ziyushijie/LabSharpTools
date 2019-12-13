@@ -73,7 +73,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ZedGraph", "ZedGraph", "{42
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZedGraph", "..\ZedGraph\ZedGraph.csproj", "{B99650EE-AF46-47B4-A4A9-212ADE7809B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabHexEdit", "LabHex\LabHexEdit.csproj", "{72D5A1AE-5BD4-4DC1-AF94-D760DB573C10}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabHexEdit", "LabHexEdit\LabHexEdit.csproj", "{72D5A1AE-5BD4-4DC1-AF94-D760DB573C10}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabMcuFunc", "LabMcuFunc\LabMcuFunc.csproj", "{22AE2121-9EBB-4772-9C2B-10BB545B4D2F}"
 EndProject

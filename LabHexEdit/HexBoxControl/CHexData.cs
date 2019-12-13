@@ -13,6 +13,20 @@ namespace Harry.LabTools.LabHexEdit
 	/// </summary>
 	public partial class CHexBox
 	{
+		#region 属性定义
+		
+		/// <summary>
+		/// 数据信息为只读
+		/// </summary>
+		public byte[] mDataMap
+		{
+			get
+			{
+				return this.defaultNowData;
+			}
+		}
+
+		#endregion
 
 		#region 绘制数据刻度
 		/// <summary>
@@ -179,7 +193,7 @@ namespace Harry.LabTools.LabHexEdit
 				return this.defaultNowData[pos];
 			}
 		}
-
+		
 		/// <summary>
 		/// 得到字符串数据
 		/// </summary>

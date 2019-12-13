@@ -219,8 +219,8 @@
       <Project>{C64AEEA0-7A08-4786-9F1E-BD66608E190E}</Project>
       <Name>LabGenFunc</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LabHex\LabHexEdit.csproj">
-      <Project>{72D5A1AE-5BD4-4DC1-AF94-D760DB573C10}</Project>
+    <ProjectReference Include="..\LabHexEdit\LabHexEdit.csproj">
+      <Project>{72d5a1ae-5bd4-4dc1-af94-d760db573c10}</Project>
       <Name>LabHexEdit</Name>
     </ProjectReference>
     <ProjectReference Include="..\LabMcuFunc\LabMcuFunc.csproj">

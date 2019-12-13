@@ -4,6 +4,7 @@ using Harry.LabTools.LabHexEdit;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -46,19 +47,21 @@ namespace Harry.LabTools.LabMcuFunc
 
 		#region Hex文件操作
 
+		#region 加载Flash
+
 		/// <summary>
 		/// 加载Flash文件
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <param name="msg"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_LoadFlashFile(ref byte[] flash, RichTextBox msg)
+		public virtual int CMcuFunc_LoadFlashHexFile(ref byte[] flash, RichTextBox msg)
 		{
 			int _return = -1;
 			OpenFileDialog flashFile = new OpenFileDialog();
 			flashFile.AddExtension = true;
 			flashFile.DefaultExt = "hex";
-			flashFile.Filter = " files(*.hex)|*.hex|All files(*.*)|*.*";
+			flashFile.Filter = "Intel Hex(*.hex)|*.hex|All files(*.*)|*.*";
 			flashFile.FilterIndex = 0;
 			//---选择文件
 			if ((flashFile.ShowDialog() == DialogResult.OK) && (!string.IsNullOrEmpty(flashFile.FileName)))
@@ -71,9 +74,9 @@ namespace Harry.LabTools.LabMcuFunc
 					//---填充默认数据是0xFF
 					CGenFuncMem.GenFuncMemset(ref flash, 0xFF);
 					//---数组拷贝
-					Array.Copy(loadFlash.mDataMap,0, flash, loadFlash.mSTARTAddr,loadFlash.mDataMap.Length);
+					Array.Copy(loadFlash.mDataMap, 0, flash, loadFlash.mSTARTAddr, loadFlash.mDataMap.Length);
 					//---消息显示
-					if (msg!=null)
+					if (msg != null)
 					{
 						CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "调入Flash文件:" + flashFile.FileName, Color.Black);
 					}
@@ -81,7 +84,7 @@ namespace Harry.LabTools.LabMcuFunc
 				}
 				else
 				{
-					MessageBox.Show("Flash文件加载失败","消息提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("加载Flash文件失败", "消息提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
 			return _return;
@@ -93,63 +96,14 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <param name="chb"></param>
 		/// <param name="msg"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_LoadFlashFile(CHexBox chb, RichTextBox msg)
+		public virtual int CMcuFunc_LoadFlashHexFile(CHexBox chb, RichTextBox msg)
 		{
 			byte[] flash = null;
-			int _return = this.CMcuFunc_LoadFlashFile(ref flash, msg);
-			//---校验结果
-			if ((_return==0)&&(flash!=null))
-			{
-				if (chb!=null)
-				{
-					if (chb.InvokeRequired)
-					{
-						chb.BeginInvoke((EventHandler)
-										(delegate
-										{
-											chb.AddData(flash, this.mMcuInfoParam.mChipFlashByteSize);
-										}));
-					}
-					else
-					{
-						chb.AddData(flash,this.mMcuInfoParam.mChipFlashByteSize);
-					}
-				}
-			}
-			return _return;
-		}
-
-		/// <summary>
-		/// 加载Flash文件
-		/// </summary>
-		/// <param name="chb"></param>
-		/// <param name="msg"></param>
-		/// <returns></returns>
-		public virtual int CMcuFunc_LoadFlashFile(CHexBox chb, Label flashSize,  RichTextBox msg)
-		{
-			byte[] flash = null;
-			int _return = this.CMcuFunc_LoadFlashFile(ref flash, msg);
+			//---加载Hex的数据
+			int _return = this.CMcuFunc_LoadFlashHexFile(ref flash, msg);
 			//---校验结果
 			if ((_return == 0) && (flash != null))
 			{
-				//---显示固件的大小
-				if (flashSize!=null)
-				{
-					if (flashSize.InvokeRequired)
-					{
-						flashSize.BeginInvoke((EventHandler)
-										(delegate
-										{
-											flashSize.Text = flash.Length.ToString() + "/" + this.mMcuInfoParam.mChipFlashByteSize.ToString();
-										}));
-					}
-					else
-					{
-						flashSize.Text = flash.Length.ToString() + "/" + this.mMcuInfoParam.mChipFlashByteSize.ToString();
-					}
-				}
-				
-				//---刷新数据到Hex控件中
 				if (chb != null)
 				{
 					if (chb.InvokeRequired)
@@ -170,18 +124,133 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
+		/// 加载Flash文件
+		/// </summary>
+		/// <param name="chb"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_LoadFlashHexFile(CHexBox chb, Label flashSize, RichTextBox msg)
+		{
+			byte[] flash = null;
+			//---加载Hex的数据
+			int _return = this.CMcuFunc_LoadFlashHexFile(ref flash, msg);
+			//---校验结果
+			if ((_return == 0) && (flash != null))
+			{
+				//---显示固件的大小
+				if (flashSize != null)
+				{
+					if (flashSize.InvokeRequired)
+					{
+						flashSize.BeginInvoke((EventHandler)
+										(delegate
+										{
+											flashSize.Text = flash.Length.ToString() + "/" + this.mMcuInfoParam.mChipFlashByteSize.ToString();
+										}));
+					}
+					else
+					{
+						flashSize.Text = flash.Length.ToString() + "/" + this.mMcuInfoParam.mChipFlashByteSize.ToString();
+					}
+				}
+
+				//---刷新数据到Hex控件中
+				if (chb != null)
+				{
+					if (chb.InvokeRequired)
+					{
+						chb.BeginInvoke((EventHandler)
+										(delegate
+										{
+											chb.AddData(flash, this.mMcuInfoParam.mChipFlashByteSize);
+										}));
+					}
+					else
+					{
+						chb.AddData(flash, this.mMcuInfoParam.mChipFlashByteSize);
+					}
+				}
+			}
+			return _return;
+		}
+
+		#endregion
+
+		#region 保存Flash
+
+		/// <summary>
+		/// 保存Flash文件
+		/// </summary>
+		/// <param name="flash"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_SaveFlashHexFile(byte[] flash, RichTextBox msg)
+		{
+			if ((flash != null) && (flash.Length > 1))
+			{
+				SaveFileDialog flashFile = new SaveFileDialog();
+				//---文件存在是是否提示覆盖
+				flashFile.OverwritePrompt = false; 
+				flashFile.DefaultExt = "hex";
+				flashFile.Filter = "Intel Hex(*.hex)|*.hex|All files(*.*)|*.*";
+				if (flashFile.ShowDialog() == DialogResult.OK)
+				{
+					//---Hex文件类
+					CHexFile flashHexFile = new CHexFile();
+					//---获取保存的数据
+					string[] _return = flashHexFile.SaveHexLine(flash);
+					//---将数据保存到指定文本中
+					using (StreamWriter sw = new StreamWriter(flashFile.FileName))
+					{
+						for (int i = 0; i < _return.Length; i++)
+						{
+							sw.Write(_return[i]);
+						}
+						sw.Close();
+					}
+					//---消息显示
+					if (msg != null)
+					{
+						CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "保存Flash文件:" + flashFile.FileName, Color.Black);
+					}
+					return 0;
+			}	}
+			else
+			{
+				MessageBox.Show("保存Flash文件失败", "消息提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+
+			return -1;
+		}
+
+		/// <summary>
+		/// 保存Flash文件
+		/// </summary>
+		/// <param name="chb"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_SaveFlashHexFile( CHexBox chb, RichTextBox msg)
+		{
+			return this.CMcuFunc_SaveFlashHexFile(chb.mDataMap,msg);
+		}
+
+		#endregion
+
+		#region 加载Eeprom
+
+		/// <summary>
 		/// 加载Eeprom
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <param name="msg"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_LoadEepromhFile(ref byte[] eeprom, RichTextBox msg)
+		public virtual int CMcuFunc_LoadEepromHexFile(ref byte[] eeprom, RichTextBox msg)
 		{
 			int _return = -1;
 			OpenFileDialog eepromFile = new OpenFileDialog();
 			eepromFile.AddExtension = true;
 			eepromFile.DefaultExt = "hex";
-			eepromFile.Filter = " files(*.hex)|*.hex|All files(*.*)|*.*";
+			eepromFile.Filter = "Intel Hex(*.hex)|*.hex|All files(*.*)|*.*";
 			eepromFile.FilterIndex = 0;
 			//---选择文件
 			if ((eepromFile.ShowDialog() == DialogResult.OK) && (!string.IsNullOrEmpty(eepromFile.FileName)))
@@ -216,10 +285,11 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <param name="chb"></param>
 		/// <param name="msg"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_LoadEepromhFile(CHexBox chb, RichTextBox msg)
+		public virtual int CMcuFunc_LoadEepromHexFile(CHexBox chb, RichTextBox msg)
 		{
 			byte[] eeprom = null;
-			int _return = this.CMcuFunc_LoadFlashFile(ref eeprom, msg);
+			//---加载Hex的数据
+			int _return = this.CMcuFunc_LoadFlashHexFile(ref eeprom, msg);
 			//---校验结果
 			if ((_return == 0) && (eeprom != null))
 			{
@@ -248,10 +318,11 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <param name="chb"></param>
 		/// <param name="msg"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_LoadEepromhFile(CHexBox chb, Label eepromSize, RichTextBox msg)
+		public virtual int CMcuFunc_LoadEepromHexFile(CHexBox chb, Label eepromSize, RichTextBox msg)
 		{
 			byte[] eeprom = null;
-			int _return = this.CMcuFunc_LoadFlashFile(ref eeprom, msg);
+			//---加载Hex的数据
+			int _return = this.CMcuFunc_LoadFlashHexFile(ref eeprom, msg);
 			//---校验结果
 			if ((_return == 0) && (eeprom != null))
 			{
@@ -291,6 +362,68 @@ namespace Harry.LabTools.LabMcuFunc
 			}
 			return _return;
 		}
+
+		#endregion
+
+		#region 保存Eeprom
+
+		/// <summary>
+		/// 保存Flash文件
+		/// </summary>
+		/// <param name="eeprom"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_SaveEepromHexFile(byte[] eeprom, RichTextBox msg)
+		{
+			if ((eeprom != null) && (eeprom.Length > 1))
+			{
+				SaveFileDialog eepromFile = new SaveFileDialog();
+				//---文件存在不提示提示覆盖
+				eepromFile.OverwritePrompt = false;
+				eepromFile.DefaultExt = "hex";
+				eepromFile.Filter = "Intel Hex(*.hex)|*.hex|All files(*.*)|*.*";
+				if (eepromFile.ShowDialog() == DialogResult.OK)
+				{
+					//---Hex文件类
+					CHexFile flashHexFile = new CHexFile();
+					//---获取保存的数据
+					string[] _return = flashHexFile.SaveHexLine(eeprom);
+					//---将数据保存到指定文本中
+					using (StreamWriter sw = new StreamWriter(eepromFile.FileName))
+					{
+						for (int i = 0; i < _return.Length; i++)
+						{
+							sw.Write(_return[i]);
+						}
+						sw.Close();
+					}
+					//---消息显示
+					if (msg != null)
+					{
+						CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "保存Eeprom文件:" + eepromFile.FileName, Color.Black);
+					}
+					return 0;
+				}
+			}
+			else
+			{
+				MessageBox.Show("保存Eeprom文件失败", "消息提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+			return -1;
+		}
+
+		/// <summary>
+		/// 保存Flash文件
+		/// </summary>
+		/// <param name="chb"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_SaveEepromHexFile(CHexBox chb, RichTextBox msg)
+		{
+			return this.CMcuFunc_SaveEepromHexFile(chb.mDataMap, msg);
+		}
+
+		#endregion
 
 		#endregion
 

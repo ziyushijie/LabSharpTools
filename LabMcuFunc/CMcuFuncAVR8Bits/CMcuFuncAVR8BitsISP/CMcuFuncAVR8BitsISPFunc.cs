@@ -64,7 +64,11 @@ namespace Harry.LabTools.LabMcuFunc
 			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
 				//---发送命令
-				byte[] cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_OPEN_CLOSE, 0x01 };
+				byte[] cmd = new byte[] {	(byte)CMCUFUNC_CMD_ISP.CMD_ISP_OPEN_CLOSE, 0x01,
+											(byte)((this.mMcuInfoParam.mPollReady==true)?1:0),
+											(byte)(this.mMcuInfoParam.mChipFlashPerPageWordNum>>8),(byte)(this.mMcuInfoParam.mChipFlashPerPageWordNum),
+											(byte)(this.mMcuInfoParam.mChipEepromPerPageByteNum>>8),(byte)(this.mMcuInfoParam.mChipEepromPerPageByteNum)
+										};
 				//---读取命令
 				byte[] res = null;
 				//---发送并读取命令
@@ -226,7 +230,92 @@ namespace Harry.LabTools.LabMcuFunc
 			//---校验通讯端口
 			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
-
+				if (chipFlash==null)
+				{
+					//---申请缓存区
+					chipFlash = new byte[this.mMcuInfoParam.mChipFlashByteSize];
+				}
+				//---长度大小
+				int length = 2;
+				//---每包数据最大数量
+				int packageMaxSize = 0;
+				//---最大包数
+				int packageMaxNum = 0;
+				//---数据的地址
+				long addr = 0;
+				//---发送命令
+				byte[] cmd = null;
+				//---命令定义解析
+				if (this.mCCOMM.mPerPackageMaxSize > 0xFF)
+				{
+					//---大数据长度数据传输
+					cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_FLASH_PAGE_READ, 0x00,0x00,0x00,0x00,0x00 };
+					length += 1;
+				}
+				else
+				{
+					//---小数据包长度
+					cmd= new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_FLASH_PAGE_READ, 0x00, 0x00, 0x00, 0x00, };
+				}
+				//---计算数据包的大小
+				packageMaxSize = this.mCCOMM.mPerPackageMaxSize - length;
+				//---数据长度必须是偶数
+				if ((packageMaxSize & 0x01)!=0)
+				{
+					packageMaxSize -= 1;
+				}
+				//---计算读取的包数
+				packageMaxNum = (int)(this.mMcuInfoParam.mChipFlashByteSize / packageMaxSize);
+				//---校验是不是整数包
+				if ((this.mMcuInfoParam.mChipFlashByteSize%packageMaxSize)!=0)
+				{
+					packageMaxNum += 1;
+				}
+				//---读取命令
+				byte[] res = null;
+				//---循环读取数据
+				for (int i=0;i<packageMaxNum;i++)
+				{
+					//---每包的数据长度
+					length = ((this.mMcuInfoParam.mChipFlashByteSize - i * packageMaxSize) > packageMaxSize) ? packageMaxSize : (int)(this.mMcuInfoParam.mChipFlashByteSize - i * packageMaxSize);
+					//---校验是不是大包数据传输
+					if (this.mCCOMM.mPerPackageMaxSize > 0xFF)
+					{
+						//---大数据长度数据传输
+						cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_FLASH_PAGE_READ,(byte)(addr>>16) , (byte)(addr>>8), (byte)(addr), (byte)(length>>8), (byte)(length) };
+					}
+					else
+					{
+						//---小数据包长度
+						cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_FLASH_PAGE_READ, (byte)(addr >> 16), (byte)(addr >> 8), (byte)(addr), (byte)(length) };
+					}
+					//---发送并读取命令
+					_return = this.mCCOMM.SendCmdAndReadResponse(cmd, ref res);
+					//---校验结果
+					if (_return == 0)
+					{
+						if (this.mCCOMM.mReceCheckPass)
+						{
+							//---将读取的数据拷贝到数据缓存区
+							Array.Copy(this.mCCOMM.mReceData.mArray, this.mCCOMM.mReceData.mIndexOffset, chipFlash, (addr * 2), length);
+							//---地址进行偏移，准备下次读取
+							addr += (length / 2);
+						}
+						else
+						{
+							_return = 1;
+							this.mMsgText = "ISP编程：Flash读取命令校验错误!";
+							//---退出循环
+							break;
+						}
+					}
+					else
+					{
+						this.mMsgText = this.mCCOMM.mLogMsg;
+						//---退出循环
+						break;
+					}
+				}
 			}
 			else
 			{
@@ -387,7 +476,107 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public override int CMcuFunc_ReadChipEeprom(ref byte[] chipEeprom, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			//---校验通讯端口
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
+			{
+				//---校验缓存区
+				if (chipEeprom == null)
+				{
+					//---申请缓存区
+					chipEeprom = new byte[this.mMcuInfoParam.mChipEepromByteSize];
+				}
+				//---长度大小
+				int length = 2;
+				//---每包数据最大数量
+				int packageMaxSize = 0;
+				//---最大包数
+				int packageMaxNum = 0;
+				//---数据的地址
+				long addr = 0;
+				//---发送命令
+				byte[] cmd = null;
+				//---命令定义解析
+				if (this.mCCOMM.mPerPackageMaxSize > 0xFF)
+				{
+					//---大数据长度数据传输
+					cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_EEPROM_PAGE_READ, 0x00, 0x00, 0x00, 0x00};
+					length += 1;
+				}
+				else
+				{
+					//---小数据包长度
+					cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_EEPROM_PAGE_READ, 0x00, 0x00, 0x00 };
+				}
+				//---计算数据包的大小
+				packageMaxSize = this.mCCOMM.mPerPackageMaxSize - length;
+				//---数据长度必须是偶数
+				if ((packageMaxSize & 0x01) != 0)
+				{
+					packageMaxSize -= 1;
+				}
+				//---计算读取的包数
+				packageMaxNum = (int)(this.mMcuInfoParam.mChipEepromByteSize / packageMaxSize);
+				//---校验是不是整数包
+				if ((this.mMcuInfoParam.mChipEepromByteSize % packageMaxSize) != 0)
+				{
+					packageMaxNum += 1;
+				}
+				//---读取命令
+				byte[] res = null;
+				//---循环读取数据
+				for (int i = 0; i < packageMaxNum; i++)
+				{
+					//---每包的数据长度
+					length = ((this.mMcuInfoParam.mChipEepromByteSize - i * packageMaxSize) > packageMaxSize) ? packageMaxSize : (int)(this.mMcuInfoParam.mChipEepromByteSize - i * packageMaxSize);
+					//---校验是不是大包数据传输
+					if (this.mCCOMM.mPerPackageMaxSize > 0xFF)
+					{
+						//---大数据长度数据传输
+						cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_EEPROM_PAGE_READ, (byte)(addr >> 8), (byte)(addr), (byte)(length >> 8), (byte)(length) };
+					}
+					else
+					{
+						//---小数据包长度
+						cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_EEPROM_PAGE_READ, (byte)(addr >> 8), (byte)(addr), (byte)(length) };
+					}
+					//---发送并读取命令
+					_return = this.mCCOMM.SendCmdAndReadResponse(cmd, ref res);
+					//---校验结果
+					if (_return == 0)
+					{
+						if (this.mCCOMM.mReceCheckPass)
+						{
+							//---将读取的数据拷贝到数据缓存区
+							Array.Copy(this.mCCOMM.mReceData.mArray, this.mCCOMM.mReceData.mIndexOffset, chipEeprom, addr, length);
+							//---地址进行偏移，准备下次读取
+							addr += length ;
+						}
+						else
+						{
+							_return = 1;
+							this.mMsgText = "ISP编程：Eeprom读取命令校验错误!";
+							//---退出循环
+							break;
+						}
+					}
+					else
+					{
+						this.mMsgText = this.mCCOMM.mLogMsg;
+						//---退出循环
+						break;
+					}
+				}
+			}
+			else
+			{
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			if (msg != null)
+			{
+				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.mMsgText, (_return == 0 ? Color.Black : Color.Red));
+			}
+			return _return;
 		}
 
 		/// <summary>

@@ -29,7 +29,6 @@ namespace Harry.LabTools.LabGenFunc
 					return false;
 				}
 			}
-
 			return true;
 		}
 

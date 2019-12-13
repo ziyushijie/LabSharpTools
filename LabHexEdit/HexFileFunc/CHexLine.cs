@@ -302,7 +302,7 @@ namespace Harry.LabTools.LabHexEdit
 					}
 					break;
 				case HexType.START_SEGMENT_ADDRESS_RECORD:
-					if (this.defaultLength != 2)
+					if (this.defaultLength != 4)
 					{
 						this.defaultLogMessage = "Hex格式段地址标识错误!";
 						return false;
@@ -316,7 +316,7 @@ namespace Harry.LabTools.LabHexEdit
 					}
 					break;
 				case HexType.START_LINEAR_ADDRESS_RECORD:
-					if (this.defaultLength != 2)
+					if (this.defaultLength != 4)
 					{
 						this.defaultLogMessage = "Hex格式开始线性地址标识错误!";
 						return false;

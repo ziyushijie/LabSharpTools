@@ -37,7 +37,7 @@ namespace Harry.LabTools.LabMcuFunc
 		private CMcuFuncAVR8BitsParam defaultInterface = null;//new byte[] { (byte)AVR8BITS_PROG_INTERFACE.ISP, (byte)AVR8BITS_PROG_INTERFACE.HVPP };
 
 		/// <summary>
-		/// 芯片是否支持轮训模式，true---支持，false---不支持，编程通过延时指定
+		/// 芯片是否支持轮训模式，true---支持，编程查询表示；false---不支持，编程通过延时指定
 		/// </summary>
 		private bool defaultChipPollReady = false;
 
