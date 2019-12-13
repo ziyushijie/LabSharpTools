@@ -81,6 +81,32 @@ namespace Harry.LabTools.LabGenFunc
 			return true;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="aArray"></param>
+		/// <param name="bArray"></param>
+		/// <returns></returns>
+		public static bool GenFuncEqual(byte[] aArray, byte[] bArray,ref int index)
+		{
+			if ((aArray == null) || (bArray == null) || (aArray.Length != bArray.Length))
+			{
+				return false;
+			}
+			else
+			{
+				for (int i = 0; i < aArray.Length; i++)
+				{
+					if (aArray[i] != bArray[i])
+					{
+						index += 1;
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
 		#endregion
 	}
 }

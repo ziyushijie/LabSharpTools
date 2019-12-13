@@ -392,7 +392,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public override int CMcuFunc_WriteChipFlash(CHexBox chb, RichTextBox msg)
 		{
-			return -1;
+			return this.CMcuFunc_WriteChipFlash(chb.mDataMap, msg);
 		}
 
 		/// <summary>
@@ -402,7 +402,30 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public override int CMcuFunc_CheckChipFlash(byte[] chipFlash, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			byte[] tempFlash = null;
+			_return = this.CMcuFunc_ReadChipFlash(ref tempFlash, msg);
+			//---校验Flash是否读取成功
+			if (_return == 0)
+			{
+				//---位置信息
+				int pos = 0;
+				//---校验数据是否相等
+				if (CGenFuncEqual.GenFuncEqual(tempFlash, chipFlash, ref pos) == true)
+				{
+					this.mMsgText = "ISP编程：Flash校验通过！";
+					if (msg != null)
+					{
+						CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.mMsgText, Color.Black);
+					}
+				}
+				else
+				{
+					_return = 1;
+					this.mMsgText = "ISP编程：Flash校验错误！";
+				}
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -412,7 +435,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public override int CMcuFunc_CheckChipFlash(CHexBox chb, RichTextBox msg)
 		{
-			return -1;
+			return this.CMcuFunc_CheckChipFlash(chb.mDataMap,msg);
 		}
 
 		/// <summary>
@@ -623,13 +646,46 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
+		/// 编程Eeprom
+		/// </summary>
+		/// <param name="flash"></param>
+		/// <returns></returns>
+		public override int CMcuFunc_WriteChipEeprom(CHexBox chb, RichTextBox msg)
+		{
+			return this.CMcuFunc_WriteChipEeprom(chb.mDataMap, msg);
+		}
+
+		/// <summary>
 		/// 校验Eeprom
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
 		public override int CMcuFunc_CheckChipEeprom(byte[] chipEeprom, RichTextBox msg)
 		{
-			return -1;
+			int _return = -1;
+			byte[] tempEeprom = null;
+			_return = this.CMcuFunc_ReadChipEeprom(ref tempEeprom, msg);
+			//---校验Eeprom是否读取成功
+			if (_return==0)
+			{
+				//---位置信息
+				int pos = 0;
+				//---校验数据是否相等
+				if (CGenFuncEqual.GenFuncEqual(tempEeprom, chipEeprom, ref pos) == true)
+				{
+					this.mMsgText = "ISP编程：Eeprom校验通过！";
+					if (msg != null)
+					{
+						CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.mMsgText,  Color.Black);
+					}
+				}
+				else
+				{
+					_return = 1;
+					this.mMsgText = "ISP编程：Eeprom校验错误！";
+				}
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -639,7 +695,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public override int CMcuFunc_CheckChipEeprom(CHexBox chb, RichTextBox msg)
 		{
-			return -1;
+			return this.CMcuFunc_CheckChipEeprom(chb.mDataMap, msg);
 		}
 
 		/// <summary>
