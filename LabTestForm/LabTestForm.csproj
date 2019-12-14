@@ -164,7 +164,7 @@
       <Project>{2BDCF93A-3A16-4AC3-A3F6-6E45601F13E5}</Project>
       <Name>LabFuncControl</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LabHex\LabHexEdit.csproj">
+    <ProjectReference Include="..\LabHexEdit\LabHexEdit.csproj">
       <Project>{72D5A1AE-5BD4-4DC1-AF94-D760DB573C10}</Project>
       <Name>LabHexEdit</Name>
     </ProjectReference>

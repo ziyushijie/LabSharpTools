@@ -635,9 +635,12 @@ namespace Harry.LabTools.LabCommType
 			}
 			//---获取开始时间标签
 			DateTime nowTime = DateTime.Now;
+			//---发送数据
 			int _return = this.WriteCmdToDevice(cmd, msg);
+			//---校验发送结果
 			if (_return==0)
 			{
+				//---读取响应
 				_return = this.ReadCmdFromDevice(ref res, timeout, msg);
 			}
 			//---结束时间
@@ -655,11 +658,24 @@ namespace Harry.LabTools.LabCommType
 		/// <returns></returns>
 		public override int SendCmdAndReadResponse(string cmd, ref string res, int timeout = 200, RichTextBox msg = null)
 		{
+			//---校验上一次的接收状态
+			if (this.defaultLastReceIsOK == false)
+			{
+				//---清空接收缓存区
+				this.defaultSerialPort.DiscardInBuffer();
+				//---清空发送缓存区
+				this.defaultSerialPort.DiscardOutBuffer();
+				//---置位上一次的数据接收为正常
+				this.defaultLastReceIsOK = true;
+			}
 			//---获取开始时间标签
 			DateTime nowTime = DateTime.Now;
+			//---发送数据
 			int _return = this.WriteCmdToDevice(cmd, msg);
+			//---校验发送结果
 			if (_return==0)
 			{
+				//---读取响应
 				_return = ReadCmdFromDevice(ref res, timeout, msg);
 			}
 			//---结束时间

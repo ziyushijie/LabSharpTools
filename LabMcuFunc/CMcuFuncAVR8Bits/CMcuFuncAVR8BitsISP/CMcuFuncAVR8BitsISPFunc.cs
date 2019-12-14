@@ -193,38 +193,11 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
-		/// 芯片擦除
-		/// </summary>
-		/// <returns></returns>
-		public override int CMcuFunc_EraseChip(TextBox lockFuse, RichTextBox msg)
-		{
-			//---擦除芯片
-			int _return = this.CMcuFunc_EraseChip(msg);
-			//---校验结果
-			if ((_return==0)&&(lockFuse!=null))
-			{
-				if (lockFuse.InvokeRequired)
-				{
-					lockFuse.BeginInvoke((EventHandler)
-											(delegate
-											{
-												lockFuse.Text = "FF";
-											}));
-				}
-				else
-				{
-					lockFuse.Text = "FF";
-				}
-			}
-			return _return;
-		}
-
-		/// <summary>
 		/// 读取Flash
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_ReadChipFlash(ref byte[] chipFlash, RichTextBox msg)
+		public override int CMcuFunc_ReadChipFlash(ref byte[] chipFlash, RichTextBox msg, ToolStripLabel workState = null, ToolStripLabel workTime = null, ToolStripProgressBar workBar = null, string str = "读取Flash")
 		{
 			int _return = -1;
 			//---校验通讯端口
@@ -235,6 +208,13 @@ namespace Harry.LabTools.LabMcuFunc
 					//---申请缓存区
 					chipFlash = new byte[this.mMcuInfoParam.mChipFlashByteSize];
 				}
+				//---工作状态
+				if (workState != null)
+				{
+					workState.Text = "读取Flash";
+				}
+				//---计算耗时
+				DateTime nowTime = DateTime.Now;
 				//---长度大小
 				int length = 2;
 				//---每包数据最大数量
@@ -258,7 +238,7 @@ namespace Harry.LabTools.LabMcuFunc
 					cmd= new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_FLASH_PAGE_READ, 0x00, 0x00, 0x00, 0x00, };
 				}
 				//---计算数据包的大小
-				packageMaxSize = this.mCCOMM.mPerPackageMaxSize - length;
+				packageMaxSize = this.mCCOMM.mPerPackageMaxSize - length-cmd.Length;
 				//---数据长度必须是偶数
 				if ((packageMaxSize & 0x01)!=0)
 				{
@@ -270,6 +250,13 @@ namespace Harry.LabTools.LabMcuFunc
 				if ((this.mMcuInfoParam.mChipFlashByteSize%packageMaxSize)!=0)
 				{
 					packageMaxNum += 1;
+				}
+				//---进度条
+				if (workBar != null)
+				{
+					workBar.Maximum = packageMaxNum;
+					workBar.Step = 1;
+					workBar.Value = 0;
 				}
 				//---读取命令
 				byte[] res = null;
@@ -315,6 +302,28 @@ namespace Harry.LabTools.LabMcuFunc
 						//---退出循环
 						break;
 					}
+					//---加载进度条
+					if (workBar != null)
+					{
+						workBar.Value += 1;
+					}
+				}
+				if (_return==0)
+				{
+					this.mMsgText = "ISP编程：Flash读取成功!";
+					TimeSpan timeSpan = DateTime.Now - nowTime;
+					if (workTime != null)
+					{
+						workTime.Text = timeSpan.Hours.ToString("#00") + ":" + timeSpan.Minutes.ToString("#00") + ":" + timeSpan.Seconds.ToString("#00");
+					}
+				}
+				if (workState != null)
+				{
+					workState.Text = "空闲";
+				}
+				if (workBar != null)
+				{
+					workBar.Value = 0;
 				}
 			}
 			else
@@ -324,39 +333,6 @@ namespace Harry.LabTools.LabMcuFunc
 			if (msg != null)
 			{
 				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.mMsgText, (_return == 0 ? Color.Black : Color.Red));
-			}
-			return _return;
-		}
-
-		/// <summary>
-		/// 读取Flash，并刷新到Hex编辑控件
-		/// </summary>
-		/// <param name="chb"></param>
-		/// <param name="msg"></param>
-		/// <returns></returns>
-		public override int CMcuFunc_ReadChipFlash(CHexBox chb, RichTextBox msg)
-		{
-			byte[] flash = null;
-			//---读取Flash数据
-			int _return = this.CMcuFunc_ReadChipFlash(ref flash,msg);
-			//---校验结果
-			if ((_return == 0) && (flash != null))
-			{
-				if (chb != null)
-				{
-					if (chb.InvokeRequired)
-					{
-						chb.BeginInvoke((EventHandler)
-												(delegate
-												{
-													chb.AddData(flash);
-												}));
-					}
-					else
-					{
-						chb.AddData(flash);
-					}
-				}
 			}
 			return _return;
 		}
@@ -366,16 +342,156 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_WriteChipFlash(byte[] chipFlash, RichTextBox msg)
+		public override int CMcuFunc_WriteChipFlash(byte[] chipFlash, RichTextBox msg, bool isAuto = false, ToolStripLabel  workState=null, ToolStripLabel workTime=null, ToolStripProgressBar workBar=null, string str = "编程Flash")
 		{
-			int _return = -1;
+			int _return = 0;
 			//---校验通讯端口
 			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
-			{
-
+			{	
+				//---校验是否需要进入编程模式
+				if (isAuto==true)
+				{
+					_return = this.CMcuFunc_OpenConnect(null);
+				}
+				//---校验编程模式，进入Flash编程任务
+				if (_return == 0)
+				{
+					//---工作状态
+					if (workState!=null)
+					{
+						workState.Text = str;// "编程Flash";
+					}
+					//---计算耗时
+					DateTime nowTime = DateTime.Now;
+					//---保存读取的数据
+					byte[][][] flash = null;
+					//---发送命令
+					byte[] cmd = null;
+					//---数据接收
+					byte[] res = null;
+					//---
+					int length = 2;
+					//---每包数据最大数量
+					int packageMaxSize = 0;
+					//---数据的地址
+					long addr = 0;
+					//---校验最大数据传输量
+					if (this.mCCOMM.mPerPackageMaxSize > 0xFF)
+					{
+						cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_FLASH_PAGE_WRITE, 0x00, 0x00, 0x00, 0x00, 0x00 };
+						length += 1;
+					}
+					else
+					{
+						cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_FLASH_PAGE_WRITE, 0x00, 0x00, 0x00, 0x00 };
+					}
+					//---计算数据包的大小
+					packageMaxSize = this.mCCOMM.mPerPackageMaxSize - length - cmd.Length;
+					//---数据长度必须是偶数
+					if ((packageMaxSize & 0x01) != 0)
+					{
+						packageMaxSize -= 1;
+					}
+					//---命令数据的偏移
+					int cmdDataOffset = cmd.Length;
+					//---将数据进行打包处理
+					flash = CGenFuncPackage.GenFuncPackage(chipFlash, this.mMcuInfoParam.mChipFlashPerPageByteNum, packageMaxSize);
+					//---进度条
+					if ((workBar!=null)&&(flash!=null))
+					{
+						workBar.Maximum = flash.Length;
+						workBar.Step = 1;
+						workBar.Value = 0;
+					}
+					//---大包数据处理
+					for (int i = 0; i < flash.Length; i++)
+					{
+						//---计算页地址
+						cmd[1] = (byte)(addr >> 16);
+						cmd[2] = (byte)(addr >> 8);
+						cmd[3] = (byte)(addr);
+						//---校验数据包是不是全0xFF
+						if (CGenFuncEqual.GenFuncEqual(CGenFuncUnPackage.GenFuncUnPackage(flash[i]))==false)
+						{
+							for (int j = 0; j < flash[i].Length; j++)
+							{
+								length = flash[i][j].Length;
+								//---重置发送数据缓存区的大小
+								Array.Resize<byte>(ref cmd, (length+ cmdDataOffset));
+								//---将数据拷贝到指定位置
+								Array.Copy(flash[i][j], 0, cmd, cmdDataOffset, length);
+								//---计算数据的长度
+								if (this.mCCOMM.mPerPackageMaxSize > 0xFF)
+								{
+									cmd[4] = (byte)(length>>8);
+									cmd[5] = (byte)(length);
+								}
+								else
+								{
+									cmd[4] = (byte)(length);
+								}
+								//---发送并读取命令
+								_return = this.mCCOMM.SendCmdAndReadResponse(cmd, ref res);
+								//---校验结果
+								if (_return == 0)
+								{
+									if (this.mCCOMM.mReceCheckPass==false)
+									{
+										_return = 1;
+										this.mMsgText = "ISP编程：Flash编程命令校验错误!";
+										//---退出循环
+										break;
+									}
+								}
+								else
+								{
+									this.mMsgText = this.mCCOMM.mLogMsg;
+									//---退出循环
+									break;
+								}
+							}
+						}
+						//---加载进度条
+						if (workBar != null)
+						{
+							workBar.Value +=1;
+						}
+						//---也地址进行偏移
+						addr += this.mMcuInfoParam.mChipFlashPerPageWordNum;
+						//---校验编程是否出错
+						if (_return!=0)
+						{
+							break;
+						}
+					}
+					if (_return == 0)
+					{
+						this.mMsgText = "ISP编程：Flash编程成功!";
+						TimeSpan timeSpan = DateTime.Now - nowTime;
+						if (workTime!=null)
+						{
+							workTime.Text = timeSpan.Hours.ToString("#00")+":"+ timeSpan.Minutes.ToString("#00") + ":"+ timeSpan.Seconds.ToString("#00");
+						}
+					}
+					if (workState != null)
+					{
+						workState.Text = "空闲";
+					}
+					if (workBar != null)
+					{
+						workBar.Value = 0;
+					}
+				}
+				else
+				{
+					MessageBox.Show("进入编程模式错误，请检查编程器与目标板的连线是否正确？",
+													"消息提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					return -2;
+				}
 			}
 			else
 			{
+				_return = -1;
 				this.mMsgText = "通讯端口初始化失败!";
 			}
 			if (msg != null)
@@ -383,16 +499,6 @@ namespace Harry.LabTools.LabMcuFunc
 				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.mMsgText, (_return == 0 ? Color.Black : Color.Red));
 			}
 			return _return;
-		}
-
-		/// <summary>
-		/// 编程Flash
-		/// </summary>
-		/// <param name="chb">Hex编辑器控件</param>
-		/// <returns></returns>
-		public override int CMcuFunc_WriteChipFlash(CHexBox chb, RichTextBox msg)
-		{
-			return this.CMcuFunc_WriteChipFlash(chb.mDataMap, msg);
 		}
 
 		/// <summary>
@@ -400,11 +506,11 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_CheckChipFlash(byte[] chipFlash, RichTextBox msg)
+		public override int CMcuFunc_CheckChipFlash(byte[] chipFlash, RichTextBox msg, ToolStripLabel workState = null, ToolStripLabel workTime = null, ToolStripProgressBar workBar = null, string str = "校验Flash")
 		{
 			int _return = -1;
 			byte[] tempFlash = null;
-			_return = this.CMcuFunc_ReadChipFlash(ref tempFlash, msg);
+			_return = this.CMcuFunc_ReadChipFlash(ref tempFlash, msg,workState,workTime,workBar,str);
 			//---校验Flash是否读取成功
 			if (_return == 0)
 			{
@@ -426,16 +532,6 @@ namespace Harry.LabTools.LabMcuFunc
 				}
 			}
 			return _return;
-		}
-
-		/// <summary>
-		/// 校验Flash
-		/// </summary>
-		/// <param name="chb">Hex编辑器控件</param>
-		/// <returns></returns>
-		public override int CMcuFunc_CheckChipFlash(CHexBox chb, RichTextBox msg)
-		{
-			return this.CMcuFunc_CheckChipFlash(chb.mDataMap,msg);
 		}
 
 		/// <summary>
@@ -468,6 +564,8 @@ namespace Harry.LabTools.LabMcuFunc
 						else
 						{
 							this.mMsgText = "ISP编程：Flash不为空!";
+							//---弹出窗体
+							MessageBox.Show("Flash不为空！", "消息提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 						}
 					}
 					else
@@ -497,7 +595,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_ReadChipEeprom(ref byte[] chipEeprom, RichTextBox msg)
+		public override int CMcuFunc_ReadChipEeprom(ref byte[] chipEeprom, RichTextBox msg, ToolStripLabel workState = null, ToolStripLabel workTime = null, ToolStripProgressBar workBar = null,string str="读取Eeprom")
 		{
 			int _return = -1;
 			//---校验通讯端口
@@ -509,6 +607,13 @@ namespace Harry.LabTools.LabMcuFunc
 					//---申请缓存区
 					chipEeprom = new byte[this.mMcuInfoParam.mChipEepromByteSize];
 				}
+				//---工作状态
+				if (workState != null)
+				{
+					workState.Text = str;//"读取Eeprom";
+				}
+				//---计算耗时
+				DateTime nowTime = DateTime.Now;
 				//---长度大小
 				int length = 2;
 				//---每包数据最大数量
@@ -532,7 +637,7 @@ namespace Harry.LabTools.LabMcuFunc
 					cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_EEPROM_PAGE_READ, 0x00, 0x00, 0x00 };
 				}
 				//---计算数据包的大小
-				packageMaxSize = this.mCCOMM.mPerPackageMaxSize - length;
+				packageMaxSize = this.mCCOMM.mPerPackageMaxSize - length - cmd.Length;
 				//---数据长度必须是偶数
 				if ((packageMaxSize & 0x01) != 0)
 				{
@@ -544,6 +649,13 @@ namespace Harry.LabTools.LabMcuFunc
 				if ((this.mMcuInfoParam.mChipEepromByteSize % packageMaxSize) != 0)
 				{
 					packageMaxNum += 1;
+				}
+				//---进度条
+				if (workBar != null)
+				{
+					workBar.Maximum = packageMaxNum;
+					workBar.Step = 1;
+					workBar.Value = 0;
 				}
 				//---读取命令
 				byte[] res = null;
@@ -590,6 +702,23 @@ namespace Harry.LabTools.LabMcuFunc
 						break;
 					}
 				}
+				if (_return == 0)
+				{
+					this.mMsgText = "ISP编程：Eeprom读取成功!";
+					TimeSpan timeSpan = DateTime.Now - nowTime;
+					if (workTime != null)
+					{
+						workTime.Text = timeSpan.Hours.ToString("#00") + ":" + timeSpan.Minutes.ToString("#00") + ":" + timeSpan.Seconds.ToString("#00");
+					}
+				}
+				if (workState != null)
+				{
+					workState.Text = "空闲";
+				}
+				if (workBar != null)
+				{
+					workBar.Value = 0;
+				}
 			}
 			else
 			{
@@ -603,56 +732,144 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
-		/// 读取EEPROM，并刷新到hex编辑控件中
+		/// 编程Eeprom
 		/// </summary>
-		/// <param name="chb"></param>
-		/// <param name="msg"></param>
+		/// <param name="flash"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_ReadChipEeprom(CHexBox chb, RichTextBox msg)
+		public override int CMcuFunc_WriteChipEeprom(byte[] chipEeprom, RichTextBox msg, ToolStripLabel workState = null, ToolStripLabel workTime = null, ToolStripProgressBar workBar = null,string str= "编程Eeprom")
 		{
-			byte[] eeprom = null;
-			//---读取Eeprom数据
-			int _return = this.CMcuFunc_ReadChipEeprom(ref eeprom, msg);
-			//---校验结果
-			if ((_return == 0) && (eeprom != null))
+			int _return = -1;
+			//---校验通讯端口
+			if ((this.mCCOMM != null) && (this.mCCOMM.mIsOpen == true))
 			{
-				if (chb != null)
+				//---工作状态
+				if (workState != null)
 				{
-					if (chb.InvokeRequired)
+					workState.Text = str;// "编程Flash";
+				}
+				//---计算耗时
+				DateTime nowTime = DateTime.Now;
+				//---保存读取的数据
+				byte[][] eeprom = null;
+				//---发送命令
+				byte[] cmd = null;
+				//---数据接收
+				byte[] res = null;
+				//---
+				int length = 2;
+				//---每包数据最大数量
+				int packageMaxSize = 0;
+				//---数据的地址
+				long addr = 0;
+				//---校验最大数据传输量
+				if (this.mCCOMM.mPerPackageMaxSize > 0xFF)
+				{
+					cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_EEPROM_PAGE_WRITE, 0x00, 0x00, 0x00, 0x00 };
+					length += 1;
+				}
+				else
+				{
+					cmd = new byte[] { (byte)CMCUFUNC_CMD_ISP.CMD_ISP_EEPROM_PAGE_WRITE, 0x00, 0x00, 0x00 };
+				}
+				//---计算数据包的大小
+				packageMaxSize = this.mCCOMM.mPerPackageMaxSize - length - cmd.Length;
+				//---数据长度必须是偶数
+				if ((packageMaxSize & 0x01) != 0)
+				{
+					packageMaxSize -= 1;
+				}
+				//---命令数据的偏移
+				int cmdDataOffset = cmd.Length;
+				//---将数据进行打包处理
+				eeprom = CGenFuncPackage.GenFuncPackage(chipEeprom, packageMaxSize);
+				//---进度条
+				if ((workBar != null) && (eeprom != null))
+				{
+					workBar.Maximum = eeprom.Length;
+					workBar.Step = 1;
+					workBar.Value = 0;
+				}
+				//---大包数据处理
+				for (int i = 0; i < eeprom.Length; i++)
+				{
+					//---计算页地址
+					cmd[1] = (byte)(addr >> 8);
+					cmd[2] = (byte)(addr);
+					length = eeprom[i].Length;
+					//---重置发送数据缓存区的大小
+					Array.Resize<byte>(ref cmd, (length + cmdDataOffset));
+					//---将数据拷贝到指定位置
+					Array.Copy(eeprom[i], 0, cmd, cmdDataOffset, length);
+					//---计算数据的长度
+					if (this.mCCOMM.mPerPackageMaxSize > 0xFF)
 					{
-						chb.BeginInvoke((EventHandler)
-												(delegate
-												{
-													chb.AddData(eeprom);
-												}));
+						cmd[3] = (byte)(length >> 8);
+						cmd[4] = (byte)(length);
 					}
 					else
 					{
-						chb.AddData(eeprom);
+						cmd[3] = (byte)(length);
+					}
+					//---发送并读取命令
+					_return = this.mCCOMM.SendCmdAndReadResponse(cmd, ref res,(length<15)?200:(length*15));
+					//---校验结果
+					if (_return == 0)
+					{
+						if (this.mCCOMM.mReceCheckPass == false)
+						{
+							_return = 1;
+							this.mMsgText = "ISP编程：Eeprom编程命令校验错误!";
+							//---退出循环
+							break;
+						}
+					}
+					else
+					{
+						this.mMsgText = this.mCCOMM.mLogMsg;
+						//---退出循环
+						break;
+					}
+					//---加载进度条
+					if (workBar != null)
+					{
+						workBar.Value += 1;
+					}
+					//---地址进行偏移
+					addr += packageMaxSize;
+					//---校验编程是否出错
+					if (_return != 0)
+					{
+						break;
 					}
 				}
+				if (_return == 0)
+				{
+					this.mMsgText = "ISP编程：Eeprom编程成功!";
+					TimeSpan timeSpan = DateTime.Now - nowTime;
+					if (workTime != null)
+					{
+						workTime.Text = timeSpan.Hours.ToString("#00") + ":" + timeSpan.Minutes.ToString("#00") + ":" + timeSpan.Seconds.ToString("#00");
+					}
+				}
+				if (workState != null)
+				{
+					workState.Text = "空闲";
+				}
+				if (workBar != null)
+				{
+					workBar.Value = 0;
+				}
+			}
+			else
+			{
+				_return = -1;
+				this.mMsgText = "通讯端口初始化失败!";
+			}
+			if (msg != null)
+			{
+				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.mMsgText, (_return == 0 ? Color.Black : Color.Red));
 			}
 			return _return;
-		}
-
-		/// <summary>
-		/// 编程Eeprom
-		/// </summary>
-		/// <param name="flash"></param>
-		/// <returns></returns>
-		public override int CMcuFunc_WriteChipEeprom(byte[] chipEeprom, RichTextBox msg)
-		{
-			return -1;
-		}
-
-		/// <summary>
-		/// 编程Eeprom
-		/// </summary>
-		/// <param name="flash"></param>
-		/// <returns></returns>
-		public override int CMcuFunc_WriteChipEeprom(CHexBox chb, RichTextBox msg)
-		{
-			return this.CMcuFunc_WriteChipEeprom(chb.mDataMap, msg);
 		}
 
 		/// <summary>
@@ -660,11 +877,11 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public override int CMcuFunc_CheckChipEeprom(byte[] chipEeprom, RichTextBox msg)
+		public override int CMcuFunc_CheckChipEeprom(byte[] chipEeprom, RichTextBox msg, ToolStripLabel workState = null, ToolStripLabel workTime = null, ToolStripProgressBar workBar = null, string str = "校验Eeprom")
 		{
 			int _return = -1;
 			byte[] tempEeprom = null;
-			_return = this.CMcuFunc_ReadChipEeprom(ref tempEeprom, msg);
+			_return = this.CMcuFunc_ReadChipEeprom(ref tempEeprom, msg,workState,workTime,workBar,str);
 			//---校验Eeprom是否读取成功
 			if (_return==0)
 			{
@@ -686,16 +903,6 @@ namespace Harry.LabTools.LabMcuFunc
 				}
 			}
 			return _return;
-		}
-
-		/// <summary>
-		/// 校验Eeprom
-		/// </summary>
-		/// <param name="chb">Hex编辑器控件</param>
-		/// <returns></returns>
-		public override int CMcuFunc_CheckChipEeprom(CHexBox chb, RichTextBox msg)
-		{
-			return this.CMcuFunc_CheckChipEeprom(chb.mDataMap, msg);
 		}
 
 		/// <summary>
@@ -727,6 +934,8 @@ namespace Harry.LabTools.LabMcuFunc
 						else
 						{
 							this.mMsgText = "ISP编程：Eeprom不为空!";
+							//---弹出窗体
+							MessageBox.Show("Eeprom不为空！", "消息提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 						}
 					}
 					else
@@ -802,167 +1011,6 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
-		/// 读取熔丝位
-		/// </summary>
-		/// <param name="chipFuse"></param>
-		/// <returns></returns>
-		public override int CMcuFunc_ReadChipFuse(TextBox lowFuse, TextBox highFuse, TextBox externFuse, RichTextBox msg)
-		{
-			byte[] fuse = null;
-			//---读取熔丝位
-			int _return = this.CMcuFunc_ReadChipFuse(ref fuse, msg);
-			//---判断读取结果
-			if ((_return==0)&&(fuse!=null)&&(fuse.Length>1))
-			{
-				//---低位熔丝位
-				if (lowFuse != null)
-				{
-					if (lowFuse.InvokeRequired)
-					{
-						lowFuse.BeginInvoke((EventHandler)
-											(delegate
-											{
-												lowFuse.Text = fuse[0].ToString("X2");
-											}));
-					}
-					else
-					{
-						lowFuse.Text = fuse[0].ToString("X2");
-					}
-				}
-
-				//---高位熔丝位
-				if (highFuse != null)
-				{
-					if (highFuse.InvokeRequired)
-					{
-						highFuse.BeginInvoke((EventHandler)
-												(delegate
-												{
-													highFuse.Text = fuse[1].ToString("X2");
-												}));
-					}
-					else
-					{
-						highFuse.Text = fuse[1].ToString("X2");
-					}
-				}
-
-				//---拓展位熔丝位
-				if (externFuse != null)
-				{
-					int tempFuse = 0;
-					if (fuse.Length > 2)
-					{
-						tempFuse = fuse[2];
-					}
-					else
-					{
-						tempFuse = 0;
-					}
-					if (externFuse.InvokeRequired)
-					{
-						externFuse.BeginInvoke((EventHandler)
-											(delegate
-											{
-												externFuse.Text = tempFuse.ToString("X2");
-											}));
-					}
-					else
-					{
-						externFuse.Text = tempFuse.ToString("X2");
-					}
-				}
-			}
-			return _return;
-		}
-
-		/// <summary>
-		/// 默认熔丝位
-		/// </summary>
-		/// <param name="chipFuse"></param>
-		/// <returns></returns>
-		public override int CMcuFunc_DefaultChipFuse(TextBox lowFuse, TextBox highFuse, TextBox externFuse, RichTextBox msg)
-		{
-			int _return = 0;
-			//---获取熔丝位
-			int[] fuse = this.mMcuInfoParam.McuDefaultFuseInfo();
-			//---校验熔丝位
-			if ((fuse == null)||(fuse.Length<2))
-			{
-				_return = 1;
-			}
-			else
-			{
-				//---低位熔丝位
-				if (lowFuse!=null)
-				{
-					if (lowFuse.InvokeRequired)
-					{
-						lowFuse.BeginInvoke((EventHandler)
-											(delegate
-											{
-												lowFuse.Text = fuse[0].ToString("X2");
-											}));
-					}
-					else
-					{
-						lowFuse.Text = fuse[0].ToString("X2");
-					}
-				}
-
-				//---高位熔丝位
-				if (highFuse!=null)
-				{
-					if (highFuse.InvokeRequired)
-					{
-						highFuse.BeginInvoke((EventHandler)
-												(delegate
-												{
-													highFuse.Text = fuse[1].ToString("X2");
-												}));
-					}
-					else
-					{
-						highFuse.Text = fuse[1].ToString("X2");
-					}
-				}
-
-				//---拓展位熔丝位
-				if (externFuse!=null)
-				{
-					int tempFuse = 0;
-					if (fuse.Length > 2)
-					{
-						tempFuse = fuse[2];
-					}
-					else
-					{
-						tempFuse = 0;
-					}
-					if (externFuse.InvokeRequired)
-					{
-						externFuse.BeginInvoke((EventHandler)
-											(delegate
-											{
-												externFuse.Text = tempFuse.ToString("X2");
-											}));
-					}
-					else
-					{
-						externFuse.Text = tempFuse.ToString("X2");
-					}
-				}
-				
-				if (msg!=null)
-				{
-					CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "默认熔丝位恢复成功!", Color.Black);
-				}
-			}
-			return _return;
-		}
-
-		/// <summary>
 		/// 读取加密位
 		/// </summary>
 		/// <param name="fuse"></param>
@@ -1006,42 +1054,6 @@ namespace Harry.LabTools.LabMcuFunc
 			if (msg != null)
 			{
 				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.mMsgText, (_return == 0 ? Color.Black : Color.Red));
-			}
-			return _return;
-		}
-
-		/// <summary>
-		/// 读取加密位
-		/// </summary>
-		/// <param name="lockFuse"></param>
-		/// <param name="msg"></param>
-		/// <returns></returns>
-		public override int CMcuFunc_ReadChipLock(TextBox lockFuse, RichTextBox msg)
-		{
-			byte tempLock = 0x00;
-			//---读取加密位
-			int _return = this.CMcuFunc_ReadChipLock(ref tempLock, msg);
-			//---校验读取结果
-			if (_return!=0)
-			{
-				tempLock = 0xFF;
-			}
-			//---加密位信息
-			if (lockFuse != null)
-			{
-				//---低位熔丝位
-				if (lockFuse.InvokeRequired)
-				{
-					lockFuse.BeginInvoke((EventHandler)
-										(delegate
-										{
-											lockFuse.Text = tempLock.ToString("X2");
-										}));
-				}
-				else
-				{
-					lockFuse.Text = tempLock.ToString("X2");
-				}
 			}
 			return _return;
 		}
@@ -1102,16 +1114,6 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
-		/// 写入熔丝位
-		/// </summary>
-		/// <param name="chipFuse"></param>
-		/// <returns></returns>
-		public override int CMcuFunc_WriteChipFuse(TextBox lowFuse, TextBox highFuse, TextBox externFuse, RichTextBox msg)
-		{
-			return this.CMcuFunc_WriteChipFuse(new byte[] {Convert.ToByte(lowFuse.Text,16),Convert.ToByte(highFuse.Text,16),Convert.ToByte(externFuse.Text,16)}, msg);
-		}
-
-		/// <summary>
 		/// 读取加密位
 		/// </summary>
 		/// <param name="fuse"></param>
@@ -1155,17 +1157,6 @@ namespace Harry.LabTools.LabMcuFunc
 				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.mMsgText, (_return == 0 ? Color.Black : Color.Red));
 			}
 			return _return;
-		}
-
-		/// <summary>
-		/// 写入加密位
-		/// </summary>
-		/// <param name="lockFuse"></param>
-		/// <param name="msg"></param>
-		/// <returns></returns>
-		public override int CMcuFunc_WriteChipLock(TextBox lockFuse, RichTextBox msg)
-		{
-			return this.CMcuFunc_WriteChipLock(Convert.ToByte(lockFuse.Text,16), msg);
 		}
 
 		/// <summary>
@@ -1227,39 +1218,6 @@ namespace Harry.LabTools.LabMcuFunc
 		}
 
 		/// <summary>
-		/// 读取芯片的ID信息
-		/// </summary>
-		/// <param name="chipID"></param>
-		/// <returns></returns>
-		public override int CMcuFunc_ReadChipID(RichTextBox msg, Form form = null)
-		{
-			byte[] tempID = null;
-			//---读取ChipID
-			int _return = this.CMcuFunc_ReadChipID(ref tempID, msg);
-			//---校验读取结果
-			if (_return==0)
-			{
-				if (CGenFuncEqual.GenFuncEqual(tempID, this.mMcuInfoParam.mChipID)==false)
-				{
-					if (form != null)
-					{
-						CMessageBoxPlus.Show(form, "芯片识别字不匹配\r\n读出识别字：" +
-													tempID[0].ToString("X2") + ":" + tempID[1].ToString("X2") + ":" + tempID[2].ToString("X2"), 
-													"消息提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-					}
-					else
-					{
-						MessageBox.Show("芯片识别字不匹配\r\n读出识别字：" +
-													tempID[0].ToString("X2") + ":" + tempID[1].ToString("X2") + ":" + tempID[2].ToString("X2"),
-													"消息提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-					}
-				}
-				
-			}
-			return _return;
-		}
-
-		/// <summary>
 		/// 读取校准字
 		/// </summary>
 		/// <param name="chipCalibration"></param>
@@ -1305,99 +1263,6 @@ namespace Harry.LabTools.LabMcuFunc
 			if (msg != null)
 			{
 				CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, this.mMsgText, (_return == 0 ? Color.Black : Color.Red));
-			}
-			return _return;
-		}
-
-		/// <summary>
-		/// 读取校准字
-		/// </summary>
-		/// <param name="chipCalibration"></param>
-		/// <returns></returns>
-		public override int CMcuFunc_ReadChipCalibration(TextBox oscValue1, TextBox oscValue2, TextBox oscValue3, TextBox oscValue4, RichTextBox msg)
-		{
-			byte[] chipCalibration = null;
-			//---读取校准字
-			int _return = this.CMcuFunc_ReadChipCalibration(ref chipCalibration, msg);
-			//---校验读取结果
-			if ((_return==0)&&(chipCalibration!=null))
-			{
-				for (int i = 0; i < chipCalibration.Length; i++)
-				{
-					switch (i)
-					{
-						case 0:
-							if (oscValue1.Visible==true)
-							{
-								if (oscValue1.InvokeRequired)
-								{
-									oscValue1.BeginInvoke((EventHandler)
-											(delegate
-											{
-												oscValue1.Text = chipCalibration[i].ToString("X2");
-											}));
-								}
-								else
-								{
-									oscValue1.Text = chipCalibration[i].ToString("X2");
-								}
-							}
-							break;
-						case 1:
-							if (oscValue2.Visible == true)
-							{
-								if (oscValue2.InvokeRequired)
-								{
-									oscValue2.BeginInvoke((EventHandler)
-											(delegate
-											{
-												oscValue2.Text = chipCalibration[i].ToString("X2");
-											}));
-								}
-								else
-								{
-									oscValue2.Text = chipCalibration[i].ToString("X2");
-								}
-							}
-							break;
-						case 2:
-							if (oscValue3.Visible == true)
-							{
-								if (oscValue3.InvokeRequired)
-								{
-									oscValue3.BeginInvoke((EventHandler)
-											(delegate
-											{
-												oscValue3.Text = chipCalibration[i].ToString("X2");
-											}));
-								}
-								else
-								{
-									oscValue3.Text = chipCalibration[i].ToString("X2");
-								}
-							}
-							break;
-						case 3:
-							if (oscValue4.Visible == true)
-							{
-								if (oscValue4.InvokeRequired)
-								{
-									oscValue4.BeginInvoke((EventHandler)
-											(delegate
-											{
-												oscValue4.Text = chipCalibration[i].ToString("X2");
-											}));
-								}
-								else
-								{
-									oscValue4.Text = chipCalibration[i].ToString("X2");
-								}
-							}
-							break;
-						default:
-							break;
-					}
-				}
 			}
 			return _return;
 		}

@@ -125,6 +125,54 @@ namespace LabMcuForm
 			}
 		}
 
+		/// <summary>
+		/// 系统类型
+		/// </summary>
+		private Boolean IsXpOr2003
+		{
+			get
+			{
+				OperatingSystem os = Environment.OSVersion;
+				Version vs = os.Version;
+				if (os.Platform == PlatformID.Win32NT)
+				{
+					if ((vs.Major == 5) && (vs.Minor != 0))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+
+			}
+		}
+
+		/// <summary>
+		/// 设置控件窗口创建参数的扩展风格
+		/// </summary>
+		//protected override CreateParams CreateParams
+		//{
+		//	get
+		//	{
+		//		CreateParams cp = base.CreateParams;
+		//		// Turn on WS_EX_COMPOSITED    
+		//		cp.ExStyle |= 0x02000000;
+		//		if (this.IsXpOr2003 == true)
+		//		{
+		//			// Turn on WS_EX_LAYERED  
+		//			cp.ExStyle |= 0x00080000;
+		//			this.Opacity = 1;
+		//		}
+		//		return cp;
+		//	}
+		//}
+
 		#endregion
 
 		#region 构造函数
@@ -610,27 +658,27 @@ namespace LabMcuForm
 					break;
 				//---读取Flash
 				case "button_ReadChipFlash":
-					this.defaultCMcuFunc.CMcuFunc_ReadChipFlash(this.cHexBox_Flash, this.cRichTextBoxEx_ChipMsg);
+					this.defaultCMcuFunc.CMcuFunc_ReadChipFlash(this.cHexBox_Flash, this.cRichTextBoxEx_ChipMsg,this.toolStripLabel_ChipState, this.toolStripLabel_ChipTime, this.toolStripProgressBar_ChipBar);
 					break;
 				//---编程Flash
 				case "button_WriteChipFlash":
-					this.defaultCMcuFunc.CMcuFunc_WriteChipFlash(this.cHexBox_Flash, this.cRichTextBoxEx_ChipMsg);
+					this.defaultCMcuFunc.CMcuFunc_WriteChipFlash(this.cHexBox_Flash, this.cRichTextBoxEx_ChipMsg,true,this.toolStripLabel_ChipState,this.toolStripLabel_ChipTime,this.toolStripProgressBar_ChipBar);
 					break;
 				//---校验Flash
 				case "button_CheckChipFlash":
-					this.defaultCMcuFunc.CMcuFunc_CheckChipFlash(this.cHexBox_Flash, this.cRichTextBoxEx_ChipMsg);
+					this.defaultCMcuFunc.CMcuFunc_CheckChipFlash(this.cHexBox_Flash, this.cRichTextBoxEx_ChipMsg,this.toolStripLabel_ChipState, this.toolStripLabel_ChipTime, this.toolStripProgressBar_ChipBar);
 					break;
 				//---读取Eeprom
 				case "button_ReadChipEeprom":
-					this.defaultCMcuFunc.CMcuFunc_ReadChipEeprom(this.cHexBox_Eeprom, this.cRichTextBoxEx_ChipMsg);
+					this.defaultCMcuFunc.CMcuFunc_ReadChipEeprom(this.cHexBox_Eeprom, this.cRichTextBoxEx_ChipMsg,this.toolStripLabel_ChipState, this.toolStripLabel_ChipTime, this.toolStripProgressBar_ChipBar);
 					break;
 				//---编程Eeprom
 				case "button_WriteChipEeprom":
-					this.defaultCMcuFunc.CMcuFunc_WriteChipEeprom(this.cHexBox_Eeprom, this.cRichTextBoxEx_ChipMsg);
+					this.defaultCMcuFunc.CMcuFunc_WriteChipEeprom(this.cHexBox_Eeprom, this.cRichTextBoxEx_ChipMsg,this.toolStripLabel_ChipState, this.toolStripLabel_ChipTime, this.toolStripProgressBar_ChipBar);
 					break;
 				//---校验Eeprom
 				case "button_CheckChipEeprom":
-					this.defaultCMcuFunc.CMcuFunc_CheckChipEeprom(this.cHexBox_Eeprom, this.cRichTextBoxEx_ChipMsg);
+					this.defaultCMcuFunc.CMcuFunc_CheckChipEeprom(this.cHexBox_Eeprom, this.cRichTextBoxEx_ChipMsg,this.toolStripLabel_ChipState, this.toolStripLabel_ChipTime, this.toolStripProgressBar_ChipBar);
 					break;
 				//---编程熔丝位
 				case "button_WriteChipFuse":

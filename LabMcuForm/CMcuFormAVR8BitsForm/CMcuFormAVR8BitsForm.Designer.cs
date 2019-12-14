@@ -56,11 +56,12 @@
 			this.button_ReadChipID = new System.Windows.Forms.Button();
 			this.textBox_ChipID = new System.Windows.Forms.TextBox();
 			this.label_ChipID = new System.Windows.Forms.Label();
-			this.tabControl_ChipProgram = new System.Windows.Forms.TabControl();
+			this.tabControl_ChipProgram = new Harry.LabTools.LabControlPlus.CTabControlEx();
 			this.tabPage_ChipFunc = new System.Windows.Forms.TabPage();
 			this.panel_ChipMsg = new System.Windows.Forms.Panel();
 			this.cRichTextBoxEx_ChipMsg = new Harry.LabTools.LabControlPlus.CRichTextBoxEx();
 			this.panel_ChipFunc = new System.Windows.Forms.Panel();
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse = new LabMcuForm.CMcuFormAVR8Bits.CMcuFormAVR8BitsFuseAndLockControl();
 			this.panel_ChipCheckFunc = new System.Windows.Forms.Panel();
 			this.label_EepromSize = new System.Windows.Forms.Label();
 			this.label_Eeprom = new System.Windows.Forms.Label();
@@ -109,20 +110,19 @@
 			this.toolStripSeparator_ChipTime = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripProgressBar_ChipBar = new System.Windows.Forms.ToolStripProgressBar();
 			this.tabPage_ChipEdit = new System.Windows.Forms.TabPage();
-			this.tabControl_ChipMemery = new System.Windows.Forms.TabControl();
+			this.tabControl_ChipMemery = new Harry.LabTools.LabControlPlus.CTabControlEx();
 			this.tabPage_Flash = new System.Windows.Forms.TabPage();
+			this.cHexBox_Flash = new Harry.LabTools.LabHexEdit.CHexBox();
 			this.tabPage_Eeprom = new System.Windows.Forms.TabPage();
+			this.cHexBox_Eeprom = new Harry.LabTools.LabHexEdit.CHexBox();
 			this.tabPage_ROM = new System.Windows.Forms.TabPage();
+			this.cHexBox_ROM = new Harry.LabTools.LabHexEdit.CHexBox();
 			this.menuStrip_ChipMenu = new System.Windows.Forms.MenuStrip();
 			this.ToolStripMenuItem_File = new System.Windows.Forms.ToolStripMenuItem();
 			this.ToolStripMenuItem_Cmd = new System.Windows.Forms.ToolStripMenuItem();
 			this.ToolStripMenuItem_Edit = new System.Windows.Forms.ToolStripMenuItem();
 			this.ToolStripMenuItem_About = new System.Windows.Forms.ToolStripMenuItem();
 			this.timer_ChipRTCTime = new System.Windows.Forms.Timer(this.components);
-			this.cHexBox_Flash = new Harry.LabTools.LabHexEdit.CHexBox();
-			this.cHexBox_Eeprom = new Harry.LabTools.LabHexEdit.CHexBox();
-			this.cHexBox_ROM = new Harry.LabTools.LabHexEdit.CHexBox();
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse = new LabMcuForm.CMcuFormAVR8Bits.CMcuFormAVR8BitsFuseAndLockControl();
 			this.panel_ChipID.SuspendLayout();
 			this.groupBox_ChipClock.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.trackBar_ChipClock)).BeginInit();
@@ -227,7 +227,7 @@
 			this.trackBar_ChipClock.Location = new System.Drawing.Point(3, 17);
 			this.trackBar_ChipClock.Maximum = 19;
 			this.trackBar_ChipClock.Name = "trackBar_ChipClock";
-			this.trackBar_ChipClock.Size = new System.Drawing.Size(336, 45);
+			this.trackBar_ChipClock.Size = new System.Drawing.Size(336, 51);
 			this.trackBar_ChipClock.TabIndex = 0;
 			this.trackBar_ChipClock.TickStyle = System.Windows.Forms.TickStyle.Both;
 			// 
@@ -501,6 +501,18 @@
 			this.panel_ChipFunc.Size = new System.Drawing.Size(1094, 284);
 			this.panel_ChipFunc.TabIndex = 6;
 			// 
+			// cMcuFormAVR8BitsFuseAndLockControl_ChipFuse
+			// 
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Dock = System.Windows.Forms.DockStyle.Left;
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Location = new System.Drawing.Point(0, 0);
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.MaximumSize = new System.Drawing.Size(515, 278);
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.mCMcuFunc = null;
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.MinimumSize = new System.Drawing.Size(515, 278);
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Name = "cMcuFormAVR8BitsFuseAndLockControl_ChipFuse";
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Size = new System.Drawing.Size(515, 278);
+			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.TabIndex = 2;
+			// 
 			// panel_ChipCheckFunc
 			// 
 			this.panel_ChipCheckFunc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -514,9 +526,9 @@
 			this.panel_ChipCheckFunc.Controls.Add(this.button_Erase);
 			this.panel_ChipCheckFunc.Controls.Add(this.cCheckedListBoxEx_Func2);
 			this.panel_ChipCheckFunc.Controls.Add(this.cCheckedListBoxEx_Func1);
-			this.panel_ChipCheckFunc.Location = new System.Drawing.Point(518, 5);
+			this.panel_ChipCheckFunc.Location = new System.Drawing.Point(518, 8);
 			this.panel_ChipCheckFunc.Name = "panel_ChipCheckFunc";
-			this.panel_ChipCheckFunc.Size = new System.Drawing.Size(569, 273);
+			this.panel_ChipCheckFunc.Size = new System.Drawing.Size(569, 271);
 			this.panel_ChipCheckFunc.TabIndex = 1;
 			// 
 			// label_EepromSize
@@ -942,7 +954,7 @@
 			this.toolStripLabel_ChipState.AutoSize = false;
 			this.toolStripLabel_ChipState.Name = "toolStripLabel_ChipState";
 			this.toolStripLabel_ChipState.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-			this.toolStripLabel_ChipState.Size = new System.Drawing.Size(160, 22);
+			this.toolStripLabel_ChipState.Size = new System.Drawing.Size(100, 22);
 			this.toolStripLabel_ChipState.Text = "空闲";
 			// 
 			// toolStripSeparator_ChipState
@@ -966,7 +978,7 @@
 			this.toolStripLabel_ChipTime.AutoSize = false;
 			this.toolStripLabel_ChipTime.Name = "toolStripLabel_ChipTime";
 			this.toolStripLabel_ChipTime.Size = new System.Drawing.Size(74, 22);
-			this.toolStripLabel_ChipTime.Text = "00-00-00";
+			this.toolStripLabel_ChipTime.Text = "00:00:00";
 			// 
 			// toolStripSeparator_ChipTime
 			// 
@@ -976,10 +988,11 @@
 			// toolStripProgressBar_ChipBar
 			// 
 			this.toolStripProgressBar_ChipBar.AutoSize = false;
-			this.toolStripProgressBar_ChipBar.Margin = new System.Windows.Forms.Padding(3, 1, 1, 1);
+			this.toolStripProgressBar_ChipBar.Margin = new System.Windows.Forms.Padding(3);
 			this.toolStripProgressBar_ChipBar.Name = "toolStripProgressBar_ChipBar";
 			this.toolStripProgressBar_ChipBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.toolStripProgressBar_ChipBar.Size = new System.Drawing.Size(466, 22);
+			this.toolStripProgressBar_ChipBar.Size = new System.Drawing.Size(466, 18);
+			this.toolStripProgressBar_ChipBar.Step = 1;
 			// 
 			// tabPage_ChipEdit
 			// 
@@ -1024,86 +1037,6 @@
 			this.tabPage_Flash.TabIndex = 0;
 			this.tabPage_Flash.Text = "FLASH";
 			this.tabPage_Flash.UseVisualStyleBackColor = true;
-			// 
-			// tabPage_Eeprom
-			// 
-			this.tabPage_Eeprom.BackColor = System.Drawing.Color.WhiteSmoke;
-			this.tabPage_Eeprom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tabPage_Eeprom.Controls.Add(this.cHexBox_Eeprom);
-			this.tabPage_Eeprom.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.tabPage_Eeprom.Location = new System.Drawing.Point(4, 4);
-			this.tabPage_Eeprom.Margin = new System.Windows.Forms.Padding(0);
-			this.tabPage_Eeprom.Name = "tabPage_Eeprom";
-			this.tabPage_Eeprom.Size = new System.Drawing.Size(1200, 637);
-			this.tabPage_Eeprom.TabIndex = 1;
-			this.tabPage_Eeprom.Text = "EEPROM";
-			this.tabPage_Eeprom.UseVisualStyleBackColor = true;
-			// 
-			// tabPage_ROM
-			// 
-			this.tabPage_ROM.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tabPage_ROM.Controls.Add(this.cHexBox_ROM);
-			this.tabPage_ROM.Location = new System.Drawing.Point(4, 4);
-			this.tabPage_ROM.Margin = new System.Windows.Forms.Padding(0);
-			this.tabPage_ROM.Name = "tabPage_ROM";
-			this.tabPage_ROM.Size = new System.Drawing.Size(1200, 637);
-			this.tabPage_ROM.TabIndex = 2;
-			this.tabPage_ROM.Text = "ROM";
-			this.tabPage_ROM.UseVisualStyleBackColor = true;
-			// 
-			// menuStrip_ChipMenu
-			// 
-			this.menuStrip_ChipMenu.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.menuStrip_ChipMenu.GripMargin = new System.Windows.Forms.Padding(2);
-			this.menuStrip_ChipMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItem_File,
-            this.ToolStripMenuItem_Cmd,
-            this.ToolStripMenuItem_Edit,
-            this.ToolStripMenuItem_About});
-			this.menuStrip_ChipMenu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-			this.menuStrip_ChipMenu.Location = new System.Drawing.Point(2, 2);
-			this.menuStrip_ChipMenu.Margin = new System.Windows.Forms.Padding(3);
-			this.menuStrip_ChipMenu.Name = "menuStrip_ChipMenu";
-			this.menuStrip_ChipMenu.Padding = new System.Windows.Forms.Padding(3);
-			this.menuStrip_ChipMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.menuStrip_ChipMenu.Size = new System.Drawing.Size(1218, 26);
-			this.menuStrip_ChipMenu.TabIndex = 3;
-			this.menuStrip_ChipMenu.Text = "menuStrip1";
-			// 
-			// ToolStripMenuItem_File
-			// 
-			this.ToolStripMenuItem_File.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-			this.ToolStripMenuItem_File.Name = "ToolStripMenuItem_File";
-			this.ToolStripMenuItem_File.Padding = new System.Windows.Forms.Padding(2);
-			this.ToolStripMenuItem_File.Size = new System.Drawing.Size(55, 20);
-			this.ToolStripMenuItem_File.Text = "文件(&Z)";
-			// 
-			// ToolStripMenuItem_Cmd
-			// 
-			this.ToolStripMenuItem_Cmd.Name = "ToolStripMenuItem_Cmd";
-			this.ToolStripMenuItem_Cmd.Padding = new System.Windows.Forms.Padding(2);
-			this.ToolStripMenuItem_Cmd.Size = new System.Drawing.Size(55, 20);
-			this.ToolStripMenuItem_Cmd.Text = "命令(&Y)";
-			// 
-			// ToolStripMenuItem_Edit
-			// 
-			this.ToolStripMenuItem_Edit.Name = "ToolStripMenuItem_Edit";
-			this.ToolStripMenuItem_Edit.Padding = new System.Windows.Forms.Padding(2);
-			this.ToolStripMenuItem_Edit.Size = new System.Drawing.Size(55, 20);
-			this.ToolStripMenuItem_Edit.Text = "编辑(&X)";
-			// 
-			// ToolStripMenuItem_About
-			// 
-			this.ToolStripMenuItem_About.Name = "ToolStripMenuItem_About";
-			this.ToolStripMenuItem_About.Padding = new System.Windows.Forms.Padding(2);
-			this.ToolStripMenuItem_About.Size = new System.Drawing.Size(55, 20);
-			this.ToolStripMenuItem_About.Text = "关于(&W)";
-			// 
-			// timer_ChipRTCTime
-			// 
-			this.timer_ChipRTCTime.Enabled = true;
-			this.timer_ChipRTCTime.Interval = 1000;
-			this.timer_ChipRTCTime.Tag = "timer_ChipRTCTime";
 			// 
 			// cHexBox_Flash
 			// 
@@ -1658,6 +1591,20 @@
 			this.cHexBox_Flash.TabIndex = 0;
 			this.cHexBox_Flash.Text = "Flash";
 			// 
+			// tabPage_Eeprom
+			// 
+			this.tabPage_Eeprom.BackColor = System.Drawing.Color.WhiteSmoke;
+			this.tabPage_Eeprom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tabPage_Eeprom.Controls.Add(this.cHexBox_Eeprom);
+			this.tabPage_Eeprom.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.tabPage_Eeprom.Location = new System.Drawing.Point(4, 4);
+			this.tabPage_Eeprom.Margin = new System.Windows.Forms.Padding(0);
+			this.tabPage_Eeprom.Name = "tabPage_Eeprom";
+			this.tabPage_Eeprom.Size = new System.Drawing.Size(1200, 637);
+			this.tabPage_Eeprom.TabIndex = 1;
+			this.tabPage_Eeprom.Text = "EEPROM";
+			this.tabPage_Eeprom.UseVisualStyleBackColor = true;
+			// 
 			// cHexBox_Eeprom
 			// 
 			this.cHexBox_Eeprom.BackColor = System.Drawing.Color.White;
@@ -2209,6 +2156,18 @@
 			this.cHexBox_Eeprom.Size = new System.Drawing.Size(1198, 635);
 			this.cHexBox_Eeprom.TabIndex = 1;
 			this.cHexBox_Eeprom.Text = "Eeprom";
+			// 
+			// tabPage_ROM
+			// 
+			this.tabPage_ROM.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tabPage_ROM.Controls.Add(this.cHexBox_ROM);
+			this.tabPage_ROM.Location = new System.Drawing.Point(4, 4);
+			this.tabPage_ROM.Margin = new System.Windows.Forms.Padding(0);
+			this.tabPage_ROM.Name = "tabPage_ROM";
+			this.tabPage_ROM.Size = new System.Drawing.Size(1200, 637);
+			this.tabPage_ROM.TabIndex = 2;
+			this.tabPage_ROM.Text = "ROM";
+			this.tabPage_ROM.UseVisualStyleBackColor = true;
 			// 
 			// cHexBox_ROM
 			// 
@@ -2762,17 +2721,59 @@
 			this.cHexBox_ROM.TabIndex = 1;
 			this.cHexBox_ROM.Text = "ROM";
 			// 
-			// cMcuFormAVR8BitsFuseAndLockControl_ChipFuse
+			// menuStrip_ChipMenu
 			// 
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Dock = System.Windows.Forms.DockStyle.Left;
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Location = new System.Drawing.Point(0, 0);
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.MaximumSize = new System.Drawing.Size(515, 278);
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.mCMcuFunc = null;
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.MinimumSize = new System.Drawing.Size(515, 278);
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Name = "cMcuFormAVR8BitsFuseAndLockControl_ChipFuse";
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.Size = new System.Drawing.Size(515, 278);
-			this.cMcuFormAVR8BitsFuseAndLockControl_ChipFuse.TabIndex = 2;
+			this.menuStrip_ChipMenu.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.menuStrip_ChipMenu.GripMargin = new System.Windows.Forms.Padding(2);
+			this.menuStrip_ChipMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItem_File,
+            this.ToolStripMenuItem_Cmd,
+            this.ToolStripMenuItem_Edit,
+            this.ToolStripMenuItem_About});
+			this.menuStrip_ChipMenu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+			this.menuStrip_ChipMenu.Location = new System.Drawing.Point(2, 2);
+			this.menuStrip_ChipMenu.Margin = new System.Windows.Forms.Padding(3);
+			this.menuStrip_ChipMenu.Name = "menuStrip_ChipMenu";
+			this.menuStrip_ChipMenu.Padding = new System.Windows.Forms.Padding(3);
+			this.menuStrip_ChipMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+			this.menuStrip_ChipMenu.Size = new System.Drawing.Size(1218, 26);
+			this.menuStrip_ChipMenu.TabIndex = 3;
+			this.menuStrip_ChipMenu.Text = "menuStrip1";
+			// 
+			// ToolStripMenuItem_File
+			// 
+			this.ToolStripMenuItem_File.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.ToolStripMenuItem_File.Name = "ToolStripMenuItem_File";
+			this.ToolStripMenuItem_File.Padding = new System.Windows.Forms.Padding(2);
+			this.ToolStripMenuItem_File.Size = new System.Drawing.Size(55, 20);
+			this.ToolStripMenuItem_File.Text = "文件(&Z)";
+			// 
+			// ToolStripMenuItem_Cmd
+			// 
+			this.ToolStripMenuItem_Cmd.Name = "ToolStripMenuItem_Cmd";
+			this.ToolStripMenuItem_Cmd.Padding = new System.Windows.Forms.Padding(2);
+			this.ToolStripMenuItem_Cmd.Size = new System.Drawing.Size(55, 20);
+			this.ToolStripMenuItem_Cmd.Text = "命令(&Y)";
+			// 
+			// ToolStripMenuItem_Edit
+			// 
+			this.ToolStripMenuItem_Edit.Name = "ToolStripMenuItem_Edit";
+			this.ToolStripMenuItem_Edit.Padding = new System.Windows.Forms.Padding(2);
+			this.ToolStripMenuItem_Edit.Size = new System.Drawing.Size(55, 20);
+			this.ToolStripMenuItem_Edit.Text = "编辑(&X)";
+			// 
+			// ToolStripMenuItem_About
+			// 
+			this.ToolStripMenuItem_About.Name = "ToolStripMenuItem_About";
+			this.ToolStripMenuItem_About.Padding = new System.Windows.Forms.Padding(2);
+			this.ToolStripMenuItem_About.Size = new System.Drawing.Size(55, 20);
+			this.ToolStripMenuItem_About.Text = "关于(&W)";
+			// 
+			// timer_ChipRTCTime
+			// 
+			this.timer_ChipRTCTime.Enabled = true;
+			this.timer_ChipRTCTime.Interval = 1000;
+			this.timer_ChipRTCTime.Tag = "timer_ChipRTCTime";
 			// 
 			// CMcuFormAVR8BitsForm
 			// 
@@ -2781,6 +2782,7 @@
 			this.ClientSize = new System.Drawing.Size(1222, 723);
 			this.Controls.Add(this.tabControl_ChipProgram);
 			this.Controls.Add(this.menuStrip_ChipMenu);
+			this.DoubleBuffered = true;
 			this.MainMenuStrip = this.menuStrip_ChipMenu;
 			this.Name = "CMcuFormAVR8BitsForm";
 			this.Padding = new System.Windows.Forms.Padding(2);
@@ -2832,8 +2834,8 @@
 		private System.Windows.Forms.Button button_SetChipInterface;
 		private System.Windows.Forms.ComboBox comboBox_ChipInterface;
 		private System.Windows.Forms.Button button_ReadChipID;
-		private System.Windows.Forms.TabControl tabControl_ChipProgram;
-		private System.Windows.Forms.TabPage tabPage_ChipFunc;
+       // private Harry.LabTools.LabControlPlus.CTabControlEx tabControl_ChipProgram;
+        private System.Windows.Forms.TabPage tabPage_ChipFunc;
 		private System.Windows.Forms.TabPage tabPage_ChipEdit;
 		private System.Windows.Forms.Button button_ReadChipRefPWR;
 		private System.Windows.Forms.Label label_ChipRefPWRUnite;
@@ -2847,8 +2849,9 @@
 		private System.Windows.Forms.TextBox textBox_ChipPWR;
 		private System.Windows.Forms.Label label_ChipPWR;
 		private System.Windows.Forms.Button button_SetChipPWR;
-		private System.Windows.Forms.TabControl tabControl_ChipMemery;
-		private System.Windows.Forms.TabPage tabPage_Flash;
+        //private System.Windows.Forms.TabControl tabControl_ChipMemery;
+        private Harry.LabTools.LabControlPlus.CTabControlEx tabControl_ChipMemery;
+        private System.Windows.Forms.TabPage tabPage_Flash;
 		private System.Windows.Forms.TabPage tabPage_Eeprom;
 		private System.Windows.Forms.MenuStrip menuStrip_ChipMenu;
 		private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_File;
@@ -2916,5 +2919,6 @@
 		private System.Windows.Forms.Label label_EepromSize;
 		private System.Windows.Forms.Label label_Eeprom;
         private CMcuFormAVR8Bits.CMcuFormAVR8BitsFuseAndLockControl cMcuFormAVR8BitsFuseAndLockControl_ChipFuse;
+        private Harry.LabTools.LabControlPlus.CTabControlEx tabControl_ChipProgram;
     }
 }

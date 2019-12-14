@@ -66,6 +66,53 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 			}
 		}
 
+		/// <summary>
+		/// 系统类型
+		/// </summary>
+		private Boolean IsXpOr2003
+		{
+			get
+			{
+				OperatingSystem os = Environment.OSVersion;
+				Version vs = os.Version;
+				if (os.Platform == PlatformID.Win32NT)
+				{
+					if ((vs.Major == 5) && (vs.Minor != 0))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				else
+				{
+					return false;
+				}
+
+			}
+		}
+
+		/// <summary>
+		/// 设置控件窗口创建参数的扩展风格
+		/// </summary>
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				// Turn on WS_EX_COMPOSITED    
+				cp.ExStyle |= 0x02000000;
+				if (this.IsXpOr2003 == true)
+				{
+					// Turn on WS_EX_LAYERED  
+					cp.ExStyle |= 0x00080000;
+				}
+				return cp;
+			}
+		}
+
 
 		#endregion
 
@@ -232,6 +279,8 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 				return;
 			}
 			CheckedListBox clb = (CheckedListBox)sender;
+			//---这里是为防止双击效果
+			CGenFuncDelay.GenFuncDelayms(150);
 			//clb.Enabled = false;
 			if (clb.SelectedItem.ToString() == "NC")
 			{
@@ -266,8 +315,6 @@ namespace LabMcuForm.CMcuFormAVR8Bits
 						break;
 				}
 			}
-			//---这里是为防止双击效果
-			CGenFuncDelay.GenFuncDelayms(150);
 			//clb.Enabled = true;
 			//设置输入焦点
 			clb.Focus();

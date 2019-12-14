@@ -77,6 +77,18 @@ namespace Harry.LabTools.LabControlPlus
 
 		#region 构造函数
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public CNumericUpDownEx()
+		{
+			//设置控件风格
+			this.SetStyle(ControlStyles.AllPaintingInWmPaint |  //全部在窗口绘制消息中绘图
+							ControlStyles.OptimizedDoubleBuffer,    //使用双缓冲
+							true
+						);
+		}
+
 		#endregion
 
 		#region 事件定义

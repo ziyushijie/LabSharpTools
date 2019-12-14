@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Harry.LabTools.LabHexEdit
 {
@@ -55,7 +56,7 @@ namespace Harry.LabTools.LabHexEdit
 		/// 数据缓存区
 		/// </summary>
 		private byte[] defaultDataMap = null;
-
+		
 		#endregion
 
 		#region 属性定义
@@ -246,6 +247,7 @@ namespace Harry.LabTools.LabHexEdit
 							this.defaultLogMessage = "第" + i.ToString() + "行" + "的数据解析错误!" + readHexLine.LogMessage + "\r\n";
 							return false;
 						}
+						Application.DoEvents();
 					}
 				}
 			}
@@ -291,52 +293,37 @@ namespace Harry.LabTools.LabHexEdit
 			//---将解析后的数据填充到数据缓存区
 			for (int i = 0; i < this.defaultCHexLine.Count; i++)
 			{
-				/*
-				//byte[] buffer = null;
 				//---数据类型的解析
 				switch (this.defaultCHexLine[i].Type)
 				{
-					case HexType.DATA_RECORD:
-						//---拷贝数据
-						Array.Copy(this.defaultCHexLine[i].InfoData, 0, _return, (this.defaultCHexLine[i].Addr), this.defaultCHexLine[i].Length);
-						break;
-					case HexType.END_OF_FILE_RECORD:
-						break;
-					case HexType.EXTEND_SEGMENT_ADDRESS_RECORD:
-						break;
-					case HexType.START_SEGMENT_ADDRESS_RECORD:
-						break;
-					case HexType.EXTEND_LINEAR_ADDRESS_RECORD:
-						break;
-					case HexType.START_LINEAR_ADDRESS_RECORD:
-						break;
-					default:
-						return null;
-				}
-				*/
-				//---数据类型的解析
-				switch (this.defaultCHexLine[i].Type)
-				{
+					//---记录数据
 					case HexType.DATA_RECORD:
 						//---拷贝数据
 						Array.Copy(this.defaultCHexLine[i].InfoData, 0, _return, ((this.defaultCHexLine[i].Addr)+myAddr), this.defaultCHexLine[i].Length);
 						break;
+					//---文件结束记录
 					case HexType.END_OF_FILE_RECORD:                    //1
 						break;
+					//---扩展段地址
 					case HexType.EXTEND_SEGMENT_ADDRESS_RECORD:         //2
+						//--解析段地址
 						buffer = new byte[2] { this.defaultCHexLine[i].InfoData[1], this.defaultCHexLine[i].InfoData[0] };
 						myAddr = BitConverter.ToUInt16(buffer, 0);
 						myAddr <<= 4;
 						break;
+					//---开始段地址
 					case HexType.START_SEGMENT_ADDRESS_RECORD:          //3
 						break;
+					//---扩展线性地址
 					case HexType.EXTEND_LINEAR_ADDRESS_RECORD:          //4
+						//---解析拓展线性地址
 						buffer = new byte[2] { this.defaultCHexLine[i].InfoData[1], this.defaultCHexLine[i].InfoData[0] };
 						//---将字节地址转换成字地址
 						myAddr = BitConverter.ToUInt16(buffer, 0);
 						//---将拓展线性地址转换成实际的对应的地址段
 						myAddr <<= 16;
 						break;
+					//---开始线性地址
 					case HexType.START_LINEAR_ADDRESS_RECORD:           //5
 						break;
 					default:
@@ -487,7 +474,7 @@ namespace Harry.LabTools.LabHexEdit
 		{
 			List<string> hexFile = new List<string>();
 			//---保存数据记录行
-			hexFile.AddRange(this.SaveHexLine(val, 32, 0));
+			hexFile.AddRange(this.SaveHexLine(val, 16, 0));
 			//---添加数据结束行
 			hexFile.Add(CHexLine.ToHexLineEndOfFileRecord());
 			string _return = "";
@@ -507,7 +494,7 @@ namespace Harry.LabTools.LabHexEdit
 		{
 			List<string> hexFile = new List<string>();
 			//---保存数据记录行
-			hexFile.AddRange(this.SaveHexLine(val, 32, 0));
+			hexFile.AddRange(this.SaveHexLine(val, 16, 0));
 			//---添加数据结束行
 			hexFile.Add(CHexLine.ToHexLineEndOfFileRecord());
 			//---返回结果
@@ -544,6 +531,12 @@ namespace Harry.LabTools.LabHexEdit
 			{
 				lineCount += 1;
 			}
+			//---校验是大文件，添加拓展线性地址，线性地址是0
+			if (val.Length>65536)
+			{
+				//---拓展段地址
+				_return.Add(CHexLine.ToHexLineExternSegmentAddrRecord(0));
+			}
 			//---数据地址
 			long baseAddr = addr;
 			//---数据保存处理
@@ -561,8 +554,9 @@ namespace Harry.LabTools.LabHexEdit
 				{
 					//---对65536求整处理
 					long externLineAddr = (baseAddr / 65536);
-					//---拓展线性定制
-					temp = CHexLine.ToHexLineExternLineAddrRecord(externLineAddr);
+					//---拓展段地址
+					//temp = CHexLine.ToHexLineExternLineAddrRecord(externLineAddr);
+					temp = CHexLine.ToHexLineExternSegmentAddrRecord(externLineAddr);
 					_return.Add(temp);
 				}
 				

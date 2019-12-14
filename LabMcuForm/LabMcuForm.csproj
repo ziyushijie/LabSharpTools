@@ -20,6 +20,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -32,7 +33,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -210,6 +210,14 @@
     <ProjectReference Include="..\LabControlPlus\LabControlPlus.csproj">
       <Project>{E54A51A6-A054-4F21-AC22-A827B5EF4D36}</Project>
       <Name>LabControlPlus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LabFuncControl\LabFuncControl.csproj">
+      <Project>{2bdcf93a-3a16-4ac3-a3f6-6e45601f13e5}</Project>
+      <Name>LabFuncControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LabGenControl\LabGenControl.csproj">
+      <Project>{79e7d600-ebdd-4ecb-9d23-dcd37b10f9eb}</Project>
+      <Name>LabGenControl</Name>
     </ProjectReference>
     <ProjectReference Include="..\LabGenForm\LabGenForm.csproj">
       <Project>{FBA5494A-61A4-45B7-92FF-AA4F5F06BB49}</Project>

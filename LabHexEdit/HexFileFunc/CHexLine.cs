@@ -403,7 +403,8 @@ namespace Harry.LabTools.LabHexEdit
 		public static string ToHexLineExternSegmentAddrRecord(long addr)
 		{
 			string _return = "";
-			byte[] line = new byte[2] { (byte)((addr >> 8) & 0xFF), (byte)(addr & 0xFF) };
+			//addr <<= 12;
+			byte[] line = new byte[2] { (byte)((addr<<4) & 0xFF), (byte)(((addr<<4)>>8)& 0xFF) };
 			_return = CHexLine.ToHexLine(0, HexType.EXTEND_SEGMENT_ADDRESS_RECORD, line);
 			return _return;
 		}
@@ -416,11 +417,13 @@ namespace Harry.LabTools.LabHexEdit
 		public static string ToHexLineExternLineAddrRecord(long addr)
 		{
 			string _return = "";
-
+			/*
+			addr <<= 24;
 			byte[] line = new byte[2] { (byte)((addr >> 8) & 0xFF), (byte)(addr & 0xFF) };
-
 			_return = CHexLine.ToHexLine(0, HexType.EXTEND_LINEAR_ADDRESS_RECORD, line);
-
+			*/
+			byte[] line = new byte[2] { (byte)((addr >>8) & 0xFF), (byte)(addr & 0xFF) };
+			_return = CHexLine.ToHexLine(0, HexType.EXTEND_LINEAR_ADDRESS_RECORD, line);
 			return _return;
 		}
 

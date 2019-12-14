@@ -24,6 +24,13 @@ namespace Harry.LabTools.LabControlPlus
 		/// </summary>
 		public CRichTextBoxEx() : base()
 		{
+
+			//设置控件风格
+			this.SetStyle(ControlStyles.AllPaintingInWmPaint |  //全部在窗口绘制消息中绘图
+							ControlStyles.OptimizedDoubleBuffer,    //使用双缓冲
+							true
+						);
+
 			//加载contextMenuTrip的子项---消息显示的清楚和
 			ToolStripItem tsItem;
 			this.ContextMenuStrip=this.userContextMenuStrip;

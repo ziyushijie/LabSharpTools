@@ -79,7 +79,7 @@
     <Compile Include="CGenFuncEXE\CGenFuncEXE.cs" />
     <Compile Include="CGenFuncMem\CGenFuncMem.cs" />
     <Compile Include="CGenFuncPackage\CGenFuncPackage.cs" />
-    <Compile Include="CGenFuncUnpackage\CGenFuncUnpackage.cs" />
+    <Compile Include="CGenFuncUnpackage\CGenFuncUnPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

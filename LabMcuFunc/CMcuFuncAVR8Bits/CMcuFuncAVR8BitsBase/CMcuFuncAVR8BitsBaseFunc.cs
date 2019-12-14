@@ -255,15 +255,15 @@ namespace Harry.LabTools.LabMcuFunc
 			//---选择文件
 			if ((eepromFile.ShowDialog() == DialogResult.OK) && (!string.IsNullOrEmpty(eepromFile.FileName)))
 			{
-				CHexFile loadFlash = new CHexFile(eepromFile.FileName);
+				CHexFile loadEeprom = new CHexFile(eepromFile.FileName);
 				//---校验文件的解析
-				if (loadFlash.mIsOK)
+				if (loadEeprom.mIsOK)
 				{
-					eeprom = new byte[loadFlash.mSTOPAddr];
+					eeprom = new byte[loadEeprom.mSTOPAddr];
 					//---填充默认数据是0xFF
 					CGenFuncMem.GenFuncMemset(ref eeprom, 0xFF);
 					//---数组拷贝
-					Array.Copy(loadFlash.mDataMap, 0, eeprom, loadFlash.mSTARTAddr, loadFlash.mDataMap.Length);
+					Array.Copy(loadEeprom.mDataMap, 0, eeprom, loadEeprom.mSTARTAddr, loadEeprom.mDataMap.Length);
 					//---消息显示
 					if (msg != null)
 					{
@@ -289,7 +289,7 @@ namespace Harry.LabTools.LabMcuFunc
 		{
 			byte[] eeprom = null;
 			//---加载Hex的数据
-			int _return = this.CMcuFunc_LoadFlashHexFile(ref eeprom, msg);
+			int _return = this.CMcuFunc_LoadEepromHexFile(ref eeprom, msg);
 			//---校验结果
 			if ((_return == 0) && (eeprom != null))
 			{
@@ -322,7 +322,7 @@ namespace Harry.LabTools.LabMcuFunc
 		{
 			byte[] eeprom = null;
 			//---加载Hex的数据
-			int _return = this.CMcuFunc_LoadFlashHexFile(ref eeprom, msg);
+			int _return = this.CMcuFunc_LoadEepromHexFile(ref eeprom, msg);
 			//---校验结果
 			if ((_return == 0) && (eeprom != null))
 			{
@@ -351,12 +351,12 @@ namespace Harry.LabTools.LabMcuFunc
 						chb.BeginInvoke((EventHandler)
 										(delegate
 										{
-											chb.AddData(eeprom, this.mMcuInfoParam.mChipFlashByteSize);
+											chb.AddData(eeprom, this.mMcuInfoParam.mChipEepromByteSize);
 										}));
 					}
 					else
 					{
-						chb.AddData(eeprom, this.mMcuInfoParam.mChipFlashByteSize);
+						chb.AddData(eeprom, this.mMcuInfoParam.mChipEepromByteSize);
 					}
 				}
 			}
@@ -463,7 +463,25 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public virtual int CMcuFunc_EraseChip(TextBox lockFuse,RichTextBox msg)
 		{
-			return -1;
+			//---擦除芯片
+			int _return = this.CMcuFunc_EraseChip(msg);
+			//---校验结果
+			if ((_return == 0) && (lockFuse != null))
+			{
+				if (lockFuse.InvokeRequired)
+				{
+					lockFuse.BeginInvoke((EventHandler)
+											(delegate
+											{
+												lockFuse.Text = "FF";
+											}));
+				}
+				else
+				{
+					lockFuse.Text = "FF";
+				}
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -471,9 +489,56 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_ReadChipFlash(ref byte[] chipFlash, RichTextBox msg)
+		public virtual int CMcuFunc_ReadChipFlash(ref byte[] chipFlash, RichTextBox msg,ToolStripLabel workState = null, ToolStripLabel workTime = null, ToolStripProgressBar workBar = null, string str = "读取Flash")
 		{
 			return -1;
+		}
+
+		/// <summary>
+		/// 读取Flash
+		/// </summary>
+		/// <param name="chipFlash"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_ReadChipFlash(ref byte[] chipFlash, RichTextBox msg)
+		{
+			return this.CMcuFunc_ReadChipFlash(ref chipFlash, msg, null, null, null);
+		}
+		
+		/// <summary>
+		/// 读取Flash
+		/// </summary>
+		/// <param name="chb"></param>
+		/// <param name="msg"></param>
+		/// <param name="workState"></param>
+		/// <param name="workTime"></param>
+		/// <param name="workBar"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_ReadChipFlash(CHexBox chb, RichTextBox msg, ToolStripLabel workState = null, ToolStripLabel workTime = null, ToolStripProgressBar workBar = null, string str = "读取Flash")
+		{
+			byte[] flash = null;
+			//---读取Flash数据
+			int _return = this.CMcuFunc_ReadChipFlash(ref flash, msg,workState,workTime,workBar,str);
+			//---校验结果
+			if ((_return == 0) && (flash != null))
+			{
+				if (chb != null)
+				{
+					if (chb.InvokeRequired)
+					{
+						chb.BeginInvoke((EventHandler)
+												(delegate
+												{
+													chb.AddData(flash);
+												}));
+					}
+					else
+					{
+						chb.AddData(flash);
+					}
+				}
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -483,35 +548,40 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public virtual int CMcuFunc_ReadChipFlash(CHexBox chb, RichTextBox msg)
 		{
-			int _return = -1;
-			byte[] tempRom = null;
-			_return = this.CMcuFunc_ReadChipFlash(ref tempRom,msg);
-			if ((_return == 0) && (tempRom != null))
-			{
-				if (chb.InvokeRequired)
-				{
-					chb.BeginInvoke((EventHandler)
-										(delegate
-										{
-											chb.AddData(tempRom);
-										}));
-				}
-				else
-				{
-					chb.AddData(tempRom);
-				}
-			}
-			return _return;
+			return this.CMcuFunc_ReadChipFlash(chb, msg, null, null, null);
 		}
-
+		
 		/// <summary>
 		/// 编程Flash
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_WriteChipFlash( byte[] chipFlash, RichTextBox msg)
+		public virtual int CMcuFunc_WriteChipFlash(byte[] chipFlash, RichTextBox msg, bool isAuto = false, ToolStripLabel workState = null, ToolStripLabel workTime = null, ToolStripProgressBar workBar = null, string str = "编程Flash")
 		{
 			return -1;
+		}
+
+		/// <summary>
+		/// 编程Flash
+		/// </summary>
+		/// <param name="chipFlash"></param>
+		/// <param name="msg"></param>
+		/// <param name="isAuto"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_WriteChipFlash(byte[] chipFlash, RichTextBox msg, bool isAuto = false)
+		{
+			return this.CMcuFunc_WriteChipFlash(chipFlash, msg, isAuto, null, null, null);
+		}
+
+
+		/// <summary>
+		/// 编程Flash
+		/// </summary>
+		/// <param name="chb">Hex编辑器控件</param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_WriteChipFlash(CHexBox chb, RichTextBox msg, bool isAuto = false, ToolStripLabel workState = null, ToolStripLabel workTime = null, ToolStripProgressBar workBar = null, string str = "编程Flash")
+		{
+			return this.CMcuFunc_WriteChipFlash(chb.mDataMap, msg, isAuto, workState,workTime,workBar,str);
 		}
 
 		/// <summary>
@@ -519,7 +589,17 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chb">Hex编辑器控件</param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_WriteChipFlash(CHexBox chb, RichTextBox msg)
+		public virtual int CMcuFunc_WriteChipFlash(CHexBox chb, RichTextBox msg, bool isAuto = false)
+		{
+			return this.CMcuFunc_WriteChipFlash(chb, msg,isAuto,null,null,null);
+		}
+
+		/// <summary>
+		/// 校验Flash
+		/// </summary>
+		/// <param name="flash"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_CheckChipFlash(byte[] chipFlash, RichTextBox msg, ToolStripLabel workState = null, ToolStripLabel workTime = null, ToolStripProgressBar workBar = null, string str = "校验Flash")
 		{
 			return -1;
 		}
@@ -527,11 +607,12 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <summary>
 		/// 校验Flash
 		/// </summary>
-		/// <param name="flash"></param>
+		/// <param name="chipFlash"></param>
+		/// <param name="msg"></param>
 		/// <returns></returns>
 		public virtual int CMcuFunc_CheckChipFlash(byte[] chipFlash, RichTextBox msg)
 		{
-			return -1;
+			return this.CMcuFunc_CheckChipFlash(chipFlash,msg,null,null,null);
 		}
 
 		/// <summary>
@@ -539,9 +620,20 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chb">Hex编辑器控件</param>
 		/// <returns></returns>
+		public virtual int CMcuFunc_CheckChipFlash(CHexBox chb, RichTextBox msg, ToolStripLabel workState = null, ToolStripLabel workTime = null, ToolStripProgressBar workBar = null, string str = "校验Flash")
+		{
+			return this.CMcuFunc_CheckChipFlash(chb.mDataMap, msg,workState,workTime,workBar,str);
+		}
+
+		/// <summary>
+		/// 校验Flash
+		/// </summary>
+		/// <param name="chb"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
 		public virtual int CMcuFunc_CheckChipFlash(CHexBox chb, RichTextBox msg)
 		{
-			return -1;
+			return this.CMcuFunc_CheckChipFlash(chb, msg,null,null,null);
 		}
 
 		/// <summary>
@@ -559,9 +651,56 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_ReadChipEeprom(ref byte[] chipEeprom, RichTextBox msg)
+		public virtual int CMcuFunc_ReadChipEeprom(ref byte[] chipEeprom, RichTextBox msg, ToolStripLabel workState = null, ToolStripLabel workTime = null, ToolStripProgressBar workBar = null, string str = "读取Eeprom")
 		{
 			return -1;
+		}
+
+		/// <summary>
+		/// 读取Eeprom
+		/// </summary>
+		/// <param name="chipEeprom"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_ReadChipEeprom(ref byte[] chipEeprom, RichTextBox msg)
+		{
+			return this.CMcuFunc_ReadChipEeprom(ref chipEeprom,msg,null,null,null);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="chb"></param>
+		/// <param name="msg"></param>
+		/// <param name="workState"></param>
+		/// <param name="workTime"></param>
+		/// <param name="workBar"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_ReadChipEeprom(CHexBox chb, RichTextBox msg, ToolStripLabel workState = null, ToolStripLabel workTime = null, ToolStripProgressBar workBar = null, string str = "读取Eeprom")
+		{
+			byte[] eeprom = null;
+			//---读取Eeprom数据
+			int _return = this.CMcuFunc_ReadChipEeprom(ref eeprom, msg,workState,workTime,workBar,str);
+			//---校验结果
+			if ((_return == 0) && (eeprom != null))
+			{
+				if (chb != null)
+				{
+					if (chb.InvokeRequired)
+					{
+						chb.BeginInvoke((EventHandler)
+												(delegate
+												{
+													chb.AddData(eeprom);
+												}));
+					}
+					else
+					{
+						chb.AddData(eeprom);
+					}
+				}
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -571,25 +710,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public virtual int CMcuFunc_ReadChipEeprom(CHexBox chb, RichTextBox msg)
 		{
-			int _return = -1;
-			byte[] tempRom = null;
-			_return = this.CMcuFunc_ReadChipEeprom(ref tempRom,msg);
-			if ((_return == 0) && (tempRom != null))
-			{
-				if (chb.InvokeRequired)
-				{
-					chb.BeginInvoke((EventHandler)
-										(delegate
-										{
-											chb.AddData(tempRom);
-										}));
-				}
-				else
-				{
-					chb.AddData(tempRom);
-				}
-			}
-			return _return;
+			return this.CMcuFunc_ReadChipEeprom(chb, msg, null, null, null);
 		}
 
 		/// <summary>
@@ -597,9 +718,20 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_WriteChipEeprom(byte[] chipEeprom, RichTextBox msg)
+		public virtual int CMcuFunc_WriteChipEeprom(byte[] chipEeprom, RichTextBox msg, ToolStripLabel workState = null, ToolStripLabel workTime = null, ToolStripProgressBar workBar = null,string str = "编程Eeprom")
 		{
 			return -1;
+		}
+
+		/// <summary>
+		/// 读取Eeprom
+		/// </summary>
+		/// <param name="chipEeprom"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_WriteChipEeprom(byte[] chipEeprom, RichTextBox msg)
+		{
+			return this.CMcuFunc_WriteChipEeprom(chipEeprom,msg,null,null,null);
 		}
 
 		/// <summary>
@@ -607,9 +739,20 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="chb">Hex编辑器控件</param>
 		/// <returns></returns>
+		public virtual int CMcuFunc_WriteChipEeprom(CHexBox chb, RichTextBox msg, ToolStripLabel workState = null, ToolStripLabel workTime = null, ToolStripProgressBar workBar = null, string str = "编程Eeprom")
+		{
+			return this.CMcuFunc_WriteChipEeprom(chb.mDataMap, msg,workState,workTime,workBar,str);
+		}
+
+		/// <summary>
+		/// 读取Eeprom
+		/// </summary>
+		/// <param name="chb"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
 		public virtual int CMcuFunc_WriteChipEeprom(CHexBox chb, RichTextBox msg)
 		{
-			return -1;
+			return this.CMcuFunc_WriteChipEeprom(chb, msg, null,null,null);
 		}
 
 
@@ -618,9 +761,35 @@ namespace Harry.LabTools.LabMcuFunc
 		/// </summary>
 		/// <param name="flash"></param>
 		/// <returns></returns>
-		public virtual int CMcuFunc_CheckChipEeprom(byte[] chipEeprom, RichTextBox msg)
+		public virtual int CMcuFunc_CheckChipEeprom(byte[] chipEeprom, RichTextBox msg, ToolStripLabel workState = null, ToolStripLabel workTime = null, ToolStripProgressBar workBar = null, string str = "校验Eeprom")
 		{
 			return -1;
+		}
+
+		/// <summary>
+		/// 校验eeprom
+		/// </summary>
+		/// <param name="chipEeprom"></param>
+		/// <param name="msg"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_CheckChipEeprom(byte[] chipEeprom, RichTextBox msg)
+		{
+			return this.CMcuFunc_CheckChipEeprom(chipEeprom, msg, null, null, null);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="chb"></param>
+		/// <param name="msg"></param>
+		/// <param name="workState"></param>
+		/// <param name="workTime"></param>
+		/// <param name="workBar"></param>
+		/// <param name="str"></param>
+		/// <returns></returns>
+		public virtual int CMcuFunc_CheckChipEeprom(CHexBox chb, RichTextBox msg, ToolStripLabel workState = null, ToolStripLabel workTime = null, ToolStripProgressBar workBar = null, string str = "校验Eeprom")
+		{
+			return this.CMcuFunc_CheckChipEeprom(chb.mDataMap, msg, workState, workTime, workBar,str);
 		}
 
 		/// <summary>
@@ -630,7 +799,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public virtual int CMcuFunc_CheckChipEeprom(CHexBox chb, RichTextBox msg)
 		{
-			return -1;
+			return this.CMcuFunc_CheckChipEeprom(chb, msg, null, null, null);
 		}
 
 		/// <summary>
@@ -660,7 +829,73 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public virtual int CMcuFunc_ReadChipFuse(TextBox lowFuse, TextBox highFuse, TextBox externFuse, RichTextBox msg)
 		{
-			return -1;
+			byte[] fuse = null;
+			//---读取熔丝位
+			int _return = this.CMcuFunc_ReadChipFuse(ref fuse, msg);
+			//---判断读取结果
+			if ((_return == 0) && (fuse != null) && (fuse.Length > 1))
+			{
+				//---低位熔丝位
+				if (lowFuse != null)
+				{
+					if (lowFuse.InvokeRequired)
+					{
+						lowFuse.BeginInvoke((EventHandler)
+											(delegate
+											{
+												lowFuse.Text = fuse[0].ToString("X2");
+											}));
+					}
+					else
+					{
+						lowFuse.Text = fuse[0].ToString("X2");
+					}
+				}
+
+				//---高位熔丝位
+				if (highFuse != null)
+				{
+					if (highFuse.InvokeRequired)
+					{
+						highFuse.BeginInvoke((EventHandler)
+												(delegate
+												{
+													highFuse.Text = fuse[1].ToString("X2");
+												}));
+					}
+					else
+					{
+						highFuse.Text = fuse[1].ToString("X2");
+					}
+				}
+
+				//---拓展位熔丝位
+				if (externFuse != null)
+				{
+					int tempFuse = 0;
+					if (fuse.Length > 2)
+					{
+						tempFuse = fuse[2];
+					}
+					else
+					{
+						tempFuse = 0;
+					}
+					if (externFuse.InvokeRequired)
+					{
+						externFuse.BeginInvoke((EventHandler)
+											(delegate
+											{
+												externFuse.Text = tempFuse.ToString("X2");
+											}));
+					}
+					else
+					{
+						externFuse.Text = tempFuse.ToString("X2");
+					}
+				}
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -670,7 +905,82 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public virtual int CMcuFunc_DefaultChipFuse(TextBox lowFuse, TextBox highFuse, TextBox externFuse, RichTextBox msg)
 		{
-			return -1;
+			int _return = 0;
+			//---获取熔丝位
+			int[] fuse = this.mMcuInfoParam.McuDefaultFuseInfo();
+			//---校验熔丝位
+			if ((fuse == null) || (fuse.Length < 2))
+			{
+				_return = 1;
+			}
+			else
+			{
+				//---低位熔丝位
+				if (lowFuse != null)
+				{
+					if (lowFuse.InvokeRequired)
+					{
+						lowFuse.BeginInvoke((EventHandler)
+											(delegate
+											{
+												lowFuse.Text = fuse[0].ToString("X2");
+											}));
+					}
+					else
+					{
+						lowFuse.Text = fuse[0].ToString("X2");
+					}
+				}
+
+				//---高位熔丝位
+				if (highFuse != null)
+				{
+					if (highFuse.InvokeRequired)
+					{
+						highFuse.BeginInvoke((EventHandler)
+												(delegate
+												{
+													highFuse.Text = fuse[1].ToString("X2");
+												}));
+					}
+					else
+					{
+						highFuse.Text = fuse[1].ToString("X2");
+					}
+				}
+
+				//---拓展位熔丝位
+				if (externFuse != null)
+				{
+					int tempFuse = 0;
+					if (fuse.Length > 2)
+					{
+						tempFuse = fuse[2];
+					}
+					else
+					{
+						tempFuse = 0;
+					}
+					if (externFuse.InvokeRequired)
+					{
+						externFuse.BeginInvoke((EventHandler)
+											(delegate
+											{
+												externFuse.Text = tempFuse.ToString("X2");
+											}));
+					}
+					else
+					{
+						externFuse.Text = tempFuse.ToString("X2");
+					}
+				}
+
+				if (msg != null)
+				{
+					CRichTextBoxPlus.AppendTextInfoTopWithDataTime(msg, "默认熔丝位恢复成功!", Color.Black);
+				}
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -691,7 +1001,32 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public virtual int CMcuFunc_ReadChipLock(TextBox lockFuse, RichTextBox msg)
 		{
-			return -1;
+			byte tempLock = 0x00;
+			//---读取加密位
+			int _return = this.CMcuFunc_ReadChipLock(ref tempLock, msg);
+			//---校验读取结果
+			if (_return != 0)
+			{
+				tempLock = 0xFF;
+			}
+			//---加密位信息
+			if (lockFuse != null)
+			{
+				//---低位熔丝位
+				if (lockFuse.InvokeRequired)
+				{
+					lockFuse.BeginInvoke((EventHandler)
+										(delegate
+										{
+											lockFuse.Text = tempLock.ToString("X2");
+										}));
+				}
+				else
+				{
+					lockFuse.Text = tempLock.ToString("X2");
+				}
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -711,7 +1046,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public virtual int CMcuFunc_WriteChipFuse(TextBox lowFuse, TextBox highFuse, TextBox externFuse, RichTextBox msg)
 		{
-			return -1;
+			return this.CMcuFunc_WriteChipFuse(new byte[] { Convert.ToByte(lowFuse.Text, 16), Convert.ToByte(highFuse.Text, 16), Convert.ToByte(externFuse.Text, 16) }, msg);
 		}
 
 		/// <summary>
@@ -732,7 +1067,7 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public virtual int CMcuFunc_WriteChipLock(TextBox lockFuse, RichTextBox msg)
 		{
-			return -1;
+			return this.CMcuFunc_WriteChipLock(Convert.ToByte(lockFuse.Text, 16), msg);
 		}
 
 		/// <summary>
@@ -752,7 +1087,30 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public virtual int CMcuFunc_ReadChipID(RichTextBox msg,Form form=null)
 		{
-			return -1;
+			byte[] tempID = null;
+			//---读取ChipID
+			int _return = this.CMcuFunc_ReadChipID(ref tempID, msg);
+			//---校验读取结果
+			if (_return == 0)
+			{
+				if (CGenFuncEqual.GenFuncEqual(tempID, this.mMcuInfoParam.mChipID) == false)
+				{
+					if (form != null)
+					{
+						CMessageBoxPlus.Show(form, "芯片识别字不匹配\r\n读出识别字：" +
+													tempID[0].ToString("X2") + ":" + tempID[1].ToString("X2") + ":" + tempID[2].ToString("X2"),
+													"消息提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+					}
+					else
+					{
+						MessageBox.Show("芯片识别字不匹配\r\n读出识别字：" +
+													tempID[0].ToString("X2") + ":" + tempID[1].ToString("X2") + ":" + tempID[2].ToString("X2"),
+													"消息提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+					}
+				}
+
+			}
+			return _return;
 		}
 
 		/// <summary>
@@ -772,7 +1130,90 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		public virtual int CMcuFunc_ReadChipCalibration( TextBox oscValue1, TextBox oscValue2, TextBox oscValue3, TextBox oscValue4, RichTextBox msg)
 		{
-			return -1;
+			byte[] chipCalibration = null;
+			//---读取校准字
+			int _return = this.CMcuFunc_ReadChipCalibration(ref chipCalibration, msg);
+			//---校验读取结果
+			if ((_return == 0) && (chipCalibration != null))
+			{
+				for (int i = 0; i < chipCalibration.Length; i++)
+				{
+					switch (i)
+					{
+						case 0:
+							if (oscValue1.Visible == true)
+							{
+								if (oscValue1.InvokeRequired)
+								{
+									oscValue1.BeginInvoke((EventHandler)
+											(delegate
+											{
+												oscValue1.Text = chipCalibration[i].ToString("X2");
+											}));
+								}
+								else
+								{
+									oscValue1.Text = chipCalibration[i].ToString("X2");
+								}
+							}
+							break;
+						case 1:
+							if (oscValue2.Visible == true)
+							{
+								if (oscValue2.InvokeRequired)
+								{
+									oscValue2.BeginInvoke((EventHandler)
+											(delegate
+											{
+												oscValue2.Text = chipCalibration[i].ToString("X2");
+											}));
+								}
+								else
+								{
+									oscValue2.Text = chipCalibration[i].ToString("X2");
+								}
+							}
+							break;
+						case 2:
+							if (oscValue3.Visible == true)
+							{
+								if (oscValue3.InvokeRequired)
+								{
+									oscValue3.BeginInvoke((EventHandler)
+											(delegate
+											{
+												oscValue3.Text = chipCalibration[i].ToString("X2");
+											}));
+								}
+								else
+								{
+									oscValue3.Text = chipCalibration[i].ToString("X2");
+								}
+							}
+							break;
+						case 3:
+							if (oscValue4.Visible == true)
+							{
+								if (oscValue4.InvokeRequired)
+								{
+									oscValue4.BeginInvoke((EventHandler)
+											(delegate
+											{
+												oscValue4.Text = chipCalibration[i].ToString("X2");
+											}));
+								}
+								else
+								{
+									oscValue4.Text = chipCalibration[i].ToString("X2");
+								}
+							}
+							break;
+						default:
+							break;
+					}
+				}
+			}
+			return _return;
 		}
 
 		/// <summary>

@@ -28,6 +28,11 @@ namespace Harry.LabTools.LabMcuFunc
 		private string defaultChipName = string.Empty;// "ATmega8";
 
 		/// <summary>
+		/// MCU参数的解析结果，true---正常，false---失效
+		/// </summary>
+		private bool defaultChipInfoOK = true;
+
+		/// <summary>
 		/// 编程接口名称
 		/// </summary>
 		/// { "ISP", "JTAG", "HVPP", "HVSP" };
@@ -165,6 +170,17 @@ namespace Harry.LabTools.LabMcuFunc
 			get
 			{
 				return MCU_INFO_TYPE.MCU_AVR8BITS;
+			}
+		}
+
+		/// <summary>
+		/// 参数解析结果的正常的属性为只读
+		/// </summary>
+		public virtual bool mChipInfoOK
+		{
+			get
+			{
+				return this.defaultChipInfoOK;
 			}
 		}
 
@@ -1412,7 +1428,8 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns>true---合格，False---失败</returns>
 		private bool AnalyseAVR8BitsMcuInfo(string chipName)
 		{
-			return this.AnalyseAVR8BitsMcuInfoXml(chipName);
+			this.defaultChipInfoOK = this.AnalyseAVR8BitsMcuInfoXml(chipName);
+			return this.defaultChipInfoOK;
 		}
 
 		/// <summary>
@@ -1422,7 +1439,13 @@ namespace Harry.LabTools.LabMcuFunc
 		/// <returns></returns>
 		private string[] AnalyseAVR8BitsMcuList()
 		{
-			return this.AnalyseAVR8BitsMcuListXml();
+			string[] _return= this.AnalyseAVR8BitsMcuListXml();
+			//---校验设备列表解析结果
+			if ((_return==null)||(_return.Length==0))
+			{
+				this.defaultChipInfoOK = false;
+			}
+			return _return;
 		}
 
 		#region 解析MCU的信息
@@ -1776,8 +1799,9 @@ namespace Harry.LabTools.LabMcuFunc
 			if (!File.Exists(xmlPath))
 			{
 				this.defaultMsgText = "设备列别XML文件解析失败！";
-				//---打印Debug信息
-				Debug.WriteLine(this.defaultMsgText);
+				//---显示错误
+				MessageBox.Show(this.defaultMsgText, "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				//---返回结果
 				return null;
 			}
 			List<string> _return = new List<string>();
@@ -1816,8 +1840,9 @@ namespace Harry.LabTools.LabMcuFunc
 			catch (Exception e)
 			{
 				this.defaultMsgText = e.ToString();
-				//---打印Debug信息
-				Debug.WriteLine(this.defaultMsgText);
+				//---显示错误
+				MessageBox.Show(this.defaultMsgText, "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				//---返回结果
 				return null;
 			}
 			return _return.ToArray();

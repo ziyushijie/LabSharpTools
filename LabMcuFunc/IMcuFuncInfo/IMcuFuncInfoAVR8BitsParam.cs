@@ -241,6 +241,14 @@ namespace Harry.LabTools.LabMcuFunc
 		#region 属性参数
 		
 		/// <summary>
+		/// 参数解析是是否正常
+		/// </summary>
+		bool mChipInfoOK
+		{
+			get;
+		}
+
+		/// <summary>
 		/// 芯片名称
 		/// </summary>
 		string mChipName

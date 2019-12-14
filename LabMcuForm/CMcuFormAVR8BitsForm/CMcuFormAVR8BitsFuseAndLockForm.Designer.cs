@@ -57,6 +57,7 @@
 			// 
 			this.cMcuFormAVR8BitsFuseAndLockControl1.Location = new System.Drawing.Point(82, 41);
 			this.cMcuFormAVR8BitsFuseAndLockControl1.MaximumSize = new System.Drawing.Size(655, 310);
+			this.cMcuFormAVR8BitsFuseAndLockControl1.mCMcuFunc = null;
 			this.cMcuFormAVR8BitsFuseAndLockControl1.MinimumSize = new System.Drawing.Size(655, 310);
 			this.cMcuFormAVR8BitsFuseAndLockControl1.Name = "cMcuFormAVR8BitsFuseAndLockControl1";
 			this.cMcuFormAVR8BitsFuseAndLockControl1.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);

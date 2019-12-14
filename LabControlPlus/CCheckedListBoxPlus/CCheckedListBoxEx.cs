@@ -12,7 +12,40 @@ namespace Harry.LabTools.LabControlPlus
 	/// </summary>
 	public class CCheckedListBoxEx : CheckedListBox
 	{
-		#region 绘制函数
+
+		#region 变量定义
+
+		#endregion
+
+		#region 属性定义
+
+		#endregion
+
+		#region 构造函数
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public CCheckedListBoxEx()
+		{
+			//设置控件风格
+			this.SetStyle(ControlStyles.AllPaintingInWmPaint |  //全部在窗口绘制消息中绘图
+							ControlStyles.OptimizedDoubleBuffer,    //使用双缓冲
+							true
+						);
+		}
+
+		#endregion
+
+		#region 析构函数
+
+		#endregion
+
+		#region 公共函数
+
+		#endregion
+
+		#region 保护函数
 
 		/// <summary>
 		/// 重新绘制选中是的背景为透明色
@@ -24,6 +57,15 @@ namespace Harry.LabTools.LabControlPlus
 			base.OnDrawItem(e2);
 		}
 
-		#endregion 绘制函数
+		#endregion
+
+		#region 私有函数
+
+		#endregion
+
+		#region 事件函数
+
+		#endregion
+
 	}
 }
